@@ -4,80 +4,90 @@ title: FAQ
 
 # Frequently asked questions
 
-## Can I play games with this yet?
+## Can I install this on my Mac?
 
-No. d3d12agx has no presentation layer — it renders correctly but cannot display
-a frame to a window, so it cannot run an application end to end.
+Not as a supported thing, no. There is no installer and no supported path.
 
-For actually playing Direct3D 12 games on Apple Silicon today, use Proton with
-vkd3d-proton on Honeykrisp. That works now and is the right answer.
+Running it means test signing, modified boot policy, a matching m1n1 and Project
+Mu build for your exact machine, and a tethered host for debugging and recovery.
+It can crash Windows, corrupt data, or leave the machine needing recovery. Only
+do this on hardware and data you can afford to lose.
 
-## Then what is the point?
+## Does Windows actually run?
 
-Two things.
+Yes. On a MacBook Pro 14-inch M2 Pro it boots to a desktop from the internal SSD,
+with the GPU rendering and presenting frames to the physical console.
 
-The conformance result is evidence that Direct3D 12 can be implemented directly
-on Apple's GPU without a translation layer — including passing tests the
-Vulkan-based route cannot, because some D3D12 semantics have no faithful Vulkan
-expression.
+It is not finished. The desktop is not GPU-accelerated yet (that needs the WDDM
+path), SMP is in progress, and wireless is still being brought up. See
+[Hardware support](../platform/support.md) for the current feature table.
 
-And it is the graphics half of running Windows on Apple Silicon, where there is
-no Vulkan driver to translate to in the first place.
+## Which Macs work?
 
-## Is this faster than vkd3d-proton?
+M2 Pro is the primary and most validated target — specifically the MacBook Pro
+14-inch (`j414s`). M1 Pro was the earlier bring-up machine and is behind. M5 Pro
+has had preliminary testing but is blocked on an iBoot issue.
 
-Unknown — no performance comparison has been run, and it would be premature. The
-work so far has been entirely about correctness. Removing a translation layer
-*should* reduce CPU overhead, but "should" is not a benchmark, and vkd3d-proton
-is mature and heavily optimised.
+Everything else is unsupported. Unlike GPU work, Windows bring-up does not
+generalise between machines: ACPI tables, device trees and firmware profiles are
+per-model.
 
-Anyone quoting a performance number for d3d12agx today is guessing.
+## Is the GPU actually working, or is it software rendering?
 
-## How can it beat vkd3d-proton if it is so much newer?
+Actually working. Honeykrisp advertises Vulkan 1.4.354 on hardware, Direct3D 11
+runs through DXVK at feature level 11.0, and presentation has been validated
+across 1,200-frame runs on the physical console.
 
-It does not beat it overall. It passes more of one test suite on one GPU.
+What is *not* done is the WDDM miniport, which is what would make the Windows
+desktop itself accelerated. That is in bring-up.
 
-The reason is structural rather than a matter of quality: Direct3D 12 → Vulkan
-loses information. Texture array view reinterpretation, structured/raw/typed
-view aliasing and null-descriptor behaviour are all defined in D3D12 in ways
-Vulkan's rules cannot express, so those tests are unwinnable through a Vulkan
-layer no matter how good the implementation is.
+## Is the Vulkan implementation conformant?
 
-## Does this work on my Mac?
+No, and it should not be described that way. It advertises 1.4.354 and runs real
+workloads, but no Vulkan CTS profile has been run — no dEQP binary is staged on
+the machine. "Works" and "conformant" are different claims and only the first is
+currently supported by evidence.
 
-If it is an M1 or M2 family machine running Asahi Linux, probably — but only the
-base M2 has actually been tested. M3 and later are not supported, because the
-underlying Mesa AGX substrate does not support them yet. See
-[Hardware support](../platform/support.md).
+## Can I play games?
+
+Not yet, and this is not the project to use if that is your goal today. Direct3D
+11 titles are the closest thing to plausible, but the desktop is not accelerated
+and large parts of the platform are still being brought up.
+
+## What is d3d12agx, and is it what runs my games?
+
+No. [d3d12agx](../projects/d3d12agx/index.md) is a separate research project on
+**Linux** — a native Direct3D 12 driver for the Apple GPU with no Vulkan layer.
+
+Direct3D 12 on the Windows stack goes through vkd3d-proton on Vulkan, like it
+does on Linux under Proton. d3d12agx is an experiment in removing that hop; if it
+matures and is ported, it would replace vkd3d in the chain.
 
 ## Is this affiliated with Asahi Linux?
 
-No. Aurora Silicon is a separate, unaffiliated project.
+No. Aurora Silicon is an independent experimental effort, not an official product
+of — or supported by — Asahi Linux or the upstream NT-for-ASi project.
 
-We build on Asahi's kernel, the `drm/asahi` GPU driver and Mesa's AGX compiler
-infrastructure, and none of this would exist without that work. But please
-report our bugs to us, not to them.
+It builds on public work from both, and would not exist without them. Please do
+not report bugs caused by these experimental drivers to either project unless one
+of their maintainers explicitly asks. Report them here.
 
-## Will this be upstreamed to Mesa?
+## Was this built with AI?
 
-Not currently planned. It is a large driver for an API Mesa does not otherwise
-implement in this direction, and upstreaming would need buy-in we have not
-sought. The code is MIT and public regardless, so anyone can use it.
+Substantial parts, yes — and it is stated in the repository README as well as
+[here](method.md).
 
-## Why not use dxil-spirv?
+That is why the evidence standards are what they are. Hardware traces, host tests
+and repeatable builds are what validate a change; fluent-looking code is not
+evidence. Treat every implementation as untrusted until proven on your exact
+target.
 
-Because it emits SPIR-V, and SPIR-V requires structured control flow. DXIL does
-not have it, so translating DXIL → SPIR-V means reconstructing structure from an
-arbitrary control-flow graph — the hardest problem in that space.
+## How do I report a problem?
 
-NIR has no such requirement, so going straight to NIR avoids the problem rather
-than solving it. dxil-spirv is MIT licensed, so this was an engineering choice,
-not a licensing one.
+Include the exact Mac model and SoC, Windows build and image type,
+driver/firmware/m1n1 commit IDs, package and payload hashes, and the complete
+serial, hypervisor and debugger logs. Symptoms and photos help but do not replace
+logs.
 
-## What about macOS or Windows?
-
-macOS is out of scope; Apple's own driver owns the GPU there.
-
-Windows would require porting d3d12agx to a WDDM user-mode driver and pairing it
-with a kernel-mode driver. That is the long-term point of the exercise, but it
-has not been started.
+[GitHub](https://github.com/aurora-silicon) or
+[Discord](https://discord.gg/DXmsSSc5aY) — contact `djdev` or `rttdev`.

@@ -85,6 +85,30 @@ Two examples that shaped the current process:
 Nothing on this site is a target that was aimed at. If a number moves down after
 an audit, that is the process working.
 
+## Development method
+
+Substantial parts of this project were developed with assistance from large
+language models. This is stated plainly rather than left to be discovered.
+
+It does not lower the evidence bar — it is the reason the bar is where it is.
+Everything above about measurement, falsification, one-variable experiments and
+verifying outside claims applies to LLM-produced work first and hardest, because
+that work is fluent, plentiful, and confidently wrong often enough to matter.
+
+What that means in practice:
+
+- Hardware traces, host tests and repeatable builds are what validate a change.
+  Plausible-looking code is not evidence of anything
+- Every implementation should be treated as untrusted until independently
+  reviewed and proven on the exact target configuration
+- The source rules below are enforced more strictly, not less. A model cannot be
+  asked where a fact came from, so the provenance of every input has to be
+  established independently
+
+If you adapt this work for hardware we do not have — with or without model
+assistance — the same standard applies: review it, test it, and prove it on your
+device before trusting it.
+
 ## Source discipline
 
 Permitted inputs are public documentation, the Asahi and Linux trees, Mesa,

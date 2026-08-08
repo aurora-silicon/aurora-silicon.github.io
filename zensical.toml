@@ -16,13 +16,15 @@ nav = [
   { "Home" = "index.md" },
   { "Projects" = [
     "projects/index.md",
-    { "d3d12agx — DirectX 12 on AGX" = [
+    { "Boot chain and platform" = "projects/windows.md" },
+    { "Drivers" = "projects/drivers.md" },
+    { "Graphics" = "projects/gpu.md" },
+    { "d3d12agx (research)" = [
       "projects/d3d12agx/index.md",
       "projects/d3d12agx/conformance.md",
       "projects/d3d12agx/architecture.md",
       "projects/d3d12agx/limits.md",
     ] },
-    { "Windows on Apple Silicon" = "projects/windows.md" },
   ] },
   { "Hardware Support" = "platform/support.md" },
   { "For Developers" = [

@@ -4,6 +4,16 @@ title: d3d12agx
 
 # d3d12agx — DirectX 12 on the Apple GPU
 
+!!! info "Research project, on Linux"
+
+    d3d12agx is an **experiment**, separate from the Windows stack. It runs on
+    Linux, has no presentation layer, and is not part of how Aurora Silicon
+    renders on Windows today — that is [Honeykrisp with DXVK and
+    vkd3d-proton](../gpu.md).
+
+    Its purpose is to test whether Direct3D 12 can be implemented directly on
+    Apple's GPU, with no Vulkan layer in between. The answer so far is yes.
+
 d3d12agx is a **Direct3D 12 user-mode driver** for Apple's AGX GPU, written from
 scratch on the Mesa/Asahi substrate.
 
@@ -13,10 +23,24 @@ and no runtime dependency on Microsoft's shader compiler.
 
 <div class="scoreboard" markdown>
 <div class="cell" markdown><div class="n hero">523</div><div class="l">tests passing</div></div>
-<div class="cell" markdown><div class="n ref">505</div><div class="l">reference, same GPU</div></div>
+<div class="cell" markdown><div class="n ref">505</div><div class="l">vkd3d-proton, same GPU</div></div>
 <div class="cell" markdown><div class="n">~39k</div><div class="l">lines of C</div></div>
 <div class="cell" markdown><div class="n">0</div><div class="l">translation layers</div></div>
 </div>
+
+## Why it matters to the Windows work
+
+Today Direct3D 12 on Aurora Silicon goes
+`D3D12 → vkd3d-proton → Vulkan → Honeykrisp → AGX`. That works, and it is what
+ships.
+
+If d3d12agx matures and is ported to a Windows user-mode driver, that chain
+becomes `D3D12 → AGX`. Two translation steps removed, and — measurably — some
+Direct3D 12 behaviour becomes expressible that a Vulkan layer cannot represent
+at all.
+
+That port has not been started. This is a research result, not a roadmap item
+with a date.
 
 ## What kind of thing is this?
 

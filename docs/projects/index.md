@@ -4,57 +4,69 @@ title: Projects
 
 # Projects
 
-Aurora Silicon runs two efforts. They are independent — either could ship
-without the other — but they converge on a Mac that boots Windows and renders
-with its own GPU rather than a software rasteriser.
+Aurora Silicon is one goal — Windows running properly on Apple Silicon — split
+across the layers it takes to get there.
 
-## [d3d12agx](d3d12agx/index.md) — DirectX 12 on the Apple GPU
+## [Boot chain and platform](windows.md)
 
-A from-scratch Direct3D 12 **user-mode driver** for Apple's AGX GPU, built on
-the Mesa/Asahi substrate. Shader bytecode is compiled directly to AGX machine
+Getting Windows to start at all: m1n1 for bring-up and hypervisor tracing,
+Project Mu for UEFI firmware and ACPI tables, and a native HAL extension so
+Windows drives Apple's interrupt controller directly rather than through an
+emulated GIC.
+
+<span class="status works">Boots to desktop</span> from internal storage on
+M2 Pro.
+
+## [Drivers](drivers.md)
+
+43 Windows driver projects for hardware Windows has never seen: DART, PCIe,
+Apple's NVMe controller, USB4 and DWC3, the display coprocessor, SMC, SPI HID,
+Broadcom Wi-Fi and Bluetooth, audio, sensors.
+
+Some are working, some are early. Each carries its own README with the
+authoritative status.
+
+## [Graphics](gpu.md)
+
+A GPU stack on Windows, built on Mesa's reverse-engineered AGX support: a KMDF
+render node, Honeykrisp ported to Windows for Vulkan, and DXVK and vkd3d-proton
+above it for Direct3D.
+
+<span class="status works">Vulkan 1.4</span> and
+<span class="status works">D3D11</span> run on hardware, with frames presented
+to the physical console. The WDDM miniport — the piece that gets the Windows
+desktop itself accelerated — is in bring-up.
+
+## [d3d12agx](d3d12agx/index.md) — research
+
+A separate experiment, on Linux: a native Direct3D 12 driver for the Apple GPU
+with no Vulkan layer at all. Shader bytecode compiles straight to AGX machine
 code.
 
-<span class="status works">523/557</span> on the vkd3d-proton D3D12 test suite,
-against a reference score of 505 on the same hardware.
+<span class="status partial">Research</span> It passes more of the Direct3D 12
+conformance suite than the Vulkan-based route does on the same GPU, which is
+evidence the approach is sound. It has no presentation layer and is not part of
+the Windows stack today.
 
-| | |
-| --- | --- |
-| Language | C, ~39,000 lines |
-| Repository | [aurora-silicon/mesa](https://github.com/aurora-silicon/mesa) (branch `dev`) |
-| Licence | MIT, matching Mesa |
-| Runs on | Linux on Apple Silicon (M1/M2 families) |
-| Blocked on | Presentation — no swapchain yet |
+If it matures and is ported to a Windows UMD, it would collapse
+`D3D12 → vkd3d → Vulkan → AGX` into `D3D12 → AGX`.
 
-## [Windows on Apple Silicon](windows.md)
-
-The boot chain, firmware and drivers required to run Windows on ARM on Apple
-hardware: a tethered `m1n1` bootloader, a Project Mu UEFI implementation, and
-NT-side drivers including a native AIC2 interrupt controller HAL extension.
-
-<span class="status partial">Desktop boots</span> from the internal SSD,
-software-rendered.
-
-| | |
-| --- | --- |
-| Repositories | [m1n1](https://github.com/aurora-silicon/m1n1), [mu](https://github.com/aurora-silicon/mu), [linux](https://github.com/aurora-silicon/linux) |
-| Status | Boots to desktop; peripheral subsystems in progress |
-| Blocked on | SMP, GPU acceleration, peripheral bring-up |
-
-## How they connect
-
-Windows on ARM needs a display driver to be useful. Today that role is filled by
-software rendering, which works but is slow. d3d12agx is the graphics half of
-the answer — though reaching Windows means porting it to a WDDM user-mode driver
-and pairing it with a kernel-mode driver, which is a separate piece of work not
-yet started.
-
-A nearer-term application is Linux: shipping d3d12agx as a PE `d3d12.dll` inside
-a Wine or Proton build would let Windows games run on Apple Silicon with two
-translation layers removed from the graphics path.
+## How the layers stack
 
 ```
-today   Proton → vkd3d-proton → Honeykrisp (Vulkan) → AGX
-target  Proton → d3d12agx → AGX
+              Windows on ARM
+                    │
+   ┌────────────────┼────────────────┐
+   ▼                ▼                ▼
+ drivers        graphics         boot chain
+ 43 projects    Vulkan/D3D11     m1n1 · Mu/UEFI · ACPI
+                DXVK · vkd3d     AicHal
+                    │
+                    ▼
+              AppleAgxGpu.sys
+                    │
+                   AGX
 ```
 
-That path needs a Wine unixlib thunk and a present path. Neither exists yet.
+d3d12agx sits outside this diagram for now — it is Linux-side research aimed at
+replacing the `vkd3d → Vulkan` hop later.

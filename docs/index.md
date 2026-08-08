@@ -4,69 +4,79 @@ title: Aurora Silicon
 
 # Aurora Silicon
 
-Bringing **Windows on ARM** and a **native DirectX 12 driver** to Apple Silicon.
+**Windows on ARM for Apple Silicon.**
 
-Two efforts run in parallel, and they meet at the same destination — a Mac that
-boots Windows and draws with its own GPU:
+Apple Silicon Macs do not expose the hardware interfaces Windows expects — no
+GIC, no standard PCIe topology, no conventional storage or display controllers.
+Aurora Silicon builds the missing layer: a boot chain, HAL extensions, and the
+Windows drivers for Apple's own silicon blocks.
 
-- **[Windows on Apple Silicon](projects/windows.md)** — the boot chain, firmware
-  and drivers needed to run Windows on ARM on Apple hardware. A Windows desktop
-  boots from the internal SSD today, software-rendered.
-- **[d3d12agx](projects/d3d12agx/index.md)** — a from-scratch Direct3D 12
-  user-mode driver for the Apple GPU. DXIL and DXBC shader bytecode compile
-  straight to AGX machine code: no Vulkan layer, no SPIR-V, no translation.
+<div class="scoreboard" markdown>
+<div class="cell" markdown><div class="n hero">43</div><div class="l">NT drivers in tree</div></div>
+<div class="cell" markdown><div class="n hero">1.4</div><div class="l">Vulkan on hardware</div></div>
+<div class="cell" markdown><div class="n">11.0</div><div class="l">D3D11 feature level</div></div>
+<div class="cell" markdown><div class="n">M2 Pro</div><div class="l">primary target</div></div>
+</div>
+
+Windows boots to a desktop from internal storage on a MacBook Pro 14-inch
+M2 Pro, with the GPU rendering and presenting frames to the physical console.
 
 ## Where things stand
 
-<div class="scoreboard" markdown>
-<div class="cell" markdown><div class="n hero">523</div><div class="l">D3D12 tests passing</div></div>
-<div class="cell" markdown><div class="n ref">505</div><div class="l">reference score, same GPU</div></div>
-<div class="cell" markdown><div class="n">+18</div><div class="l">ahead of reference</div></div>
-<div class="cell" markdown><div class="n">557</div><div class="l">tests in suite</div></div>
-</div>
-
-The reference is **vkd3d-proton running on Vulkan/Honeykrisp on the same Apple
-M2** — a mature, widely-deployed D3D12 implementation. d3d12agx now passes more
-of the suite than it does on identical hardware.
-
-That is not a claim that the driver is better overall. It is a measurable
-consequence of removing a layer: Direct3D 12 → Vulkan is a lossy mapping, and
-some D3D12 behaviour simply cannot be expressed through it. Full method and
-caveats are in [Conformance](projects/d3d12agx/conformance.md).
-
-!!! warning "Not usable software yet"
-
-    d3d12agx renders correctly on hardware but has **no presentation layer** —
-    no swapchain, nothing displays to a window. Every result is an offscreen
-    render compared against expected pixels. It cannot run an application today.
-
-## What is actually proven
-
-| Claim | Evidence |
+| Capability | State |
 | --- | --- |
-| D3D12 shaders compile and execute on AGX | 523/557 of the vkd3d-proton D3D12 suite, per-test logs retained |
-| Vertex, geometry, tessellation, mesh and amplification stages all run | Dedicated hardware acceptance suites, pixel-exact against CPU reference |
-| No Vulkan or SPIR-V anywhere in the path | DXIL/DXBC → NIR → AGX, in-tree, [architecture](projects/d3d12agx/architecture.md) |
-| Windows desktop boots on Apple hardware | Boots from internal SSD, software-rendered |
+| Windows boots from internal SSD | <span class="status works">Working</span> |
+| Native AIC2 interrupt path (no GIC emulation) | <span class="status works">Working</span> |
+| Vulkan on the Apple GPU | <span class="status works">Working</span> — Honeykrisp advertises 1.4.354 |
+| Direct3D 11 via DXVK | <span class="status works">Working</span> — feature level 11.0 |
+| Presentation to the physical console | <span class="status works">Working</span> — 1,200-frame runs |
+| WDDM miniport | <span class="status wip">In progress</span> — builds and tests clean; hardware start next |
+| Accelerated DWM desktop | <span class="status wip">Not yet</span> — needs the WDDM present path and a native D3D11 UMD DDI |
+| SMP | <span class="status wip">In progress</span> |
 
-## Where to start
+!!! warning "Research software"
 
-- New here? [Projects overview](projects/index.md)
-- Want the numbers and how they were taken? [Conformance](projects/d3d12agx/conformance.md)
-- Want to build it? [Building](developers/building.md)
-- Wondering what your Mac supports? [Hardware support](platform/support.md)
-- Sceptical? Good — [how we measure](project/method.md) explains what counts as
-  proven here and what does not.
+    This is not production-ready and has had no complete security review. It can
+    crash Windows, corrupt data, or leave hardware needing recovery. Use it only
+    on systems and installations you can afford to lose, and keep a verified
+    recovery path.
 
-## Talk to us
+## What is being built
+
+**[Drivers](projects/drivers.md)** — 43 Windows driver projects covering
+interrupts, DART, PCIe, NVMe, USB4 and DWC3, display and DCP, SMC, SPI/I²C HID,
+Wi-Fi and Bluetooth, audio, and more.
+
+**[Graphics](projects/gpu.md)** — a full GPU stack on Windows: a KMDF render
+node for AGX, Mesa's Honeykrisp Vulkan driver ported to Windows, and DXVK and
+vkd3d-proton on top for Direct3D.
+
+**[Boot chain](projects/windows.md)** — m1n1, Project Mu/UEFI and ACPI tables,
+plus `auroradbg` for build, boot, logging and recovery.
+
+**[d3d12agx](projects/d3d12agx/index.md)** — a research effort on Linux: a
+native Direct3D 12 driver for AGX with no Vulkan layer, aimed at eventually
+replacing the translation chain above.
+
+## Hardware
+
+Development targets **M1 Pro and M2 Pro** systems. The M2 Pro MacBook Pro 14-inch
+(`j414s`) is the primary and most validated target. M5 Pro has had preliminary
+testing but is blocked on an unresolved iBoot issue.
+
+See [Hardware support](platform/support.md) for what is tested versus expected.
+
+## Getting involved
 
 Development happens on [GitHub](https://github.com/aurora-silicon) and in
-[Discord](https://discord.gg/DXmsSSc5aY).
+[Discord](https://discord.gg/DXmsSSc5aY) — contact `djdev` or `rttdev`.
 
-!!! note "Relationship to Asahi Linux"
+!!! note "Independent project"
 
-    Aurora Silicon builds on the [Asahi Linux](https://asahilinux.org) kernel,
-    the `drm/asahi` GPU driver and the Mesa AGX compiler infrastructure, all of
-    which made this work possible. We are a **separate, unaffiliated project**.
-    Please direct questions here rather than to Asahi, and do not report our
-    bugs to them.
+    Aurora Silicon is an independent experimental effort. It is **not** an
+    official product of, or supported by, Asahi Linux or the upstream NT-for-ASi
+    project, though it builds on public work from both.
+
+    Please do not report bugs caused by these experimental drivers to either
+    project unless one of their maintainers explicitly asks for that
+    information — report them here.
