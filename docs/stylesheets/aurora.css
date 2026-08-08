@@ -1,0 +1,102 @@
+/*
+ * Aurora Silicon — visual identity.
+ *
+ * The name is the brief: an aurora is cold sky with a band of green-cyan light
+ * across it. Deep indigo ground, a single luminous accent, and nothing else
+ * competing for attention. Status colours are separate from the accent so a
+ * support matrix reads at a glance without borrowing the brand hue.
+ */
+
+:root {
+  --aurora-veil: #3ddc97;   /* the light itself */
+  --aurora-deep: #1f2a5e;   /* night sky */
+  --aurora-dusk: #6f7bbd;   /* horizon */
+
+  /* Support-status semantics, deliberately not the accent. */
+  --st-works:    #2e9e6b;
+  --st-partial:  #b8860b;
+  --st-wip:      #6f7bbd;
+  --st-none:     #8b8b8b;
+  --st-blocked:  #b04a3a;
+}
+
+[data-md-color-scheme="slate"] {
+  --aurora-veil: #4fe3a6;
+  --aurora-deep: #b6c0ee;
+  --aurora-dusk: #98a3d8;
+
+  --st-works:    #4fc48a;
+  --st-partial:  #d9a945;
+  --st-wip:      #98a3d8;
+  --st-none:     #9aa0a6;
+  --st-blocked:  #e08163;
+}
+
+/* The one flourish: a thin aurora band under the page title. */
+.md-typeset h1 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.md-typeset h1::after {
+  content: "";
+  display: block;
+  width: 4.5rem;
+  height: 3px;
+  margin-top: 0.55rem;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--aurora-veil), transparent);
+}
+
+/* Status pills for the support matrices. */
+.status {
+  display: inline-block;
+  padding: 0.1em 0.55em;
+  border-radius: 3px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: #fff;
+}
+.status.works   { background: var(--st-works); }
+.status.partial { background: var(--st-partial); }
+.status.wip     { background: var(--st-wip); }
+.status.none    { background: var(--st-none); }
+.status.blocked { background: var(--st-blocked); }
+
+/* Numbers in tables should line up. */
+.md-typeset table:not([class]) td:has(> code),
+.md-typeset table:not([class]) td.num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* A scoreboard block for the headline conformance figures. */
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 1px;
+  margin: 1.4rem 0;
+  background: var(--md-default-fg-color--lightest);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.scoreboard .cell {
+  background: var(--md-default-bg-color);
+  padding: 0.85rem 1rem;
+}
+.scoreboard .n {
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.scoreboard .n.hero { color: var(--st-works); }
+.scoreboard .n.ref  { color: var(--aurora-dusk); }
+.scoreboard .l {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--md-default-fg-color--light);
+  margin-top: 0.25rem;
+}
