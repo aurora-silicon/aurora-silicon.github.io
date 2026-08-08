@@ -1,81 +1,93 @@
 ---
-title: Windows on Apple Silicon
+title: Boot chain
 ---
 
-# Windows on Apple Silicon
+# Boot chain and platform
 
-Running Windows on ARM on Apple hardware means supplying everything the platform
-normally gets from a vendor: a boot chain, UEFI firmware, ACPI tables describing
-hardware Windows has never seen, and NT-side drivers for Apple's own silicon
-blocks.
+Windows on ARM expects a PC. It expects a GIC for interrupts, a conventional
+PCIe topology, standard storage and display controllers, and firmware that
+describes all of it through ACPI.
 
-<span class="status partial">Desktop boots</span> A Windows desktop boots from
-the internal SSD today. It is software-rendered — there is no GPU driver on the
-Windows side yet.
+Apple Silicon provides none of that. Everything below exists to bridge the gap
+before Windows has even started.
 
-## The boot chain
+## The chain
 
 ```
 Apple iBoot
-    └─ m1n1            bring-up, hypervisor, tracing
-        └─ Project Mu  UEFI firmware + ACPI tables
+    └─ m1n1              bring-up, hypervisor, hardware tracing
+        └─ Project Mu    UEFI firmware + ACPI tables
             └─ winload
-                └─ Windows on ARM
+                └─ Windows on ARM64
 ```
 
 | Component | Repository | Role |
 | --- | --- | --- |
-| **m1n1** | [aurora-silicon/m1n1](https://github.com/aurora-silicon/m1n1) | Bootloader and experimentation playground. Its hypervisor mode is the primary debugging instrument — it traces guest MMIO access against real hardware |
-| **Project Mu** | [aurora-silicon/mu](https://github.com/aurora-silicon/mu) | UEFI implementation for Apple platforms. Produces the firmware environment and ACPI tables Windows requires |
-| **Linux** | [aurora-silicon/linux](https://github.com/aurora-silicon/linux) | Asahi kernel tree, used for hardware reference and as the host side of tethered development |
+| **m1n1** | [aurora-silicon/m1n1](https://github.com/aurora-silicon/m1n1) | Bootloader and experimentation playground. Its hypervisor mode is the primary debugging instrument — it traces guest hardware access against real silicon |
+| **Project Mu** | [aurora-silicon/mu](https://github.com/aurora-silicon/mu) | UEFI implementation producing the firmware environment and ACPI tables Windows requires |
+| **Linux** | [aurora-silicon/linux](https://github.com/aurora-silicon/linux) | Asahi kernel tree — hardware reference, and the host side of tethered development |
+| **auroradbg** | in the main tree | Build, boot, logging, recovery and guest control via the `abg` CLI, including chainload failure recovery and bugcheck detection |
+
+Each machine carries its own launch contract and firmware manifest under
+`targets/` — a target definition names the Mu profile, build script, output
+paths and required features, and pins firmware artifacts by SHA-256.
 
 ## The interrupt problem
 
-The most substantial NT-side work so far is the interrupt controller.
+The most significant platform work is the interrupt controller.
 
-Apple Silicon does not have a GIC — ARM's standard interrupt controller, which
-Windows on ARM assumes. Apple uses **AIC2**, an entirely different design.
+Apple Silicon has no GIC. It uses **AIC2**, an entirely different design, and
+Windows on ARM has no driver for it.
 
-Early approaches emulated a GIC in the hypervisor so Windows could use its stock
-driver. That works but is slow, fragile, and leaves the guest permanently
-mediated. The approach taken here instead is a **native AIC2 HAL extension**: a
-Windows HAL extension driver that speaks AIC2 directly, so Windows drives the
-real interrupt controller with no emulation layer, no vGIC and no GIC carrier.
+One approach is to emulate a GIC in the hypervisor so Windows can use its stock
+driver. That works, but it is slow, fragile, and leaves the guest permanently
+mediated by the hypervisor.
 
-WinPE reaches graphical Setup over that purely native path, with hardware device
-interrupts delivered and xHCI arbitrating and starting.
+The approach taken here is a **native AIC2 HAL extension**: a Windows HAL
+extension that speaks AIC2 directly. Windows drives the real interrupt
+controller with no emulation, no vGIC and no GIC carrier — hardware interrupts
+are delivered natively.
+
+## Booting from internal storage
+
+Windows boots from the internal SSD, which requires Apple's own NVMe/ANS storage
+controller to work under Windows — `AppleNvme` in the [driver
+tree](drivers.md).
 
 ## Current focus
 
-- **Peripheral subsystems** — USB, storage and HID confirmation end to end
-- **SMP** — multi-processor bring-up; the guest currently runs single-core by
-  design while other variables are under test
-- **PCIe and DART** — the IOMMU that sits in front of most Apple peripherals
-- **Graphics** — today software-rendered. See [d3d12agx](d3d12agx/index.md) for
-  the GPU work, though reaching Windows requires a WDDM port that has not been
-  started
+- **SMP** — multi-processor bring-up
+- **WDDM** — getting the Windows desktop itself GPU-accelerated, see
+  [Graphics](gpu.md)
+- **Wireless** — Broadcom Wi-Fi and Bluetooth
+- **USB and peripherals** — DWC3, xHCI, Type-C
 
-## Method
+## Working method
 
-This is undocumented hardware, so the working rules are strict:
+This is undocumented hardware, so the rules are strict and were learned
+expensively:
 
-- **One behavioural variable per boot.** Two changes at once means a result that
-  cannot be attributed
-- **Measure before hypothesising.** The expensive mistakes in this project have
-  all been confident theories acted on without a measurement that could falsify
-  them
-- **Clean inputs only.** Public documentation, the Asahi and Linux trees,
-  Microsoft's public documentation and symbol server, and behaviour observed on
-  our own hardware. Leaked material of any kind is excluded — it would
-  contaminate the project permanently
+- **One behavioural variable per boot.** Two changes at once produce a result
+  attributable to neither
+- **Measure before hypothesising.** Ask what single number would falsify the
+  idea, then go and get it
+- **Logs, not symptoms.** Photos and descriptions help but do not substitute for
+  serial, hypervisor and debugger logs
+- **Clean inputs only.** Public documentation from Asahi and upstream Linux,
+  upstream m1n1 and NT-for-ASi, public Arm/ACPI/UEFI/Microsoft Learn/WDK
+  documentation, Microsoft public symbols, and traces from hardware the project
+  owns. Leaked source, private Apple documentation and material of uncertain
+  provenance are not acceptable inputs
 
 ## Getting involved
 
-Development happens in [Discord](https://discord.gg/DXmsSSc5aY) and on
-[GitHub](https://github.com/aurora-silicon).
+[GitHub](https://github.com/aurora-silicon) and
+[Discord](https://discord.gg/DXmsSSc5aY) — contact `djdev` or `rttdev`.
 
 !!! warning "Not a supported installation"
 
-    This is active development on hardware that Windows does not officially
-    support. Expect it to break, and do not attempt it on a machine whose data
-    you care about.
+    Test signing, modified boot policy, private HAL interfaces, direct MMIO and
+    early-boot instrumentation materially change the security and failure model
+    of the system.
+
+    Do not run this on a machine holding data you cannot lose.
