@@ -36,6 +36,7 @@ nav = [
     "project/faq.md",
     "project/glossary.md",
     "project/method.md",
+    "project/artwork.md",
   ] },
 ]
 
