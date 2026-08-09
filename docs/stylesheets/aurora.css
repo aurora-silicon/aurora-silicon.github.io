@@ -8,7 +8,11 @@
  */
 
 :root {
-  --aurora-veil: #3ddc97;   /* the light itself */
+  /* Taken from the mark: it runs warm orange in the upper-left pane to deep
+   * blue in the lower-right. Those two are the identity; everything else on
+   * the page stays quiet so they read. */
+  --aurora-warm: #E8822A;   /* the orange pane */
+  --aurora-cool: #2E52C4;   /* the blue pane */
   --aurora-deep: #1f2a5e;   /* night sky */
   --aurora-dusk: #6f7bbd;   /* horizon */
 
@@ -21,7 +25,8 @@
 }
 
 [data-md-color-scheme="slate"] {
-  --aurora-veil: #4fe3a6;
+  --aurora-warm: #FFA94D;
+  --aurora-cool: #7BA5D8;
   --aurora-deep: #b6c0ee;
   --aurora-dusk: #98a3d8;
 
@@ -40,11 +45,11 @@
 .md-typeset h1::after {
   content: "";
   display: block;
-  width: 4.5rem;
+  width: 6rem;
   height: 3px;
   margin-top: 0.55rem;
   border-radius: 2px;
-  background: linear-gradient(90deg, var(--aurora-veil), transparent);
+  background: linear-gradient(90deg, var(--aurora-warm), var(--aurora-cool), transparent);
 }
 
 /* Status pills for the support matrices. */
