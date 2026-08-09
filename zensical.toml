@@ -42,6 +42,8 @@ nav = [
 [project.theme]
 variant = "modern"
 language = "en"
+logo = "assets/logo.png"
+favicon = "assets/favicon.png"
 font.text = "Inter"
 font.code = "JetBrains Mono"
 features = [
@@ -70,7 +72,7 @@ toggle.name = "Switch to light mode"
 media = "(prefers-color-scheme: light)"
 scheme = "default"
 primary = "indigo"
-accent = "teal"
+accent = "orange"
 toggle.icon = "lucide/sun"
 toggle.name = "Switch to dark mode"
 
@@ -78,7 +80,7 @@ toggle.name = "Switch to dark mode"
 media = "(prefers-color-scheme: dark)"
 scheme = "slate"
 primary = "indigo"
-accent = "teal"
+accent = "orange"
 toggle.icon = "lucide/moon"
 toggle.name = "Switch to system preference"
 
