@@ -12,7 +12,8 @@ title: d3d12agx
     vkd3d-proton](../gpu.md).
 
     Its purpose is to test whether Direct3D 12 can be implemented directly on
-    Apple's GPU, with no Vulkan layer in between. The answer so far is yes.
+    Apple's GPU, with no Vulkan layer in between. The answer is yes: 553 of 557
+    conformance tests pass, with four classified failures remaining.
 
 d3d12agx is a **Direct3D 12 user-mode driver** for Apple's AGX GPU, written from
 scratch on the Mesa/Asahi substrate.
@@ -22,7 +23,7 @@ Direct3D shader bytecode — both DXIL (Shader Model 6) and DXBC (Shader Model 5
 and no runtime dependency on Microsoft's shader compiler.
 
 <div class="scoreboard" markdown>
-<div class="cell" markdown><div class="n hero">523</div><div class="l">tests passing</div></div>
+<div class="cell" markdown><div class="n hero">553</div><div class="l">tests passing</div></div>
 <div class="cell" markdown><div class="n ref">505</div><div class="l">vkd3d-proton, same GPU</div></div>
 <div class="cell" markdown><div class="n">~39k</div><div class="l">lines of C</div></div>
 <div class="cell" markdown><div class="n">0</div><div class="l">translation layers</div></div>
