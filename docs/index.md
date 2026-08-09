@@ -4,6 +4,11 @@ title: Aurora Silicon
 
 # Aurora Silicon
 
+<p style="text-align:center;margin:0.5rem 0 2rem">
+  <img src="assets/brand/aurora-mark-512.png" alt="Aurora Silicon"
+       width="180" height="180">
+</p>
+
 **Windows on ARM for Apple Silicon.**
 
 Apple Silicon Macs do not expose the hardware interfaces Windows expects — no

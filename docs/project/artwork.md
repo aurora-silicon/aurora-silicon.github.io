@@ -9,7 +9,7 @@ upper-right pane, running warm orange to deep blue — Windows and Apple silicon
 in one shape.
 
 <p style="text-align:center;margin:2rem 0">
-  <img src="../../assets/brand/aurora-mark-512.png" alt="The Aurora Silicon mark"
+  <img src="../assets/brand/aurora-mark-512.png" alt="The Aurora Silicon mark"
        width="220" height="220">
 </p>
 
@@ -20,14 +20,14 @@ predictably.
 
 | File | Size | Use |
 | --- | --- | --- |
-| [aurora-mark-1024.png](../../assets/brand/aurora-mark-1024.png) | 1024×1024 | Print, large display, source for resizing |
-| [aurora-mark-512.png](../../assets/brand/aurora-mark-512.png) | 512×512 | Slides, articles, README headers |
-| [aurora-mark-256.png](../../assets/brand/aurora-mark-256.png) | 256×256 | Avatars, app icons |
-| [aurora-mark-128.png](../../assets/brand/aurora-mark-128.png) | 128×128 | Small avatars |
-| [aurora-mark-64.png](../../assets/brand/aurora-mark-64.png) | 64×64 | Inline, list icons |
-| [aurora-mark-32.png](../../assets/brand/aurora-mark-32.png) | 32×32 | Favicon, toolbar |
-| [aurora-mark-16.png](../../assets/brand/aurora-mark-16.png) | 16×16 | Favicon |
-| [aurora-mark-1024-white.png](../../assets/brand/aurora-mark-1024-white.png) | 1024×1024 | Flattened on white, where transparency is not supported |
+| [aurora-mark-1024.png](../assets/brand/aurora-mark-1024.png) | 1024×1024 | Print, large display, source for resizing |
+| [aurora-mark-512.png](../assets/brand/aurora-mark-512.png) | 512×512 | Slides, articles, README headers |
+| [aurora-mark-256.png](../assets/brand/aurora-mark-256.png) | 256×256 | Avatars, app icons |
+| [aurora-mark-128.png](../assets/brand/aurora-mark-128.png) | 128×128 | Small avatars |
+| [aurora-mark-64.png](../assets/brand/aurora-mark-64.png) | 64×64 | Inline, list icons |
+| [aurora-mark-32.png](../assets/brand/aurora-mark-32.png) | 32×32 | Favicon, toolbar |
+| [aurora-mark-16.png](../assets/brand/aurora-mark-16.png) | 16×16 | Favicon |
+| [aurora-mark-1024-white.png](../assets/brand/aurora-mark-1024-white.png) | 1024×1024 | Flattened on white, where transparency is not supported |
 
 !!! note "No SVG, and an honest reason why"
 
