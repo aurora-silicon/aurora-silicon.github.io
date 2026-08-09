@@ -18,26 +18,34 @@ Worth noting the native build of vkd3d-proton has the same gap — Direct3D
 presentation lives on the Windows/Wine side of the stack, not in the driver.
 
 <span class="status wip">Remaining suite failures</span>
-Roughly 34 tests within the reference's pass set are still outstanding. They are
-no longer clustered: the largest shared cause covers two tests, so what remains
-is a long tail of individually small features plus a set of tests that produce
-wrong results with no explicit refusal to point at.
+Four tests remain, and each has a named cause rather than an assumption — see
+[Conformance](conformance.md).
 
 ## Blocked by hardware
 
-These cannot be fixed by writing more driver code.
+Two entries that used to sit here have been removed, because they turned out
+not to be true.
+
+!!! warning "Walls that were not walls"
+
+    This page previously listed the **2,048-entry sampler heap** and **sparse
+    residency / tile mappings** as hardware limits, on the grounds that AGX
+    provides 1,024 sampler slots and the platform exposed no sparse support.
+
+    Both have since been implemented — sampler-state virtualization for the
+    first, full Tier-1 tiled resources for the second. Both were classified as
+    impossible because the Vulkan-based comparator also failed them, which is
+    not evidence of anything. The comparator failing a test means nobody had
+    done it, not that it could not be done.
+
+What is currently believed unreachable, each with a specific cause rather than
+a comparison:
 
 | Feature | Blocker |
 | --- | --- |
 | 64-bit atomics | AGX has 32-bit atomics and no 64-bit compare-and-swap. The only correct emulation is a per-address spinlock, which serialises access and can deadlock under wave divergence — a robustness trade we have declined to make |
 | `GetAttributeAtVertex` (barycentrics) | AGX has no per-vertex fragment inputs. Emulating it means the vertex shader emitting three flat copies of every attribute — a cross-stage ABI change to serve one feature |
-| Sparse residency / tile mappings | Not provided by the platform |
-| Shared handles | Windows-style cross-process sharing has no equivalent here |
-| Sampler feedback | Not supported by the hardware |
-| 2048-entry sampler heap | AGX provides 1024 fixed hardware sampler slots; dedup of identical state is the mitigation |
-
-The reference implementation fails these too, which is how we know they are
-platform limits rather than our bugs.
+| Importing a heap from a host address | Requires an Asahi **kernel** user-memory import ABI that does not exist yet. Not a driver gap |
 
 ## Deliberately declined
 

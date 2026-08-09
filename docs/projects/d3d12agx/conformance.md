@@ -10,52 +10,98 @@ and rendering results. It is the same suite Mesa drivers such as Turnip and NVK
 have used as a Direct3D conformance gate.
 
 <div class="scoreboard" markdown>
-<div class="cell" markdown><div class="n hero">523</div><div class="l">d3d12agx</div></div>
+<div class="cell" markdown><div class="n hero">553</div><div class="l">d3d12agx</div></div>
 <div class="cell" markdown><div class="n ref">505</div><div class="l">vkd3d-proton, same GPU</div></div>
 <div class="cell" markdown><div class="n">557</div><div class="l">suite total</div></div>
-<div class="cell" markdown><div class="n">≥18</div><div class="l">passing that the reference fails</div></div>
+<div class="cell" markdown><div class="n">+48</div><div class="l">passing that the reference fails</div></div>
 </div>
 
-## Why 557 is the wrong denominator
+## The reference, and why it is not a ceiling
 
-A raw fraction of 557 overstates the work remaining, because some tests cannot
-pass on this hardware at all.
+The identical test binary was built against **vkd3d-proton's own Direct3D 12
+implementation** and run on the same Apple M2, over Vulkan on Honeykrisp. That
+is a mature, widely-deployed implementation — it is what Proton uses to run
+Direct3D 12 games on Linux today.
 
-To find out which, the identical test binary was built against **vkd3d-proton's
-own Direct3D 12 implementation** and run on the same Apple M2, over Vulkan on
-the Honeykrisp driver. That is a mature, widely-deployed implementation — it is
-what Proton uses to run Direct3D 12 games on Linux today.
+It scores **505 of 557**. d3d12agx scores **553**.
 
-It scores **505 of 557**.
+For a long time the 52 tests the reference misses were treated as
+platform-impossible, and the campaign planned around 505 as a ceiling. **That
+was wrong, and the error is worth recording**: an audit showed 25 of those 52
+were already passing here, so the group was never impossible. Everything since
+came from re-testing rows that had been written off because the comparator
+failed them.
 
-The 52 it misses are dominated by things the platform does not provide: sparse
-residency and tile mappings, Windows-style shared handles, sampler feedback,
-raytracing acceleration-structure validation, and a few memory-bound stress
-tests. Those are not d3d12agx bugs and chasing them would be wasted effort.
+Two that were explicitly documented as hardware walls on this site have since
+been implemented:
 
-So the meaningful reference point is 505, not 557.
-
-## Passing tests the reference fails
-
-d3d12agx currently scores **523**, which is 18 above the reference. Since the
-reference's pass set contains only 505 tests, **at least 18 of our passes must
-lie outside it** — that follows from the arithmetic alone.
-
-When this was last measured exactly, at a score of 471, the figure was **25
-tests** passing here that vkd3d-proton fails on identical hardware.
-
-This is not a claim that d3d12agx is a better driver. It is a consequence of
-removing a layer. Direct3D 12 → Vulkan is a lossy mapping, and several D3D12
-behaviours have no faithful Vulkan expression:
-
-| Area | Why the translation loses it |
+| Was called a wall | What it actually needed |
 | --- | --- |
-| Texture array view reinterpretation | D3D12 permits casts that Vulkan's image-view rules forbid |
-| Structured / raw / typed view aliasing | D3D12 allows aliasing at one heap offset; SPIR-V descriptor types do not |
-| Null descriptor behaviour | D3D12 defines reads through a null descriptor; Vulkan's equivalent is narrower |
-| Typed buffer object counts | Vulkan descriptor-count limits |
+| 2,048-entry sampler heap vs AGX's 1,024 slots | Sampler-state virtualization |
+| Sparse residency and tile mappings | Full Tier-1 tiled resources |
 
-Compiling DXIL straight to NIR skips that bottleneck entirely.
+The lesson generalises: **a comparator failing a test means nobody had done it,
+not that it could not be done.**
+
+## What actually remains
+
+Four tests, each with a named cause rather than an assumption:
+
+| Test | Cause |
+| --- | --- |
+| `test_open_heap_from_address` | Requires an Asahi **kernel** user-memory import ABI that does not exist. Not a driver gap |
+| Two structured/raw typed-read probes | Vendor-**undefined** behaviour. Excluded rather than fabricated — passing them would mean inventing semantics |
+| `test_stress_fallback_render_target_allocation_device` | Requests roughly 16 GiB on a 7.3 GiB machine. Truthful support needs a residency/eviction architecture |
+
+Two of those four are arguably not scoreable at all, and one is a property of
+the machine rather than the driver.
+
+## Head-to-head on the same GPU
+
+Conformance says both implementations are correct. The obvious next question is
+what each costs.
+
+`d3d12agx/bench/duel.sh` runs the identical workload against both libraries —
+one binary, `dlopen`-ing either — and byte-compares the resulting images before
+reporting any timing, because a speed comparison between two stacks that drew
+different things is meaningless.
+
+1,000 frames, 256×256, clear + draw + fence wait:
+
+| | d3d12agx | vkd3d-proton |
+| --- | --- | --- |
+| mean | 0.181 ms | **0.171 ms** |
+| median | 0.160 ms | **0.146 ms** |
+| p99 | 0.841 ms | **0.769 ms** |
+| images | \multicolumn | **byte-identical** |
+
+**vkd3d-proton is ~1.06x faster on this workload.** Removing a translation
+layer has not yet produced a speed win — and it is worth saying so plainly
+rather than quietly not measuring it.
+
+!!! warning "This is not a graphics benchmark"
+
+    A 3-vertex triangle at 256×256 is nothing for this GPU, so what is being
+    measured is the CPU cost of recording and submitting a frame plus the round
+    trip to completion — not shader throughput, not fill rate, not anything an
+    application would notice. Do not quote it as a general performance figure.
+
+    It is useful for exactly one thing: showing that the submission path is in
+    the same order of magnitude as a mature implementation, and where the tail
+    latency sits.
+
+### An interop hazard found while building it
+
+`GetCPUDescriptorHandleForHeapStart` returns a struct by value, and the two
+implementations disagree on how. d3d12agx returns it plainly; vkd3d-proton uses
+widl's `WIDL_EXPLICIT_AGGREGATE_RETURNS` convention, where the caller passes a
+hidden result pointer.
+
+Each is self-consistent with the headers it was built against. But **a single
+process calling both through one set of header macros will corrupt memory** —
+it passes nothing in the hidden-pointer register for one of them. The benchmark
+selects the convention at runtime. Anyone binding these two implementations
+into one binary needs to know this.
 
 ## How a pass is counted
 

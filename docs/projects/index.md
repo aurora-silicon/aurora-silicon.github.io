@@ -43,10 +43,10 @@ A separate experiment, on Linux: a native Direct3D 12 driver for the Apple GPU
 with no Vulkan layer at all. Shader bytecode compiles straight to AGX machine
 code.
 
-<span class="status partial">Research</span> It passes more of the Direct3D 12
-conformance suite than the Vulkan-based route does on the same GPU, which is
-evidence the approach is sound. It has no presentation layer and is not part of
-the Windows stack today.
+<span class="status partial">Research</span> **553 of 557** on the Direct3D 12
+conformance suite, against 505 for the Vulkan-based route on the same GPU. Only
+four tests remain, each with a named cause. It has no presentation layer and is
+not part of the Windows stack today.
 
 If it matures and is ported to a Windows UMD, it would collapse
 `D3D12 → vkd3d → Vulkan → AGX` into `D3D12 → AGX`.
