@@ -19,17 +19,9 @@ nav = [
     { "Boot chain and platform" = "projects/windows.md" },
     { "Drivers" = "projects/drivers.md" },
     { "Graphics" = "projects/gpu.md" },
-    { "d3d12agx (research)" = [
-      "projects/d3d12agx/index.md",
-      "projects/d3d12agx/conformance.md",
-      "projects/d3d12agx/architecture.md",
-      "projects/d3d12agx/limits.md",
-    ] },
   ] },
   { "Hardware Support" = "platform/support.md" },
   { "For Developers" = [
-    "developers/building.md",
-    "developers/testing.md",
     "developers/contributing.md",
   ] },
   { "Project" = [
@@ -37,6 +29,16 @@ nav = [
     "project/glossary.md",
     "project/method.md",
     "project/artwork.md",
+  ] },
+  { "Research" = [
+    { "d3d12agx (research)" = [
+      "projects/d3d12agx/index.md",
+      "projects/d3d12agx/conformance.md",
+      "projects/d3d12agx/architecture.md",
+      "projects/d3d12agx/limits.md",
+      "developers/building.md",
+      "developers/testing.md",
+    ] },
   ] },
 ]
 
