@@ -3,7 +3,7 @@
 
 [project]
 site_name = "Aurora Silicon"
-site_url = "https://aurora-silicon.github.io/"
+site_url = "https://aurorasilicon.org/"
 site_description = "Windows and DirectX 12 on Apple Silicon"
 repo_url = "https://github.com/aurora-silicon"
 repo_name = "aurora-silicon"

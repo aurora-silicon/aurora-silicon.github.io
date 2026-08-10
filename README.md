@@ -1,6 +1,6 @@
 # Aurora Silicon documentation
 
-Source for <https://aurora-silicon.github.io/>.
+Source for <https://aurorasilicon.org/>.
 
 Windows on ARM and a native Direct3D 12 driver for Apple Silicon.
 
