@@ -25,12 +25,14 @@ path), SMP is in progress, and wireless is still being brought up. See
 ## Which Macs work?
 
 M2 Pro is the primary and most validated target — specifically the MacBook Pro
-14-inch (`j414s`). M1 Pro was the earlier bring-up machine and is behind. M5 Pro
-has had preliminary testing but is blocked on an iBoot issue.
+14-inch (`j414s`). M1 Pro was the earlier bring-up machine and is behind. The M5
+MacBook Air (`j813`) is in active preliminary bring-up: m1n1 and UEFI boot,
+read-only internal-storage discovery works, and Windows Setup has launched, but
+there is no complete installation or general hardware support yet.
 
-Everything else is unsupported. Unlike GPU work, Windows bring-up does not
-generalise between machines: ACPI tables, device trees and firmware profiles are
-per-model.
+MacBook Neo (8 GB / 256 GB) and M3 Max MacBook Pro have not been tested and are
+unsupported. Unlike GPU work, Windows bring-up does not generalise between
+machines: ACPI tables, device trees and firmware profiles are per-model.
 
 ## Is the GPU actually working, or is it software rendering?
 

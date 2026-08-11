@@ -65,11 +65,16 @@ replacing the translation chain above.
 
 ## Hardware
 
-Development targets **M1 Pro and M2 Pro** systems. The M2 Pro MacBook Pro 14-inch
-(`j414s`) is the primary and most validated target. M5 Pro has had preliminary
-testing but is blocked on an unresolved iBoot issue.
+Development targets **M1 Pro, M2 Pro and M5** systems. The M2 Pro MacBook Pro
+14-inch (`j414s`) remains the primary and most validated target. The M5 MacBook
+Air (`j813`) is an active preliminary target: m1n1 and UEFI boot, internal
+storage is exposed read-only, its GPT is verified, and Windows Setup has
+launched. MacBook Neo (8 GB / 256 GB) and M3 Max MacBook Pro are listed for
+tracking but have not been tested.
 
-See [Hardware support](platform/support.md) for what is tested versus expected.
+The project hardware pool spans A18 and M1 through M5 systems. See the
+[feature-support catalog](platform/support.md) for every Apple Silicon model
+family, the machines available in the lab, and the separate validation matrix.
 
 ## Getting involved
 

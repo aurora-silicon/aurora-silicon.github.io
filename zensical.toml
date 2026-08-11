@@ -20,7 +20,15 @@ nav = [
     { "Drivers" = "projects/drivers.md" },
     { "Graphics" = "projects/gpu.md" },
   ] },
-  { "Hardware Support" = "platform/support.md" },
+  { "Feature Support" = [
+    "platform/support.md",
+    { "M1 series" = "platform/support/m1.md" },
+    { "M2 series" = "platform/support/m2.md" },
+    { "M3 series" = "platform/support/m3.md" },
+    { "M4 series" = "platform/support/m4.md" },
+    { "M5 series" = "platform/support/m5.md" },
+    { "A18 series" = "platform/support/a18.md" },
+  ] },
   { "For Developers" = [
     "developers/contributing.md",
   ] },
