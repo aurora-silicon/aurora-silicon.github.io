@@ -1,3 +1,7 @@
 # Zensical build output
 site/
 .cache/
+
+# macOS metadata
+.DS_Store
+**/.DS_Store

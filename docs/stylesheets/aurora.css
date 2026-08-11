@@ -105,3 +105,184 @@
   color: var(--md-default-fg-color--light);
   margin-top: 0.25rem;
 }
+
+/* Feature-support catalog: ownership and support remain separate signals. */
+.support-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1.15rem;
+  margin: 1.2rem 0 1.5rem;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.72rem;
+}
+
+.support-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.family-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+  gap: 0.65rem;
+  margin: 1.2rem 0 1.6rem;
+}
+
+.md-typeset .family-card {
+  display: flex;
+  min-height: 6.2rem;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 5px;
+  color: var(--md-default-fg-color);
+  background: color-mix(in srgb, var(--md-default-bg-color) 96%, var(--aurora-cool));
+  text-decoration: none !important;
+  transition: border-color 120ms ease, transform 120ms ease, background 120ms ease;
+}
+
+.md-typeset .family-card * { text-decoration: none !important; }
+
+.md-typeset .family-card:hover {
+  border-color: var(--aurora-warm);
+  color: var(--md-default-fg-color);
+  background: color-mix(in srgb, var(--md-default-bg-color) 91%, var(--aurora-warm));
+  transform: translateY(-1px);
+}
+
+.family-card strong {
+  color: var(--aurora-warm);
+  font-size: 0.88rem;
+}
+
+.family-card span {
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.family-card small {
+  font-size: 0.6rem;
+  color: var(--md-default-fg-color--lighter);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.family-card--active {
+  border-left: 3px solid var(--st-wip) !important;
+}
+
+.generation-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1rem;
+  margin: 1rem 0 1.4rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--md-default-bg-color) 96%, var(--aurora-cool));
+  font-size: 0.7rem;
+}
+
+.generation-summary strong { color: var(--aurora-warm); }
+
+.support-page-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.7rem;
+}
+
+.device-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr));
+  gap: 0.7rem;
+  margin: 0.8rem 0 1.8rem;
+}
+
+.device-card {
+  min-width: 0;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-left: 3px solid var(--st-none);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--md-default-bg-color) 95%, var(--aurora-cool));
+}
+
+.device-card.is-tested { border-left-color: var(--st-works); }
+.device-card.is-partial { border-left-color: var(--st-partial); }
+.device-card.is-preliminary { border-left-color: var(--st-wip); }
+
+.device-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.65rem;
+}
+
+.md-typeset .device-card h3 {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.25;
+}
+
+.md-typeset .device-card p {
+  margin: 0.42rem 0 0;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
+.device-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.65rem;
+}
+
+.owner-badge {
+  display: inline-block;
+  padding: 0.08rem 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--aurora-warm) 55%, transparent);
+  border-radius: 999px;
+  color: var(--aurora-warm);
+  background: color-mix(in srgb, var(--aurora-warm) 9%, transparent);
+  font-size: 0.62rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.feature-matrix-wrap {
+  max-width: 100%;
+  margin: 1rem 0 1.5rem;
+  overflow-x: auto;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 5px;
+}
+
+.md-typeset .feature-matrix-wrap table:not([class]) {
+  display: table;
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+  border: 0;
+}
+
+.feature-matrix-wrap th:first-child,
+.feature-matrix-wrap td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 10rem;
+  background: var(--md-default-bg-color);
+  box-shadow: 1px 0 var(--md-default-fg-color--lightest);
+}
+
+@media (max-width: 640px) {
+  .device-grid { grid-template-columns: 1fr; }
+  .device-card__top { align-items: center; }
+}
