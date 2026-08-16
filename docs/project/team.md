@@ -50,7 +50,7 @@ under [feature support](../feature-support/overview.md).
 <span class="team-role">Developer</span>
 <span class="owner-handle">liamray10</span>
 
-<p class="team-location team-location--tbc">Location to be confirmed</p>
+<p class="team-location">California, United States</p>
 
 </article>
 
