@@ -1,0 +1,15 @@
+{% extends "main.html" %}
+{% block htmltitle %}
+  <title>Page not found - {{ config.site_name }}</title>
+{% endblock %}
+{% block content %}
+  <h1>Page not found</h1>
+  <p>That page doesn't exist, or it moved while the site was being rebuilt.</p>
+  <ul>
+    <li><a href="/">Back to the home page</a></li>
+    <li><a href="/users/getting-started/">Getting started as a user</a></li>
+    <li><a href="/developers/getting-started/">Getting started as a developer</a></li>
+  </ul>
+  <p>You can also use the search box at the top of the page to look for what you
+  wanted.</p>
+{% endblock %}
