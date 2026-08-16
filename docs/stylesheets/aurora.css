@@ -1,47 +1,20 @@
-/*
- * Aurora Silicon — visual identity.
- *
- * The name is the brief: an aurora is cold sky with a band of green-cyan light
- * across it. Deep indigo ground, a single luminous accent, and nothing else
- * competing for attention. Status colours are separate from the accent so a
- * support matrix reads at a glance without borrowing the brand hue.
- */
+/* Aurora Silicon visual identity. Page-specific styles belong with the new design. */
 
 :root {
-  /* Taken from the mark: it runs warm orange in the upper-left pane to deep
-   * blue in the lower-right. Those two are the identity; everything else on
-   * the page stays quiet so they read. */
-  --aurora-warm: #E8822A;   /* the orange pane */
-  --aurora-cool: #2E52C4;   /* the blue pane */
-  --aurora-deep: #1f2a5e;   /* night sky */
-  --aurora-dusk: #6f7bbd;   /* horizon */
-
-  /* Support-status semantics, deliberately not the accent. */
-  --st-works:    #2e9e6b;
-  --st-partial:  #b8860b;
-  --st-wip:      #6f7bbd;
-  --st-none:     #8b8b8b;
-  --st-blocked:  #b04a3a;
+  --aurora-warm: #e8822a;
+  --aurora-cool: #2e52c4;
 }
 
 [data-md-color-scheme="slate"] {
-  --aurora-warm: #FFA94D;
-  --aurora-cool: #7BA5D8;
-  --aurora-deep: #b6c0ee;
-  --aurora-dusk: #98a3d8;
-
-  --st-works:    #4fc48a;
-  --st-partial:  #d9a945;
-  --st-wip:      #98a3d8;
-  --st-none:     #9aa0a6;
-  --st-blocked:  #e08163;
+  --aurora-warm: #ffa94d;
+  --aurora-cool: #7ba5d8;
 }
 
-/* The one flourish: a thin aurora band under the page title. */
 .md-typeset h1 {
   font-weight: 700;
   letter-spacing: -0.02em;
 }
+
 .md-typeset h1::after {
   content: "";
   display: block;
@@ -49,240 +22,482 @@
   height: 3px;
   margin-top: 0.55rem;
   border-radius: 2px;
-  background: linear-gradient(90deg, var(--aurora-warm), var(--aurora-cool), transparent);
+  background: linear-gradient(
+    90deg,
+    var(--aurora-warm),
+    var(--aurora-cool),
+    transparent
+  );
 }
 
-/* Status pills for the support matrices. */
-.status {
-  display: inline-block;
-  padding: 0.1em 0.55em;
-  border-radius: 3px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  color: #fff;
-}
-.status.works   { background: var(--st-works); }
-.status.partial { background: var(--st-partial); }
-.status.wip     { background: var(--st-wip); }
-.status.none    { background: var(--st-none); }
-.status.blocked { background: var(--st-blocked); }
-
-/* Numbers in tables should line up. */
-.md-typeset table:not([class]) td:has(> code),
-.md-typeset table:not([class]) td.num {
-  font-variant-numeric: tabular-nums;
+/* Keep long-form pages calm and readable without wasting the available space.
+   The gutter matches Home. max-width carries the padding so the text measure
+   stays 46rem — centring alone would collapse the gutter to nothing on narrow
+   viewports, leaving text against the edge. */
+.md-content__inner {
+  box-sizing: border-box;
+  max-width: 49.2rem;
+  margin-inline: auto;
+  padding-inline: 1.6rem;
 }
 
-/* A scoreboard block for the headline conformance figures. */
-.scoreboard {
+.md-content__inner:has(.home-page-title) {
+  max-width: none;
+}
+
+@media screen and (max-width: 44.984375em) {
+  .md-content__inner {
+    padding-inline: 0.8rem;
+  }
+}
+
+.home-hero {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-  gap: 1px;
-  margin: 1.4rem 0;
-  background: var(--md-default-fg-color--lightest);
+  justify-items: center;
+  gap: 0.8rem;
+  margin: 2rem 0 2.4rem;
+  text-align: center;
+}
+
+.home-mark {
+  width: 8.8rem;
+  height: 8.8rem;
+  object-fit: contain;
+  filter: drop-shadow(0 0.7rem 1.6rem color-mix(in srgb, var(--aurora-cool) 18%, transparent));
+}
+
+.home-tagline {
+  margin: 0 !important;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.95rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+}
+
+.home-paths {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1rem 0 1.8rem;
+}
+
+.home-path {
+  margin: 0;
+  padding: 1rem 1.1rem;
   border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: 4px;
-  overflow: hidden;
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--md-default-bg-color) 96%, var(--aurora-cool));
 }
-.scoreboard .cell {
-  background: var(--md-default-bg-color);
-  padding: 0.85rem 1rem;
+
+.md-typeset .home-path h3 {
+  margin: 0;
+  font-size: 0.85rem;
 }
-.scoreboard .n {
-  font-size: 1.7rem;
-  font-weight: 700;
-  line-height: 1.1;
-  font-variant-numeric: tabular-nums;
-}
-.scoreboard .n.hero { color: var(--st-works); }
-.scoreboard .n.ref  { color: var(--aurora-dusk); }
-.scoreboard .l {
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
+
+.md-typeset .home-path p {
+  margin: 0.4rem 0 0;
   color: var(--md-default-fg-color--light);
-  margin-top: 0.25rem;
+  font-size: 0.76rem;
 }
 
-/* Feature-support catalog: ownership and support remain separate signals. */
-.support-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem 1.15rem;
-  margin: 1.2rem 0 1.5rem;
-  color: var(--md-default-fg-color--light);
-  font-size: 0.72rem;
+@media screen and (max-width: 44.984375em) {
+  .home-hero {
+    margin-block: 1.4rem 1.8rem;
+  }
+
+  .home-mark {
+    width: 7rem;
+    height: 7rem;
+  }
+
+  .home-paths {
+    grid-template-columns: 1fr;
+  }
 }
 
-.support-legend > span {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-}
+/* Feature support: generation index and hardware catalog tables. */
 
-.family-grid {
+.gen-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
-  gap: 0.65rem;
+  gap: 0.7rem;
   margin: 1.2rem 0 1.6rem;
 }
 
-.md-typeset .family-card {
+.md-typeset .gen-card {
   display: flex;
-  min-height: 6.2rem;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 0.85rem 0.9rem;
+  gap: 0.45rem;
+  padding: 0.85rem 0.95rem;
   border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: 5px;
-  color: var(--md-default-fg-color);
+  border-radius: 0.5rem;
   background: color-mix(in srgb, var(--md-default-bg-color) 96%, var(--aurora-cool));
-  text-decoration: none !important;
-  transition: border-color 120ms ease, transform 120ms ease, background 120ms ease;
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  transition: border-color 120ms ease, transform 120ms ease;
 }
 
-.md-typeset .family-card * { text-decoration: none !important; }
-
-.md-typeset .family-card:hover {
+.md-typeset .gen-card:hover {
   border-color: var(--aurora-warm);
-  color: var(--md-default-fg-color);
-  background: color-mix(in srgb, var(--md-default-bg-color) 91%, var(--aurora-warm));
   transform: translateY(-1px);
 }
 
-.family-card strong {
-  color: var(--aurora-warm);
-  font-size: 0.88rem;
+.gen-card__name {
+  font-size: 0.82rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
 }
 
-.family-card span {
-  font-size: 0.7rem;
+.gen-card__socs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.gen-card__count {
+  margin-top: auto;
   color: var(--md-default-fg-color--light);
+  font-size: 0.66rem;
 }
 
-.family-card small {
+.soc-id {
+  padding: 0.08rem 0.32rem;
+  border-radius: 0.25rem;
+  background: color-mix(in srgb, var(--aurora-cool) 14%, transparent);
+  color: var(--md-default-fg-color--light);
+  font-family: var(--md-code-font-family);
   font-size: 0.6rem;
-  color: var(--md-default-fg-color--lighter);
-  letter-spacing: 0.04em;
+}
+
+/* Catalog tables stay readable on narrow screens instead of squashing. */
+.id-table {
+  overflow-x: auto;
+}
+
+/* Full width so the catalog's right edge lines up with the split above it. */
+.md-typeset .id-table table {
+  width: 100%;
+  min-width: 26rem;
+}
+
+.md-typeset .id-table th,
+.md-typeset .split-table th {
+  font-size: 0.66rem;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 
-.family-card--active {
-  border-left: 3px solid var(--st-wip) !important;
+.md-typeset .id-table td code,
+.md-typeset .split-table td code {
+  padding: 0.08rem 0.34rem;
+  border-radius: 0.25rem;
+  background: color-mix(in srgb, var(--aurora-warm) 13%, transparent);
+  color: var(--md-default-fg-color);
+  font-size: 0.68rem;
 }
 
-.generation-summary {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem 1rem;
-  margin: 1rem 0 1.4rem;
-  padding: 0.75rem 0.9rem;
-  border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: 5px;
-  background: color-mix(in srgb, var(--md-default-bg-color) 96%, var(--aurora-cool));
-  font-size: 0.7rem;
-}
-
-.generation-summary strong { color: var(--aurora-warm); }
-
-.support-page-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  font-size: 0.7rem;
-}
-
-.device-grid {
+/* Silicon and primary targets sit side by side; the silicon table is narrow
+   enough on its own that the space to its right would otherwise be dead. */
+.series-split {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr));
-  gap: 0.7rem;
-  margin: 0.8rem 0 1.8rem;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 1.6rem;
+  align-items: start;
+  margin-top: 1.2rem;
 }
 
-.device-card {
-  min-width: 0;
-  padding: 0.85rem 0.9rem;
-  border: 1px solid var(--md-default-fg-color--lightest);
-  border-left: 3px solid var(--st-none);
-  border-radius: 5px;
-  background: color-mix(in srgb, var(--md-default-bg-color) 95%, var(--aurora-cool));
+.md-typeset .series-split h2 {
+  margin-top: 0;
 }
 
-.device-card.is-tested { border-left-color: var(--st-works); }
-.device-card.is-partial { border-left-color: var(--st-partial); }
-.device-card.is-preliminary { border-left-color: var(--st-wip); }
-
-.device-card__top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.65rem;
-}
-
-.md-typeset .device-card h3 {
-  margin: 0;
-  font-size: 0.82rem;
-  line-height: 1.25;
-}
-
-.md-typeset .device-card p {
-  margin: 0.42rem 0 0;
+/* Both columns lead with their table so the two line up. Commentary goes
+   underneath, where it cannot push one side out of alignment. */
+.md-typeset .series-split .targets-note {
+  margin: 0.5rem 0 0;
   color: var(--md-default-fg-color--light);
-  font-size: 0.7rem;
-  line-height: 1.45;
+  font-size: 0.64rem;
 }
 
-.device-card__chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  margin-top: 0.65rem;
+/* Both columns wrap their table in identical markup, so the two tables start on
+   the same line. These fill their column rather than scrolling — a scrollbar
+   inside a two-column split is never what is wanted. */
+.md-typeset .split-table table {
+  width: 100%;
+  min-width: 0;
 }
 
-.owner-badge {
-  display: inline-block;
-  padding: 0.08rem 0.45rem;
-  border: 1px solid color-mix(in srgb, var(--aurora-warm) 55%, transparent);
-  border-radius: 999px;
-  color: var(--aurora-warm);
-  background: color-mix(in srgb, var(--aurora-warm) 9%, transparent);
-  font-size: 0.62rem;
-  font-weight: 650;
-  letter-spacing: 0.02em;
+.md-typeset .split-table th:last-child,
+.md-typeset .split-table td:last-child {
   white-space: nowrap;
 }
 
-.feature-matrix-wrap {
-  max-width: 100%;
-  margin: 1rem 0 1.5rem;
-  overflow-x: auto;
+.owner-handle {
+  display: block;
+  color: var(--md-default-fg-color--light);
+  font-family: var(--md-code-font-family);
+  font-size: 0.6rem;
+}
+
+@media screen and (max-width: 59.984375em) {
+  .series-split {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+
+  .md-typeset .series-split h2:not(:first-of-type) {
+    margin-top: 1.2rem;
+  }
+}
+
+/* Device IDs in catalog tables open a support detail modal. */
+.md-typeset .device-link {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.md-typeset .device-link code {
+  border-bottom: 1px dotted color-mix(in srgb, var(--aurora-warm) 60%, transparent);
+  transition: background-color 120ms ease;
+}
+
+.md-typeset .device-link:hover code,
+.md-typeset .device-link:focus-visible code {
+  background: color-mix(in srgb, var(--aurora-warm) 28%, transparent);
+}
+
+.device-modal {
+  width: min(34rem, calc(100vw - 1.6rem));
+  padding: 0;
   border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: 5px;
-}
-
-.md-typeset .feature-matrix-wrap table:not([class]) {
-  display: table;
-  width: max-content;
-  min-width: 100%;
-  margin: 0;
-  border: 0;
-}
-
-.feature-matrix-wrap th:first-child,
-.feature-matrix-wrap td:first-child {
-  position: sticky;
-  left: 0;
-  z-index: 1;
-  min-width: 10rem;
+  border-radius: 0.6rem;
   background: var(--md-default-bg-color);
-  box-shadow: 1px 0 var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color);
 }
 
-@media (max-width: 640px) {
-  .device-grid { grid-template-columns: 1fr; }
-  .device-card__top { align-items: center; }
+.device-modal::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.device-modal__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 0.9rem 1rem 0.7rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.device-modal__title {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.device-modal__meta {
+  margin: 0.15rem 0 0;
+  color: var(--md-default-fg-color--light);
+  font-family: var(--md-code-font-family);
+  font-size: 0.66rem;
+}
+
+.device-modal__close {
+  padding: 0.1rem 0.3rem;
+  border: none;
+  border-radius: 0.25rem;
+  background: none;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.device-modal__close:hover {
+  background: var(--md-default-fg-color--lightest);
+}
+
+.device-modal__body {
+  max-height: min(60vh, 22rem);
+  overflow-y: auto;
+  padding: 0.8rem 1rem 0.2rem;
+}
+
+.device-modal__group {
+  margin: 0 0 0.35rem;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.6rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.device-modal__feats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.9rem;
+}
+
+.feat {
+  padding: 0.16rem 0.42rem;
+  border: 1px solid transparent;
+  border-radius: 0.3rem;
+  font-size: 0.66rem;
+  line-height: 1.35;
+}
+
+.feat--unknown {
+  border-color: var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color--light);
+}
+
+/* Qualifies a state where the bare word would overstate it. */
+.feat__note {
+  opacity: 0.8;
+  font-size: 0.6rem;
+}
+
+.feat__note::before {
+  content: " · ";
+}
+
+.feat--works {
+  background: color-mix(in srgb, #2e9e5b 22%, transparent);
+  color: var(--md-default-fg-color);
+}
+
+.feat--partial {
+  background: color-mix(in srgb, var(--aurora-warm) 26%, transparent);
+  color: var(--md-default-fg-color);
+}
+
+.feat--none {
+  background: color-mix(in srgb, #d4453d 22%, transparent);
+  color: var(--md-default-fg-color);
+}
+
+.device-modal__note {
+  margin: 0;
+  padding: 0.7rem 1rem 0.9rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color--light);
+  font-size: 0.64rem;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* Attribution: upstream projects and the people behind them. */
+.attrib-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.8rem;
+  margin: 1.2rem 0 1.6rem;
+}
+
+.attrib-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--md-default-bg-color) 96%, var(--aurora-cool));
+}
+
+.md-typeset .attrib-card h3 {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.md-typeset .attrib-card p {
+  margin: 0;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.72rem;
+}
+
+.md-typeset .attrib-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: auto;
+  padding-top: 0.3rem;
+  font-size: 0.68rem;
+}
+
+.md-typeset .attrib-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.md-typeset .attrib-links svg {
+  width: 0.8rem;
+  height: 0.8rem;
+  fill: currentcolor;
+}
+
+/* Topic chips inside a card, mirroring the SoC chips on the generation index. */
+.md-typeset .topic-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0;
+}
+
+.md-typeset .topic-links a {
+  padding: 0.14rem 0.42rem;
+  border-radius: 0.25rem;
+  background: color-mix(in srgb, var(--aurora-cool) 14%, transparent);
+  color: var(--md-default-fg-color);
+  font-size: 0.66rem;
+  transition: background-color 120ms ease;
+}
+
+.md-typeset .topic-links a:hover {
+  background: color-mix(in srgb, var(--aurora-warm) 26%, transparent);
+}
+
+/* Team cards reuse the attribution card, with a role badge and location. */
+.team-role {
+  align-self: flex-start;
+  padding: 0.1rem 0.42rem;
+  border-radius: 0.3rem;
+  background: color-mix(in srgb, var(--aurora-warm) 18%, transparent);
+  color: var(--md-default-fg-color);
+  font-size: 0.62rem;
+  font-weight: 650;
+}
+
+.md-typeset .team-location {
+  margin: 0;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.72rem;
+}
+
+.md-typeset .team-location--tbc {
+  font-style: italic;
+  opacity: 0.75;
+}
+
+.aurora-header-links {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.aurora-header-links .md-header__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 44.984375em) {
+  .aurora-header-links {
+    display: none;
+  }
 }
