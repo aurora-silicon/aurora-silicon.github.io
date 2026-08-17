@@ -70,9 +70,61 @@ machine — a point that constrains everything downstream.
 | Kernel | — | SCIP applied to lock memory regions |
 
 LocalPolicy is read from the iSCPreboot partition at
-`/<volume-group-uuid>/LocalPolicy/<policy-hash>.img4`. LLB consults the
-SEP-attached Secure Storage Component for anti-replay values, which is what
-blocks both OS version rollback and security policy downgrade.
+`/<volume-group-uuid>/LocalPolicy/<policy-hash>.img4`, mounted at
+`/System/Volumes/iSCPreboot`. LLB consults the SEP-attached Secure Storage
+Component for anti-replay values, which is what blocks both OS version rollback
+and security policy downgrade.
+
+Community reports note the policy is two files, not one: the `.img4` is the base
+boot policy and a companion `.fuos.im4m` is the fuOS extension. They also warn
+that `bputil -d` elides fields, so dumping the ASN.1 directly is the reliable
+way to read what a policy actually contains.
+
+## Runtime monitors — SPTM and TXM
+
+A layer our earlier reading of the boot chain missed entirely, and the one that
+most affects newer silicon.
+
+iBoot locates two Image4 payloads co-packaged with the kernelcache —
+`Ap,SecurePageTableMonitor` and `Ap,TrustedExecutionMonitor` — and carves out
+the physical regions reserved for them from the device tree. The **Secure Page
+Table Monitor** runs at a guarded level above the kernel with exclusive control
+of frame management and page-table updates; the lower-privileged **Trusted
+Execution Monitor** enforces the code-execution policy. XNU becomes a client of
+SPTM rather than an owner of its own page tables, and a TXM compromise does not
+imply an SPTM bypass.
+
+Apple documents SPTM and TXM as replacing the Page Protection Layer on **A15 and
+M2 or later**, built on an evolution of the Fast Permission Restrictions
+primitive. Community reports from mid-2026 state that under macOS 27 the monitors
+extend to everything, A13 included — newer than Apple's published wording, which
+may simply lag.
+
+Two consequences matter for booting anything else:
+
+| Boot object | SPTM |
+| --- | --- |
+| Raw binary | Not loaded — reported plainly as "there is no sptm in raw boot mode" |
+| Mach-O | Loaded; the object runs under SPTM |
+
+Kernels built with SPTM enabled carry a distinct `__TEXT_BOOT_EXEC` entry point,
+observed present for T6020 and T6041 and absent for T6000. SPTM is also why m1n1
+lacks M4-and-later support: hypervising macOS requires putting SPTM in the
+hypervisor too, which is active work rather than a solved problem.
+
+### Exclaves
+
+Newer still, and specific to our targets. Exclavecore is described as a separate
+RTOS running in the guarded execution environment under SPTM acting as its
+hypervisor, hosting applets that hold resources the kernel cannot reclaim —
+the mechanism behind indicator-light guarantees for camera and microphone.
+
+Community reporting from July 2026 puts exclaves on **A18 Pro and M5 only** under
+macOS 27, with SPTM everywhere. The open question raised in the same discussion,
+and not answered there, is whether a kernel on such a machine can boot at all
+without an exclavecore image loaded, since the kernel may expect exclaves to be
+running. That is unresolved and directly relevant to
+[A18 Pro](../../feature-support/a18-pro.md) and [M5](../../feature-support/m5.md).
 
 ## LocalPolicy
 
@@ -154,16 +206,23 @@ preserves the chain rather than breaking it. iBoot2 will then load that specific
 image only; replacing it requires another trip through 1TR. Asahi terms the
 result **fuOS**.
 
-Community reports from `#asahi-dev` (audited March–August 2026) describe the
-practical workflow: `kmutil configure-boot --raw --entry-point 2048
---lowest-virtual-address 0` to install a raw boot object, a permissive policy
-applied with `bputil` (the flag string `-nckas` recurs), and `bputil -n` to
-revert to XNU before an update or recovery. The same reports note a bare boot
-object with nothing concatenated reaches its proxy, while appended parameters
-caused reliable iBoot panics traced to installer-added trailing zero padding.
+Community reports describe the practical workflow: `kmutil configure-boot --raw
+--entry-point 2048 --lowest-virtual-address 0` to install a raw boot object, a
+permissive policy applied with `bputil`, and `bputil -n` to revert to XNU before
+an update or recovery. Reports also note a bare boot object with nothing
+concatenated reaches its proxy, while appended parameters caused reliable iBoot
+panics traced to installer-added trailing zero padding.
 
 The individual `bputil` flags are not authoritatively documented in public
-sources; the string above is reported usage, not a verified decomposition.
+sources. Reported usage varies in flag order — both `-nckas` and `-nkcas`
+appear — so treat the string as reported usage rather than a verified
+decomposition.
+
+Two further points from the community record. The SEP itself refuses to sign a
+custom kernel outside 1TR, which is the enforcement behind the policy gate
+rather than a userspace check. And the raw-versus-Mach-O split above is the
+consequential choice: a raw boot object escapes SPTM entirely, while a Mach-O
+object is loaded under it.
 
 ## Implications for Windows
 
@@ -191,12 +250,17 @@ inheritance.
 
 ## Open questions
 
+- Whether a kernel on an exclave-bearing machine (A18 Pro, M5) can boot without
+  an exclavecore image loaded. Raised in community discussion, unanswered.
 - Whether the SEP distinguishes three boot modes or five, and what `kcOS` and
   `restoreOS` gate specifically.
-- The exact semantics of each `bputil` flag.
+- The exact semantics of each `bputil` flag, and whether flag order is
+  significant.
 - How Image4 personalisation interacts with a boot object that is not an XNU
   kernel collection, beyond the raw entry-point and virtual-address parameters
   reported above.
+- Whether SPTM changes anything about policy evaluation itself, as opposed to
+  post-handoff enforcement.
 - Whether anything in the SEPROM handshake changes between M-series generations
   in a way that affects policy evaluation, as distinct from the sepOS boot
   differences noted for T8110 and later.
@@ -207,8 +271,12 @@ inheritance.
 - Apple Platform Security — [contents of a LocalPolicy file](https://support.apple.com/guide/security/contents-a-localpolicy-file-mac-apple-silicon-secc745a0845/web)
 - Apple Platform Security — [Startup Disk security policy control](https://support.apple.com/guide/security/startup-disk-security-policy-control-sec7d92dc49f/web)
 - Apple Platform Security — [Secure Enclave](https://support.apple.com/guide/security/secure-enclave-sec59b0b31ff/web)
+- Apple Platform Security — [operating system integrity, SPTM and TXM](https://support.apple.com/guide/security/operating-system-integrity-sec8b776536b/web)
+- Wang et al. — [*Modern iOS Security Features: A Deep Dive into SPTM, TXM, and Exclaves*](https://arxiv.org/pdf/2510.09272), arXiv 2510.09272
 - Asahi Linux — [Apple Silicon boot flow](https://asahilinux.org/docs/fw/boot/)
 - Asahi Linux — [introduction to Apple Silicon, recoveryOS and 1TR](https://asahilinux.org/docs/platform/introduction/)
 - Asahi Linux — [open OS platform interoperability](https://asahilinux.org/docs/platform/open-os-interop/)
 - Asahi Linux — [SEP documentation](https://asahilinux.org/docs/hw/soc/sep/)
-- `#asahi-dev` on OFTC — community reports, audited 2026-03-11 to 2026-08-12
+- `#asahi-dev` and `#asahi-re` on OFTC — community reports, logs spanning
+  2021-01-05 to 2026-08-17. Where these conflict with older published
+  documentation, the later report is preferred and the conflict noted in place.

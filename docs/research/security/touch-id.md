@@ -137,6 +137,7 @@ serial-number strings only. The certificate chain verify is SEP-side.
 | 1 | SEPOS bootstrap under a custom OS | Asahi sleeps the SEP before Linux starts; no Linux driver re-runs the SEPROM handshake |
 | 2 | SEP firmware is signed and encrypted under a separate GID | The AP cannot decrypt or replace it. You run Apple's matcher or none |
 | 3 | Sensor-path opcodes | Management ops recovered; enroll and match need a live EP `0x08` trace |
+| 3a | xART must come up first | Community reports the SBIO endpoint does not appear until xART works, and xART needs the gigalocker file — see below |
 | 4 | Sensor↔SEP SPI is factory-paired AES-CCM | The AP cannot drive the sensor or read frames, only ask the SEP to |
 | 5 | Keyboard pairing is Apple-CA attested end to end | The verify happens in Apple-signed SEPOS, so no AP-side code can satisfy it |
 
@@ -144,6 +145,54 @@ Blocker 5 leaves two paths: clone a paired keyboard's stored identity, which
 requires extracting a PKA identity not known to be exposed; or run genuine
 signed SEPOS and let it perform the pairing. The second reduces the external
 keyboard to the built-in problem and is the one this work targets.
+
+## Community record
+
+Everything in this section comes from `#asahi-dev` and `#asahi-re` on OFTC, not
+from our own work. It corroborates the model above in places and corrects the
+ordering in one important way.
+
+**xART gates SBIO.** The SBIO endpoint does not appear until xART is working,
+and xART needs the gigalocker file, which in turn needs enough of an APFS
+implementation to read it. The sequence given by the author of the community SEP
+tracer is: get at the gigalocker, work out xART read and write, then the other
+endpoints come up and SBIO is the Touch ID one. This was stated in February 2025
+and restated in April 2026 — "you need it before sbio endpoint even comes up",
+with the reason being that xART is where the template data ends up.
+
+That reorders the work. Our own roadmap treats SBIO opcode capture as step one
+and xART as a management op among others; the community position is that xART is
+a prerequisite for SBIO existing at all.
+
+**xART is the destructive part.** Anti-replay protection means a botched write
+does not fail cleanly. Reports are consistent and blunt: corrupting SEP data
+makes the machine unbootable, and everything FileVault-encrypted is lost with
+it. The machine is recoverable — these are described as effectively unbrickable
+— but the data is not. The advice is to use a dedicated machine and keep nothing
+of value on it.
+
+**SEP firmware is not needed.** The recurring answer to "how do I get sepOS out"
+is that you should not need it: talk to the SEP the way macOS does, and trace
+macOS under the m1n1 hypervisor to learn how. Loading and booting SEPOS is
+described as already solved in m1n1 — which is consistent with blocker 1 above,
+where the gap is a Linux or Windows driver doing it, not the sequence being
+unknown.
+
+**sepOS is now partly readable anyway.** Apple ships sepOS and iBoot in
+plaintext inside Private Cloud Compute images — the first Apple platform to do
+so. That does not yield a signable image and does not touch blocker 2, but it
+does mean sepOS is available to study rather than only to invoke.
+
+**The sensor model is independently confirmed.** Community description matches
+the design exactly: the sensor and the Secure Enclave are not directly wired;
+the AP reads an encrypted blob from the sensor, hands it to the SEP untouched,
+and relays the SEP's encrypted reply back. Obtaining a fingerprint image is
+described as impossible, and the SEP as unavoidable.
+
+**More than one tracer exists.** Alongside the unmerged `trace_sep.py`, the
+community tracer carries endpoint-filtering support, which matters in practice
+because SKS traffic alone will swamp a capture — one suggested workaround being
+simply not to log in.
 
 ## Current position
 
@@ -173,3 +222,7 @@ Apple's [Platform Security guide](https://support.apple.com/guide/security/magic
 Mandt, Solnik and Wang, *Demystifying the Secure Enclave Processor* (Black Hat
 2016); checkra1n/PongoOS `sep.c`; hack-different `apple-knowledge`; m1n1
 `hw/sep.py` and `hw/asc.py`; CVE-2024-0230; Khaos Tian's "Magic Button".
+
+Community record from `#asahi-dev` and `#asahi-re` on OFTC, logs spanning
+2021-01-05 to 2026-08-17. Where community reports conflict with older material,
+the later report is preferred.
