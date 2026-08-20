@@ -22,6 +22,17 @@
       ["Power", ["Battery / charging", "Sleep / resume"]],
       ["Graphics", ["GPU acceleration"]]
     ],
+    /* 14/16-inch MacBook Pro: the laptop set plus the hardware specific to
+     * these machines — HDMI, SDXC slot, Touch ID, a ProMotion display and
+     * active cooling. */
+    mbp: [
+      ["Platform", ["UEFI boot", "Windows Boot Manager", "SMP / all cores", "Internal storage", "Nested virtualization"]],
+      ["Display & input", ["Internal display", "ProMotion (120 Hz / VRR / HDR)", "Brightness control", "Keyboard", "Keyboard backlight", "Trackpad", "Power button", "Touch ID"]],
+      ["Media", ["Speakers", "Microphone", "Camera", "Headset jack"]],
+      ["Connectivity", ["USB-C", "Thunderbolt / USB4", "HDMI", "SDXC card slot", "Wi-Fi", "Bluetooth"]],
+      ["Power", ["Battery / charging", "Fan control", "Sleep / resume"]],
+      ["Graphics", ["GPU acceleration"]]
+    ],
     desktop: [
       ["Platform", ["UEFI boot", "Windows Boot Manager", "SMP / all cores", "Internal storage"]],
       ["Display", ["Display output", "HDMI"]],
@@ -48,10 +59,10 @@
     j313:  ["MacBook Air", "M1", "t8103", "laptop"],
     j456:  ["iMac 24-inch, 4x USB-C", "M1", "t8103", "imac"],
     j457:  ["iMac 24-inch, 2x USB-C", "M1", "t8103", "imac"],
-    j314s: ["MacBook Pro 14-inch", "M1 Pro", "t6000", "laptop"],
-    j316s: ["MacBook Pro 16-inch", "M1 Pro", "t6000", "laptop"],
-    j314c: ["MacBook Pro 14-inch", "M1 Max", "t6001", "laptop"],
-    j316c: ["MacBook Pro 16-inch", "M1 Max", "t6001", "laptop"],
+    j314s: ["MacBook Pro 14-inch", "M1 Pro", "t6000", "mbp"],
+    j316s: ["MacBook Pro 16-inch", "M1 Pro", "t6000", "mbp"],
+    j314c: ["MacBook Pro 14-inch", "M1 Max", "t6001", "mbp"],
+    j316c: ["MacBook Pro 16-inch", "M1 Max", "t6001", "mbp"],
     j375c: ["Mac Studio", "M1 Max", "t6001", "desktop"],
     j375d: ["Mac Studio", "M1 Ultra", "t6002", "desktop"],
 
@@ -60,11 +71,11 @@
     j493:  ["MacBook Pro 13-inch", "M2", "t8112", "laptop"],
     j473:  ["Mac mini", "M2", "t8112", "desktop"],
     j415:  ["MacBook Air 15-inch", "M2", "t8112", "laptop"],
-    j414s: ["MacBook Pro 14-inch", "M2 Pro", "t6020", "laptop"],
-    j416s: ["MacBook Pro 16-inch", "M2 Pro", "t6020", "laptop"],
+    j414s: ["MacBook Pro 14-inch", "M2 Pro", "t6020", "mbp"],
+    j416s: ["MacBook Pro 16-inch", "M2 Pro", "t6020", "mbp"],
     j474s: ["Mac mini", "M2 Pro", "t6020", "desktop"],
-    j414c: ["MacBook Pro 14-inch", "M2 Max", "t6021", "laptop"],
-    j416c: ["MacBook Pro 16-inch", "M2 Max", "t6021", "laptop"],
+    j414c: ["MacBook Pro 14-inch", "M2 Max", "t6021", "mbp"],
+    j416c: ["MacBook Pro 16-inch", "M2 Max", "t6021", "mbp"],
     j475c: ["Mac Studio", "M2 Max", "t6021", "desktop"],
     j475d: ["Mac Studio", "M2 Ultra", "t6022", "desktop"],
     j180d: ["Mac Pro", "M2 Ultra", "t6022", "desktop"],
@@ -72,19 +83,19 @@
     /* M3 */
     j433:  ["iMac 24-inch, 2x USB-C", "M3", "t8122", "imac"],
     j434:  ["iMac 24-inch, 4x USB-C", "M3", "t8122", "imac"],
-    j504:  ["MacBook Pro 14-inch", "M3", "t8122", "laptop"],
+    j504:  ["MacBook Pro 14-inch", "M3", "t8122", "mbp"],
     j613:  ["MacBook Air 13-inch", "M3", "t8122", "laptop"],
     j615:  ["MacBook Air 15-inch", "M3", "t8122", "laptop"],
-    j514s: ["MacBook Pro 14-inch", "M3 Pro", "t6030", "laptop"],
-    j516s: ["MacBook Pro 16-inch", "M3 Pro", "t6030", "laptop"],
-    j514c: ["MacBook Pro 14-inch", "M3 Max, 16-core", "t6031", "laptop"],
-    j516c: ["MacBook Pro 16-inch", "M3 Max, 16-core", "t6031", "laptop"],
-    j514m: ["MacBook Pro 14-inch", "M3 Max, 14-core", "t6034", "laptop"],
-    j516m: ["MacBook Pro 16-inch", "M3 Max, 14-core", "t6034", "laptop"],
+    j514s: ["MacBook Pro 14-inch", "M3 Pro", "t6030", "mbp"],
+    j516s: ["MacBook Pro 16-inch", "M3 Pro", "t6030", "mbp"],
+    j514c: ["MacBook Pro 14-inch", "M3 Max, 16-core", "t6031", "mbp"],
+    j516c: ["MacBook Pro 16-inch", "M3 Max, 16-core", "t6031", "mbp"],
+    j514m: ["MacBook Pro 14-inch", "M3 Max, 14-core", "t6034", "mbp"],
+    j516m: ["MacBook Pro 16-inch", "M3 Max, 14-core", "t6034", "mbp"],
     j575d: ["Mac Studio", "M3 Ultra", "t6032", "desktop"],
 
     /* M4 */
-    j604:  ["MacBook Pro 14-inch", "M4", "t8132", "laptop"],
+    j604:  ["MacBook Pro 14-inch", "M4", "t8132", "mbp"],
     j773g: ["Mac mini", "M4", "t8132", "desktop"],
     j623:  ["iMac 24-inch, 2x USB-C", "M4", "t8132", "imac"],
     j624:  ["iMac 24-inch, 4x USB-C", "M4", "t8132", "imac"],
@@ -119,6 +130,43 @@
       "Keyboard": "works",
       "Trackpad": "works",
       "USB-C": ["partial", "no hotplug or USB 3.0"]
+    },
+
+    /* MacBook Pro 14-inch, M2 Pro — the M2-series primary target. Recorded
+     * from bring-up, 2026-08. The Windows side of these drivers is shared,
+     * so most of this translates directly to the other chips. */
+    j414s: {
+      "UEFI boot": "works",
+      "Windows Boot Manager": "works",
+      "SMP / all cores": ["works", "native P/E scheduling, cpufreq, power modes"],
+      "Internal storage": "works",
+      "Nested virtualization": ["none", "needed for WSL and VMs"],
+
+      "Internal display": "works",
+      "ProMotion (120 Hz / VRR / HDR)": ["none", "in progress"],
+      "Keyboard": "works",
+      "Keyboard backlight": "works",
+      "Trackpad": ["works", "full gesture support"],
+      "Power button": ["works", "bound to Win+L"],
+      "Touch ID": ["none", "driver in development"],
+
+      "Speakers": "none",
+      "Microphone": "none",
+      "Camera": "none",
+      "Headset jack": "none",
+
+      "USB-C": ["works", "USB 3; Ethernet via Realtek arm64 driver"],
+      "Thunderbolt / USB4": "none",
+      "HDMI": "none",
+      "SDXC card slot": ["none", "in progress"],
+      "Wi-Fi": "works",
+      "Bluetooth": "works",
+
+      "Battery / charging": ["works", "SMC battery and health reporting"],
+      "Fan control": "works",
+      "Sleep / resume": ["none", "deep sleep not implemented yet"],
+
+      "GPU acceleration": ["partial", "Honeykrisp Vulkan and DXVK run; WDDM 2.1 in progress"]
     }
   };
 
