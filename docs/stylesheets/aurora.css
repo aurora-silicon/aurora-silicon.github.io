@@ -1,13 +1,42 @@
 /* Aurora Silicon visual identity. Page-specific styles belong with the new design. */
 
+/* Brand colours are declared twice: once as a hex literal for direct use, once
+   as bare "r g b" channels so a rule can ask for a tint of them with
+   rgb(var(--x-rgb) / 13%). Tints are deliberately not color-mix(): a browser
+   that does not know that function drops the whole declaration, which silently
+   strips the support-state colours out of the device modal and leaves every
+   feature looking unrecorded. Keep the two forms of each colour in step. */
 :root {
   --aurora-warm: #e8822a;
+  --aurora-warm-rgb: 232 130 42;
   --aurora-cool: #2e52c4;
+  --aurora-cool-rgb: 46 82 196;
+
+  --aurora-works-rgb: 46 158 91;
+  --aurora-none-rgb: 212 69 61;
+}
+
+/* The dark values apply whenever the page is actually dark. The scheme
+   attribute is set on <body> by the theme's JavaScript, so keying on it alone
+   leaves the light brand colours in place on every paint before that runs —
+   over a dark page those tints are close to invisible. The media query covers
+   that window, and the attribute selectors still win when a reader picks a
+   scheme explicitly. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-md-color-scheme="default"]),
+  body:not([data-md-color-scheme="default"]) {
+    --aurora-warm: #ffa94d;
+    --aurora-warm-rgb: 255 169 77;
+    --aurora-cool: #7ba5d8;
+    --aurora-cool-rgb: 123 165 216;
+  }
 }
 
 [data-md-color-scheme="slate"] {
   --aurora-warm: #ffa94d;
+  --aurora-warm-rgb: 255 169 77;
   --aurora-cool: #7ba5d8;
+  --aurora-cool-rgb: 123 165 216;
 }
 
 .md-typeset h1 {
@@ -63,7 +92,7 @@
   width: 8.8rem;
   height: 8.8rem;
   object-fit: contain;
-  filter: drop-shadow(0 0.7rem 1.6rem color-mix(in srgb, var(--aurora-cool) 18%, transparent));
+  filter: drop-shadow(0 0.7rem 1.6rem rgb(var(--aurora-cool-rgb) / 18%));
 }
 
 .home-tagline {
@@ -86,7 +115,11 @@
   padding: 1rem 1.1rem;
   border: 1px solid var(--md-default-fg-color--lightest);
   border-radius: 0.5rem;
-  background: color-mix(in srgb, var(--md-default-bg-color) 96%, var(--aurora-cool));
+  background-color: var(--md-default-bg-color);
+  background-image: linear-gradient(
+    rgb(var(--aurora-cool-rgb) / 4%),
+    rgb(var(--aurora-cool-rgb) / 4%)
+  );
 }
 
 .md-typeset .home-path h3 {
@@ -131,7 +164,11 @@
   padding: 0.85rem 0.95rem;
   border: 1px solid var(--md-default-fg-color--lightest);
   border-radius: 0.5rem;
-  background: color-mix(in srgb, var(--md-default-bg-color) 96%, var(--aurora-cool));
+  background-color: var(--md-default-bg-color);
+  background-image: linear-gradient(
+    rgb(var(--aurora-cool-rgb) / 4%),
+    rgb(var(--aurora-cool-rgb) / 4%)
+  );
   color: var(--md-default-fg-color);
   text-decoration: none;
   transition: border-color 120ms ease, transform 120ms ease;
@@ -163,7 +200,7 @@
 .soc-id {
   padding: 0.08rem 0.32rem;
   border-radius: 0.25rem;
-  background: color-mix(in srgb, var(--aurora-cool) 14%, transparent);
+  background: rgb(var(--aurora-cool-rgb) / 14%);
   color: var(--md-default-fg-color--light);
   font-family: var(--md-code-font-family);
   font-size: 0.6rem;
@@ -191,7 +228,7 @@
 .md-typeset .split-table td code {
   padding: 0.08rem 0.34rem;
   border-radius: 0.25rem;
-  background: color-mix(in srgb, var(--aurora-warm) 13%, transparent);
+  background: rgb(var(--aurora-warm-rgb) / 13%);
   color: var(--md-default-fg-color);
   font-size: 0.68rem;
 }
@@ -259,13 +296,13 @@
 }
 
 .md-typeset .device-link code {
-  border-bottom: 1px dotted color-mix(in srgb, var(--aurora-warm) 60%, transparent);
+  border-bottom: 1px dotted rgb(var(--aurora-warm-rgb) / 60%);
   transition: background-color 120ms ease;
 }
 
 .md-typeset .device-link:hover code,
 .md-typeset .device-link:focus-visible code {
-  background: color-mix(in srgb, var(--aurora-warm) 28%, transparent);
+  background: rgb(var(--aurora-warm-rgb) / 28%);
 }
 
 .device-modal {
@@ -365,17 +402,17 @@
 }
 
 .feat--works {
-  background: color-mix(in srgb, #2e9e5b 22%, transparent);
+  background: rgb(var(--aurora-works-rgb) / 22%);
   color: var(--md-default-fg-color);
 }
 
 .feat--partial {
-  background: color-mix(in srgb, var(--aurora-warm) 26%, transparent);
+  background: rgb(var(--aurora-warm-rgb) / 26%);
   color: var(--md-default-fg-color);
 }
 
 .feat--none {
-  background: color-mix(in srgb, #d4453d 22%, transparent);
+  background: rgb(var(--aurora-none-rgb) / 22%);
   color: var(--md-default-fg-color);
 }
 
@@ -404,7 +441,11 @@
   padding: 0.9rem 1rem;
   border: 1px solid var(--md-default-fg-color--lightest);
   border-radius: 0.5rem;
-  background: color-mix(in srgb, var(--md-default-bg-color) 96%, var(--aurora-cool));
+  background-color: var(--md-default-bg-color);
+  background-image: linear-gradient(
+    rgb(var(--aurora-cool-rgb) / 4%),
+    rgb(var(--aurora-cool-rgb) / 4%)
+  );
 }
 
 .md-typeset .attrib-card h3 {
@@ -452,14 +493,14 @@
 .md-typeset .topic-links a {
   padding: 0.14rem 0.42rem;
   border-radius: 0.25rem;
-  background: color-mix(in srgb, var(--aurora-cool) 14%, transparent);
+  background: rgb(var(--aurora-cool-rgb) / 14%);
   color: var(--md-default-fg-color);
   font-size: 0.66rem;
   transition: background-color 120ms ease;
 }
 
 .md-typeset .topic-links a:hover {
-  background: color-mix(in srgb, var(--aurora-warm) 26%, transparent);
+  background: rgb(var(--aurora-warm-rgb) / 26%);
 }
 
 /* Team cards reuse the attribution card, with a role badge and location. */
@@ -467,7 +508,7 @@
   align-self: flex-start;
   padding: 0.1rem 0.42rem;
   border-radius: 0.3rem;
-  background: color-mix(in srgb, var(--aurora-warm) 18%, transparent);
+  background: rgb(var(--aurora-warm-rgb) / 18%);
   color: var(--md-default-fg-color);
   font-size: 0.62rem;
   font-weight: 650;

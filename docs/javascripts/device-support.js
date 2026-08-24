@@ -283,6 +283,11 @@
   function wire() {
     if (!dialog || !dialog.isConnected) buildDialog();
 
+    /* The dialog is parented to <body>, which instant navigation leaves alone,
+     * so it survives a page change — still open, if the reader left it open.
+     * What it describes belongs to the page they have just left. */
+    if (dialog.open) dialog.close();
+
     var cells = document.querySelectorAll(".id-table td code, .split-table td code");
     Array.prototype.forEach.call(cells, function (code) {
       var id = code.textContent.trim();
