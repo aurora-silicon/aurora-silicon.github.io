@@ -97,8 +97,18 @@ icon = "fontawesome/brands/discord"
 link = "https://discord.gg/DXmsSSc5aY"
 name = "Aurora Silicon on Discord"
 
+# The system-preference option. It carries an explicit scheme, primary and
+# accent because these values are what the built pages ship in the <body> tag:
+# the theme only resolves this entry against the reader's actual preference once
+# its JavaScript has mounted, and until then the page renders in whatever this
+# entry declares. Left blank it falls back to the theme's own defaults — the
+# light scheme with an indigo accent — so every page painted before that
+# resolution ran in a palette the site never intended to show.
 [[project.theme.palette]]
 media = "(prefers-color-scheme)"
+scheme = "slate"
+primary = "indigo"
+accent = "orange"
 toggle.icon = "lucide/sun-moon"
 toggle.name = "Switch to light mode"
 
