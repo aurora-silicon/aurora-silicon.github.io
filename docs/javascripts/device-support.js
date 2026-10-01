@@ -5,7 +5,7 @@
  *                     feature name to "works", "partial" or "none".
  *
  * Any feature without a recorded state renders as "not recorded". Nothing here
- * records Windows support only. Linux evidence is linked separately.
+ * records Windows support; Linux work is described on each generation page.
  */
 
 (function () {
@@ -51,7 +51,7 @@
     ]
   };
 
-  /* deviceId: [model, chip, socId, profile]. Public catalog snapshot: 2026-10-01. */
+  /* deviceId: [model, chip, socId, profile] */
   var CATALOG = {
     j274: ["Mac mini","M1","t8103","desktop"],
     j293: ["MacBook Pro 13-inch","M1","t8103","laptop"],
@@ -114,69 +114,6 @@
     j700: ["MacBook Neo","A18 Pro","t8140","laptop"]
   };
 
-  /* Dated Aurora Linux assessments, separate from Windows STATES below. */
-  var LINUX_EVIDENCE = {
-    j274: "/feature-support/linux/m1-mac-mini/",
-    j293: "/feature-support/linux/m1-macbook-pro/",
-    j313: "/feature-support/linux/m1-macbook-air/",
-    j314c: "/feature-support/linux/m1-macbook-pro/",
-    j314s: "/feature-support/linux/m1-macbook-pro/",
-    j316c: "/feature-support/linux/m1-macbook-pro/",
-    j316s: "/feature-support/linux/m1-macbook-pro/",
-    j375c: "/feature-support/linux/m1-mac-studio/",
-    j375d: "/feature-support/linux/m1-mac-studio/",
-    j456: "/feature-support/linux/m1-imac/",
-    j457: "/feature-support/linux/m1-imac/",
-    j180d: "/feature-support/linux/m2-mac-pro/",
-    j413: "/feature-support/linux/m2-macbook-air/",
-    j414c: "/feature-support/linux/m2-macbook-pro/",
-    j414s: "/feature-support/linux/m2-macbook-pro/",
-    j415: "/feature-support/linux/m2-macbook-air/",
-    j416c: "/feature-support/linux/m2-macbook-pro/",
-    j416s: "/feature-support/linux/m2-macbook-pro/",
-    j473: "/feature-support/linux/m2-mac-mini/",
-    j474s: "/feature-support/linux/m2-mac-mini/",
-    j475c: "/feature-support/linux/m2-mac-studio/",
-    j475d: "/feature-support/linux/m2-mac-studio/",
-    j493: "/feature-support/linux/m2-macbook-pro/",
-    j433: "/feature-support/linux/m3-imac/",
-    j434: "/feature-support/linux/m3-imac/",
-    j504: "/feature-support/linux/m3-macbook-pro/",
-    j514c: "/feature-support/linux/m3-macbook-pro/",
-    j514m: "/feature-support/linux/m3-macbook-pro/",
-    j514s: "/feature-support/linux/m3-macbook-pro/",
-    j516c: "/feature-support/linux/m3-macbook-pro/",
-    j516m: "/feature-support/linux/m3-macbook-pro/",
-    j516s: "/feature-support/linux/m3-macbook-pro/",
-    j575d: "/feature-support/linux/m3-mac-studio/",
-    j613: "/feature-support/linux/m3-macbook-air/",
-    j615: "/feature-support/linux/m3-macbook-air/",
-    j575c: "/feature-support/linux/m4-mac-studio/",
-    j604: "/feature-support/linux/m4-macbook-pro/",
-    j614c: "/feature-support/linux/m4-macbook-pro/",
-    j614s: "/feature-support/linux/m4-macbook-pro/",
-    j616c: "/feature-support/linux/m4-macbook-pro/",
-    j616s: "/feature-support/linux/m4-macbook-pro/",
-    j623: "/feature-support/linux/m4-imac/",
-    j624: "/feature-support/linux/m4-imac/",
-    j713: "/feature-support/linux/m4-macbook-air/",
-    j715: "/feature-support/linux/m4-macbook-air/",
-    j773g: "/feature-support/linux/m4-mac-mini/",
-    j773s: "/feature-support/linux/m4-mac-mini/",
-    j704: "/feature-support/linux/m5-macbook-pro/",
-    j714c: "/feature-support/linux/m5-macbook-pro/",
-    j714s: "/feature-support/linux/m5-macbook-pro/",
-    j716c: "/feature-support/linux/m5-macbook-pro/",
-    j716s: "/feature-support/linux/m5-macbook-pro/",
-    j775c: "/feature-support/linux/m5-mac-studio/",
-    j775d: "/feature-support/linux/m5-mac-studio/",
-    j813: "/feature-support/linux/m5-macbook-air/",
-    j815: "/feature-support/linux/m5-macbook-air/",
-    j873s: "/feature-support/linux/m5-mac-mini/",
-    j873g: "/feature-support/linux/m6-mac-mini/",
-    j700: "/feature-support/linux/a18-macbook-neo/"
-  };
-
   /* Recorded support states, keyed by device ID then feature name. Feature
    * names must match the FEATURES strings above exactly; unmatched names are
    * reported in the browser console rather than failing silently.
@@ -203,7 +140,7 @@
     },
 
     /* MacBook Pro 14-inch, M2 Pro — the M2-series primary target. Recorded
-     * from bring-up, 2026-08. These results qualify only this named board. */
+     * from bring-up, 2026-08. These states apply to this board only. */
     j414s: {
       "UEFI boot": "works",
       "Windows Boot Manager": "works",
@@ -257,7 +194,6 @@
 
   function buildDialog() {
     dialog = el("dialog", "device-modal");
-    dialog.setAttribute("aria-label", "Windows feature support");
 
     var head = el("div", "device-modal__head");
     var heading = el("div");
@@ -275,14 +211,9 @@
     dialog.appendChild(head);
     dialog.appendChild(el("div", "device-modal__body"));
 
-    var evidence = el("p", "device-modal__evidence");
-    var evidenceLink = el("a", "", "View the separate Aurora Linux assessment");
-    evidence.appendChild(evidenceLink);
-    dialog.appendChild(evidence);
-
     var note = el("p", "device-modal__note");
     note.textContent =
-      "No Windows support states are recorded for this machine yet. The feature list " +
+      "No support states are recorded for this machine yet. The feature list " +
       "is provisional and will be trimmed to the machine's actual hardware.";
     dialog.appendChild(note);
 
@@ -301,9 +232,7 @@
 
     dialog.querySelector(".device-modal__title").textContent = entry[0];
     dialog.querySelector(".device-modal__meta").textContent =
-      "Windows · " + entry[1] + " · " + entry[2] + " · " + id;
-
-    dialog.querySelector(".device-modal__evidence a").href = LINUX_EVIDENCE[id];
+      entry[1] + " · " + entry[2] + " · " + id;
 
     var body = dialog.querySelector(".device-modal__body");
     body.textContent = "";
@@ -373,7 +302,7 @@
 
       var button = el("button", "device-link");
       button.type = "button";
-      button.setAttribute("aria-label", "Windows support detail for " + id);
+      button.setAttribute("aria-label", "Support detail for " + id);
       code.parentNode.insertBefore(button, code);
       button.appendChild(code);
       button.addEventListener("click", function () {

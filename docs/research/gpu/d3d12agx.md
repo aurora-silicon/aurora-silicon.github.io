@@ -122,6 +122,10 @@ any machine under [feature support](../../feature-support/overview.md).
 d3d12agx is MIT, matching Mesa. The vkd3d-proton test suite is LGPL and is used
 as a test oracle only — executed, never copied into the tree.
 
-## Board qualification
+## Machine support
 
-The [Aurora Linux product assessments](../../feature-support/linux/overview.md) separately record board and driver integration as of 1 October 2026. M1/M2 AGX/DCP source paths do not qualify M3 or T8140. The [Linux display evidence summary](../linux-platform.md#thunderbolt-displays-and-resume) preserves the missing M3 GPU matches and full DCP paths; graphics-stack progress on this page should not be read as a hardware pass for every cataloged Mac.
+The Linux bring-up notes on the [generation pages](../../feature-support/overview.md)
+record which boards have driver and display paths. M1/M2 source support does not
+carry over to M3 or T8140. In the October 2026 assessment, the public M3 GPU
+matches and full DCP path are still missing; a boot framebuffer does not close
+those gaps.

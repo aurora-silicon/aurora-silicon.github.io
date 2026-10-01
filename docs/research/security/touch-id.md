@@ -207,6 +207,20 @@ single `get_catacomb_state` round trip. One acknowledgement validates the
 message bit-packing, transaction correlation, out-of-line registration and a
 real opcode at once, before any biometric operation is attempted.
 
+## Linux bring-up
+
+The October 2026 [M1 Air](https://github.com/aurora-silicon/linux/discussions/96),
+[M1 MacBook Pro](https://github.com/aurora-silicon/linux/discussions/95) and
+[M2 MacBook Pro](https://github.com/aurora-silicon/linux/discussions/106) threads record
+Touch ID results on `j313`, `j293`, `j314s` and `j414c`, with separate work on
+`j414s`. The reboot work in PR #69 is still on `feat/sep`, not the audited
+`aurora-wip` tree. Each report keeps its tested build and remaining limits.
+
+[J700](https://github.com/aurora-silicon/linux/discussions/72) has SEP services
+reported, but Touch ID matching is not working in that assessment. None of
+these Linux results establishes Windows authentication or support for an
+external Touch ID keyboard.
+
 ## Out of scope by design
 
 - Reading or relaying raw fingerprint pixels. The sensor↔SEP link is encrypted
@@ -226,7 +240,3 @@ Mandt, Solnik and Wang, *Demystifying the Secure Enclave Processor* (Black Hat
 Community record from `#asahi-dev` and `#asahi-re` on OFTC, logs spanning
 2021-01-05 to 2026-08-17. Where community reports conflict with older material,
 the later report is preferred.
-
-## Aurora Linux board reports — 1 October 2026
-
-The [Linux platform evidence summary](../linux-platform.md#sep-and-touch-id) records named M1/M2 internal-sensor reports and their development-branch limits. PR #69 remains open against `feat/sep` in that snapshot; merging into that branch is distinct from integration into `aurora-wip`. J700 SEP services are reported separately from its non-working Touch ID matching. These Linux reports do not establish Windows authentication or external-keyboard support.

@@ -25,8 +25,6 @@ writing the drivers needed to make the platform useful.
     [Discord server](https://discord.gg/DXmsSSc5aY) — join and ask directly, and
     you will get a current answer rather than whatever this site last said.
 
-The [hardware catalog](feature-support/overview.md) now identifies 59 board configurations. Its [Aurora Linux evidence directory](feature-support/linux/overview.md) records a dated source audit and hardware reports separately from Windows bring-up results.
-
 ## Where to start
 
 <div class="home-paths" markdown>
