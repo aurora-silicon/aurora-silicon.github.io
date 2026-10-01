@@ -416,6 +416,19 @@
   color: var(--md-default-fg-color);
 }
 
+.device-modal__evidence {
+  margin: 0;
+  padding: 0.7rem 1rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  font-size: 0.75rem;
+}
+
+.device-modal__evidence a {
+  color: var(--md-typeset-a-color);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 .device-modal__note {
   margin: 0;
   padding: 0.7rem 1rem 0.9rem;

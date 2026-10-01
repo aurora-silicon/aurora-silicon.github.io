@@ -1,14 +1,13 @@
 ---
-title: Apple (M5)
+title: Apple
 ---
 
-# Apple
+# Apple wireless
 
-Research notes on Apple's own wireless hardware, introduced with the M5 generation.
+The catalog identifies Apple's wireless hardware with the M5 generation. Detailed Windows driver research notes are still pending.
 
-!!! warning "Not written yet"
+## Assessment boundary
 
-    This page is a placeholder. These notes have not been written up.
+The [M5 Linux product assessments](../../feature-support/m5.md#aurora-linux-evidence) are **not audited** as of 1 October 2026, including Wi-Fi and Bluetooth. Machine identity and a radio vendor do not establish driver availability, firmware integration or working connectivity.
 
-    Until they are, the [Discord server](https://discord.gg/DXmsSSc5aY) is the
-    best place to ask about this work.
+Use the product-specific evidence pages for future board reports, and record Windows results separately. The public discussion snapshot does not contain an implementation assessment that can fill in the Windows driver details here.

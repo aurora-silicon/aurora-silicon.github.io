@@ -226,3 +226,7 @@ Mandt, Solnik and Wang, *Demystifying the Secure Enclave Processor* (Black Hat
 Community record from `#asahi-dev` and `#asahi-re` on OFTC, logs spanning
 2021-01-05 to 2026-08-17. Where community reports conflict with older material,
 the later report is preferred.
+
+## Aurora Linux board reports — 1 October 2026
+
+The [Linux platform evidence summary](../linux-platform.md#sep-and-touch-id) records named M1/M2 internal-sensor reports and their development-branch limits. PR #69 remains open against `feat/sep` in that snapshot; merging into that branch is distinct from integration into `aurora-wip`. J700 SEP services are reported separately from its non-working Touch ID matching. These Linux reports do not establish Windows authentication or external-keyboard support.

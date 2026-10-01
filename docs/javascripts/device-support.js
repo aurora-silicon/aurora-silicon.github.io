@@ -5,7 +5,7 @@
  *                     feature name to "works", "partial" or "none".
  *
  * Any feature without a recorded state renders as "not recorded". Nothing here
- * asserts support; the states are deliberately empty until measured.
+ * records Windows support only. Linux evidence is linked separately.
  */
 
 (function () {
@@ -51,60 +51,130 @@
     ]
   };
 
-  /* deviceId: [model, chip, socId, profile] */
+  /* deviceId: [model, chip, socId, profile]. Public catalog snapshot: 2026-10-01. */
   var CATALOG = {
-    /* M1 */
-    j274:  ["Mac mini", "M1", "t8103", "desktop"],
-    j293:  ["MacBook Pro 13-inch", "M1", "t8103", "laptop"],
-    j313:  ["MacBook Air", "M1", "t8103", "laptop"],
-    j456:  ["iMac 24-inch, 4x USB-C", "M1", "t8103", "imac"],
-    j457:  ["iMac 24-inch, 2x USB-C", "M1", "t8103", "imac"],
-    j314s: ["MacBook Pro 14-inch", "M1 Pro", "t6000", "mbp"],
-    j316s: ["MacBook Pro 16-inch", "M1 Pro", "t6000", "mbp"],
-    j314c: ["MacBook Pro 14-inch", "M1 Max", "t6001", "mbp"],
-    j316c: ["MacBook Pro 16-inch", "M1 Max", "t6001", "mbp"],
-    j375c: ["Mac Studio", "M1 Max", "t6001", "desktop"],
-    j375d: ["Mac Studio", "M1 Ultra", "t6002", "desktop"],
+    j274: ["Mac mini","M1","t8103","desktop"],
+    j293: ["MacBook Pro 13-inch","M1","t8103","laptop"],
+    j313: ["MacBook Air","M1","t8103","laptop"],
+    j314c: ["MacBook Pro 14-inch","M1 Max","t6001","mbp"],
+    j314s: ["MacBook Pro 14-inch","M1 Pro","t6000","mbp"],
+    j316c: ["MacBook Pro 16-inch","M1 Max","t6001","mbp"],
+    j316s: ["MacBook Pro 16-inch","M1 Pro","t6000","mbp"],
+    j375c: ["Mac Studio","M1 Max","t6001","desktop"],
+    j375d: ["Mac Studio","M1 Ultra","t6002","desktop"],
+    j456: ["iMac 24-inch, 4× USB-C","M1","t8103","imac"],
+    j457: ["iMac 24-inch, 2× USB-C","M1","t8103","imac"],
+    j180d: ["Mac Pro","M2 Ultra","t6022","desktop"],
+    j413: ["MacBook Air 13-inch","M2","t8112","laptop"],
+    j414c: ["MacBook Pro 14-inch","M2 Max","t6021","mbp"],
+    j414s: ["MacBook Pro 14-inch","M2 Pro","t6020","mbp"],
+    j415: ["MacBook Air 15-inch","M2","t8112","laptop"],
+    j416c: ["MacBook Pro 16-inch","M2 Max","t6021","mbp"],
+    j416s: ["MacBook Pro 16-inch","M2 Pro","t6020","mbp"],
+    j473: ["Mac mini","M2","t8112","desktop"],
+    j474s: ["Mac mini","M2 Pro","t6020","desktop"],
+    j475c: ["Mac Studio","M2 Max","t6021","desktop"],
+    j475d: ["Mac Studio","M2 Ultra","t6022","desktop"],
+    j493: ["MacBook Pro 13-inch","M2","t8112","laptop"],
+    j433: ["iMac 24-inch, 2× USB-C","M3","t8122","imac"],
+    j434: ["iMac 24-inch, 4× USB-C","M3","t8122","imac"],
+    j504: ["MacBook Pro 14-inch","M3","t8122","mbp"],
+    j514c: ["MacBook Pro 14-inch","M3 Max, 16-core","t6031","mbp"],
+    j514m: ["MacBook Pro 14-inch","M3 Max, 14-core","t6034","mbp"],
+    j514s: ["MacBook Pro 14-inch","M3 Pro","t6030","mbp"],
+    j516c: ["MacBook Pro 16-inch","M3 Max, 16-core","t6031","mbp"],
+    j516m: ["MacBook Pro 16-inch","M3 Max, 14-core","t6034","mbp"],
+    j516s: ["MacBook Pro 16-inch","M3 Pro","t6030","mbp"],
+    j575d: ["Mac Studio","M3 Ultra","t6032","desktop"],
+    j613: ["MacBook Air 13-inch","M3","t8122","laptop"],
+    j615: ["MacBook Air 15-inch","M3","t8122","laptop"],
+    j575c: ["Mac Studio","M4 Max","t6041","desktop"],
+    j604: ["MacBook Pro 14-inch","M4","t8132","mbp"],
+    j614c: ["MacBook Pro 14-inch","M4 Max","t6041","mbp"],
+    j614s: ["MacBook Pro 14-inch","M4 Pro","t6040","mbp"],
+    j616c: ["MacBook Pro 16-inch","M4 Max","t6041","mbp"],
+    j616s: ["MacBook Pro 16-inch","M4 Pro","t6040","mbp"],
+    j623: ["iMac 24-inch, 2× USB-C","M4","t8132","imac"],
+    j624: ["iMac 24-inch, 4× USB-C","M4","t8132","imac"],
+    j713: ["MacBook Air 13-inch","M4","t8132","laptop"],
+    j715: ["MacBook Air 15-inch","M4","t8132","laptop"],
+    j773g: ["Mac mini","M4","t8132","desktop"],
+    j773s: ["Mac mini","M4 Pro","t6040","desktop"],
+    j704: ["MacBook Pro 14-inch","M5","t8142","mbp"],
+    j714c: ["MacBook Pro 14-inch","M5 Max","t6050","mbp"],
+    j714s: ["MacBook Pro 14-inch","M5 Pro","t6050","mbp"],
+    j716c: ["MacBook Pro 16-inch","M5 Max","t6050","mbp"],
+    j716s: ["MacBook Pro 16-inch","M5 Pro","t6050","mbp"],
+    j775c: ["Mac Studio","M5 Max","t6050","desktop"],
+    j775d: ["Mac Studio","M5 Ultra","t6050","desktop"],
+    j813: ["MacBook Air 13-inch","M5","t8142","laptop"],
+    j815: ["MacBook Air 15-inch","M5","t8142","laptop"],
+    j873s: ["Mac mini","M5 Pro","t6050","desktop"],
+    j873g: ["Mac mini","M6","t8152","desktop"],
+    j700: ["MacBook Neo","A18 Pro","t8140","laptop"]
+  };
 
-    /* M2 */
-    j413:  ["MacBook Air 13-inch", "M2", "t8112", "laptop"],
-    j493:  ["MacBook Pro 13-inch", "M2", "t8112", "laptop"],
-    j473:  ["Mac mini", "M2", "t8112", "desktop"],
-    j415:  ["MacBook Air 15-inch", "M2", "t8112", "laptop"],
-    j414s: ["MacBook Pro 14-inch", "M2 Pro", "t6020", "mbp"],
-    j416s: ["MacBook Pro 16-inch", "M2 Pro", "t6020", "mbp"],
-    j474s: ["Mac mini", "M2 Pro", "t6020", "desktop"],
-    j414c: ["MacBook Pro 14-inch", "M2 Max", "t6021", "mbp"],
-    j416c: ["MacBook Pro 16-inch", "M2 Max", "t6021", "mbp"],
-    j475c: ["Mac Studio", "M2 Max", "t6021", "desktop"],
-    j475d: ["Mac Studio", "M2 Ultra", "t6022", "desktop"],
-    j180d: ["Mac Pro", "M2 Ultra", "t6022", "desktop"],
-
-    /* M3 */
-    j433:  ["iMac 24-inch, 2x USB-C", "M3", "t8122", "imac"],
-    j434:  ["iMac 24-inch, 4x USB-C", "M3", "t8122", "imac"],
-    j504:  ["MacBook Pro 14-inch", "M3", "t8122", "mbp"],
-    j613:  ["MacBook Air 13-inch", "M3", "t8122", "laptop"],
-    j615:  ["MacBook Air 15-inch", "M3", "t8122", "laptop"],
-    j514s: ["MacBook Pro 14-inch", "M3 Pro", "t6030", "mbp"],
-    j516s: ["MacBook Pro 16-inch", "M3 Pro", "t6030", "mbp"],
-    j514c: ["MacBook Pro 14-inch", "M3 Max, 16-core", "t6031", "mbp"],
-    j516c: ["MacBook Pro 16-inch", "M3 Max, 16-core", "t6031", "mbp"],
-    j514m: ["MacBook Pro 14-inch", "M3 Max, 14-core", "t6034", "mbp"],
-    j516m: ["MacBook Pro 16-inch", "M3 Max, 14-core", "t6034", "mbp"],
-    j575d: ["Mac Studio", "M3 Ultra", "t6032", "desktop"],
-
-    /* M4 */
-    j604:  ["MacBook Pro 14-inch", "M4", "t8132", "mbp"],
-    j773g: ["Mac mini", "M4", "t8132", "desktop"],
-    j623:  ["iMac 24-inch, 2x USB-C", "M4", "t8132", "imac"],
-    j624:  ["iMac 24-inch, 4x USB-C", "M4", "t8132", "imac"],
-    j713:  ["MacBook Air 13-inch", "M4", "t8132", "laptop"],
-    j715:  ["MacBook Air 15-inch", "M4", "t8132", "laptop"],
-
-    /* Recorded by the team; no upstream device trees yet. */
-    j813:  ["MacBook Air", "M5", "t8142", "laptop"],
-    j700:  ["MacBook Neo", "A18 Pro", "t8140", "laptop"]
+  /* Dated Aurora Linux assessments, separate from Windows STATES below. */
+  var LINUX_EVIDENCE = {
+    j274: "/feature-support/linux/m1-mac-mini/",
+    j293: "/feature-support/linux/m1-macbook-pro/",
+    j313: "/feature-support/linux/m1-macbook-air/",
+    j314c: "/feature-support/linux/m1-macbook-pro/",
+    j314s: "/feature-support/linux/m1-macbook-pro/",
+    j316c: "/feature-support/linux/m1-macbook-pro/",
+    j316s: "/feature-support/linux/m1-macbook-pro/",
+    j375c: "/feature-support/linux/m1-mac-studio/",
+    j375d: "/feature-support/linux/m1-mac-studio/",
+    j456: "/feature-support/linux/m1-imac/",
+    j457: "/feature-support/linux/m1-imac/",
+    j180d: "/feature-support/linux/m2-mac-pro/",
+    j413: "/feature-support/linux/m2-macbook-air/",
+    j414c: "/feature-support/linux/m2-macbook-pro/",
+    j414s: "/feature-support/linux/m2-macbook-pro/",
+    j415: "/feature-support/linux/m2-macbook-air/",
+    j416c: "/feature-support/linux/m2-macbook-pro/",
+    j416s: "/feature-support/linux/m2-macbook-pro/",
+    j473: "/feature-support/linux/m2-mac-mini/",
+    j474s: "/feature-support/linux/m2-mac-mini/",
+    j475c: "/feature-support/linux/m2-mac-studio/",
+    j475d: "/feature-support/linux/m2-mac-studio/",
+    j493: "/feature-support/linux/m2-macbook-pro/",
+    j433: "/feature-support/linux/m3-imac/",
+    j434: "/feature-support/linux/m3-imac/",
+    j504: "/feature-support/linux/m3-macbook-pro/",
+    j514c: "/feature-support/linux/m3-macbook-pro/",
+    j514m: "/feature-support/linux/m3-macbook-pro/",
+    j514s: "/feature-support/linux/m3-macbook-pro/",
+    j516c: "/feature-support/linux/m3-macbook-pro/",
+    j516m: "/feature-support/linux/m3-macbook-pro/",
+    j516s: "/feature-support/linux/m3-macbook-pro/",
+    j575d: "/feature-support/linux/m3-mac-studio/",
+    j613: "/feature-support/linux/m3-macbook-air/",
+    j615: "/feature-support/linux/m3-macbook-air/",
+    j575c: "/feature-support/linux/m4-mac-studio/",
+    j604: "/feature-support/linux/m4-macbook-pro/",
+    j614c: "/feature-support/linux/m4-macbook-pro/",
+    j614s: "/feature-support/linux/m4-macbook-pro/",
+    j616c: "/feature-support/linux/m4-macbook-pro/",
+    j616s: "/feature-support/linux/m4-macbook-pro/",
+    j623: "/feature-support/linux/m4-imac/",
+    j624: "/feature-support/linux/m4-imac/",
+    j713: "/feature-support/linux/m4-macbook-air/",
+    j715: "/feature-support/linux/m4-macbook-air/",
+    j773g: "/feature-support/linux/m4-mac-mini/",
+    j773s: "/feature-support/linux/m4-mac-mini/",
+    j704: "/feature-support/linux/m5-macbook-pro/",
+    j714c: "/feature-support/linux/m5-macbook-pro/",
+    j714s: "/feature-support/linux/m5-macbook-pro/",
+    j716c: "/feature-support/linux/m5-macbook-pro/",
+    j716s: "/feature-support/linux/m5-macbook-pro/",
+    j775c: "/feature-support/linux/m5-mac-studio/",
+    j775d: "/feature-support/linux/m5-mac-studio/",
+    j813: "/feature-support/linux/m5-macbook-air/",
+    j815: "/feature-support/linux/m5-macbook-air/",
+    j873s: "/feature-support/linux/m5-mac-mini/",
+    j873g: "/feature-support/linux/m6-mac-mini/",
+    j700: "/feature-support/linux/a18-macbook-neo/"
   };
 
   /* Recorded support states, keyed by device ID then feature name. Feature
@@ -133,8 +203,7 @@
     },
 
     /* MacBook Pro 14-inch, M2 Pro — the M2-series primary target. Recorded
-     * from bring-up, 2026-08. The Windows side of these drivers is shared,
-     * so most of this translates directly to the other chips. */
+     * from bring-up, 2026-08. These results qualify only this named board. */
     j414s: {
       "UEFI boot": "works",
       "Windows Boot Manager": "works",
@@ -188,6 +257,7 @@
 
   function buildDialog() {
     dialog = el("dialog", "device-modal");
+    dialog.setAttribute("aria-label", "Windows feature support");
 
     var head = el("div", "device-modal__head");
     var heading = el("div");
@@ -205,9 +275,14 @@
     dialog.appendChild(head);
     dialog.appendChild(el("div", "device-modal__body"));
 
+    var evidence = el("p", "device-modal__evidence");
+    var evidenceLink = el("a", "", "View the separate Aurora Linux assessment");
+    evidence.appendChild(evidenceLink);
+    dialog.appendChild(evidence);
+
     var note = el("p", "device-modal__note");
     note.textContent =
-      "No support states are recorded for this machine yet. The feature list " +
+      "No Windows support states are recorded for this machine yet. The feature list " +
       "is provisional and will be trimmed to the machine's actual hardware.";
     dialog.appendChild(note);
 
@@ -226,7 +301,9 @@
 
     dialog.querySelector(".device-modal__title").textContent = entry[0];
     dialog.querySelector(".device-modal__meta").textContent =
-      entry[1] + " · " + entry[2] + " · " + id;
+      "Windows · " + entry[1] + " · " + entry[2] + " · " + id;
+
+    dialog.querySelector(".device-modal__evidence a").href = LINUX_EVIDENCE[id];
 
     var body = dialog.querySelector(".device-modal__body");
     body.textContent = "";
@@ -296,7 +373,7 @@
 
       var button = el("button", "device-link");
       button.type = "button";
-      button.setAttribute("aria-label", "Support detail for " + id);
+      button.setAttribute("aria-label", "Windows support detail for " + id);
       code.parentNode.insertBefore(button, code);
       button.appendChild(code);
       button.addEventListener("click", function () {
