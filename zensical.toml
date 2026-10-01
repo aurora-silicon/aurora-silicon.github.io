@@ -22,7 +22,50 @@ nav = [
     { "M3 Series" = "feature-support/m3.md" },
     { "M4 Series" = "feature-support/m4.md" },
     { "M5 Series" = "feature-support/m5.md" },
+    { "M6 Series" = "feature-support/m6.md" },
     { "A18 Pro" = "feature-support/a18-pro.md" },
+    { "Aurora Linux Evidence" = [
+      { "Overview" = "feature-support/linux/overview.md" },
+      { "A18 Pro" = [
+        { "MacBook Neo" = "feature-support/linux/a18-macbook-neo.md" },
+      ] },
+      { "M1" = [
+        { "iMac" = "feature-support/linux/m1-imac.md" },
+        { "Mac mini" = "feature-support/linux/m1-mac-mini.md" },
+        { "Mac Studio" = "feature-support/linux/m1-mac-studio.md" },
+        { "MacBook Air" = "feature-support/linux/m1-macbook-air.md" },
+        { "MacBook Pro" = "feature-support/linux/m1-macbook-pro.md" },
+      ] },
+      { "M2" = [
+        { "Mac mini" = "feature-support/linux/m2-mac-mini.md" },
+        { "Mac Pro" = "feature-support/linux/m2-mac-pro.md" },
+        { "Mac Studio" = "feature-support/linux/m2-mac-studio.md" },
+        { "MacBook Air" = "feature-support/linux/m2-macbook-air.md" },
+        { "MacBook Pro" = "feature-support/linux/m2-macbook-pro.md" },
+      ] },
+      { "M3" = [
+        { "iMac" = "feature-support/linux/m3-imac.md" },
+        { "Mac Studio" = "feature-support/linux/m3-mac-studio.md" },
+        { "MacBook Air" = "feature-support/linux/m3-macbook-air.md" },
+        { "MacBook Pro" = "feature-support/linux/m3-macbook-pro.md" },
+      ] },
+      { "M4" = [
+        { "iMac" = "feature-support/linux/m4-imac.md" },
+        { "Mac mini" = "feature-support/linux/m4-mac-mini.md" },
+        { "Mac Studio" = "feature-support/linux/m4-mac-studio.md" },
+        { "MacBook Air" = "feature-support/linux/m4-macbook-air.md" },
+        { "MacBook Pro" = "feature-support/linux/m4-macbook-pro.md" },
+      ] },
+      { "M5" = [
+        { "Mac mini" = "feature-support/linux/m5-mac-mini.md" },
+        { "Mac Studio" = "feature-support/linux/m5-mac-studio.md" },
+        { "MacBook Air" = "feature-support/linux/m5-macbook-air.md" },
+        { "MacBook Pro" = "feature-support/linux/m5-macbook-pro.md" },
+      ] },
+      { "M6" = [
+        { "Mac mini" = "feature-support/linux/m6-mac-mini.md" },
+      ] },
+    ] },
   ] },
   { "Project" = [
     { "Overview" = "project/overview.md" },
@@ -44,6 +87,7 @@ nav = [
   ] },
   { "Research" = [
     { "Overview" = "research/overview.md" },
+    { "Linux Platform Evidence" = "research/linux-platform.md" },
     { "HAL Extension" = [
       { "AIC1" = "research/hal-extension/aic1.md" },
       { "AIC2" = "research/hal-extension/aic2.md" },

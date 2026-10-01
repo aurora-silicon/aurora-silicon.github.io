@@ -9,6 +9,8 @@ in several different machines. Support has to be tracked per machine, so this
 section is organised the way the hardware actually is rather than the way it is
 advertised.
 
+The catalog contains **59 board configurations**, grouped by generation and product. Device dialogs show **Windows** results. The [Aurora Linux evidence directory](linux/overview.md) contains separate, dated Linux implementation assessments and hardware reports for the same boards.
+
 ## How Apple hardware is identified
 
 Three names matter, and they don't map one to one.
@@ -52,11 +54,16 @@ device ID.
   <a class="gen-card" href="/feature-support/m4/">
     <span class="gen-card__name">M4 series</span>
     <span class="gen-card__socs"><span class="soc-id">t8132</span><span class="soc-id">t6040</span><span class="soc-id">t6041</span></span>
-    <span class="gen-card__count">6 machines catalogued</span>
+    <span class="gen-card__count">12 machines catalogued</span>
   </a>
   <a class="gen-card" href="/feature-support/m5/">
     <span class="gen-card__name">M5 series</span>
     <span class="gen-card__socs"><span class="soc-id">t8142</span><span class="soc-id">t6050</span></span>
+    <span class="gen-card__count">10 machines catalogued</span>
+  </a>
+  <a class="gen-card" href="/feature-support/m6/">
+    <span class="gen-card__name">M6 series</span>
+    <span class="gen-card__socs"><span class="soc-id">t8152</span></span>
     <span class="gen-card__count">1 machine catalogued</span>
   </a>
   <a class="gen-card" href="/feature-support/a18-pro/">
@@ -68,21 +75,31 @@ device ID.
 
 ## Reading a support state
 
-!!! warning "Support states are not recorded yet"
+A result applies to an **operating system, board, feature and tested build**. Shared silicon, a successful compilation, or a merged change does not establish that the same feature works on another machine.
 
-    The catalog below identifies hardware; it does not yet claim anything about
-    what works. Per-machine support states, and the legend that goes with them,
-    still need to be defined and filled in.
+### Windows results
 
-Two rules apply once states do appear here. A state is recorded against a device
-ID, not a marketing name — "M2 Pro works" is not a claim this section can make,
-because the M2 Pro appears in four different machines. And a result on one
-machine never transfers to a sibling, however similar: the chip may be shared,
-but the board, display, and peripherals are not.
+The generation catalogs and device dialogs preserve the project's recorded Windows bring-up results. They use **Working**, **Partial**, **Not working**, and **Not recorded**. An unrecorded feature is not a demonstrated failure. Existing results for `j316s` and `j414s` remain specific to those boards.
+
+### Aurora Linux evidence
+
+The Linux pages distinguish what exists in source from what a named board has demonstrated:
+
+| Evidence | Meaning |
+| --- | --- |
+| Reported on hardware | A linked report identifies the board, feature and tested revisions; its limits still apply. |
+| Published / integrated source | Public code or board integration exists. This alone does not prove operation on hardware. |
+| Development / partial | A feature branch, open PR, incomplete integration or qualification remains. |
+| Not audited / unverified | The available assessment does not establish the result. This does not mean unsupported. |
+| Known / source gap | The cited report or pinned source identifies a missing or failing capability. |
+| Not fitted | The hardware is absent from this product. |
+
+The [Linux directory](linux/overview.md) records the **1 October 2026** snapshot, source revision and per-product evidence. M1–M3 have source assessments; J700 has its own public assessment; M4–M6 are not yet audited. These Linux findings do not change the Windows states.
 
 ## Where the identifiers come from
 
-Device and SoC IDs on this page are taken from the Apple device trees in the
-Linux kernel and from the Asahi Linux
-[SoC codename table](https://asahilinux.org/docs/hw/soc/soc-codenames/), which
-is the reference for chips that do not yet have upstream device trees.
+The original catalog draws on Apple device trees in Linux and the Asahi Linux [SoC codename table](https://asahilinux.org/docs/hw/soc/soc-codenames/). The expanded catalog follows the [public Aurora hardware directory](https://github.com/aurora-silicon/linux/discussions/70), including its board-specific links to The Apple Wiki and pinned Aurora device trees.
+
+A public identity record is not a support guarantee or evidence that an upstream device tree exists. The M5 Pro / Max / Ultra mapping to `t6050` is retained as a source-qualified catalog entry, not a claim of identical hardware. Each product's Linux page keeps its identity references and assessment boundaries.
+
+To contribute a result, use the [hardware-report template](../developers/testing.md#hardware-report-template) and the product's canonical discussion.
