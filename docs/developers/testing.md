@@ -4,61 +4,69 @@ title: Testing
 
 # Testing
 
-A useful result identifies the operating system, exact board, feature and software that was tested. The [feature-support catalog](../feature-support/overview.md) keeps Windows results separate from the [Aurora Linux assessments](../feature-support/linux/overview.md).
+How work gets checked before it is trusted, and how results on real hardware are
+recorded.
 
-## What a check establishes
+## What we test
 
-| Check | What it establishes | What still needs evidence |
-| --- | --- | --- |
-| Source inspection | A driver, device match or board configuration exists in a specified revision. | Whether it builds, runs, has firmware and userspace integration, and works on the board. |
-| Build or automated test | The named build or test passed under its recorded environment. | Hardware operation and complete-system readiness. |
-| Hardware feature test | A specific feature behaved as reported on the named board and build. | Other boards, other configurations, untested transitions and long-term reliability. |
-| Complete-system qualification | The recorded installer, boot chain and system passed the stated end-to-end checks. | Any scenarios or hardware absent from those checks. |
+A build tells us the code compiles. A source review tells us which drivers and
+board descriptions exist. Neither tells us that the machine works.
 
-A successful build is not a hardware pass. A merged PR is not automatically a released feature: record the destination branch. In the 1 October 2026 Linux assessment, a merge into `feat/sep` remains separate from the `aurora-wip` baseline. See the [evidence legend](../feature-support/linux/overview.md#reading-the-evidence).
+Hardware results need the exact device ID, operating system and software
+revisions. Test the feature you are claiming, including the transitions that
+matter — reconnecting a device, rebooting, or suspending and waking the machine.
+Record how many attempts passed as well as what happened once.
 
-## Running tests and preparing hardware
+## Running the tests
 
-Use the instructions belonging to the exact repository and branch being tested. There is no single build, flash or recovery command that applies to every board. Record the actual command, environment and exit result; confirm the board-specific recovery procedure before changing firmware or boot components.
+Use the instructions in the repository and branch you are working on. There is
+no single build, flash or recovery command for every machine. Keep the commands
+and their output with the result, and establish the recovery procedure before
+changing firmware or boot components.
 
-A device-tree entry, driver option or successful boot is not enough to qualify all peripherals. Test the claimed operation and transitions explicitly: for example, both USB connector orientations, reconnects, storage resets, or suspend/resume. Only report the scenarios actually exercised. Avoid treating speaker routing as validated speaker tuning or a compile-tested camera series as working capture.
+## Recording a result
+
+A result belongs to one machine. Do not carry it across to another board because
+it uses the same chip, or from Linux to Windows because the hardware is the same.
+The [feature-support pages](../feature-support/overview.md) keep those results
+separate.
+
+Name the branch as well as the commit. A merged change may live in a feature
+branch rather than the working tree, and an open PR can work on hardware without
+being part of a release. Keep partial results and known limits attached to the
+claim.
+
+## Reporting a failure
+
+Use the product thread linked from the machine's generation page, with one
+feature or failure per report. An untested machine is not a reproduced bug.
+Include the expected result, what happened instead, and enough detail for
+someone else with that board to repeat it.
 
 ## Hardware-report template
-
-Post one feature or failure per report. Identify the configuration from the [product directory](../feature-support/linux/overview.md#find-a-product-or-board), and keep the original limits with every quoted result.
 
 ```text
 Operating system and version:
 Board ID:
 SoC ID and chip variant:
 Model / screen size / port configuration:
-Feature or SoC block:
-Repository / branch / exact commit:
-Kernel or Windows build and driver revisions:
-m1n1 / U-Boot / UEFI / Mesa revisions, where relevant:
+Feature:
+Repository / branch / commit:
+Kernel or Windows build and driver versions:
+m1n1 / U-Boot / UEFI / Mesa versions, where relevant:
 Firmware version:
-Host tools and test commands:
-Attached devices / cables / ports / orientations:
+Test commands and attached devices:
 Steps to reproduce:
 Expected result:
 Observed result:
 Successful attempts / total attempts:
-Boot / reboot / suspend / reconnect scenarios tested:
+Reboot / reconnect / suspend tests performed:
 Public log or artifact URL:
 Artifact SHA-256:
 Command to repeat the check:
-Known limits / untested scenarios:
-Recovery steps:
+Known limits and recovery steps:
 ```
 
-## Recording a result
-
-Record results against the device ID and operating system, never against a chip or marketing name alone. A sibling board stays unverified until evidence identifies it. Preserve failures and partial results, including repeat counts and recovery conditions.
-
-For Linux, use the evidence categories in the product assessment. For Windows, update a recorded state only when Windows evidence establishes that feature for that board. Keep a source link and assessment date, and identify any open PR or feature branch required to reproduce it.
-
-## Reporting a failure
-
-Reply to the product's canonical GitHub discussion, linked from its assessment. Include the smallest reproducible case and the expected result, observed failure, revisions and public artifact. An unaudited board is not a bug by itself; a missing source path, an untested feature and a reproduced failure are different findings.
-
-Keep reports within Aurora Silicon spaces under the project's [Policies & Guidelines](../project/policies-and-guidelines.md). The report structure is adapted from the [hardware directory](https://github.com/aurora-silicon/linux/discussions/70) and [J700 assessment](https://github.com/aurora-silicon/linux/discussions/72), dated 1 October 2026.
+This follows the reporting format in the [hardware discussions](https://github.com/aurora-silicon/linux/discussions/70).
+Keep reports within Aurora Silicon spaces, as set out in
+[Policies & Guidelines](../project/policies-and-guidelines.md).

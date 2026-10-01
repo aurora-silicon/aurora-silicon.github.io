@@ -8,10 +8,6 @@ Notes on how Apple's hardware actually behaves, and what a Windows
 implementation has to do about it. These pages record findings rather than
 instructions — the working detail lives in the repositories.
 
-## Aurora Linux evidence
-
-The [Linux platform summary](linux-platform.md) and [25 product assessments](../feature-support/linux/overview.md) record the 1 October 2026 public source audit and named hardware reports. They cover 59 cataloged boards and distinguish Linux findings from Windows support.
-
 ## Areas
 
 <div class="attrib-grid" markdown>
