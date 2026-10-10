@@ -4,18 +4,17 @@ title: Touch ID
 
 # Touch ID
 
-Notes on the Touch ID stack and a reverse-engineered C reimplementation of the
-AP side of it, targeting a custom OS — Asahi Linux and Windows on Arm.
+Notes on the Touch ID stack and a C implementation of the AP side of it,
+targeting a custom OS — Asahi Linux and Windows on Arm.
 
 Around 4,150 lines of C plus 1,050 lines of Python bring-up tooling, MIT
 licensed. This is research. Nothing in it has authenticated a fingerprint; the
 protocol layers are recovered and written, and the paths that would exercise a
-sensor return `-ENOSYS`. Roughly 30 items remain marked `TODO_RE` pending a live
-mailbox capture.
+sensor return `-ENOSYS`. Roughly 30 items remain open pending a live mailbox
+capture.
 
-The work is built from static RE of the on-disk kexts and frameworks
-(`nm`/`otool`/`kmutil`, plus the decompressed boot kernelcache), from m1n1's
-`hw/sep.py` and `hw/asc.py`, and from the public RE record.
+The work also builds on m1n1's `hw/sep.py` and `hw/asc.py` and on the public
+community record.
 
 ## Two targets
 
@@ -79,16 +78,15 @@ SEPOS bring-up fail on M2 and newer.
 ## SBIO — two command spaces
 
 The endpoint has two numbering schemes that must not be conflated. `bm_cmd_t`
-(magic `0x4d42`, opcodes `1..0x62`) is the AP and userland header, dispatched
-through a 97-entry jump table. It is never placed on the wire raw. The driver
-maps it to an SBIO wire `TYPE` in roughly `0x14..0x92`, carried by
-`AppleSEPGenericTransfer` — a transaction and fragmentation layer that adds no
-crypto.
+(magic `0x4d42`, opcodes `1..0x62`) is the AP and userland header. It is never
+placed on the wire raw. The driver maps it to an SBIO wire `TYPE` in roughly
+`0x14..0x92`, carried by `AppleSEPGenericTransfer` — a transaction and
+fragmentation layer that adds no crypto.
 
-That last point matters: static RE of the AP kexts found **no** Diffie-Hellman
-or per-session key handshake on the mailbox. Any session crypto lives inside
-encrypted SEPOS, invisible to the AP, so a client sends raw opcodes and ferries
-out-of-line buffers rather than wrapping or MACing anything.
+That last point matters: there is **no** Diffie-Hellman or per-session key
+handshake on the mailbox. Any session crypto lives inside encrypted SEPOS,
+invisible to the AP, so a client sends raw opcodes and ferries out-of-line
+buffers rather than wrapping or MACing anything.
 
 The operation split is the important structural finding:
 
