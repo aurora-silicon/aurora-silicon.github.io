@@ -1,5 +1,6 @@
 <div class="macbook">
   <div class="macbook-hinge">
+  <div class="macbook-shell" aria-hidden="true"></div>
   <div class="macbook-lid">
     <div class="macbook-screen">
       <div class="macbook-notch" aria-hidden="true"><span></span></div>
@@ -7,58 +8,174 @@
     </div>
   </div>
   </div>
-  <svg class="macbook-base" viewBox="0 0 640 18" fill="none" aria-hidden="true">
-    <defs><linearGradient id="mb-base" x1="320" y1="1" x2="320" y2="17" gradientUnits="userSpaceOnUse"><stop stop-color="var(--laptop-base-top)"/><stop offset="1" stop-color="var(--laptop-base-bottom)"/></linearGradient></defs>
-    <path d="M1 1h638v7a9 9 0 0 1-9 9H10a9 9 0 0 1-9-9V1Z" fill="url(#mb-base)" stroke="var(--laptop-base-outline)" stroke-width=".75"/>
-    <path d="M274 1h92v2a4 4 0 0 1-4 4h-84a4 4 0 0 1-4-4V1Z" fill="var(--laptop-notch)"/>
-    <path d="M5 2h265m100 0h265" stroke="var(--laptop-highlight)" stroke-width=".7"/>
+  <!-- Base front, measured from Apple's closed front view: 24 units tall for a
+       640-unit width, 15-unit bottom corners, a 112-unit thumb recess and feet. -->
+  <svg class="macbook-base" viewBox="0 0 640 30" fill="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="mb-base" x1="320" y1="1" x2="320" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="var(--laptop-base-top)"/><stop offset=".55" stop-color="color-mix(in srgb, var(--laptop-base-top) 70%, var(--laptop-base-bottom))"/><stop offset="1" stop-color="var(--laptop-base-bottom)"/></linearGradient>
+      <linearGradient id="mb-notch" x1="320" y1="1" x2="320" y2="7.6" gradientUnits="userSpaceOnUse"><stop stop-color="var(--laptop-notch)"/><stop offset=".3" stop-color="var(--laptop-base-bottom)"/><stop offset="1" stop-color="var(--laptop-base-top)"/></linearGradient>
+    </defs>
+    <path d="M34 22h40v4.9a1.6 1.6 0 0 1-1.6 1.6H35.6a1.6 1.6 0 0 1-1.6-1.6V22Zm532 0h40v4.9a1.6 1.6 0 0 1-1.6 1.6h-36.8a1.6 1.6 0 0 1-1.6-1.6V22Z" fill="var(--laptop-seam)"/>
+    <path d="M1 1h638v9a15 15 0 0 1-15 15H16A15 15 0 0 1 1 10V1Z" fill="url(#mb-base)" stroke="var(--laptop-base-outline)" stroke-width=".75"/>
+    <path d="M264 1h112v2.6a4 4 0 0 1-4 4H268a4 4 0 0 1-4-4V1Z" fill="url(#mb-notch)" stroke="var(--laptop-base-outline)" stroke-width=".5"/>
+    <path d="M5 2h257m116 0h257" stroke="var(--laptop-highlight)" stroke-width=".7"/>
   </svg>
 </div>
-<noscript><style>.macbook-hinge { transform: none !important; }.screen-content { opacity: 1 !important; }</style></noscript>
+<div class="macbook-preroll" aria-hidden="true"></div>
+<noscript><style>.macbook-hinge { transform: none !important; }.screen-content { opacity: 1 !important; }.macbook-screen::after { display: none !important; }</style></noscript>
 <script>
   const laptop = document.querySelector<HTMLElement>('.macbook');
   const hinge = laptop?.querySelector<HTMLElement>('.macbook-hinge');
   const hero = laptop?.closest<HTMLElement>('.hero');
+  const header = document.querySelector<HTMLElement>('.site-header');
+  const preroll = document.querySelector<HTMLElement>('.macbook-preroll');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const startedAt = performance.now();
+  // Shut: the lid lies flat on the base and its top edge rests on the base's top.
+  const CLOSED = 90;
   let opening = !reducedMotion.matches;
   let frame = 0;
+  // Geometry from measure(): lid height, lid thickness, perspective distance,
+  // and the gap from the top of the window to the open lid's top.
+  let lidH = 0, lidT = 0, dist = 1, lidTopY = 0;
+  // Pre-roll: tipping towards the viewer, the lid's top first rises (it comes
+  // closer) and is back at its open height only at `startAngle`. Holding the
+  // gap from the first pixel would snap the lid to that angle, so the laptop
+  // stays put for `prerollPx` of scroll while the lid eases from rest to
+  // startAngle, arriving at `startRate`, the speed the gap-holding motion needs.
+  let startAngle = 0, startRate = 0, prerollPx = 0;
+  // The lid follows its scroll angle with a short glide, so wheel steps and
+  // slow scrolling turn into continuous motion.
+  const GLIDE_MS = 90;
+  let shown = -1, lastFrame = 0;
+
+  // Height of the lid's projected top above the hinge at angle a (degrees),
+  // counting the back of the lid, which forms the top once it is nearly shut.
+  function lidTopAbove(a: number) {
+    const s = Math.sin(a * Math.PI / 180), c = Math.cos(a * Math.PI / 180);
+    const front = lidH * c * dist / (dist - lidH * s);
+    const back = (lidH * c + lidT * s) * dist / (dist - lidH * s + lidT * c);
+    return Math.max(front, back);
+  }
+
+  // The lid angle at which its top sits exactly `above` px over the hinge.
+  function angleFor(above: number) {
+    if (above >= lidTopAbove(startAngle)) return startAngle;
+    if (above <= lidTopAbove(CLOSED)) return CLOSED;
+    let lo = startAngle, hi = CLOSED;
+    for (let i = 0; i < 30; i++) {
+      const mid = (lo + hi) / 2;
+      if (lidTopAbove(mid) > above) lo = mid; else hi = mid;
+    }
+    return (lo + hi) / 2;
+  }
+
+  // The lid angle for `pinned` px of pre-roll and `moved` px the laptop has
+  // since scrolled up. During the pre-roll a cubic eases from rest to
+  // startAngle at startRate; after it the gap below the header holds exactly.
+  function closingAngle(pinned: number, moved: number) {
+    if (moved > 0 || pinned >= prerollPx) return angleFor(lidTopAbove(0) - moved);
+    if (pinned <= 0) return 0;
+    const x = pinned / prerollPx;
+    return startAngle * (3 * x * x - 2 * x * x * x) + startRate * prerollPx * (x * x * x - x * x);
+  }
   function draw(now: number) {
     frame = 0;
     if (!laptop || !hero || reducedMotion.matches) return;
     const t = opening ? Math.min(1, Math.max(0, (now - startedAt) / 1100)) : 1;
     if (t === 1) opening = false;
-    const openingAngle = 89 * (1 - t) ** 3;
-    const { top, height } = hero.getBoundingClientRect();
-    const progress = Math.min(1, Math.max(0, -top / (height * .8)));
-    const scrollAngle = 89 * progress * progress * (3 - 2 * progress);
+    const openingAngle = CLOSED * (1 - t) ** 3;
+    // The laptop scrolls normally, and the lid closes just enough to keep its
+    // top at the same gap below the header as when open. Once shut, it scrolls away.
+    const box = laptop.getBoundingClientRect();
+    const pinned = preroll ? box.bottom - preroll.getBoundingClientRect().top : 0;
+    const target = closingAngle(pinned, lidTopY - box.top);
+    const dt = lastFrame ? Math.min(100, now - lastFrame) : 16;
+    lastFrame = now;
+    shown = shown < 0 ? target : shown + (target - shown) * (1 - Math.exp(-dt / GLIDE_MS));
+    if (Math.abs(target - shown) < .01) shown = target;
     // One hinge angle for both motions: rotations never add or overshoot.
-    const angle = Math.max(openingAngle, scrollAngle);
+    const angle = Math.max(openingAngle, shown);
     laptop.style.setProperty('--lid-angle', `${-angle}deg`);
-    const fade = Math.min(1, Math.max(0, (angle / 89 - .55) / .4));
+    const fade = Math.min(1, Math.max(0, (angle / CLOSED - .55) / .4));
     laptop.style.setProperty('--screen-scroll-opacity', String(1 - fade * fade * (3 - 2 * fade)));
-    if (opening) frame = requestAnimationFrame(draw);
+    if (opening || shown !== target) frame = requestAnimationFrame(draw);
+    else lastFrame = 0;
   }
   function requestDraw() {
     if (!frame && !reducedMotion.matches) frame = requestAnimationFrame(draw);
+  }
+  // The lid's edge: solid faces standing 7.4 units deep behind the display,
+  // around its top and sides, with 8 facets on each rounded top corner. Solid
+  // from every angle, so the shut lid's front is a filled band on the base.
+  const shell = laptop?.querySelector<HTMLElement>('.macbook-shell');
+  const CORNER_FACETS = 8;
+  function buildEdge(width: number, height: number, unit: number) {
+    if (!shell) return;
+    const r = 10.9 * unit;
+    const points: [number, number][] = [[0, height], [0, r]];
+    for (let i = 1; i <= CORNER_FACETS; i++) {
+      const a = Math.PI * (1 + .5 * i / CORNER_FACETS);
+      points.push([r + r * Math.cos(a), r + r * Math.sin(a)]);
+    }
+    for (let i = 0; i <= CORNER_FACETS; i++) {
+      const a = Math.PI * (1.5 + .5 * i / CORNER_FACETS);
+      points.push([width - r + r * Math.cos(a), r + r * Math.sin(a)]);
+    }
+    points.push([width, height]);
+    const faces = points.slice(1).map((end, i) => {
+      const [x, y] = points[i];
+      const length = Math.hypot(end[0] - x, end[1] - y);
+      const angle = Math.atan2(end[1] - y, end[0] - x);
+      // Overlap neighbours by half a pixel so the facets close up.
+      return `<span style="width:${length + .5}px;transform:translate(${x}px,${y}px) rotate(${angle}rad) rotateX(-90deg)"></span>`;
+    });
+    shell.innerHTML = faces.join('');
   }
   function measure() {
     if (!laptop || !hinge) return;
     const baseWidth = laptop.clientWidth;
     const lidWidth = hinge.offsetWidth;
     const lidHeight = hinge.offsetHeight;
-    // At 90 degrees, projected width is w*d/(d-h). Solve for d so the
-    // closing lid reaches the front of the base, with a tiny rounding margin.
-    const closedWidth = baseWidth * .995;
-    const distance = lidHeight * closedWidth / Math.max(1, closedWidth - lidWidth);
+    // Shut, the lid's widest point is its side walls, which sit one corner
+    // radius r behind its front edge: projected width w*d/(d-h+r). Solve for d
+    // so that is exactly the base outline's width (x 1 to 639 of 640).
+    const closedWidth = baseWidth * 638 / 640;
+    const radius = 10.9 * lidWidth / 640;
+    const distance = (lidHeight - radius) * closedWidth / Math.max(1, closedWidth - lidWidth);
     laptop.style.setProperty('--lid-perspective', `${distance}px`);
     laptop.style.setProperty('--hinge-y', `${lidHeight}px`);
+    // Lid sizes are in units of 1/640 of the lid's width, matching the
+    // 640-unit base once the lid is shut.
+    laptop.style.setProperty('--u', `${lidWidth / 640}px`);
+    buildEdge(lidWidth, lidHeight, lidWidth / 640);
+    lidH = lidHeight;
+    lidT = 7.4 * lidWidth / 640;
+    dist = distance;
+    const gap = hero ? parseFloat(getComputedStyle(hero).paddingTop) : 0;
+    lidTopY = (header?.offsetHeight ?? 0) + gap;
+    startAngle = 0;
+    let peak = 0;
+    for (let a = 0; a < 45; a += .05) if (lidTopAbove(a) > lidTopAbove(peak)) peak = a;
+    if (peak > 0) {
+      startAngle = peak;
+      while (startAngle < CLOSED && lidTopAbove(startAngle) > lidTopAbove(0)) startAngle += .01;
+      startRate = angleFor(lidTopAbove(0) - 1) - startAngle;
+      // Long enough that the cubic never overshoots.
+      prerollPx = Math.max(1, 2.5 * startAngle / Math.max(.01, startRate));
+    } else {
+      startRate = 0;
+      prerollPx = 0;
+    }
+    laptop.style.setProperty('--macbook-pin-top', `${lidTopY}px`);
+    preroll?.style.setProperty('height', `${prerollPx}px`);
     requestDraw();
   }
   window.addEventListener('scroll', requestDraw, { passive: true });
   window.addEventListener('pageshow', requestDraw);
   const observer = new ResizeObserver(measure);
   if (hinge) observer.observe(hinge);
+  if (header) observer.observe(header);
   reducedMotion.addEventListener('change', () => {
     if (frame) cancelAnimationFrame(frame);
     frame = 0;
@@ -71,27 +188,41 @@
   measure();
 </script>
 <style>
-  .macbook { width: min(100%, 1000px); margin-inline: auto; perspective: var(--lid-perspective, 5000px); perspective-origin: 50% var(--hinge-y, 100%); }
-  .macbook-hinge { width: 88%; margin-inline: auto; transform-origin: center bottom; transform-style: preserve-3d; transform: rotateX(var(--lid-angle, -89deg)); backface-visibility: hidden; }
-  .macbook-lid { width: 100%; padding: 7px; border: 1px solid #333; border-radius: 17px 17px 3px 3px; background: #0c0c0c; }
-  .macbook-screen { position: relative; display: flex; align-items: center; justify-content: center; width: 100%; min-width: 0; aspect-ratio: 16 / 10; min-height: 215px; padding: 45px 24px 35px; border: 2px solid #0c0c0c; border-radius: 10px 10px 2px 2px; background: var(--bg); color: var(--text); }
+  .macbook { --laptop-seam: color-mix(in srgb, var(--laptop-base-bottom) 40%, #000); position: sticky; top: var(--macbook-pin-top, 0); width: min(100%, 1000px); margin-inline: auto; perspective: var(--lid-perspective, 5000px); perspective-origin: 50% var(--hinge-y, 100%); }
+  .macbook-hinge { position: relative; width: 80%; margin-inline: auto; transform-origin: center bottom; transform-style: preserve-3d; transform: rotateX(var(--lid-angle, -90deg)); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+  /* Lid, measured from Apple's open front view: 80% of the base's width, a
+     1.55% bezel with a deeper chin, and a thin aluminium rim in the base's
+     finish. Its bottom sits in the hinge, so the display meets the base in black. */
+  .macbook-lid { width: 100%; padding: calc(var(--u, 1.25px) * 9.9) calc(var(--u, 1.25px) * 9.9) calc(var(--u, 1.25px) * 11.5); border: calc(var(--u, 1.25px) * 2.2) solid var(--laptop-base-top); border-bottom-color: #0c0c0c; border-radius: calc(var(--u, 1.25px) * 10.9) calc(var(--u, 1.25px) * 10.9) calc(var(--u, 1.25px) * 1.5) calc(var(--u, 1.25px) * 1.5); background: #0c0c0c; }
+  .macbook-screen { position: relative; isolation: isolate; display: flex; align-items: center; justify-content: center; width: 100%; min-width: 0; aspect-ratio: 16 / 10; min-height: 200px; padding: 45px 24px 35px; border-radius: calc(var(--u, 1.25px) * 5.4) calc(var(--u, 1.25px) * 5.4) 0 0; background: var(--bg); color: var(--text); }
   .screen-content { width: 100%; min-width: 0; opacity: var(--screen-scroll-opacity, 0); }
-  .macbook-notch { position: absolute; top: -1px; left: 50%; transform: translateX(-50%); display: flex; justify-content: center; align-items: center; width: 70px; height: 14px; border-radius: 0 0 6px 6px; background: #0c0c0c; }
-  .macbook-notch span { width: 3px; height: 3px; border-radius: 50%; background: #333; }
+  /* The display goes dark as the lid closes, so the gap shows the black interior. */
+  .macbook-screen::after { content: ''; position: absolute; z-index: 1; inset: 0; border-radius: inherit; background: #0c0c0c; opacity: calc(1 - var(--screen-scroll-opacity, 0)); pointer-events: none; }
+  .macbook-notch { position: absolute; z-index: 2; top: 0; left: 50%; transform: translateX(-50%); display: flex; justify-content: center; align-items: center; width: 12.4%; height: calc(var(--u, 1.25px) * 14); border-radius: 0 0 calc(var(--u, 1.25px) * 5) calc(var(--u, 1.25px) * 5); background: #0c0c0c; }
+  .macbook-notch span { width: calc(var(--u, 1.25px) * 3.4); height: calc(var(--u, 1.25px) * 3.4); border-radius: 50%; background: #2a2a2a; }
+  /* Lid thickness: 7.4 units, about a third of the base as in Apple's closed
+     front view. Each edge face is shaded across its depth like the base: dark
+     seam at the display, aluminium darkening towards it, then the highlight and
+     outline at the back, which is the top of the shut lid. */
+  .macbook-shell { position: absolute; inset: 0; transform-style: preserve-3d; pointer-events: none; }
+  .macbook-shell :global(span) { position: absolute; top: 0; left: 0; height: calc(var(--u, 1.25px) * 7.4); transform-origin: 0 0; background: linear-gradient(var(--laptop-seam) 0 12%, color-mix(in srgb, var(--laptop-base-top) 45%, var(--laptop-base-bottom)) 12%, var(--laptop-base-top) 82%, var(--laptop-highlight) 82% 92%, var(--laptop-base-outline) 92%); }
   .macbook-base { display: block; width: 100%; height: auto; margin-top: -1px; }
+
+  .macbook-preroll { height: 0; }
+
   @media (prefers-reduced-motion: reduce) {
+    .macbook { position: static; }
+    .macbook-preroll { display: none; }
     .macbook-hinge { transform: none; }
     .screen-content { opacity: 1; transition: none; }
+    .macbook-screen::after { display: none; }
   }
   @media (max-width: 760px) {
-    .macbook-hinge { width: 94%; }
-    .macbook-lid { padding: 4px; border-radius: 11px 11px 2px 2px; }
-    .macbook-screen { padding: 32px 16px 26px; border-radius: 6px 6px 1px 1px; }
-    .macbook-notch { width: 50px; height: 10px; border-radius: 0 0 4px 4px; }
+    .macbook-hinge { width: 88%; }
+    .macbook-screen { padding: 32px 16px 26px; }
   }
   @media (max-width: 480px) {
-    .macbook-hinge { width: 96%; }
-    .macbook-lid { padding: 3px; }
+    .macbook-hinge { width: 92%; }
     .macbook-screen { padding: 28px 10px 22px; }
   }
 </style>
