@@ -1,9 +1,67 @@
 ---
-import LucideIcon from './LucideIcon.astro';
-interface Props { name: string; }
-const { name } = Astro.props;
-const icon = name === 'MacBook Pro' ? 'laptop'
-  : name.startsWith('MacBook') ? 'laptop-minimal'
-  : name === 'iMac' ? 'monitor' : 'pc-case';
+// Mac glyphs drawn from Apple's front views at each model's true proportions,
+// on a 32-unit grid in the same line weight as the Lucide feature icons.
+interface Props { name: string; size?: number; }
+const { name, size = 34 } = Astro.props;
+
+// Laptop bases are tall enough that the dark line inside their outline stays
+// open; the thumb recess is a shallow dip in the top edge with a thin joiner
+// of that line still running beneath it.
+// A laptop lid: rounded top corners, straight sides and small rounded feet
+// that turn onto the base's top edge, drawn at the same weight so they merge.
+const lid = (x: number, y: number, w: number) => `<path d="M${x + 1} 20.6a1 1 0 0 1-1-1V${y + 1.2}a1.2 1.2 0 0 1 1.2-1.2h${(w - 2.4).toFixed(2)}a1.2 1.2 0 0 1 1.2 1.2v${(19.6 - y - 1.2).toFixed(2)}a1 1 0 0 1-1 1" stroke-linecap="butt"/>`;
+const thumbRecess = '<path d="M13.6 20.6v.2a.35.35 0 0 0 .35.35h3.7a.35.35 0 0 0 .35-.35v-.2" stroke-width=".7"/>';
+// Feet: flat pads about 1.6 units wide, as in Apple's front views.
+const feet = (y: number, left: number, right: number) => `<path d="M${left} ${y}h1.2M${right} ${y}h1.2" stroke-width=".5"/>`;
+
+const glyphs: Record<string, string> = {
+  // MacBook Pro, from Apple's front view: lid 82% of the base's width at
+  // 1.47:1, a notch 12% of the lid's width, on a base 1.4× as thick as the
+  // Air's (3.3% of its width) with the thumb recess and feet.
+  'MacBook Pro': lid(5.3, 6, 21.4)
+    + '<rect x="14.7" y="6.4" width="2.6" height="1" rx=".4" fill="currentColor" stroke="none"/>'
+    + '<path d="M3 20.6h26v1.4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>'
+    + thumbRecess + feet(23.9, 4.7, 26.1),
+  // MacBook Air: the Pro's lid and notch on the Air's thinner base (2.3% of
+  // its width), with the thumb recess and flat feet.
+  'MacBook Air': lid(5.3, 6, 21.4)
+    + '<rect x="14.7" y="6.4" width="2.6" height="1" rx=".4" fill="currentColor" stroke="none"/>'
+    + '<path d="M3 20.6h26v1a.9.9 0 0 1-.9.9H3.9a.9.9 0 0 1-.9-.9z"/>'
+    + thumbRecess + feet(23.4, 4.5, 26.3),
+  // MacBook Neo, from Apple's front view: lid 86% of the base's width at
+  // 1.49:1, a camera dot instead of a notch, a deeper chin below the display,
+  // on a thin base with the thumb recess and small feet near each end.
+  'MacBook Neo': lid(4.9, 5.6, 22.2)
+    + '<circle cx="16" cy="6.8" r=".35" fill="currentColor" stroke="none"/><path d="M4.9 19.4h22.2"/>'
+    + '<path d="M3 20.6h26v1a.9.9 0 0 1-.9.9H3.9a.9.9 0 0 1-.9-.9z"/>'
+    + thumbRecess + feet(23.4, 4.4, 26.4),
+  // Mac mini, from Apple's front view: a 2.9:1 body with nearly square
+  // corners, two upright USB-C ports, the status light and headphone jack, on a
+  // dark vented foot tapering from 85% to 75% of the width.
+  'Mac mini': '<rect x="3" y="11" width="26" height="9" rx="1"/>'
+    + '<path d="M8.4 15.8v1.7M11.5 15.8v1.7"/>'
+    + '<circle cx="21" cy="16.6" r=".4" fill="currentColor" stroke="none"/><circle cx="23.4" cy="16.6" r=".7" fill="currentColor" stroke="none"/>'
+    + '<path d="M4.9 20h22.2l-1.3 1.6H6.2z" fill="currentColor" stroke-width=".8"/>',
+  // Mac Studio, from Apple's front view: a 2.26:1 body with nearly square
+  // corners, two upright USB-C ports and the SD slot low on the left (kept
+  // clear of the outline), the status light on the right, on a light perforated foot (90% to 82% wide).
+  'Mac Studio': '<rect x="3" y="8.5" width="26" height="11.5" rx="1"/>'
+    + '<path d="M7.2 16v1.3M9.2 16v1.3M11 16.65h3.5"/>'
+    + '<circle cx="24.7" cy="16.65" r=".4" fill="currentColor" stroke="none"/>'
+    + '<path d="M4.3 20h23.4l-1.1 1.1H5.4z" fill="currentColor" fill-opacity=".35" stroke-width=".8"/>',
+  // Mac Pro, from Apple's front view: a body about 2.2 times as tall as it is
+  // wide, its stainless frame arching over the top as the handle and running
+  // past the bottom as two legs, and a densely perforated front.
+  'Mac Pro': '<rect x="11" y="4.4" width="10" height="21.8" rx="1"/>'
+    + '<path d="M11.8 4.4V3.4a1 1 0 0 1 1-1h6.4a1 1 0 0 1 1 1v1M12.4 26.2v2M19.6 26.2v2"/>'
+    + [6.6, 8.8, 11, 13.2, 15.4, 17.6, 19.8, 22, 24.2].flatMap(y => [12.7, 14.9, 17.1, 19.3].map(x => `<circle cx="${x}" cy="${y}" r=".45" fill="currentColor" stroke="none"/>`)).join(''),
+  // iMac, from Apple's front view: a 1.46:1 body with small corners, the
+  // camera above the display, a chin across the bottom 15%, on a straight neck
+  // 24% of the width and a flat foot plate.
+  iMac: '<rect x="3" y="3.5" width="26" height="17.8" rx=".8"/><path d="M3 18.6h26"/>'
+    + '<circle cx="16" cy="4.5" r=".35" fill="currentColor" stroke="none"/>'
+    + '<path d="M13 21.3v3.5M19 21.3v3.5"/><rect x="12.7" y="24.8" width="6.6" height=".8" rx=".3"/>',
+};
+const shapes = glyphs[name] ?? glyphs['MacBook Pro'];
 ---
-<LucideIcon name={icon} class="device-icon" size={27} />
+<svg class="device-icon" width={size} height={size} viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={shapes} />
