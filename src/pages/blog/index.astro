@@ -7,6 +7,7 @@ const formatDate = (date: Date) => date.toLocaleDateString('en', { year: 'numeri
 <Site title="Blog | Aurora Silicon" description="News and development updates from Aurora Silicon.">
   <section class="blog-page wrap" aria-labelledby="blog-title">
     <h1 id="blog-title">Blog</h1>
+    {posts.length === 0 && <p class="post-list">No posts yet.</p>}
     <div class="post-list">{posts.map(post => <article><a href={`/blog/${post.id}/`}><time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time><h2>{post.data.title}</h2><p>{post.data.description}</p></a></article>)}</div>
   </section>
 </Site>
