@@ -2,6 +2,7 @@
 title: Introducing Linux on MacBook Neo
 description: An alpha release of Linux on MacBook Neo, built by the Aurora Silicon and Omarchy Mac teams.
 date: 2026-10-19
+authors: [Dj, Ryan Murray]
 ---
 
 We're proud to finally present to you an alpha release of Linux support for MacBook Neo. It is possible due to the extensive efforts of the Aurora Silicon and Omarchy Mac teams working together. While labeled as an alpha, it is (_hopefully_) a super-polished experience offering full access to the range of Neo's hardware and subsystems. This includes, but is not limited to:
