@@ -121,7 +121,7 @@ Speakers needed their own bit of care. On the MacBooks Asahi supports, the amps 
 
 So we wrote [speakerguardd](https://github.com/aurora-silicon/speakerguardd), our own speaker protection daemon that does the same on Linux. It reads back the exact audio the amps are being fed and runs it through a thermal model of the coil and magnet, turning the volume down before anything gets too hot. The constants come from the Neo's own speaker tuning, read through Apple's public AudioUnit API. It speaks the same interlock as speakersafetyd, so until it's running the kernel keeps the speakers locked 20 dB below full scale, and if it ever stops they lock again within 250 ms. We plan to make it the default on every Mac we support. And for the record, my test song through all of this was La La Land by Bryce Vine (ft. YG).
 
-<video src="/blog/macbook-neo/neo_speaker_demo.mp4" controls playsinline preload="metadata" width="480"></video>
+<video src="/blog/macbook-neo/neo_speaker_demo.mp4" poster="/blog/macbook-neo/neo_speaker_demo_poster.webp" controls playsinline preload="metadata" width="960" height="600"></video>
 
 Back over to Dj for the fun stuff!
 
@@ -133,7 +133,7 @@ Yes, it can. In fact, we went far and beyond to make it happen. Neo's GPU is qui
 
 Native games using Vulkan/OpenGL run amazing.
 
-![Minecraft on Neo](/blog/macbook-neo/image-4.png)
+![Minecraft on Neo](/blog/macbook-neo/image-4.webp)
 
 When it comes to Windows games, they'd usually run under Wine and FEX, and well, muvm for 4 KiB page size. That's a recipe for disaster on a device like Neo! Using a VM, its 8 GB of RAM will be crippled. And exactly as expected, Portal 2 ran like crap on it.
 
@@ -145,7 +145,7 @@ After like 2 days, I was able to run Steam under just FEX and Wine and run a cou
 
 They all ran quite well out of the box given the nature of a mobile processor!
 
-![Portal 2](/blog/macbook-neo/image-5.png)
+![Portal 2](/blog/macbook-neo/image-5.webp)
 
 And yes, this is shipping in all devices we will support, not just Neo. This has serious unlocks for gaming on Linux. It eliminates the need for `muvm` on Apple Silicon!
 
@@ -157,7 +157,7 @@ Neo is of course not a gaming device by any means. It doesn't have that many res
 
 Yes, we added hardware ray tracing extensions as well as native mesh shading!
 
-![Ray Tracing on Neo](/blog/macbook-neo/image-6.png)
+![Ray Tracing on Neo](/blog/macbook-neo/image-6.webp)
 
 It was a pain. It's a really complicated feature but it passes most if not all CTS finally.
 
