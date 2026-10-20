@@ -1,0 +1,128 @@
+{
+  "j313": {
+    "touch-id": [
+      {
+        "date": "2026-10-01",
+        "title": "Touch ID after reboot; direct SEP suspend check",
+        "detail": "Enrolment and verification restored; two suspend cycles with a pending direct /dev/sep-bio verify recovered. Real lock-screen / fprintd suspend is untested.",
+        "url": "https://github.com/aurora-silicon/linux/pull/69"
+      }
+    ]
+  },
+  "j293": {
+    "touch-id": [
+      {
+        "date": "2026-10-01",
+        "title": "Touch ID after reboot",
+        "detail": "SPI mode 2 enrolment and matching after reboot are reported. This is development-branch evidence.",
+        "url": "https://github.com/aurora-silicon/linux/pull/69"
+      }
+    ],
+    "thunderbolt": [
+      {
+        "date": "2026-10-01",
+        "title": "Thunderbolt dock USB / display / resume",
+        "detail": "Final 7.1.12-tbpr8-usb2fix2 build: TS4 USB2 first-session attach 3/3, keyboard / mouse and 3840\u00d72160 at 120 Hz. TS4 s2idle and Ethernet recovery reported; not every dock / role swap was requalified.",
+        "url": "https://github.com/aurora-silicon/linux/pull/8"
+      }
+    ],
+    "neural-engine": [
+      {
+        "date": "2026-10-01",
+        "title": "External Neural Engine driver research",
+        "detail": "J293: external module binding only. J316C: encoder inference smoke matched a reference hash, but SET0 readback remains missing; an unplanned reboot followed a raw debug dump. The proposed kernel itself was not boot-tested.",
+        "url": "https://github.com/aurora-silicon/linux/pull/65"
+      }
+    ]
+  },
+  "j314s": {
+    "touch-id": [
+      {
+        "date": "2026-10-01",
+        "title": "Touch ID after reboot",
+        "detail": "Matches after two separate reboots; a bring-up retry recovered two of four boots with a Thunderbolt display attached. J316S was not tested by this PR.",
+        "url": "https://github.com/aurora-silicon/linux/pull/69"
+      }
+    ],
+    "thunderbolt": [
+      {
+        "date": "2026-10-01",
+        "title": "USB-C / Thunderbolt display and resume",
+        "detail": "LG UltraFine 5K operated at 3840\u00d72160 at 60 Hz, 10-bit, on both left ports; attach / replug and 10-second s2idle tested. M1 Max path was not hardware-tested.",
+        "url": "https://github.com/aurora-silicon/linux/pull/64"
+      }
+    ]
+  },
+  "j316c": {
+    "neural-engine": [
+      {
+        "date": "2026-10-01",
+        "title": "External Neural Engine driver research",
+        "detail": "J293: external module binding only. J316C: encoder inference smoke matched a reference hash, but SET0 readback remains missing; an unplanned reboot followed a raw debug dump. The proposed kernel itself was not boot-tested.",
+        "url": "https://github.com/aurora-silicon/linux/pull/65"
+      }
+    ]
+  },
+  "j414c": {
+    "touch-id": [
+      {
+        "date": "2026-10-01",
+        "title": "Touch ID after reboot",
+        "detail": "3/3 verification matches after reboot on commit-3 / test-11.5 work. Earlier enrolment work in #58 merged into feat/sep, not the audited working branch.",
+        "url": "https://github.com/aurora-silicon/linux/pull/69"
+      }
+    ],
+    "neural-engine": [
+      {
+        "date": "2026-10-01",
+        "title": "External Neural Engine research",
+        "detail": "Programs ran, but roughly one in five results were all zero across three boots; unload required reboot. Requires separate driver and m1n1 firmware preload, not a packaged supported path.",
+        "url": "https://github.com/aurora-silicon/linux/pull/65"
+      }
+    ]
+  },
+  "j414s": {
+    "touch-id": [
+      {
+        "date": "2026-10-01",
+        "title": "Touch ID enrol / verify and PAM sudo",
+        "detail": "Experimental PR reports this board. Do not extend the J414C result from #69 to J414S, or treat the separate profile work as integrated.",
+        "url": "https://github.com/aurora-silicon/linux/pull/49"
+      }
+    ],
+    "thunderbolt": [
+      {
+        "date": "2026-10-01",
+        "title": "Dual-dock display work",
+        "detail": "J414S draft #46 uses the review/pr14-base stack; J416C #50 builds on the dual-dock branch. These are development stacks, not merged working-tree qualification.",
+        "url": "https://github.com/aurora-silicon/linux/pull/46"
+      }
+    ]
+  },
+  "j416s": {
+    "thunderbolt": [
+      {
+        "date": "2026-10-01",
+        "title": "USB peripherals through a Thunderbolt hub",
+        "detail": "OWC Thunderbolt 5 hub with USB keyboard. This result does not qualify DisplayPort or PCIe tunnels.",
+        "url": "https://github.com/aurora-silicon/linux/pull/6"
+      },
+      {
+        "date": "2026-10-01",
+        "title": "Thunderbolt display / resume work",
+        "detail": "This is the tested T602x board in #8. Code also covers other Pro / Max laptops, but those boards do not inherit this result.",
+        "url": "https://github.com/aurora-silicon/linux/pull/8"
+      }
+    ]
+  },
+  "j416c": {
+    "thunderbolt": [
+      {
+        "date": "2026-10-01",
+        "title": "Dual-dock display work",
+        "detail": "J414S draft #46 uses the review/pr14-base stack; J416C #50 builds on the dual-dock branch. These are development stacks, not merged working-tree qualification.",
+        "url": "https://github.com/aurora-silicon/linux/pull/46"
+      }
+    ]
+  }
+}

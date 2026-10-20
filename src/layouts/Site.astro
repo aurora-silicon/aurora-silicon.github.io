@@ -1,0 +1,76 @@
+---
+import ThemeToggle from '../components/ThemeToggle.astro';
+import '../styles/home.css';
+interface Props { title: string; description?: string; }
+const { title, description = 'Linux on Apple Silicon. Aurora Silicon downloads and device support.' } = Astro.props;
+---
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#000000" />
+    <script is:inline>
+      (() => {
+        let saved;
+        try { saved = localStorage.getItem('starlight-theme'); } catch {}
+        document.documentElement.dataset.theme = saved === 'light' || saved === 'dark' ? saved : matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      })();
+    </script>
+    <title>{title}</title>
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Aurora Silicon" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).href} />
+    <meta property="og:image" content={new URL('/og-image.png', Astro.site).href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" data-hero-header={Astro.url.pathname === '/' ? '' : undefined}>
+      <div class="header-inner wrap">
+      <a class="brand" href="/" aria-label="Aurora Silicon home"><img src="/brand/aurora-silicon-mark.svg" width="48" height="48" alt="" /><span>Aurora Silicon</span></a>
+      <nav aria-label="Main navigation"><a class="docs-link" href="/blog/">Blog</a><a class="docs-link" href="/docs/">Docs</a><ThemeToggle /></nav>
+      </div>
+    </header>
+    <noscript><style>.site-header[data-hero-header] .brand { visibility: visible; opacity: 1; transform: none; pointer-events: auto; }</style></noscript>
+    <main id="main"><slot /></main>
+    <footer class="site-footer wrap">
+      <span class="footer-name">© {new Date().getFullYear()} Aurora Silicon contributors</span>
+      <nav aria-label="Footer navigation"><a href="/docs/attribution/">Attribution</a><a href="/docs/policies/">Policies &amp; guidelines</a></nav>
+      <p class="footer-credit">Built on <a href="https://asahilinux.org">Asahi Linux</a>. Apple, Mac and MacBook are trademarks of Apple Inc. Linux® is the registered trademark of Linus Torvalds. Aurora Silicon is not affiliated with Apple.</p>
+    </footer>
+  </body>
+</html>
+<script>
+  const header = document.querySelector<HTMLElement>('.site-header');
+  const hero = header?.hasAttribute('data-hero-header') ? document.querySelector<HTMLElement>('.hero') : null;
+  let queued = false;
+  function updateHeader() {
+    queued = false;
+    if (!header) return;
+    header.classList.toggle('is-scrolled', window.scrollY > 8);
+    if (hero) {
+      const rect = hero.getBoundingClientRect();
+      header.classList.toggle('is-hero-past', rect.top + rect.height * .55 <= header.offsetHeight);
+    }
+  }
+  function scheduleHeader() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(updateHeader);
+  }
+  window.addEventListener('scroll', scheduleHeader, { passive: true });
+  window.addEventListener('resize', scheduleHeader, { passive: true });
+  window.addEventListener('pageshow', updateHeader);
+  updateHeader();
+</script>

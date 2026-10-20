@@ -1,0 +1,17 @@
+---
+import { getCollection, render } from 'astro:content';
+import Site from '../../layouts/Site.astro';
+export async function getStaticPaths() {
+  return (await getCollection('blog')).map(post => ({ params: { id: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+const date = post.data.date.toLocaleDateString('en', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+---
+<Site title={`${post.data.title} | Aurora Silicon`} description={post.data.description}>
+  <article class="blog-post wrap">
+    <a class="back-link" href="/blog/"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6" /></svg><span>Blog</span></a>
+    <header><time datetime={post.data.date.toISOString()}>{date}</time><h1>{post.data.title}</h1></header>
+    <div class="post-content"><Content /></div>
+  </article>
+</Site>

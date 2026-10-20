@@ -1,0 +1,592 @@
+[
+  {
+    "model": "MacBook Neo",
+    "device": "j700",
+    "chip": "A18 Pro",
+    "soc": "t8140",
+    "year": "",
+    "generation": "A18 Pro",
+    "discussion": "/blog/introducing-linux-on-macbook-neo/",
+    "profile": "neo"
+  },
+  {
+    "model": "Mac mini",
+    "device": "j873g",
+    "chip": "M6",
+    "soc": "t8152",
+    "year": "",
+    "generation": "M6",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "desktop"
+  },
+  {
+    "model": "MacBook Air 13-inch",
+    "device": "j813",
+    "chip": "M5",
+    "soc": "t8142",
+    "year": "",
+    "generation": "M5",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "laptop"
+  },
+  {
+    "model": "MacBook Air 15-inch",
+    "device": "j815",
+    "chip": "M5",
+    "soc": "t8142",
+    "year": "",
+    "generation": "M5",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "laptop"
+  },
+  {
+    "model": "MacBook Pro 14-inch",
+    "device": "j704",
+    "chip": "M5",
+    "soc": "t8142",
+    "year": "",
+    "generation": "M5",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 14-inch",
+    "device": "j714s",
+    "chip": "M5 Pro",
+    "soc": "t6050",
+    "year": "",
+    "generation": "M5",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 14-inch",
+    "device": "j714c",
+    "chip": "M5 Max",
+    "soc": "t6051",
+    "year": "",
+    "generation": "M5",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 16-inch",
+    "device": "j716s",
+    "chip": "M5 Pro",
+    "soc": "t6050",
+    "year": "",
+    "generation": "M5",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 16-inch",
+    "device": "j716c",
+    "chip": "M5 Max",
+    "soc": "t6051",
+    "year": "",
+    "generation": "M5",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "Mac mini",
+    "device": "j873s",
+    "chip": "M5 Pro",
+    "soc": "t6050",
+    "year": "",
+    "generation": "M5",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "desktop"
+  },
+  {
+    "model": "Mac Studio",
+    "device": "j775c",
+    "chip": "M5 Max",
+    "soc": "t6051",
+    "year": "",
+    "generation": "M5",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "desktop"
+  },
+  {
+    "model": "Mac Studio",
+    "device": "j775d",
+    "chip": "M5 Ultra",
+    "soc": "t6052",
+    "year": "",
+    "generation": "M5",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "desktop"
+  },
+  {
+    "model": "MacBook Air 13-inch",
+    "device": "j713",
+    "chip": "M4",
+    "soc": "t8132",
+    "year": "2025",
+    "generation": "M4",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/133",
+    "profile": "laptop"
+  },
+  {
+    "model": "MacBook Air 15-inch",
+    "device": "j715",
+    "chip": "M4",
+    "soc": "t8132",
+    "year": "2025",
+    "generation": "M4",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/133",
+    "profile": "laptop"
+  },
+  {
+    "model": "MacBook Pro 14-inch",
+    "device": "j604",
+    "chip": "M4",
+    "soc": "t8132",
+    "year": "2024",
+    "generation": "M4",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/129",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 14-inch",
+    "device": "j614s",
+    "chip": "M4 Pro",
+    "soc": "t6040",
+    "year": "2024",
+    "generation": "M4",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/129",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 14-inch",
+    "device": "j614c",
+    "chip": "M4 Max",
+    "soc": "t6041",
+    "year": "2024",
+    "generation": "M4",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/129",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 16-inch",
+    "device": "j616s",
+    "chip": "M4 Pro",
+    "soc": "t6040",
+    "year": "2024",
+    "generation": "M4",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/129",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 16-inch",
+    "device": "j616c",
+    "chip": "M4 Max",
+    "soc": "t6041",
+    "year": "2024",
+    "generation": "M4",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/129",
+    "profile": "mbp"
+  },
+  {
+    "model": "Mac mini",
+    "device": "j773g",
+    "chip": "M4",
+    "soc": "t8132",
+    "year": "2024",
+    "generation": "M4",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/130",
+    "profile": "desktop"
+  },
+  {
+    "model": "Mac mini",
+    "device": "j773s",
+    "chip": "M4 Pro",
+    "soc": "t6040",
+    "year": "2024",
+    "generation": "M4",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/130",
+    "profile": "desktop"
+  },
+  {
+    "model": "iMac 24-inch, 2× USB-C",
+    "device": "j623",
+    "chip": "M4",
+    "soc": "t8132",
+    "year": "2024",
+    "generation": "M4",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/131",
+    "profile": "imac"
+  },
+  {
+    "model": "iMac 24-inch, 4× USB-C",
+    "device": "j624",
+    "chip": "M4",
+    "soc": "t8132",
+    "year": "2024",
+    "generation": "M4",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/131",
+    "profile": "imac"
+  },
+  {
+    "model": "Mac Studio",
+    "device": "j575c",
+    "chip": "M4 Max",
+    "soc": "t6041",
+    "year": "2025",
+    "generation": "M4",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/141",
+    "profile": "desktop"
+  },
+  {
+    "model": "MacBook Air 13-inch",
+    "device": "j613",
+    "chip": "M3",
+    "soc": "t8122",
+    "year": "2024",
+    "generation": "M3",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "laptop"
+  },
+  {
+    "model": "MacBook Air 15-inch",
+    "device": "j615",
+    "chip": "M3",
+    "soc": "t8122",
+    "year": "2024",
+    "generation": "M3",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "laptop"
+  },
+  {
+    "model": "MacBook Pro 14-inch",
+    "device": "j504",
+    "chip": "M3",
+    "soc": "t8122",
+    "year": "2023",
+    "generation": "M3",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 14-inch",
+    "device": "j514s",
+    "chip": "M3 Pro",
+    "soc": "t6030",
+    "year": "2023",
+    "generation": "M3",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 16-inch",
+    "device": "j516s",
+    "chip": "M3 Pro",
+    "soc": "t6030",
+    "year": "2023",
+    "generation": "M3",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 14-inch",
+    "device": "j514c",
+    "chip": "M3 Max, 16-core",
+    "soc": "t6031",
+    "year": "2023",
+    "generation": "M3",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 16-inch",
+    "device": "j516c",
+    "chip": "M3 Max, 16-core",
+    "soc": "t6031",
+    "year": "2023",
+    "generation": "M3",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 14-inch",
+    "device": "j514m",
+    "chip": "M3 Max, 14-core",
+    "soc": "t6034",
+    "year": "2023",
+    "generation": "M3",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 16-inch",
+    "device": "j516m",
+    "chip": "M3 Max, 14-core",
+    "soc": "t6034",
+    "year": "2023",
+    "generation": "M3",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "iMac 24-inch, 2× USB-C",
+    "device": "j433",
+    "chip": "M3",
+    "soc": "t8122",
+    "year": "2023",
+    "generation": "M3",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/117",
+    "profile": "imac"
+  },
+  {
+    "model": "iMac 24-inch, 4× USB-C",
+    "device": "j434",
+    "chip": "M3",
+    "soc": "t8122",
+    "year": "2023",
+    "generation": "M3",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/117",
+    "profile": "imac"
+  },
+  {
+    "model": "Mac Studio",
+    "device": "j575d",
+    "chip": "M3 Ultra",
+    "soc": "t6032",
+    "year": "2025",
+    "generation": "M3",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "desktop"
+  },
+  {
+    "model": "MacBook Air 13-inch",
+    "device": "j413",
+    "chip": "M2",
+    "soc": "t8112",
+    "year": "2022",
+    "generation": "M2",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "laptop"
+  },
+  {
+    "model": "MacBook Air 15-inch",
+    "device": "j415",
+    "chip": "M2",
+    "soc": "t8112",
+    "year": "2023",
+    "generation": "M2",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "laptop"
+  },
+  {
+    "model": "MacBook Pro 13-inch",
+    "device": "j493",
+    "chip": "M2",
+    "soc": "t8112",
+    "year": "2022",
+    "generation": "M2",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "laptop"
+  },
+  {
+    "model": "MacBook Pro 14-inch",
+    "device": "j414s",
+    "chip": "M2 Pro",
+    "soc": "t6020",
+    "year": "2023",
+    "generation": "M2",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 14-inch",
+    "device": "j414c",
+    "chip": "M2 Max",
+    "soc": "t6021",
+    "year": "2023",
+    "generation": "M2",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 16-inch",
+    "device": "j416s",
+    "chip": "M2 Pro",
+    "soc": "t6020",
+    "year": "2023",
+    "generation": "M2",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 16-inch",
+    "device": "j416c",
+    "chip": "M2 Max",
+    "soc": "t6021",
+    "year": "2023",
+    "generation": "M2",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "Mac mini",
+    "device": "j473",
+    "chip": "M2",
+    "soc": "t8112",
+    "year": "2023",
+    "generation": "M2",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "desktop"
+  },
+  {
+    "model": "Mac mini",
+    "device": "j474s",
+    "chip": "M2 Pro",
+    "soc": "t6020",
+    "year": "2023",
+    "generation": "M2",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "desktop"
+  },
+  {
+    "model": "Mac Studio",
+    "device": "j475c",
+    "chip": "M2 Max",
+    "soc": "t6021",
+    "year": "2023",
+    "generation": "M2",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "desktop"
+  },
+  {
+    "model": "Mac Studio",
+    "device": "j475d",
+    "chip": "M2 Ultra",
+    "soc": "t6022",
+    "year": "2023",
+    "generation": "M2",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "desktop"
+  },
+  {
+    "model": "Mac Pro",
+    "device": "j180d",
+    "chip": "M2 Ultra",
+    "soc": "t6022",
+    "year": "2023",
+    "generation": "M2",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "desktop"
+  },
+  {
+    "model": "MacBook Air",
+    "device": "j313",
+    "chip": "M1",
+    "soc": "t8103",
+    "year": "2020",
+    "generation": "M1",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/96",
+    "profile": "laptop"
+  },
+  {
+    "model": "MacBook Pro 13-inch",
+    "device": "j293",
+    "chip": "M1",
+    "soc": "t8103",
+    "year": "2020",
+    "generation": "M1",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/95",
+    "profile": "laptop"
+  },
+  {
+    "model": "MacBook Pro 14-inch",
+    "device": "j314s",
+    "chip": "M1 Pro",
+    "soc": "t6000",
+    "year": "2021",
+    "generation": "M1",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/95",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 14-inch",
+    "device": "j314c",
+    "chip": "M1 Max",
+    "soc": "t6001",
+    "year": "2021",
+    "generation": "M1",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/95",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 16-inch",
+    "device": "j316s",
+    "chip": "M1 Pro",
+    "soc": "t6000",
+    "year": "2021",
+    "generation": "M1",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/95",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 16-inch",
+    "device": "j316c",
+    "chip": "M1 Max",
+    "soc": "t6001",
+    "year": "2021",
+    "generation": "M1",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/95",
+    "profile": "mbp"
+  },
+  {
+    "model": "Mac mini",
+    "device": "j274",
+    "chip": "M1",
+    "soc": "t8103",
+    "year": "2020",
+    "generation": "M1",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "desktop"
+  },
+  {
+    "model": "iMac 24-inch, 4× USB-C",
+    "device": "j456",
+    "chip": "M1",
+    "soc": "t8103",
+    "year": "2021",
+    "generation": "M1",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "imac"
+  },
+  {
+    "model": "iMac 24-inch, 2× USB-C",
+    "device": "j457",
+    "chip": "M1",
+    "soc": "t8103",
+    "year": "2021",
+    "generation": "M1",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "imac"
+  },
+  {
+    "model": "Mac Studio",
+    "device": "j375c",
+    "chip": "M1 Max",
+    "soc": "t6001",
+    "year": "2022",
+    "generation": "M1",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "desktop"
+  },
+  {
+    "model": "Mac Studio",
+    "device": "j375d",
+    "chip": "M1 Ultra",
+    "soc": "t6002",
+    "year": "2022",
+    "generation": "M1",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "desktop"
+  }
+]

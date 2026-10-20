@@ -1,0 +1,14 @@
+---
+interface Props { name: string; }
+const { name } = Astro.props;
+const paths = name.startsWith('MacBook')
+  ? 'M5 3h14v12H5zM2 16h20v2H2z'
+  : name === 'iMac'
+    ? 'M2 2h20v14H2zM2 12h20M9 21h6m-3-5v5'
+    : name === 'Mac Pro'
+      ? 'M6 3h12v19H6zM9 3V1m6 2V1M9 7h6M9 11h6M9 15h6'
+      : name === 'Mac Studio'
+        ? 'M3 7h18v13H3zM3 15h18m-14 2h.01M7 10h.01m3 0h.01'
+        : 'M3 6h18v12H3zM3 15h18m-3 1h.01';
+---
+<svg class="device-icon" width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={paths} /></svg>

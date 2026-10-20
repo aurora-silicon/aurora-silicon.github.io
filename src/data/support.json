@@ -1,0 +1,1617 @@
+{
+  "source": "Supplied alternate website: _data/support.yml",
+  "imported": "2026-10-19",
+  "series": [
+    "A18 Pro",
+    "M6",
+    "M5",
+    "M4",
+    "M3",
+    "M2",
+    "M1"
+  ],
+  "profiles": {
+    "neo": [
+      {
+        "name": "Platform",
+        "features": [
+          "Boot",
+          "All CPU cores",
+          "Internal storage"
+        ]
+      },
+      {
+        "name": "Display and input",
+        "features": [
+          "Internal display",
+          "External display",
+          "Brightness control",
+          "Keyboard",
+          "Trackpad",
+          "Touch ID"
+        ]
+      },
+      {
+        "name": "Media",
+        "features": [
+          "Speakers",
+          "Microphone",
+          "Camera",
+          "Headset jack"
+        ]
+      },
+      {
+        "name": "Connectivity",
+        "features": [
+          "USB-C",
+          "Wi-Fi",
+          "Bluetooth"
+        ]
+      },
+      {
+        "name": "Power and sensors",
+        "features": [
+          "Battery / charging",
+          "Sleep / resume",
+          "Ambient light"
+        ]
+      },
+      {
+        "name": "Graphics",
+        "features": [
+          "GPU acceleration",
+          "Vulkan",
+          "Ray tracing",
+          "Video decoding"
+        ]
+      }
+    ],
+    "laptop": [
+      {
+        "name": "Platform",
+        "features": [
+          "Boot",
+          "All CPU cores",
+          "Internal storage"
+        ]
+      },
+      {
+        "name": "Display and input",
+        "features": [
+          "Internal display",
+          "External display",
+          "Brightness control",
+          "Keyboard",
+          "Keyboard backlight",
+          "Trackpad",
+          "Touch ID"
+        ]
+      },
+      {
+        "name": "Media",
+        "features": [
+          "Speakers",
+          "Microphone",
+          "Camera",
+          "Headset jack"
+        ]
+      },
+      {
+        "name": "Connectivity",
+        "features": [
+          "USB-C",
+          "Thunderbolt / USB4",
+          "Wi-Fi",
+          "Bluetooth"
+        ]
+      },
+      {
+        "name": "Power",
+        "features": [
+          "Battery / charging",
+          "Sleep / resume"
+        ]
+      },
+      {
+        "name": "Graphics",
+        "features": [
+          "GPU acceleration",
+          "Vulkan",
+          "Ray tracing",
+          "Video decoding"
+        ]
+      }
+    ],
+    "mbp": [
+      {
+        "name": "Platform",
+        "features": [
+          "Boot",
+          "All CPU cores",
+          "Internal storage"
+        ]
+      },
+      {
+        "name": "Display and input",
+        "features": [
+          "Internal display",
+          "External display",
+          "ProMotion",
+          "Brightness control",
+          "Keyboard",
+          "Keyboard backlight",
+          "Trackpad",
+          "Touch ID"
+        ]
+      },
+      {
+        "name": "Media",
+        "features": [
+          "Speakers",
+          "Microphone",
+          "Camera",
+          "Headset jack"
+        ]
+      },
+      {
+        "name": "Connectivity",
+        "features": [
+          "USB-C",
+          "Thunderbolt / USB4",
+          "HDMI",
+          "SDXC card slot",
+          "Wi-Fi",
+          "Bluetooth"
+        ]
+      },
+      {
+        "name": "Power",
+        "features": [
+          "Battery / charging",
+          "Fan control",
+          "Sleep / resume"
+        ]
+      },
+      {
+        "name": "Graphics",
+        "features": [
+          "GPU acceleration",
+          "Vulkan",
+          "Ray tracing",
+          "Video decoding"
+        ]
+      }
+    ],
+    "desktop": [
+      {
+        "name": "Platform",
+        "features": [
+          "Boot",
+          "All CPU cores",
+          "Internal storage"
+        ]
+      },
+      {
+        "name": "Display",
+        "features": [
+          "Display output",
+          "HDMI"
+        ]
+      },
+      {
+        "name": "Media",
+        "features": [
+          "Speaker",
+          "Headset jack"
+        ]
+      },
+      {
+        "name": "Connectivity",
+        "features": [
+          "USB-A",
+          "USB-C",
+          "Thunderbolt / USB4",
+          "Ethernet",
+          "Wi-Fi",
+          "Bluetooth"
+        ]
+      },
+      {
+        "name": "Power",
+        "features": [
+          "Sleep / resume"
+        ]
+      },
+      {
+        "name": "Graphics",
+        "features": [
+          "GPU acceleration",
+          "Vulkan",
+          "Ray tracing",
+          "Video decoding"
+        ]
+      }
+    ],
+    "imac": [
+      {
+        "name": "Platform",
+        "features": [
+          "Boot",
+          "All CPU cores",
+          "Internal storage"
+        ]
+      },
+      {
+        "name": "Display",
+        "features": [
+          "Internal display",
+          "Brightness control"
+        ]
+      },
+      {
+        "name": "Media",
+        "features": [
+          "Speakers",
+          "Microphone",
+          "Camera",
+          "Headset jack"
+        ]
+      },
+      {
+        "name": "Connectivity",
+        "features": [
+          "USB-C",
+          "Thunderbolt / USB4",
+          "Ethernet",
+          "Wi-Fi",
+          "Bluetooth"
+        ]
+      },
+      {
+        "name": "Power",
+        "features": [
+          "Sleep / resume"
+        ]
+      },
+      {
+        "name": "Graphics",
+        "features": [
+          "GPU acceleration",
+          "Vulkan",
+          "Ray tracing",
+          "Video decoding"
+        ]
+      }
+    ]
+  },
+  "results": {
+    "j700": {
+      "Boot": {
+        "state": "works",
+        "note": ""
+      },
+      "All CPU cores": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal storage": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal display": {
+        "state": "works",
+        "note": ""
+      },
+      "External display": {
+        "state": "works",
+        "note": "up to 4K 60 Hz"
+      },
+      "Brightness control": {
+        "state": "works",
+        "note": ""
+      },
+      "Keyboard": {
+        "state": "works",
+        "note": ""
+      },
+      "Trackpad": {
+        "state": "works",
+        "note": ""
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": ""
+      },
+      "Speakers": {
+        "state": "works",
+        "note": ""
+      },
+      "Microphone": {
+        "state": "works",
+        "note": ""
+      },
+      "Camera": {
+        "state": "works",
+        "note": "1080p 30 fps"
+      },
+      "Headset jack": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C": {
+        "state": "works",
+        "note": "USB 3 rear, USB 2 front"
+      },
+      "Wi-Fi": {
+        "state": "works",
+        "note": ""
+      },
+      "Bluetooth": {
+        "state": "works",
+        "note": ""
+      },
+      "Battery / charging": {
+        "state": "works",
+        "note": ""
+      },
+      "Sleep / resume": {
+        "state": "works",
+        "note": "suspend to idle"
+      },
+      "Ambient light": {
+        "state": "works",
+        "note": ""
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": ""
+      },
+      "Vulkan": {
+        "state": "works",
+        "note": "1.4"
+      },
+      "Ray tracing": {
+        "state": "partial",
+        "note": "in progress"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": ""
+      }
+    },
+    "j813": {
+      "Boot": {
+        "state": "works",
+        "note": ""
+      },
+      "All CPU cores": {
+        "state": "works",
+        "note": "10 cores"
+      },
+      "Internal storage": {
+        "state": "partial",
+        "note": ""
+      },
+      "Internal display": {
+        "state": "works",
+        "note": "software rendering"
+      },
+      "Keyboard": {
+        "state": "works",
+        "note": ""
+      },
+      "Keyboard backlight": {
+        "state": "works",
+        "note": ""
+      },
+      "Trackpad": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C": {
+        "state": "partial",
+        "note": "USB 3, no Thunderbolt"
+      },
+      "Wi-Fi": {
+        "state": "works",
+        "note": ""
+      },
+      "Bluetooth": {
+        "state": "works",
+        "note": ""
+      },
+      "Sleep / resume": {
+        "state": "partial",
+        "note": ""
+      },
+      "GPU acceleration": {
+        "state": "none",
+        "note": ""
+      }
+    },
+    "j714s": {
+      "Boot": {
+        "state": "works",
+        "note": ""
+      },
+      "All CPU cores": {
+        "state": "works",
+        "note": "18 cores"
+      },
+      "Internal storage": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal display": {
+        "state": "partial",
+        "note": ""
+      },
+      "Wi-Fi": {
+        "state": "works",
+        "note": ""
+      },
+      "Bluetooth": {
+        "state": "works",
+        "note": ""
+      },
+      "Sleep / resume": {
+        "state": "works",
+        "note": ""
+      },
+      "External display": {
+        "state": "works",
+        "note": ""
+      },
+      "ProMotion": {
+        "state": "works",
+        "note": ""
+      },
+      "Brightness control": {
+        "state": "works",
+        "note": ""
+      },
+      "Keyboard": {
+        "state": "works",
+        "note": ""
+      },
+      "Keyboard backlight": {
+        "state": "works",
+        "note": ""
+      },
+      "Trackpad": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C": {
+        "state": "works",
+        "note": ""
+      },
+      "HDMI": {
+        "state": "works",
+        "note": ""
+      },
+      "Battery / charging": {
+        "state": "works",
+        "note": ""
+      },
+      "Fan control": {
+        "state": "works",
+        "note": ""
+      },
+      "GPU acceleration": {
+        "state": "partial",
+        "note": ""
+      },
+      "Vulkan": {
+        "state": "partial",
+        "note": ""
+      },
+      "Ray tracing": {
+        "state": "partial",
+        "note": ""
+      }
+    },
+    "j713": {
+      "Boot": {
+        "state": "works",
+        "note": ""
+      },
+      "GPU acceleration": {
+        "state": "partial",
+        "note": "OpenGL ES 3.2, Vulkan"
+      },
+      "Vulkan": {
+        "state": "partial",
+        "note": ""
+      }
+    },
+    "j616s": {
+      "Boot": {
+        "state": "partial",
+        "note": "single core"
+      },
+      "Internal display": {
+        "state": "partial",
+        "note": "framebuffer"
+      }
+    },
+    "j613": {
+      "Boot": {
+        "state": "works",
+        "note": ""
+      },
+      "All CPU cores": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal storage": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal display": {
+        "state": "works",
+        "note": ""
+      },
+      "External display": {
+        "state": "works",
+        "note": "both USB-C ports"
+      },
+      "Keyboard": {
+        "state": "works",
+        "note": ""
+      },
+      "Trackpad": {
+        "state": "works",
+        "note": ""
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": ""
+      },
+      "Wi-Fi": {
+        "state": "works",
+        "note": ""
+      },
+      "Bluetooth": {
+        "state": "works",
+        "note": ""
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": "OpenGL"
+      },
+      "Vulkan": {
+        "state": "none",
+        "note": ""
+      }
+    },
+    "j615": {
+      "Boot": {
+        "state": "works",
+        "note": ""
+      },
+      "All CPU cores": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal storage": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal display": {
+        "state": "works",
+        "note": ""
+      },
+      "Keyboard": {
+        "state": "works",
+        "note": ""
+      },
+      "Trackpad": {
+        "state": "works",
+        "note": ""
+      },
+      "GPU acceleration": {
+        "state": "partial",
+        "note": ""
+      }
+    },
+    "j514s": {
+      "Boot": {
+        "state": "works",
+        "note": ""
+      },
+      "All CPU cores": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal storage": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal display": {
+        "state": "works",
+        "note": ""
+      },
+      "Keyboard": {
+        "state": "works",
+        "note": ""
+      },
+      "Trackpad": {
+        "state": "works",
+        "note": ""
+      },
+      "HDMI": {
+        "state": "works",
+        "note": ""
+      },
+      "Thunderbolt / USB4": {
+        "state": "partial",
+        "note": "docks"
+      },
+      "Wi-Fi": {
+        "state": "works",
+        "note": ""
+      },
+      "Bluetooth": {
+        "state": "works",
+        "note": ""
+      },
+      "GPU acceleration": {
+        "state": "partial",
+        "note": "opt-in"
+      },
+      "Vulkan": {
+        "state": "partial",
+        "note": ""
+      }
+    },
+    "j516s": {
+      "Boot": {
+        "state": "works",
+        "note": ""
+      },
+      "All CPU cores": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal storage": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal display": {
+        "state": "works",
+        "note": ""
+      },
+      "Keyboard": {
+        "state": "works",
+        "note": ""
+      },
+      "Trackpad": {
+        "state": "works",
+        "note": ""
+      },
+      "HDMI": {
+        "state": "works",
+        "note": ""
+      },
+      "Thunderbolt / USB4": {
+        "state": "partial",
+        "note": "docks"
+      },
+      "Wi-Fi": {
+        "state": "works",
+        "note": ""
+      },
+      "Bluetooth": {
+        "state": "works",
+        "note": ""
+      },
+      "GPU acceleration": {
+        "state": "partial",
+        "note": "opt-in"
+      },
+      "Vulkan": {
+        "state": "partial",
+        "note": ""
+      }
+    },
+    "j514c": {
+      "Boot": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal display": {
+        "state": "works",
+        "note": ""
+      },
+      "GPU acceleration": {
+        "state": "partial",
+        "note": ""
+      }
+    },
+    "j516c": {
+      "Boot": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal display": {
+        "state": "works",
+        "note": ""
+      },
+      "GPU acceleration": {
+        "state": "partial",
+        "note": ""
+      }
+    },
+    "j873g": {
+      "Boot": {
+        "state": "partial",
+        "note": "minimal"
+      },
+      "All CPU cores": {
+        "state": "works",
+        "note": "12 cores"
+      }
+    },
+    "j413": {
+      "Boot": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal storage": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal display": {
+        "state": "works",
+        "note": "2560×1600 60 Hz"
+      },
+      "Brightness control": {
+        "state": "works",
+        "note": ""
+      },
+      "Keyboard": {
+        "state": "works",
+        "note": ""
+      },
+      "Trackpad": {
+        "state": "works",
+        "note": ""
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": ""
+      },
+      "Microphone": {
+        "state": "works",
+        "note": ""
+      },
+      "Camera": {
+        "state": "works",
+        "note": "30 fps"
+      },
+      "USB-C": {
+        "state": "partial",
+        "note": "charging only tested"
+      },
+      "Wi-Fi": {
+        "state": "works",
+        "note": ""
+      },
+      "Bluetooth": {
+        "state": "works",
+        "note": ""
+      },
+      "Battery / charging": {
+        "state": "works",
+        "note": ""
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": "OpenGL"
+      },
+      "Vulkan": {
+        "state": "works",
+        "note": ""
+      },
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      },
+      "External display": {
+        "state": "works",
+        "note": "USB-C displays."
+      }
+    },
+    "j414s": {
+      "External display": {
+        "state": "works",
+        "note": "through Thunderbolt docks"
+      },
+      "ProMotion": {
+        "state": "works",
+        "note": "Adaptive refresh supported."
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": ""
+      },
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      }
+    },
+    "j313": {
+      "Keyboard": {
+        "state": "works",
+        "note": ""
+      },
+      "Trackpad": {
+        "state": "works",
+        "note": ""
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": ""
+      },
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      },
+      "External display": {
+        "state": "works",
+        "note": "USB-C displays."
+      }
+    },
+    "j316s": {
+      "Boot": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal storage": {
+        "state": "works",
+        "note": ""
+      },
+      "Internal display": {
+        "state": "works",
+        "note": "3456×2160 120 Hz"
+      },
+      "ProMotion": {
+        "state": "works",
+        "note": "Adaptive refresh supported."
+      },
+      "Brightness control": {
+        "state": "works",
+        "note": ""
+      },
+      "Keyboard": {
+        "state": "works",
+        "note": ""
+      },
+      "Trackpad": {
+        "state": "works",
+        "note": ""
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": ""
+      },
+      "Microphone": {
+        "state": "works",
+        "note": ""
+      },
+      "Camera": {
+        "state": "works",
+        "note": "30 fps"
+      },
+      "USB-C": {
+        "state": "partial",
+        "note": "charging only tested"
+      },
+      "Wi-Fi": {
+        "state": "works",
+        "note": ""
+      },
+      "Bluetooth": {
+        "state": "works",
+        "note": ""
+      },
+      "Battery / charging": {
+        "state": "works",
+        "note": ""
+      },
+      "Sleep / resume": {
+        "state": "partial",
+        "note": "Touch ID lost after resume"
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": ""
+      },
+      "Vulkan": {
+        "state": "works",
+        "note": ""
+      },
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      },
+      "External display": {
+        "state": "works",
+        "note": "USB-C displays."
+      }
+    },
+    "j415": {
+      "Touch ID": {
+        "state": "works",
+        "note": ""
+      },
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      },
+      "External display": {
+        "state": "works",
+        "note": "USB-C displays."
+      }
+    },
+    "j414c": {
+      "Touch ID": {
+        "state": "works",
+        "note": ""
+      },
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "ProMotion": {
+        "state": "works",
+        "note": "Adaptive refresh supported."
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      },
+      "External display": {
+        "state": "works",
+        "note": "USB-C displays."
+      }
+    },
+    "j416s": {
+      "External display": {
+        "state": "works",
+        "note": "over Thunderbolt"
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": ""
+      },
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Sleep / resume": {
+        "state": "works",
+        "note": ""
+      },
+      "ProMotion": {
+        "state": "works",
+        "note": "Adaptive refresh supported."
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      }
+    },
+    "j416c": {
+      "External display": {
+        "state": "works",
+        "note": "USB-C and docks"
+      },
+      "ProMotion": {
+        "state": "works",
+        "note": "Adaptive refresh supported."
+      },
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Sleep / resume": {
+        "state": "works",
+        "note": ""
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      }
+    },
+    "j473": {
+      "Display output": {
+        "state": "works",
+        "note": "8 of 8 cold boots"
+      },
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      }
+    },
+    "j293": {
+      "External display": {
+        "state": "works",
+        "note": "4K through docks"
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": ""
+      },
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      }
+    },
+    "j314s": {
+      "External display": {
+        "state": "works",
+        "note": "5K over Thunderbolt"
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": ""
+      },
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "HDMI": {
+        "state": "works",
+        "note": "4K with audio"
+      },
+      "Sleep / resume": {
+        "state": "works",
+        "note": ""
+      },
+      "ProMotion": {
+        "state": "works",
+        "note": "Adaptive refresh supported."
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      }
+    },
+    "j274": {
+      "Display output": {
+        "state": "works",
+        "note": "USB-C and HDMI"
+      },
+      "HDMI": {
+        "state": "works",
+        "note": ""
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "4K H.264"
+      },
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      }
+    },
+    "j493": {
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      },
+      "External display": {
+        "state": "works",
+        "note": "USB-C displays."
+      }
+    },
+    "j474s": {
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      },
+      "Display output": {
+        "state": "works",
+        "note": "USB-C displays."
+      }
+    },
+    "j475c": {
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      },
+      "Display output": {
+        "state": "works",
+        "note": "USB-C displays."
+      }
+    },
+    "j475d": {
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      },
+      "Display output": {
+        "state": "works",
+        "note": "USB-C displays."
+      }
+    },
+    "j180d": {
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      },
+      "Display output": {
+        "state": "works",
+        "note": "USB-C displays."
+      }
+    },
+    "j314c": {
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": ""
+      },
+      "ProMotion": {
+        "state": "works",
+        "note": "Adaptive refresh supported."
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      },
+      "External display": {
+        "state": "works",
+        "note": "USB-C displays."
+      }
+    },
+    "j316c": {
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": ""
+      },
+      "ProMotion": {
+        "state": "works",
+        "note": "Adaptive refresh supported."
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      },
+      "External display": {
+        "state": "works",
+        "note": "USB-C displays."
+      }
+    },
+    "j456": {
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      }
+    },
+    "j457": {
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      }
+    },
+    "j375c": {
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      },
+      "Display output": {
+        "state": "works",
+        "note": "USB-C displays."
+      }
+    },
+    "j375d": {
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": ""
+      },
+      "Secure Enclave": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C display": {
+        "state": "works",
+        "note": ""
+      },
+      "Variable refresh rate": {
+        "state": "works",
+        "note": "On compatible displays."
+      },
+      "Display output": {
+        "state": "works",
+        "note": "USB-C displays."
+      }
+    },
+    "j716s": {
+      "Boot": {
+        "state": "works",
+        "note": ""
+      },
+      "External display": {
+        "state": "works",
+        "note": ""
+      },
+      "ProMotion": {
+        "state": "works",
+        "note": ""
+      },
+      "Brightness control": {
+        "state": "works",
+        "note": ""
+      },
+      "Keyboard": {
+        "state": "works",
+        "note": ""
+      },
+      "Keyboard backlight": {
+        "state": "works",
+        "note": ""
+      },
+      "Trackpad": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C": {
+        "state": "works",
+        "note": ""
+      },
+      "HDMI": {
+        "state": "works",
+        "note": ""
+      },
+      "Battery / charging": {
+        "state": "works",
+        "note": ""
+      },
+      "Fan control": {
+        "state": "works",
+        "note": ""
+      },
+      "GPU acceleration": {
+        "state": "partial",
+        "note": ""
+      },
+      "Vulkan": {
+        "state": "partial",
+        "note": ""
+      },
+      "Ray tracing": {
+        "state": "partial",
+        "note": ""
+      }
+    },
+    "j873s": {
+      "Boot": {
+        "state": "works",
+        "note": ""
+      },
+      "Display output": {
+        "state": "works",
+        "note": ""
+      },
+      "USB-C": {
+        "state": "works",
+        "note": ""
+      },
+      "HDMI": {
+        "state": "works",
+        "note": ""
+      },
+      "Fan control": {
+        "state": "works",
+        "note": ""
+      },
+      "GPU acceleration": {
+        "state": "partial",
+        "note": ""
+      },
+      "Vulkan": {
+        "state": "partial",
+        "note": ""
+      },
+      "Ray tracing": {
+        "state": "partial",
+        "note": ""
+      }
+    }
+  },
+  "corrections": [
+    {
+      "source": "Project owner confirmation in this session",
+      "scope": "M1 and M2",
+      "features": [
+        "Thunderbolt / USB4",
+        "USB-C displays",
+        "VRR",
+        "Touch ID where fitted",
+        "Secure Enclave"
+      ],
+      "note": "Other per-device results and earlier dated reports are retained."
+    },
+    {
+      "source": "Project owner confirmation in this session",
+      "scope": "M5 Pro",
+      "working": [
+        "Boot",
+        "External display",
+        "Display output",
+        "ProMotion",
+        "Brightness control",
+        "Keyboard",
+        "Keyboard backlight",
+        "Trackpad",
+        "USB-C",
+        "HDMI",
+        "Battery / charging",
+        "Fan control"
+      ],
+      "partial": [
+        "GPU acceleration",
+        "Vulkan",
+        "Ray tracing"
+      ],
+      "note": "Features apply where the hardware is fitted. M5 Max records are unchanged."
+    }
+  ]
+}

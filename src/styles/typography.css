@@ -1,0 +1,5 @@
+@import '@fontsource-variable/geist';
+
+:root {
+  --site-font: -apple-system, BlinkMacSystemFont, 'Geist Variable', 'Segoe UI', sans-serif;
+}

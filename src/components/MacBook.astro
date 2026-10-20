@@ -1,0 +1,97 @@
+<div class="macbook">
+  <div class="macbook-hinge">
+  <div class="macbook-lid">
+    <div class="macbook-screen">
+      <div class="macbook-notch" aria-hidden="true"><span></span></div>
+      <div class="screen-content"><slot /></div>
+    </div>
+  </div>
+  </div>
+  <svg class="macbook-base" viewBox="0 0 640 18" fill="none" aria-hidden="true">
+    <defs><linearGradient id="mb-base" x1="320" y1="1" x2="320" y2="17" gradientUnits="userSpaceOnUse"><stop stop-color="var(--laptop-base-top)"/><stop offset="1" stop-color="var(--laptop-base-bottom)"/></linearGradient></defs>
+    <path d="M1 1h638v7a9 9 0 0 1-9 9H10a9 9 0 0 1-9-9V1Z" fill="url(#mb-base)" stroke="var(--laptop-base-outline)" stroke-width=".75"/>
+    <path d="M274 1h92v2a4 4 0 0 1-4 4h-84a4 4 0 0 1-4-4V1Z" fill="var(--laptop-notch)"/>
+    <path d="M5 2h265m100 0h265" stroke="var(--laptop-highlight)" stroke-width=".7"/>
+  </svg>
+</div>
+<noscript><style>.macbook-hinge { transform: none !important; }.screen-content { opacity: 1 !important; }</style></noscript>
+<script>
+  const laptop = document.querySelector<HTMLElement>('.macbook');
+  const hinge = laptop?.querySelector<HTMLElement>('.macbook-hinge');
+  const hero = laptop?.closest<HTMLElement>('.hero');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const startedAt = performance.now();
+  let opening = !reducedMotion.matches;
+  let frame = 0;
+  function draw(now: number) {
+    frame = 0;
+    if (!laptop || !hero || reducedMotion.matches) return;
+    const t = opening ? Math.min(1, Math.max(0, (now - startedAt) / 1100)) : 1;
+    if (t === 1) opening = false;
+    const openingAngle = 89 * (1 - t) ** 3;
+    const { top, height } = hero.getBoundingClientRect();
+    const progress = Math.min(1, Math.max(0, -top / (height * .8)));
+    const scrollAngle = 89 * progress * progress * (3 - 2 * progress);
+    // One hinge angle for both motions: rotations never add or overshoot.
+    const angle = Math.max(openingAngle, scrollAngle);
+    laptop.style.setProperty('--lid-angle', `${-angle}deg`);
+    const fade = Math.min(1, Math.max(0, (angle / 89 - .55) / .4));
+    laptop.style.setProperty('--screen-scroll-opacity', String(1 - fade * fade * (3 - 2 * fade)));
+    if (opening) frame = requestAnimationFrame(draw);
+  }
+  function requestDraw() {
+    if (!frame && !reducedMotion.matches) frame = requestAnimationFrame(draw);
+  }
+  function measure() {
+    if (!laptop || !hinge) return;
+    const baseWidth = laptop.clientWidth;
+    const lidWidth = hinge.offsetWidth;
+    const lidHeight = hinge.offsetHeight;
+    // At 90 degrees, projected width is w*d/(d-h). Solve for d so the
+    // closing lid reaches the front of the base, with a tiny rounding margin.
+    const closedWidth = baseWidth * .995;
+    const distance = lidHeight * closedWidth / Math.max(1, closedWidth - lidWidth);
+    laptop.style.setProperty('--lid-perspective', `${distance}px`);
+    laptop.style.setProperty('--hinge-y', `${lidHeight}px`);
+    requestDraw();
+  }
+  window.addEventListener('scroll', requestDraw, { passive: true });
+  window.addEventListener('pageshow', requestDraw);
+  const observer = new ResizeObserver(measure);
+  if (hinge) observer.observe(hinge);
+  reducedMotion.addEventListener('change', () => {
+    if (frame) cancelAnimationFrame(frame);
+    frame = 0;
+    opening = false;
+    if (reducedMotion.matches) {
+      laptop?.style.removeProperty('--lid-angle');
+      laptop?.style.removeProperty('--screen-scroll-opacity');
+    } else requestDraw();
+  });
+  measure();
+</script>
+<style>
+  .macbook { width: min(100%, 1000px); margin-inline: auto; perspective: var(--lid-perspective, 5000px); perspective-origin: 50% var(--hinge-y, 100%); }
+  .macbook-hinge { width: 88%; margin-inline: auto; transform-origin: center bottom; transform-style: preserve-3d; transform: rotateX(var(--lid-angle, -89deg)); backface-visibility: hidden; }
+  .macbook-lid { width: 100%; padding: 7px; border: 1px solid #333; border-radius: 17px 17px 3px 3px; background: #0c0c0c; }
+  .macbook-screen { position: relative; display: flex; align-items: center; justify-content: center; width: 100%; min-width: 0; aspect-ratio: 16 / 10; min-height: 215px; padding: 45px 24px 35px; border: 2px solid #0c0c0c; border-radius: 10px 10px 2px 2px; background: var(--bg); color: var(--text); }
+  .screen-content { width: 100%; min-width: 0; opacity: var(--screen-scroll-opacity, 0); }
+  .macbook-notch { position: absolute; top: -1px; left: 50%; transform: translateX(-50%); display: flex; justify-content: center; align-items: center; width: 70px; height: 14px; border-radius: 0 0 6px 6px; background: #0c0c0c; }
+  .macbook-notch span { width: 3px; height: 3px; border-radius: 50%; background: #333; }
+  .macbook-base { display: block; width: 100%; height: auto; margin-top: -1px; }
+  @media (prefers-reduced-motion: reduce) {
+    .macbook-hinge { transform: none; }
+    .screen-content { opacity: 1; transition: none; }
+  }
+  @media (max-width: 760px) {
+    .macbook-hinge { width: 94%; }
+    .macbook-lid { padding: 4px; border-radius: 11px 11px 2px 2px; }
+    .macbook-screen { padding: 32px 16px 26px; border-radius: 6px 6px 1px 1px; }
+    .macbook-notch { width: 50px; height: 10px; border-radius: 0 0 4px 4px; }
+  }
+  @media (max-width: 480px) {
+    .macbook-hinge { width: 96%; }
+    .macbook-lid { padding: 3px; }
+    .macbook-screen { padding: 28px 10px 22px; }
+  }
+</style>

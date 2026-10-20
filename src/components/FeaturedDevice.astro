@@ -1,0 +1,49 @@
+---
+import devices from '../data/devices.json';
+import { getState, getSummary, labels } from '../lib/support';
+import FeatureIcon from './FeatureIcon.astro';
+import Arrow from './Arrow.astro';
+const device = devices.find(device => device.device === 'j700')!;
+const summary = getSummary(device);
+const essentials = [
+  { feature: 'Internal display', label: 'Display' },
+  { feature: 'GPU acceleration', label: 'GPU' },
+  { feature: 'Vulkan', label: 'Vulkan 1.4' },
+  { feature: 'Touch ID', label: 'Touch ID' },
+  { feature: 'Speakers', label: 'Audio' },
+  { feature: 'Camera', label: 'Camera' },
+  { feature: 'Wi-Fi', label: 'Wi-Fi' },
+  { feature: 'Bluetooth', label: 'Bluetooth' },
+];
+---
+<section class="featured-device wrap" aria-labelledby="featured-device-title">
+  <div class="device-card">
+    <div class="device-card-intro">
+      <span class="device-kicker">Latest device</span>
+      <h2 id="featured-device-title">{device.model}</h2>
+      <p>{device.chip} · {summary.working} working · {summary.partial} partial</p>
+      <a class="project-link" href={`/devices/?device=${device.device}`}>All features <Arrow /></a>
+    </div>
+    <ul class="device-essentials" aria-label="MacBook Neo features">
+      {essentials.map(({ feature, label }) => <li><a class={`status-${getState(device.device, feature)}`} href={`/devices/?device=${device.device}&feature=${encodeURIComponent(feature)}`} aria-label={`${label}: ${labels[getState(device.device, feature)]}. View details.`}><FeatureIcon name={feature} /><span>{label}</span><span class="essential-check" aria-hidden="true">{getState(device.device, feature) === 'works' ? '✓' : '◐'}</span></a></li>)}
+    </ul>
+  </div>
+</section>
+<style>
+  .featured-device { padding-block: 6px 64px; }
+  .device-card { display: grid; grid-template-columns: .85fr 1.15fr; align-items: center; gap: 48px; border: 1px solid var(--line); border-radius: 12px; padding: 33px 36px; background: linear-gradient(135deg, color-mix(in srgb, var(--text) 3%, var(--bg)), var(--bg) 65%); }
+  .device-kicker { display: flex; align-items: center; gap: 10px; font-size: 11px; color: var(--muted); }
+  h2 { margin-top: 17px; font-size: 28px; letter-spacing: -.04em; }
+  p { color: var(--muted); font-size: 11px; line-height: 1.8; margin-top: 12px; }
+  .project-link { margin-top: 14px; }
+  .device-essentials { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; list-style: none; padding: 0; margin: 0; }
+  .device-essentials a { display: flex; align-items: center; gap: 10px; min-height: 40px; border: 1px solid var(--line); border-radius: 7px; padding: 10px 12px; font-size: 11px; }
+  .device-essentials :global(.feature-icon) { color: var(--muted); flex-shrink: 0; width: 15px; height: 15px; }
+  .essential-check { margin-left: auto; color: var(--muted); font-size: 11px; }
+  .device-essentials a:hover { border-color: var(--muted); background: color-mix(in srgb, var(--text) 3%, var(--bg)); }
+  .device-essentials a.status-works { color: var(--status-working); background: var(--status-working-bg); border-color: var(--status-working-border); }
+  .device-essentials a.status-partial { color: var(--status-partial); background: var(--status-partial-bg); border-color: var(--status-partial-border); }
+  .device-essentials a.status-works :global(.feature-icon), .device-essentials a.status-partial :global(.feature-icon), .device-essentials a .essential-check { color: inherit; }
+  @media (max-width: 760px) { .device-card { gap: 28px; padding: 27px; } h2 { font-size: 24px; } .device-essentials a { gap: 8px; padding-inline: 10px; } }
+  @media (max-width: 600px) { .featured-device { padding-bottom: 45px; } .device-card { grid-template-columns: 1fr; gap: 24px; padding: 25px; } }
+</style>
