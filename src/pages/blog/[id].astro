@@ -1,0 +1,61 @@
+---
+import { getCollection, render } from 'astro:content';
+import Site from '../../layouts/Site.astro';
+export async function getStaticPaths() {
+  // Newest first, so each post's neighbours are the next newer and older posts.
+  const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  return posts.map((post, i) => ({ params: { id: post.id }, props: { post, newer: posts[i - 1], older: posts[i + 1] } }));
+}
+const { post, newer, older } = Astro.props;
+const { Content, headings } = await render(post);
+const formatDate = (date: Date) => date.toLocaleDateString('en', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const date = formatDate(post.data.date);
+// About 230 words a minute, counting only prose: no code, tags or link targets.
+const words = (post.body ?? '').replace(/```[\s\S]*?```/g, '').replace(/<[^>]+>|\]\([^)]*\)/g, ' ').split(/\s+/).filter(Boolean).length;
+const minutes = Math.max(1, Math.round(words / 230));
+// "A", "A and B", "A, B and C"; posts without authors are signed by the project.
+const authors = post.data.authors?.length ? post.data.authors : ['The Aurora Silicon Authors'];
+const byline = authors.length > 1 ? `${authors.slice(0, -1).join(', ')} and ${authors.at(-1)}` : authors[0];
+const sections = headings.filter(h => h.depth === 2 && h.slug !== 'footnote-label');
+const icon = (d: string) => `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
+---
+<Site title={`${post.data.title} | Aurora Silicon`} description={post.data.description}>
+  <article class="blog-post wrap">
+    <div class="post-bar">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/" aria-label="Home"><Fragment set:html={icon('M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z')} /></a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><span aria-current="page">{post.data.title}</span></li>
+        </ol>
+      </nav>
+      {sections.length > 2 && (
+        <details class="post-toc">
+          <summary aria-label="Contents"><Fragment set:html={icon('M3 6h.01M3 12h.01M3 18h.01M8 6h13M8 12h13M8 18h13')} /><span class="post-toc-label">Contents</span><Fragment set:html={icon('m6 9 6 6 6-6')} /></summary>
+          <ol>{sections.map(h => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+        </details>
+      )}
+    </div>
+    <header class="post-header">
+      <p class="post-meta"><time datetime={post.data.date.toISOString()}>{date}</time><span aria-hidden="true">·</span><span>{minutes} min read</span></p>
+      <h1>{post.data.title}</h1>
+      <p class="post-dek">{post.data.description}</p>
+    </header>
+    <div class="post-content"><Content /></div>
+    <p class="post-signoff"><span>{byline}</span><span aria-hidden="true">·</span><time datetime={post.data.date.toISOString()}>{date}</time></p>
+    <nav class="post-pager" aria-label="More posts">
+      {newer ? <a class="post-pager-link" href={`/blog/${newer.id}/`}><span class="post-pager-label"><Fragment set:html={icon('m14 6-6 6 6 6')} />Newer</span><span class="post-pager-title">{newer.data.title}</span></a> : <span />}
+      {older ? <a class="post-pager-link is-older" href={`/blog/${older.id}/`}><span class="post-pager-label">Older<Fragment set:html={icon('m10 6 6 6-6 6')} /></span><span class="post-pager-title">{older.data.title}</span></a> : <span />}
+      <a class="post-pager-all" href="/blog/">All posts</a>
+    </nav>
+  </article>
+</Site>
+<script>
+  // The contents menu closes on a pick, a click elsewhere or Escape.
+  const toc = document.querySelector<HTMLDetailsElement>('.post-toc');
+  if (toc) {
+    toc.addEventListener('click', e => { if ((e.target as Element).closest('a')) toc.open = false; });
+    document.addEventListener('click', e => { if (toc.open && !toc.contains(e.target as Node)) toc.open = false; });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && toc.open) { toc.open = false; toc.querySelector('summary')?.focus(); } });
+  }
+</script>
