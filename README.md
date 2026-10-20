@@ -91,3 +91,7 @@ M5 Pro boot, external display, ProMotion, brightness, keyboard and backlight, tr
 The hero’s live HTML content sits inside `MacBook.astro`, above a flat SVG base. One hinge angle combines the initial opening and scroll-driven closing, so transforms never add together. Perspective is derived from the untransformed lid height and the lid/base width ratio; the fully closing projection is limited to 99.5% of the base width. The perspective origin sits on the hinge, keeping the base and lid centered. Screen contents fade in the last part of closing. Reduced-motion preferences disable movement and keep the screen fully open and visible.
 
 The shared header is sticky glass. Branding is hidden at the top of the homepage and appears after scrolling through the hero. The latest blog entry sits directly below About.
+
+## Licence
+
+Copyright © 2026 Aurora Silicon. All rights reserved. No licence is granted to copy, modify or redistribute this site; see `LICENSE`, which also lists the third-party material that keeps its own licence.

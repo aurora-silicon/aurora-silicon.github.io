@@ -1,0 +1,33 @@
+Copyright © 2026 Aurora Silicon. All rights reserved.
+
+This repository contains the source code, text, documentation, images and
+other material for the Aurora Silicon website (aurorasilicon.org). Unless
+noted below, all of it is the property of Aurora Silicon.
+
+No licence is granted. You may view this repository and the published
+website, but you may not copy, modify, distribute, sublicense or create
+derivative works from any part of it without prior written permission from
+Aurora Silicon. Contributions submitted to this repository are made on the
+understanding that Aurora Silicon may use them under these terms.
+
+Trademarks
+
+"Aurora Silicon", the Aurora Silicon name and the Aurora "A" mark are
+trademarks of Aurora Silicon. Apple, Mac, MacBook, MacBook Air, MacBook Pro,
+MacBook Neo, iMac, Mac mini, Mac Studio and Mac Pro are trademarks of
+Apple Inc. Linux is the registered trademark of Linus Torvalds. Aurora Silicon
+is not affiliated with Apple Inc.
+
+Third-party material
+
+The following material is not owned by Aurora Silicon and remains under its
+own licence:
+
+- Lucide icons: ISC licence, with parts under MIT. See
+  public/licenses/lucide.txt.
+- Omarchy desktop screenshot (public/images/omarchy-desktop.webp): from
+  https://github.com/omacom/omarchy, MIT licence.
+- Geist typeface: SIL Open Font License 1.1, installed through
+  @fontsource-variable/geist.
+- npm dependencies, including Astro and Starlight: each under the licence in
+  its package.
