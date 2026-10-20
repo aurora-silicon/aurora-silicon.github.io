@@ -94,4 +94,4 @@ The shared header is sticky glass. Branding is hidden at the top of the homepage
 
 ## Licence
 
-Copyright © 2026 Aurora Silicon. All rights reserved. No licence is granted to copy, modify or redistribute this site; see `LICENSE`, which also lists the third-party material that keeps its own licence.
+Copyright © 2026 The Aurora Silicon Authors, the people listed in `AUTHORS`. All rights reserved. No licence is granted to copy, modify or redistribute this site; see `LICENSE`, which also lists the third-party material that keeps its own licence.
