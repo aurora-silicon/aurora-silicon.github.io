@@ -1,20 +1,22 @@
 ---
 import devices from '../data/devices.json';
 import FeatureIcon from './FeatureIcon.astro';
-import { getGroups, getState, labels, support, deviceClasses, getDeviceClass, getChipGroups, getChipGroup } from '../lib/support';
+import { getGroups, getState, labels, support, deviceClasses, getDeviceClass, getSeries } from '../lib/support';
 import DeviceIcon from './DeviceIcon.astro';
-const chipGroups = getChipGroups(devices);
+const seriesList = getSeries(devices);
 const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMap(group => group.features)))];
 ---
 <section class="device-finder" aria-label="Device configuration">
-  <div class="soc-selection">
-    <div class="series-picker" role="group" aria-label="SoC">
-      {chipGroups.map(group => <div class="soc-family" role="group" aria-label={`${group.family} family`}>{group.options.map(option => <button type="button" data-series={option} aria-pressed="false">{option}</button>)}</div>)}
+  <!-- One row of chip series, newest first. Pro, Max and Ultra are chosen
+       with the model below, so the row stays short. -->
+  <div class="series-selection">
+    <div class="series-picker" role="group" aria-label="Chip series">
+      {seriesList.map(series => <button type="button" data-series={series} aria-pressed="false">{series}</button>)}
     </div>
   </div>
   <div class="class-selection">
     <div class="class-picker" role="group" aria-label="Device">
-      {deviceClasses.map(name => <button type="button" data-device-class={name} aria-pressed="false"><DeviceIcon name={name} /><span>{name}</span></button>)}
+      {deviceClasses.map(name => <button type="button" data-device-class={name} aria-pressed="false"><DeviceIcon name={name} /><span>{name}</span><span class="class-count" data-class-count></span></button>)}
     </div>
   </div>
   <div class="variant-picker" data-variants role="group" aria-label="Model variant" hidden></div>
@@ -28,14 +30,14 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   </section>
   <template data-feature-icons>{iconNames.map(name => <span data-icon-name={name}><FeatureIcon name={name} /></span>)}</template>
   <noscript>
-    <style>.soc-selection,.class-selection,.variant-picker{display:none}</style>
-    <div class="offline-devices"><p>Select a SoC, then a device.</p>{chipGroups.flatMap(group => group.options).map(series => <details><summary>{series}</summary>{deviceClasses.filter(name => devices.some(device => getChipGroup(device) === series && getDeviceClass(device) === name)).map(name => <details><summary>{name}</summary>{devices.filter(device => getChipGroup(device) === series && getDeviceClass(device) === name).map(device => <details><summary>{device.model} · {device.chip} · {device.device}</summary>{getGroups(device).map(group => <div><h3>{group.name}</h3><ul>{group.features.map(feature => <li>{feature}: {labels[getState(device.device, feature)]}{support.results[device.device]?.[feature]?.note ? ` · ${support.results[device.device][feature].note}` : ''}</li>)}</ul></div>)}<a href={device.discussion}>Hardware reports</a></details>)}</details>)}</details>)}</div>
+    <style>.series-selection,.class-selection,.variant-picker{display:none}</style>
+    <div class="offline-devices"><p>Select a chip series, then a device.</p>{seriesList.map(series => <details><summary>{series}</summary>{deviceClasses.filter(name => devices.some(device => device.generation === series && getDeviceClass(device) === name)).map(name => <details><summary>{name}</summary>{devices.filter(device => device.generation === series && getDeviceClass(device) === name).map(device => <details><summary>{device.model} · {device.chip} · {device.device}</summary>{getGroups(device).map(group => <div><h3>{group.name}</h3><ul>{group.features.map(feature => <li>{feature}: {labels[getState(device.device, feature)]}{support.results[device.device]?.[feature]?.note ? ` · ${support.results[device.device][feature].note}` : ''}</li>)}</ul></div>)}<a href={device.discussion}>Hardware reports</a></details>)}</details>)}</details>)}</div>
   </noscript>
   <span class="sr-only" data-device-announcement role="status" aria-live="polite"></span>
 </section>
 <script>
   import devices from '../data/devices.json';
-  import { getGroups, getState, getSummary, getHistory, labels, support, getDeviceClass, getChipGroup, getChipGroups } from '../lib/support';
+  import { getGroups, getState, getSummary, getHistory, labels, support, getDeviceClass, getSeries, getChipTier } from '../lib/support';
   import type { Device } from '../lib/support';
   const classButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-device-class]')];
   const variants = document.querySelector<HTMLElement>('[data-variants]')!;
@@ -45,8 +47,15 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   const announce = document.querySelector<HTMLElement>('[data-device-announcement]')!;
   const icons = document.querySelector<HTMLTemplateElement>('[data-feature-icons]')!.content;
   const seriesButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-series]')];
+  const classRow = document.querySelector<HTMLElement>('.class-selection')!;
+  // A kind of Mac made in only one series (the MacBook Neo) is shown in that
+  // series alone, rather than as a dimmed tile everywhere else.
+  const onlyIn = (name: string) => {
+    const series = new Set(devices.filter(device => getDeviceClass(device) === name).map(device => device.generation));
+    return series.size === 1 ? [...series][0] : undefined;
+  };
   let selected: Device | undefined;
-  let series = getChipGroups(devices)[0].options[0];
+  let series = getSeries(devices)[0];
   let deviceClass = '';
   function resetDetails() {
     panel.hidden = true;
@@ -58,10 +67,17 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
     const activeChip = seriesButtons.find(button => button.dataset.series === value);
     const chipRow = activeChip?.closest<HTMLElement>('.series-picker');
     if (activeChip && chipRow) chipRow.scrollLeft = activeChip.offsetLeft - (chipRow.clientWidth - activeChip.offsetWidth) / 2;
-    const available = devices.filter(device => getChipGroup(device) === series);
+    const available = devices.filter(device => device.generation === series);
     for (const button of classButtons) {
-      button.disabled = !available.some(device => getDeviceClass(device) === button.dataset.deviceClass);
+      const models = available.filter(device => getDeviceClass(device) === button.dataset.deviceClass).length;
+      const home = onlyIn(button.dataset.deviceClass!);
+      button.disabled = !models;
+      button.hidden = Boolean(home && home !== series);
+      button.querySelector<HTMLElement>('[data-class-count]')!.textContent = models > 1 ? `${models} models` : '';
     }
+    // With a single kind of Mac in the series there is nothing to choose.
+    classRow.hidden = new Set(available.map(getDeviceClass)).size <= 1;
+    classRow.closest('.device-finder')!.classList.toggle('is-single', classRow.hidden);
     const nextClass = preferredClass && available.some(device => getDeviceClass(device) === preferredClass)
       ? preferredClass : available.some(device => getDeviceClass(device) === deviceClass)
         ? deviceClass : classButtons.find(button => !button.disabled)?.dataset.deviceClass;
@@ -75,23 +91,51 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
       const row = active.parentElement;
       row.scrollLeft = active.offsetLeft - (row.clientWidth - active.offsetWidth) / 2;
     }
-    const matches = devices.filter(device => getChipGroup(device) === series && getDeviceClass(device) === value);
+    classMatches = devices
+      .filter(device => device.generation === series && getDeviceClass(device) === value)
+      .sort((a, b) => sizeOf(a) - sizeOf(b) || getChipTier(a) - getChipTier(b));
+    chooseDevice(classMatches.find(device => device.device === (preferredDevice ?? selected?.device)) ?? classMatches[0]);
+  }
+  // Models of the chosen kind of Mac, picked by size and then chip, as in
+  // Apple's store: a segmented control for each, shown only when it has a choice.
+  let classMatches: Device[] = [];
+  const sizeOf = (device: Device) => parseFloat(device.model.match(/(\d)× USB-C/)?.[1] ?? device.model.match(/(\d+)-inch/)?.[1] ?? '0');
+  // iMacs are all 24-inch, so they are told apart by their ports.
+  const kindOf = (device: Device) => device.model.match(/(\d× USB-C)/)?.[1] ?? device.model.match(/(\d+-inch)/)?.[1] ?? '';
+  const kindLabel = (kind: string) => kind.endsWith('-inch') ? kind.replace('-inch', '″') : kind.replace('× USB-C', ' ports');
+  function segmented(label: string) {
+    const group = document.createElement('div'); group.className = 'segmented'; group.setAttribute('role', 'group'); group.setAttribute('aria-label', label);
+    return group;
+  }
+  function segment(text: string, pressed: boolean, data: { [key: string]: string }) {
+    const button = document.createElement('button'); button.type = 'button'; button.textContent = text;
+    Object.assign(button.dataset, data); button.setAttribute('aria-pressed', String(pressed));
+    return button;
+  }
+  function renderVariants(device: Device | undefined) {
     variants.replaceChildren();
-    variants.hidden = matches.length <= 1;
-    for (const device of matches) {
-      const button = document.createElement('button'); button.type = 'button'; button.dataset.variant = device.device;
-      const size = device.model.match(/(\d+-inch)/)?.[1];
-      const ports = device.model.match(/(\d× USB-C)/)?.[1];
-      const base = [size, ports, device.chip].filter(Boolean).join(' · ');
-      const duplicate = matches.some(other => other.device !== device.device && other.model === device.model && other.chip === device.chip);
-      button.textContent = base + (duplicate ? ` · ${device.device}` : '');
-      button.setAttribute('aria-pressed', 'false'); variants.append(button);
+    if (!device) { variants.hidden = true; return; }
+    const kinds = [...new Set(classMatches.map(kindOf))];
+    if (kinds.length > 1) {
+      const sizes = segmented(kinds.some(kind => kind.includes('USB-C')) ? 'Ports' : 'Size');
+      for (const kind of kinds) sizes.append(segment(kindLabel(kind), kind === kindOf(device), { size: kind }));
+      variants.append(sizes);
     }
-    chooseDevice(matches.find(device => device.device === (preferredDevice ?? selected?.device)) ?? matches[0]);
+    // Only sizes that come with more than one chip get a chip control.
+    const sameKind = classMatches.filter(other => kindOf(other) === kindOf(device));
+    if (sameKind.length > 1) {
+      const chips = segmented('Chip');
+      for (const option of sameKind) {
+        const duplicate = sameKind.some(other => other.device !== option.device && other.chip === option.chip);
+        chips.append(segment(option.chip.replace(', ', ' ') + (duplicate ? ` · ${option.device}` : ''), option.device === device.device, { variant: option.device }));
+      }
+      variants.append(chips);
+    }
+    variants.hidden = !variants.children.length;
   }
   function chooseDevice(device: Device | undefined) {
     selected = device;
-    variants.querySelectorAll<HTMLButtonElement>('[data-variant]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.variant === device?.device)));
+    renderVariants(device);
     updateFeatures();
   }
   function clearUrl() {
@@ -154,40 +198,88 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
       const detail = document.createElement('p'); detail.className = 'historic-detail'; detail.textContent = record.detail;
       const source = document.createElement('a'); source.href = record.url || selected.discussion; source.textContent = `Earlier report · ${record.date}`; source.className = 'project-link'; body.append(detail, source);
     }
+    revealPanel();
   });
-  seriesButtons.forEach(button => button.addEventListener('click', () => chooseSeries(button.dataset.series!)));
-  classButtons.forEach(button => button.addEventListener('click', () => chooseClass(button.dataset.deviceClass!)));
+  // Once a click leaves nothing more to choose, bring the device's results into
+  // view: a series with one Mac, a kind of Mac with one model, a size with one
+  // chip, or a chip. Not on page load or a shared link.
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const siteHeader = document.querySelector<HTMLElement>('.site-header');
+  const GAP = 28;
+  function scrollToY(y: number) {
+    window.scrollTo({ top: Math.max(0, y), behavior: reducedMotion.matches ? 'instant' : 'smooth' });
+  }
+  // Bring a feature's notes fully into view, below the header, if they aren't.
+  function revealPanel() {
+    const box = panel.getBoundingClientRect();
+    const headerBottom = siteHeader?.offsetHeight ?? 0;
+    if (box.top >= headerBottom + GAP && box.bottom <= window.innerHeight - GAP) return;
+    const fits = box.height <= window.innerHeight - headerBottom - 2 * GAP;
+    scrollToY(window.scrollY + (fits ? box.bottom - window.innerHeight + GAP : box.top - headerBottom - GAP));
+  }
+  function showResultsIfChosen(step: 'series' | 'class' | 'size' | 'chip') {
+    const sizeLeft = Boolean(variants.querySelector('[data-size]'));
+    const chipLeft = Boolean(variants.querySelector('[data-variant]'));
+    const done = step === 'chip'
+      || (step === 'size' && !chipLeft)
+      || (step === 'class' && !sizeLeft && !chipLeft)
+      || (step === 'series' && classRow.hidden);
+    if (!done || results.hidden) return;
+    // Land the device's name just below the header. Results already starting
+    // high on screen need no nudge.
+    const heading = results.querySelector<HTMLElement>('.result-heading')!;
+    const top = heading.getBoundingClientRect().top;
+    if (top >= 0 && top < window.innerHeight * .4) return;
+    scrollToY(window.scrollY + top - (siteHeader?.offsetHeight ?? 0) - GAP);
+  }
+  seriesButtons.forEach(button => button.addEventListener('click', () => { chooseSeries(button.dataset.series!); showResultsIfChosen('series'); }));
+  classButtons.forEach(button => button.addEventListener('click', () => { chooseClass(button.dataset.deviceClass!); showResultsIfChosen('class'); }));
   variants.addEventListener('click', event => {
-    const button = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-variant]');
-    if (button) chooseDevice(devices.find(device => device.device === button.dataset.variant));
+    const button = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-variant], [data-size]');
+    if (!button) return;
+    if (button.dataset.variant) { chooseDevice(devices.find(device => device.device === button.dataset.variant)); showResultsIfChosen('chip'); return; }
+    // A new size keeps the chip, or its tier, where that size has it.
+    const options = classMatches.filter(device => kindOf(device) === button.dataset.size);
+    chooseDevice(options.find(device => device.chip === selected?.chip)
+      ?? options.find(device => selected && getChipTier(device) === getChipTier(selected))
+      ?? options[0]);
+    showResultsIfChosen('size');
   });
   const url = new URL(window.location.href);
   const initial = devices.find(device => device.device === (url.searchParams.get('device') || url.hash.slice(1)));
-  chooseSeries(initial ? getChipGroup(initial) : getChipGroups(devices)[0].options[0], initial ? getDeviceClass(initial) : undefined, initial?.device);
+  chooseSeries(initial ? initial.generation : getSeries(devices)[0], initial ? getDeviceClass(initial) : undefined, initial?.device);
   const feature = url.searchParams.get('feature');
   if (feature) [...groups.querySelectorAll<HTMLButtonElement>('[data-feature]')].find(pill => pill.dataset.feature === feature)?.click();
 
 </script>
 <style>
   .device-finder { max-width: 940px; }
-  .series-picker { position: relative; display: flex; flex-wrap: wrap; gap: 8px 12px; overflow-x: auto; padding: 5px 3px 8px; margin: -5px -3px 22px; scrollbar-width: thin; }
-  .soc-family { display: flex; flex-shrink: 0; align-items: center; gap: 2px; padding-right: 10px; border-right: 1px solid var(--line); }
-  .soc-family:last-child { border-right: 0; padding-right: 0; }
-  .series-picker button { flex-shrink: 0; background: none; color: var(--muted); padding: 9px 10px; border: 1px solid transparent; border-radius: 7px; font-size: 13px; cursor: pointer; }
-  .series-picker button[aria-pressed='true'] { color: var(--text); border-color: var(--line); background: color-mix(in srgb, var(--text) 4%, var(--bg)); }
+  .series-picker { display: flex; gap: 4px; margin-bottom: 22px; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+  .series-picker::-webkit-scrollbar { display: none; }
+  .series-picker button { flex-shrink: 0; min-height: 44px; margin-bottom: -1px; padding: 0 14px; border: 0; border-bottom: 2px solid transparent; background: none; color: var(--muted); font: inherit; font-size: 14px; white-space: nowrap; cursor: pointer; }
   .series-picker button:hover { color: var(--text); }
+  .series-picker button[aria-pressed='true'] { color: var(--text); border-bottom-color: var(--text); font-weight: 550; }
+  .series-picker button:focus-visible { outline: 2px solid var(--text); outline-offset: -2px; border-radius: 4px; }
   .class-picker { position: relative; display: flex; gap: 8px; overflow-x: auto; padding: 5px 3px 9px; margin-inline: -3px; scrollbar-width: thin; }
   .class-picker button { flex: 1; min-width: 110px; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 20px 8px 15px; background: none; color: var(--muted); border: 1px solid transparent; border-radius: 9px; font-size: 11px; white-space: nowrap; cursor: pointer; }
   .class-picker button[aria-pressed='true'] { color: var(--text); border-color: var(--line); background: color-mix(in srgb, var(--text) 3%, var(--bg)); }
   .class-picker button:hover:not(:disabled) { color: var(--text); }
   .class-picker button:disabled { opacity: .25; cursor: default; }
-  .series-picker, .class-picker { scrollbar-color: var(--line) transparent; }
-  .series-picker::-webkit-scrollbar, .class-picker::-webkit-scrollbar { height: 3px; }
-  .series-picker::-webkit-scrollbar-thumb, .class-picker::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
-  .variant-picker { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 22px; }
-  .variant-picker :global(button) { padding: 9px 12px; border: 1px solid var(--line); border-radius: 6px; background: none; font: inherit; font-size: 11px; color: var(--muted); cursor: pointer; }
-  .variant-picker :global(button[aria-pressed='true']) { color: var(--text); border-color: var(--muted); }
+  .class-picker button[hidden], .class-selection[hidden] { display: none; }
+  .class-count { min-height: 1.4em; margin-top: -8px; font-size: 10px; color: var(--muted); }
+  .class-picker { scrollbar-color: var(--line) transparent; }
+  .class-picker::-webkit-scrollbar { height: 3px; }
+  .class-picker::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
+  .variant-picker { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; }
+  .variant-picker :global(.segmented) { display: inline-flex; max-width: 100%; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; scrollbar-width: none; }
+  .variant-picker :global(.segmented::-webkit-scrollbar) { display: none; }
+  .variant-picker :global(.segmented button) { flex-shrink: 0; padding: 7px 12px; border: 0; border-radius: 7px; background: none; color: var(--muted); font: inherit; font-size: 12px; white-space: nowrap; cursor: pointer; }
+  .variant-picker :global(.segmented button:hover) { color: var(--text); }
+  .variant-picker :global(.segmented button[aria-pressed='true']) { color: var(--text); background: color-mix(in srgb, var(--text) 10%, var(--bg)); }
+  .variant-picker :global(.segmented button:focus-visible) { outline: 2px solid var(--text); outline-offset: -2px; }
   .feature-results { margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--line); }
+  /* With nothing to pick below the tabs, the results sit straight under them. */
+  .is-single .feature-results { margin-top: 0; padding-top: 6px; border-top: 0; }
   .result-heading { display: flex; justify-content: space-between; align-items: start; gap: 24px; margin-bottom: 16px; }
   .result-heading h2 { font-size: 21px; }
   .device-meta { margin-top: 9px; color: var(--muted); font-size: 11px; }
@@ -223,11 +315,8 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   .offline-devices h3 { font-size: 12px; margin-top: 20px; }
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
   @media (max-width: 600px) {
-    .series-picker { flex-wrap: nowrap; gap: 8px; }
-    .series-picker button { min-height: 40px; font-size: 12px; padding: 10px; }
+    .series-picker button { padding: 0 12px; font-size: 13px; }
     .class-picker button { min-width: 99px; padding-block: 17px 13px; }
-    .variant-picker { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
-    .variant-picker :global(button) { min-height: 42px; padding: 10px; line-height: 1.6; }
     .feature-results { margin-top: 30px; }
     .result-heading { flex-direction: column; gap: 10px; }
     .feature-groups :global(.feature-pill) { min-height: 42px; padding: 10px 12px; gap: 8px; font-size: 12px; }
