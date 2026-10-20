@@ -39,4 +39,8 @@ Neo bring-up builds on work from these contributors and source lineages:
 
 The [MacBook Neo release article](/blog/introducing-linux-on-macbook-neo/) includes the bring-up story and individual contributor credits.
 
+## Website icons
+
+Feature and device glyphs use [Lucide](https://lucide.dev). The [ISC and MIT licence notices](/licenses/lucide.txt) accompany the icons.
+
 This list is not exhaustive. Repository licence headers, credits, and commit history remain the authoritative record for code provenance. If a credit is missing, please [let us know](https://discord.gg/DXmsSSc5aY).
