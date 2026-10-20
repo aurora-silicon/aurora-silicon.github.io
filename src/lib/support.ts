@@ -13,23 +13,21 @@ export const deviceClasses = ['MacBook Air', 'MacBook Neo', 'MacBook Pro', 'Mac 
 export function getDeviceClass(device: Device): string {
   return deviceClasses.find(name => device.model.startsWith(name)) ?? device.model;
 }
-export const chipFamilies = ['M1', 'M2', 'M3', 'M4', 'A18 Pro', 'M5', 'M6'];
-export function getChipGroup(device: Device): string {
-  if (/^M\d+ (Pro|Max)/.test(device.chip)) return `${device.generation} Pro/Max`;
-  if (/^M\d+ Ultra/.test(device.chip)) return `${device.generation} Ultra`;
-  return device.generation;
-}
-export function getChipGroups(devices: Device[]): { family: string; options: string[] }[] {
-  return chipFamilies.map(family => ({
-    family,
-    options: [family, `${family} Pro/Max`, `${family} Ultra`].filter(option => devices.some(device => getChipGroup(device) === option)),
-  })).filter(group => group.options.length);
-}
 export const support = supportData as {
   profiles: { [profile: string]: FeatureGroup[] };
   results: { [device: string]: { [feature: string]: Record } };
   series: string[];
 };
+// Chip series, newest first, as the Support page tabs show them.
+export function getSeries(devices: Device[]): string[] {
+  return support.series.filter(series => devices.some(device => device.generation === series));
+}
+// Pro, Max and Ultra chips are told apart within a series, after the base chip.
+const chipTiers = ['Pro', 'Max', 'Ultra'];
+export function getChipTier(device: Device): number {
+  const tier = device.chip.match(/\b(Pro|Max|Ultra)\b/)?.[1];
+  return tier ? chipTiers.indexOf(tier) + 1 : 0;
+}
 export const history = historyData as { [device: string]: { [feature: string]: History[] } };
 export const labels: { [state in State]: string } = {
   works: 'Working', partial: 'Partial', none: 'Not working', unknown: 'Not recorded', reported: 'Reported',
