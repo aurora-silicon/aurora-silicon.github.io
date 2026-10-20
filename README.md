@@ -58,9 +58,9 @@ The hero Download button jumps to the Omarchy Mac section. Its Download button l
 
 Feature pills use Working, Partial, Not working, and Not recorded from the imported Linux support snapshot. Where only older observations exist, they show Reported. The dated development reports from October 1, 2026 are retained separately and remain available in feature details. Update current states in `support.json` and add dated, model-specific evidence in `feature-reports.json`. Being in the catalog does not imply compatibility.
 
-The support page starts with chronological chip groups, then device classes. Base, Pro/Max, and Ultra are separate options, with Pro and Max grouped together. A compact variant row appears only when several models match. Hardware-specific groups follow, with green Working and orange Partial pills in both themes. Without JavaScript, the same data is available through nested SoC and device-class disclosure groups. A feature can be linked directly with `/devices/?device=j700&feature=Vulkan`; legacy board hashes are also accepted.
+The support page starts with one row of chip-series tabs, newest first, then device classes. Pro, Max and Ultra are chosen with the model, through compact Size (or iMac Ports) and Chip controls that appear only when they offer a choice; a series with a single Mac skips straight to its results. Hardware-specific groups follow, with green Working and orange Partial pills in both themes. Without JavaScript, the same data is available through nested SoC and device-class disclosure groups. A feature can be linked directly with `/devices/?device=j700&feature=Vulkan`; legacy board hashes are also accepted.
 
-Legacy `/docs/devices/` and `/docs/installation/` URLs redirect to `/devices/` and `/#omarchy`.
+Legacy `/docs/devices/` and `/docs/installation/` URLs redirect to `/devices/` and `/docs/download/`.
 
 ## Deployment
 

@@ -17,6 +17,8 @@ export default defineConfig({
         { icon: 'discord', label: 'Discord', href: 'https://discord.gg/DXmsSSc5aY' },
       ],
       customCss: ['./src/styles/docs.css'],
+      // Support and Blog sit in the docs header, as in the site's main navigation.
+      components: { SocialIcons: './src/components/DocsSocialIcons.astro' },
       editLink: {
         baseUrl: 'https://github.com/aurora-silicon/aurora-silicon.github.io/edit/main/',
       },
@@ -26,11 +28,9 @@ export default defineConfig({
         { tag: 'link', attrs: { rel: 'manifest', href: '/site.webmanifest' } },
       ],
       sidebar: [
-        { label: 'Home', link: '/' },
         { label: 'Start here', items: [
           { label: 'Introduction', slug: 'docs' },
-          { label: 'Download', link: '/#omarchy' },
-          { label: 'Device support', link: '/devices/' },
+          { label: 'Download', slug: 'docs/download' },
           { label: 'Project overview', slug: 'docs/project' },
           { label: 'Attribution', slug: 'docs/attribution' },
           { label: 'Support records', slug: 'docs/hardware' },

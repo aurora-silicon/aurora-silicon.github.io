@@ -7,7 +7,7 @@ Aurora develops Linux for Apple Silicon. Development covers the kernel, graphics
 
 ## Installation and device support
 
-Find your Mac in [device support](/devices/) and read its hardware report before following the [download options](/#omarchy).
+Find your Mac in [device support](/devices/) and read its hardware report before following the [download options](/docs/download/).
 
 Support is recorded per device and software revision. Results for one Mac do not apply automatically to another model with the same chip.
 
