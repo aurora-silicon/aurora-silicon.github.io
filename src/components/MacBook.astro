@@ -219,7 +219,8 @@
   .screen-content { width: 100%; min-width: 0; opacity: var(--screen-scroll-opacity, 0); }
   /* The display goes dark as the lid closes, so the gap shows the black interior. */
   .macbook-screen::after { content: ''; position: absolute; z-index: 1; inset: 0; border-radius: inherit; background: #0c0c0c; opacity: calc(1 - var(--screen-scroll-opacity, 0)); pointer-events: none; }
-  .macbook-notch { position: absolute; z-index: 2; top: 0; left: 50%; transform: translateX(-50%); display: flex; justify-content: center; align-items: center; width: 12.4%; height: calc(var(--u, 1.25px) * 14); border-radius: 0 0 calc(var(--u, 1.25px) * 5) calc(var(--u, 1.25px) * 5); background: #0c0c0c; }
+  /* Overlap the bezel to cover subpixel seams during the 3D rotation. */
+  .macbook-notch { position: absolute; z-index: 2; top: -1px; left: 50%; transform: translateX(-50%); display: flex; justify-content: center; align-items: center; width: 12.4%; height: calc(var(--u, 1.25px) * 14 + 1px); border-radius: 0 0 calc(var(--u, 1.25px) * 5) calc(var(--u, 1.25px) * 5); background: #0c0c0c; }
   .macbook-notch span { width: calc(var(--u, 1.25px) * 3.4); height: calc(var(--u, 1.25px) * 3.4); border-radius: 50%; background: #2a2a2a; }
   /* Lid thickness: 7.4 units, about a third of the base as in Apple's closed
      front view. Each edge face is shaded across its depth like the base: dark
