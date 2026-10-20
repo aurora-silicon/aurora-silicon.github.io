@@ -1,7 +1,14 @@
 ---
+import { Icon } from '@astrojs/starlight/components';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import '../styles/home.css';
 interface Props { title: string; description?: string; }
+// The same accounts as the docs header's social icons (astro.config.mjs).
+const social = [
+  { icon: 'github', label: 'GitHub', href: 'https://github.com/aurora-silicon' },
+  { icon: 'x.com', label: 'X', href: 'https://x.com/aurorasilicon' },
+  { icon: 'discord', label: 'Discord', href: 'https://discord.gg/DXmsSSc5aY' },
+] as const;
 const { title, description = 'Linux on Apple Silicon. Aurora Silicon downloads and device support.' } = Astro.props;
 ---
 <!doctype html>
@@ -45,9 +52,17 @@ const { title, description = 'Linux on Apple Silicon. Aurora Silicon downloads a
     <noscript><style>.site-header[data-hero-header] .brand { visibility: visible; opacity: 1; transform: none; pointer-events: auto; }</style></noscript>
     <main id="main"><slot /></main>
     <footer class="site-footer wrap">
-      <span class="footer-name">© {new Date().getFullYear()} The Aurora Silicon Authors. All rights reserved.</span>
-      <nav aria-label="Footer navigation"><a href="/docs/attribution/">Attribution</a><a href="/docs/policies/">Policies &amp; guidelines</a></nav>
-      <p class="footer-credit">Built on <a href="https://asahilinux.org">Asahi Linux</a>. Apple, Mac and MacBook are trademarks of Apple Inc. Linux® is the registered trademark of Linus Torvalds. Aurora Silicon is not affiliated with Apple.</p>
+      <div class="footer-top">
+        <a class="footer-brand" href="/" aria-label="Aurora Silicon home"><img src="/brand/aurora-silicon-mark.svg" width="40" height="40" alt="" /><span>Aurora Silicon</span></a>
+        <div class="footer-social">{social.map(s => <a href={s.href} aria-label={s.label}><Icon name={s.icon} size="20px" /></a>)}</div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-legal">
+          <p class="footer-name">© {new Date().getFullYear()} The Aurora Silicon Authors. All rights reserved.</p>
+          <p class="footer-credit">Built on <a href="https://asahilinux.org">Asahi Linux</a>. Apple, Mac and MacBook are trademarks of Apple Inc. Linux® is the registered trademark of Linus Torvalds. Aurora Silicon is not affiliated with Apple.</p>
+        </div>
+        <nav aria-label="Footer navigation"><a href="/blog/">Blog</a><a href="/devices/">Support</a><a href="/docs/">Docs</a><a href="/docs/attribution/">Attribution</a><a href="/docs/policies/">Policies &amp; guidelines</a></nav>
+      </div>
     </footer>
   </body>
 </html>
