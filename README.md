@@ -76,7 +76,7 @@ Shared typography uses the macOS system face on Macs and self-hosted Geist elsew
 
 The Omarchy desktop screenshot is the current official Vantablack theme preview, retrieved October 19, 2026 from `https://raw.githubusercontent.com/omacom/omarchy/quattro/themes/vantablack/preview.png`, resized to WebP for the site. Source: [Omarchy](https://github.com/omacom/omarchy), MIT license. It illustrates the Omarchy desktop, rather than a verified Aurora Mac build.
 
-The Neo release article and its media are held in a separate pull request. The blog infrastructure is ready for future posts. The homepage keeps a pure black or white base, with a faint monochrome dot pattern in the hero, restrained button elevation, and rounded screenshot corners with a slight shadow in light mode.
+The first blog entry is imported from the supplied `neo_release.md`, with its referenced media copied to `public/blog/macbook-neo/`. It replaces the Hello world placeholder; the old URL redirects to the Neo article. Preserve the supplied prose, credits, and footnotes when updating it. The homepage keeps a pure black or white base, with a faint monochrome dot pattern in the hero, restrained button elevation, and rounded screenshot corners with a slight shadow in light mode.
 
 ## Alternate website import
 
