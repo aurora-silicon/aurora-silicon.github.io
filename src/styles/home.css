@@ -156,7 +156,9 @@ h2 { font-size: 21px; letter-spacing: -.035em; line-height: 1.3; font-weight: 50
 .support-page { padding-block: 65px 100px; }
 .support-page h1 { font-size: 32px; letter-spacing: -.04em; margin-bottom: 38px; }
 .blog-page { padding-block: 65px 110px; }
-.blog-page.wrap, .blog-post.wrap { width: auto; max-width: none; margin-inline: clamp(20px, 4vw, 72px); }
+/* The blog index lines up with the header; posts read in a centred column of
+   about 70 characters a line. */
+.blog-post.wrap { max-width: 720px; }
 .blog-page h1, .blog-post h1 { font-size: 36px; letter-spacing: -.04em; font-weight: 550; }
 .post-list { margin-top: 42px; }
 .post-list article { border-top: 1px solid var(--line); }
@@ -180,7 +182,7 @@ h2 { font-size: 21px; letter-spacing: -.035em; line-height: 1.3; font-weight: 50
 .post-content h2 { font-size: 26px; line-height: 1.3; color: var(--text); margin-top: 58px; scroll-margin-top: 28px; }
 .post-content h3 { font-size: 20px; color: var(--text); margin-top: 36px; }
 .post-content img { display: block; width: auto; max-width: 100%; height: auto; margin: 30px auto; border-radius: 6px; border: 1px solid var(--line); }
-.post-content video { display: block; width: min(100%, 560px); height: auto; margin: 30px auto; border-radius: 6px; border: 1px solid var(--line); background: #000; }
+.post-content video { display: block; width: 100%; height: auto; margin: 30px auto; border-radius: 6px; border: 1px solid var(--line); background: #000; }
 .post-content ul, .post-content ol { padding-left: 1.4em; }
 .post-content li { padding-left: .3em; }
 .post-content li + li { margin-top: 12px; }
