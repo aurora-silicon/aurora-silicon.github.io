@@ -1,5 +1,5 @@
 ---
-title: Introducing Linux on MacBook Neo
+title: Hello World, Hello Neo ft. Linux
 description: An alpha release of Linux on MacBook Neo, built by the Aurora Silicon and Omarchy Mac teams.
 date: 2026-10-19
 authors: [Dj, Ryan Murray]

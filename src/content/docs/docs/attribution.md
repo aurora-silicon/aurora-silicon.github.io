@@ -37,7 +37,7 @@ Neo bring-up builds on work from these contributors and source lineages:
 - **rafalh:** the [rust-fatfs](https://github.com/rafalh/rust-fatfs) filesystem crate carried in the m1n1 source lineage.
 - **Cody Ho:** SPTM and hypervisor research, including [Apple Silicon reverse-engineering notes](https://github.com/ADevWithAnIdea/apple-silicon-re) and [m1n1 work](https://github.com/AsahiLinux/m1n1/pull/622).
 
-The [MacBook Neo release article](/blog/introducing-linux-on-macbook-neo/) includes the bring-up story and individual contributor credits.
+The [MacBook Neo release article](/blog/hello-neo/) includes the bring-up story and individual contributor credits.
 
 ## Website icons
 
