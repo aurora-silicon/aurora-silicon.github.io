@@ -1,0 +1,47 @@
+---
+import LucideIcon from './LucideIcon.astro';
+interface Props { name: string; }
+const { name } = Astro.props;
+const names: Record<string, string> = {
+  "Boot": "power",
+  "UEFI boot": "power",
+  "All CPU cores": "cpu",
+  "Internal storage": "hard-drive",
+  "Internal display": "monitor",
+  "Display output": "monitor",
+  "External display": "monitor-up",
+  "ProMotion": "monitor-play",
+  "Brightness control": "sun-medium",
+  "Keyboard": "keyboard",
+  "Keyboard backlight": "lightbulb",
+  "Trackpad": "touchpad",
+  "Touch ID": "fingerprint",
+  "Power button": "power",
+  "Speakers": "volume-2",
+  "Speaker": "volume-2",
+  "Microphone": "mic",
+  "Camera": "camera",
+  "Headset jack": "headphones",
+  "USB-C": "usb",
+  "USB-A": "usb",
+  "Thunderbolt / USB4": "zap",
+  "HDMI": "hdmi-port",
+  "SDXC card slot": "card-sim",
+  "Ethernet": "ethernet-port",
+  "Wi-Fi": "wifi",
+  "Bluetooth": "bluetooth",
+  "Battery / charging": "battery-charging",
+  "Fan control": "fan",
+  "Sleep / resume": "moon",
+  "Ambient light": "sun-dim",
+  "GPU acceleration": "gpu",
+  "Vulkan": "cuboid",
+  "Ray tracing": "scan-eye",
+  "Video decoding": "film",
+  "USB-C display": "monitor-up",
+  "Variable refresh rate": "monitor-play",
+  "Secure Enclave": "fingerprint",
+  "Neural Engine": "cpu"
+};
+---
+<LucideIcon name={names[name] ?? 'cpu'} class="feature-icon" />
