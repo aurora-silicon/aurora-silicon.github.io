@@ -37,17 +37,17 @@
   let frame = 0;
   // Geometry from measure(): lid height, lid thickness, perspective distance,
   // and the gap from the top of the window to the open lid's top.
-  let lidH = 0, lidT = 0, dist = 1, lidTopY = 0;
+  let lidH = 0, lidT = 0, dist = 1, lidTopY = 0, scrollOrigin = 0;
   // Pre-roll: tipping towards the viewer, the lid's top first rises (it comes
   // closer) and is back at its open height only at `startAngle`. Holding the
   // gap from the first pixel would snap the lid to that angle, so the laptop
   // stays put for `prerollPx` of scroll while the lid eases from rest to
   // startAngle, arriving at `startRate`, the speed the gap-holding motion needs.
   let startAngle = 0, startRate = 0, prerollPx = 0;
-  // The lid follows its scroll angle with a short glide, so wheel steps and
-  // slow scrolling turn into continuous motion.
-  const GLIDE_MS = 90;
-  let shown = -1, lastFrame = 0;
+  // Smooth scroll distance before mapping it to an angle. A critically damped
+  // spring preserves velocity across finger/wheel updates and reversals.
+  const FOLLOW_RATE = 22;
+  let shownScroll = -1, scrollVelocity = 0, lastFrame = 0;
 
   // Height of the lid's projected top above the hinge at angle a (degrees),
   // counting the back of the lid, which forms the top once it is nearly shut.
@@ -70,13 +70,12 @@
     return (lo + hi) / 2;
   }
 
-  // The lid angle for `pinned` px of pre-roll and `moved` px the laptop has
-  // since scrolled up. During the pre-roll a cubic eases from rest to
-  // startAngle at startRate; after it the gap below the header holds exactly.
-  function closingAngle(pinned: number, moved: number) {
-    if (moved > 0 || pinned >= prerollPx) return angleFor(lidTopAbove(0) - moved);
-    if (pinned <= 0) return 0;
-    const x = pinned / prerollPx;
+  // Use one scroll coordinate rather than rounded sticky-element rectangles.
+  // Zero is exactly open; beyond pre-roll the existing gap-holding curve stays.
+  function closingAngle(scrolled: number) {
+    if (scrolled <= 0) return 0;
+    if (scrolled >= prerollPx) return angleFor(lidTopAbove(0) - (scrolled - prerollPx));
+    const x = scrolled / prerollPx;
     return startAngle * (3 * x * x - 2 * x * x * x) + startRate * prerollPx * (x * x * x - x * x);
   }
   function draw(now: number) {
@@ -85,25 +84,43 @@
     const t = opening ? Math.min(1, Math.max(0, (now - startedAt) / 1100)) : 1;
     if (t === 1) opening = false;
     const openingAngle = CLOSED * (1 - t) ** 3;
-    // The laptop scrolls normally, and the lid closes just enough to keep its
-    // top at the same gap below the header as when open. Once shut, it scrolls away.
-    const box = laptop.getBoundingClientRect();
-    const pinned = preroll ? box.bottom - preroll.getBoundingClientRect().top : 0;
-    const target = closingAngle(pinned, lidTopY - box.top);
-    const dt = lastFrame ? Math.min(100, now - lastFrame) : 16;
+    // Read only the scroll offset during animation. Geometry is cached by
+    // measure(), avoiding layout work and subpixel branch changes each frame.
+    const maxScroll = prerollPx + lidTopAbove(0) - lidTopAbove(CLOSED);
+    const target = Math.min(maxScroll, Math.max(0, window.scrollY - scrollOrigin));
+    const dt = lastFrame ? Math.min(64, now - lastFrame) / 1000 : 0;
     lastFrame = now;
-    shown = shown < 0 ? target : shown + (target - shown) * (1 - Math.exp(-dt / GLIDE_MS));
-    if (Math.abs(target - shown) < .01) shown = target;
-    // One hinge angle for both motions: rotations never add or overshoot.
-    const angle = Math.max(openingAngle, shown);
+    if (shownScroll < 0) shownScroll = target;
+    const delta = shownScroll - target;
+    const speed = scrollVelocity + FOLLOW_RATE * delta;
+    const decay = Math.exp(-FOLLOW_RATE * dt);
+    shownScroll = target + (delta + speed * dt) * decay;
+    scrollVelocity = (scrollVelocity - FOLLOW_RATE * speed * dt) * decay;
+    // Clamp only the physical endpoints, keeping the velocity continuous
+    // everywhere between them. Settling at the top always lands on exactly 0.
+    if (shownScroll < 0 || shownScroll > maxScroll) {
+      shownScroll = Math.min(maxScroll, Math.max(0, shownScroll));
+      scrollVelocity = 0;
+    }
+    if (Math.abs(target - shownScroll) < .02 && Math.abs(scrollVelocity) < .2) {
+      shownScroll = target;
+      scrollVelocity = 0;
+    }
+    const scrollAngle = closingAngle(shownScroll);
+    // Blend the load animation into the scroll position without a max() cusp
+    // when someone starts scrolling before the opening has finished.
+    const angle = openingAngle + (1 - openingAngle / CLOSED) * scrollAngle;
     laptop.style.setProperty('--lid-angle', `${-angle}deg`);
     const fade = Math.min(1, Math.max(0, (angle / CLOSED - .55) / .4));
     laptop.style.setProperty('--screen-scroll-opacity', String(1 - fade * fade * (3 - 2 * fade)));
-    if (opening || shown !== target) frame = requestAnimationFrame(draw);
+    if (opening || shownScroll !== target || scrollVelocity !== 0) frame = requestAnimationFrame(draw);
     else lastFrame = 0;
   }
   function requestDraw() {
-    if (!frame && !reducedMotion.matches) frame = requestAnimationFrame(draw);
+    if (!frame && !reducedMotion.matches) {
+      if (!lastFrame) lastFrame = performance.now();
+      frame = requestAnimationFrame(draw);
+    }
   }
   // The lid's edge: solid faces standing 7.4 units deep behind the display,
   // around its top and sides, with 8 facets on each rounded top corner. Solid
@@ -153,7 +170,8 @@
     lidT = 7.4 * lidWidth / 640;
     dist = distance;
     const gap = hero ? parseFloat(getComputedStyle(hero).paddingTop) : 0;
-    lidTopY = (header?.offsetHeight ?? 0) + gap;
+    lidTopY = (header?.getBoundingClientRect().height ?? 0) + gap;
+    scrollOrigin = Math.max(0, (hero?.getBoundingClientRect().top ?? 0) + window.scrollY + gap - lidTopY);
     startAngle = 0;
     let peak = 0;
     for (let a = 0; a < 45; a += .05) if (lidTopAbove(a) > lidTopAbove(peak)) peak = a;
@@ -180,6 +198,9 @@
     if (frame) cancelAnimationFrame(frame);
     frame = 0;
     opening = false;
+    shownScroll = -1;
+    scrollVelocity = 0;
+    lastFrame = 0;
     if (reducedMotion.matches) {
       laptop?.style.removeProperty('--lid-angle');
       laptop?.style.removeProperty('--screen-scroll-opacity');
@@ -198,7 +219,8 @@
   .screen-content { width: 100%; min-width: 0; opacity: var(--screen-scroll-opacity, 0); }
   /* The display goes dark as the lid closes, so the gap shows the black interior. */
   .macbook-screen::after { content: ''; position: absolute; z-index: 1; inset: 0; border-radius: inherit; background: #0c0c0c; opacity: calc(1 - var(--screen-scroll-opacity, 0)); pointer-events: none; }
-  .macbook-notch { position: absolute; z-index: 2; top: 0; left: 50%; transform: translateX(-50%); display: flex; justify-content: center; align-items: center; width: 12.4%; height: calc(var(--u, 1.25px) * 14); border-radius: 0 0 calc(var(--u, 1.25px) * 5) calc(var(--u, 1.25px) * 5); background: #0c0c0c; }
+  /* Overlap the bezel to cover subpixel seams during the 3D rotation. */
+  .macbook-notch { position: absolute; z-index: 2; top: -1px; left: 50%; transform: translateX(-50%); display: flex; justify-content: center; align-items: center; width: 12.4%; height: calc(var(--u, 1.25px) * 14 + 1px); border-radius: 0 0 calc(var(--u, 1.25px) * 5) calc(var(--u, 1.25px) * 5); background: #0c0c0c; }
   .macbook-notch span { width: calc(var(--u, 1.25px) * 3.4); height: calc(var(--u, 1.25px) * 3.4); border-radius: 50%; background: #2a2a2a; }
   /* Lid thickness: 7.4 units, about a third of the base as in Apple's closed
      front view. Each edge face is shaded across its depth like the base: dark
