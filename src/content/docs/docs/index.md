@@ -5,7 +5,7 @@ description: Linux development and device support for Apple Silicon Macs.
 
 Aurora develops Linux support for Apple Silicon Macs.
 
-- [Downloads](/#omarchy)
+- [Download](/docs/download/)
 - [Device support](/devices/)
 - [Linux development](/docs/linux/)
 - [Contributing](/docs/contributing/)
