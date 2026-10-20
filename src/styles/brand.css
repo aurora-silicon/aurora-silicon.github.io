@@ -1,0 +1,44 @@
+/* Aurora Silicon brand tokens - generated with the brand kit */
+:root {
+  /* signature flow, warm to cool (left to right on the master mark) */
+  --as-orange:     #FF992A;
+  --as-peach:      #F3BD91;
+  --as-pearl:      #EAD1C8;
+  --as-cream:      #FFF3DA;
+  --as-lavender:   #AAA6C8;
+  --as-periwinkle: #7F81B3;
+  --as-royal:      #6278D7;
+  --as-cobalt:     #4E66C5;
+  --as-deep:       #2240AB;
+  --as-indigo:     #001478;
+
+  /* grounds the marks are tested on */
+  --as-ground-dark:  #141626;   /* indigo-tinted near-black for hero and footer */
+  --as-ground-light: #F4F4F4;
+
+  /* text on each ground */
+  --as-text-on-dark:  #FFF3DA;
+  --as-text-on-light: #141626;
+  --as-muted-on-dark: #C5C0DE;
+  --as-muted-on-light: #4E4A6A;
+
+  /* the flow as a CSS gradient, for rules, buttons and accents */
+  --as-flow: linear-gradient(90deg, #FF992A 0%, #F3BD91 30%, #EAD1C8 44%, #AAA6C8 64%, #6278D7 76%, #2240AB 90%, #001478 100%);
+
+  /* mark sizing helpers: keep clear space of at least 0.25 x mark height on every side */
+  --as-mark-clear: 0.25em;
+}
+
+/* the inline SVG mark scales with font-size of its container when given height: 1em */
+.as-mark { display: inline-block; height: 1em; width: auto; vertical-align: -0.15em; }
+.as-mark--hero { height: clamp(160px, 28vw, 320px); }
+.as-mark--nav  { height: 32px; }
+.as-mark--footer { height: 40px; color: var(--as-muted-on-dark); } /* use with the mono SVG */
+
+/* typography: the brand has no custom typeface; a clean geometric grotesque matches the mark */
+.as-type { font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; }
+.as-wordmark { font-weight: 600; letter-spacing: -0.01em; }
+.as-tagline  { font-weight: 400; color: var(--as-muted-on-dark); }
+
+/* a gradient text accent for the wordmark on dark grounds only */
+.as-flow-text { background: var(--as-flow); -webkit-background-clip: text; background-clip: text; color: transparent; }

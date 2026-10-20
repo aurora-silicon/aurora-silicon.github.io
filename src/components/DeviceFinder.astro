@@ -1,0 +1,236 @@
+---
+import devices from '../data/devices.json';
+import FeatureIcon from './FeatureIcon.astro';
+import { getGroups, getState, labels, support, deviceClasses, getDeviceClass, getChipGroups, getChipGroup } from '../lib/support';
+import DeviceIcon from './DeviceIcon.astro';
+const chipGroups = getChipGroups(devices);
+const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMap(group => group.features)))];
+---
+<section class="device-finder" aria-label="Device configuration">
+  <div class="soc-selection">
+    <div class="series-picker" role="group" aria-label="SoC">
+      {chipGroups.map(group => <div class="soc-family" role="group" aria-label={`${group.family} family`}>{group.options.map(option => <button type="button" data-series={option} aria-pressed="false">{option}</button>)}</div>)}
+    </div>
+  </div>
+  <div class="class-selection">
+    <div class="class-picker" role="group" aria-label="Device">
+      {deviceClasses.map(name => <button type="button" data-device-class={name} aria-pressed="false"><DeviceIcon name={name} /><span>{name}</span></button>)}
+    </div>
+  </div>
+  <div class="variant-picker" data-variants role="group" aria-label="Model variant" hidden></div>
+  <section class="feature-results" data-feature-results hidden aria-label="Selected device features">
+    <div class="result-heading"><div><h2 data-model-name></h2><p class="device-meta" data-device-meta></p></div><a class="project-link" data-hardware-link href="https://github.com/aurora-silicon/linux/discussions">Hardware reports ↗</a></div>
+    <p class="support-summary" data-support-summary></p>
+    <div class="feature-groups" data-feature-groups></div>
+    <div id="feature-detail" class="feature-detail" data-feature-detail hidden><h3 data-feature-title></h3><div data-feature-body></div></div>
+    <ul class="support-legend" aria-label="Status key">{(['works', 'partial', 'none', 'unknown'] as const).map(state => <li><span class={`state-mark state-${state}`} aria-hidden="true"></span>{labels[state]}</li>)}</ul>
+    <p class="feature-note">Open a feature for its notes. Results apply to this device only.</p>
+  </section>
+  <template data-feature-icons>{iconNames.map(name => <span data-icon-name={name}><FeatureIcon name={name} /></span>)}</template>
+  <noscript>
+    <style>.soc-selection,.class-selection,.variant-picker{display:none}</style>
+    <div class="offline-devices"><p>Select a SoC, then a device.</p>{chipGroups.flatMap(group => group.options).map(series => <details><summary>{series}</summary>{deviceClasses.filter(name => devices.some(device => getChipGroup(device) === series && getDeviceClass(device) === name)).map(name => <details><summary>{name}</summary>{devices.filter(device => getChipGroup(device) === series && getDeviceClass(device) === name).map(device => <details><summary>{device.model} · {device.chip} · {device.device}</summary>{getGroups(device).map(group => <div><h3>{group.name}</h3><ul>{group.features.map(feature => <li>{feature}: {labels[getState(device.device, feature)]}{support.results[device.device]?.[feature]?.note ? ` · ${support.results[device.device][feature].note}` : ''}</li>)}</ul></div>)}<a href={device.discussion}>Hardware reports</a></details>)}</details>)}</details>)}</div>
+  </noscript>
+  <span class="sr-only" data-device-announcement role="status" aria-live="polite"></span>
+</section>
+<script>
+  import devices from '../data/devices.json';
+  import { getGroups, getState, getSummary, getHistory, labels, support, getDeviceClass, getChipGroup, getChipGroups } from '../lib/support';
+  import type { Device } from '../lib/support';
+  const classButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-device-class]')];
+  const variants = document.querySelector<HTMLElement>('[data-variants]')!;
+  const results = document.querySelector<HTMLElement>('[data-feature-results]')!;
+  const groups = document.querySelector<HTMLElement>('[data-feature-groups]')!;
+  const panel = document.querySelector<HTMLElement>('[data-feature-detail]')!;
+  const announce = document.querySelector<HTMLElement>('[data-device-announcement]')!;
+  const icons = document.querySelector<HTMLTemplateElement>('[data-feature-icons]')!.content;
+  const seriesButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-series]')];
+  let selected: Device | undefined;
+  let series = getChipGroups(devices)[0].options[0];
+  let deviceClass = '';
+  function resetDetails() {
+    panel.hidden = true;
+    for (const pill of groups.querySelectorAll<HTMLButtonElement>('[data-feature]')) pill.setAttribute('aria-expanded', 'false');
+  }
+  function chooseSeries(value: string, preferredClass?: string, preferredDevice?: string) {
+    series = value;
+    seriesButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.series === value)));
+    const activeChip = seriesButtons.find(button => button.dataset.series === value);
+    const chipRow = activeChip?.closest<HTMLElement>('.series-picker');
+    if (activeChip && chipRow) chipRow.scrollLeft = activeChip.offsetLeft - (chipRow.clientWidth - activeChip.offsetWidth) / 2;
+    const available = devices.filter(device => getChipGroup(device) === series);
+    for (const button of classButtons) {
+      button.disabled = !available.some(device => getDeviceClass(device) === button.dataset.deviceClass);
+    }
+    const nextClass = preferredClass && available.some(device => getDeviceClass(device) === preferredClass)
+      ? preferredClass : available.some(device => getDeviceClass(device) === deviceClass)
+        ? deviceClass : classButtons.find(button => !button.disabled)?.dataset.deviceClass;
+    if (nextClass) chooseClass(nextClass, preferredDevice);
+  }
+  function chooseClass(value: string, preferredDevice?: string) {
+    deviceClass = value;
+    classButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.deviceClass === value)));
+    const active = classButtons.find(button => button.dataset.deviceClass === value);
+    if (active?.parentElement) {
+      const row = active.parentElement;
+      row.scrollLeft = active.offsetLeft - (row.clientWidth - active.offsetWidth) / 2;
+    }
+    const matches = devices.filter(device => getChipGroup(device) === series && getDeviceClass(device) === value);
+    variants.replaceChildren();
+    variants.hidden = matches.length <= 1;
+    for (const device of matches) {
+      const button = document.createElement('button'); button.type = 'button'; button.dataset.variant = device.device;
+      const size = device.model.match(/(\d+-inch)/)?.[1];
+      const ports = device.model.match(/(\d× USB-C)/)?.[1];
+      const base = [size, ports, device.chip].filter(Boolean).join(' · ');
+      const duplicate = matches.some(other => other.device !== device.device && other.model === device.model && other.chip === device.chip);
+      button.textContent = base + (duplicate ? ` · ${device.device}` : '');
+      button.setAttribute('aria-pressed', 'false'); variants.append(button);
+    }
+    chooseDevice(matches.find(device => device.device === (preferredDevice ?? selected?.device)) ?? matches[0]);
+  }
+  function chooseDevice(device: Device | undefined) {
+    selected = device;
+    variants.querySelectorAll<HTMLButtonElement>('[data-variant]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.variant === device?.device)));
+    updateFeatures();
+  }
+  function clearUrl() {
+    const url = new URL(window.location.href); url.searchParams.delete('device'); url.searchParams.delete('feature'); url.hash = ''; history.replaceState(null, '', url);
+  }
+  function renderFeatures() {
+    groups.replaceChildren();
+    if (!selected) return;
+    for (const group of getGroups(selected)) {
+      const section = document.createElement('section'); section.className = 'feature-group';
+      const heading = document.createElement('h3'); heading.textContent = group.name; section.append(heading);
+      const list = document.createElement('div'); list.className = 'feature-pills';
+      for (const feature of group.features) {
+        const state = getState(selected.device, feature);
+        const button = document.createElement('button');
+        button.type = 'button'; button.className = `feature-pill status-${state}`; button.dataset.feature = feature;
+        button.setAttribute('aria-expanded', 'false'); button.setAttribute('aria-controls', 'feature-detail');
+        const original = [...icons.querySelectorAll<HTMLElement>('[data-icon-name]')].find(icon => icon.dataset.iconName === feature);
+        if (original?.firstElementChild) button.append(original.firstElementChild.cloneNode(true));
+        const label = document.createElement('span'); label.className = 'feature-name'; label.textContent = feature;
+        const stateLabel = document.createElement('span'); stateLabel.className = 'feature-state'; stateLabel.textContent = labels[state];
+        const marker = document.createElement('span'); marker.className = `state-mark state-${state}`; marker.setAttribute('aria-hidden', 'true');
+        button.append(label, marker, stateLabel); list.append(button);
+      }
+      section.append(list); groups.append(section);
+    }
+  }
+  function updateFeatures() {
+    results.hidden = !selected; resetDetails();
+    if (!selected) { clearUrl(); return; }
+    document.querySelector<HTMLElement>('[data-model-name]')!.textContent = selected.model;
+    document.querySelector<HTMLElement>('[data-device-meta]')!.textContent = [selected.chip, selected.soc, selected.device, selected.year].filter(Boolean).join(' · ');
+    document.querySelector<HTMLAnchorElement>('[data-hardware-link]')!.href = selected.discussion;
+    const summary = getSummary(selected);
+    document.querySelector<HTMLElement>('[data-support-summary]')!.textContent = summary.recorded
+      ? [`${summary.working} working`, `${summary.partial} partial`, summary.notWorking ? `${summary.notWorking} not working` : '', summary.reported ? `${summary.reported} reported` : '', `${summary.total - summary.recorded} not recorded`].filter(Boolean).join(' · ')
+      : 'No feature results recorded yet.';
+    renderFeatures();
+    announce.textContent = `Features for ${selected.model}, ${selected.chip}. ${summary.working} working, ${summary.partial} partial.`;
+    const url = new URL(window.location.href); url.searchParams.set('device', selected.device); url.searchParams.delete('feature'); url.hash = ''; history.replaceState(null, '', url);
+  }
+  groups.addEventListener('click', event => {
+    const pill = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-feature]');
+    if (!pill || !selected) return;
+    const wasOpen = pill.getAttribute('aria-expanded') === 'true'; resetDetails();
+    if (wasOpen) { const url = new URL(window.location.href); url.searchParams.delete('feature'); history.replaceState(null, '', url); return; }
+    const feature = pill.dataset.feature!;
+    pill.setAttribute('aria-expanded', 'true'); panel.hidden = false;
+    const url = new URL(window.location.href); url.searchParams.set('feature', feature); history.replaceState(null, '', url);
+    document.querySelector<HTMLElement>('[data-feature-title]')!.textContent = feature;
+    const body = document.querySelector<HTMLElement>('[data-feature-body]')!; body.replaceChildren();
+    const current = support.results[selected.device]?.[feature];
+    const text = document.createElement('p');
+    text.textContent = current ? `${labels[current.state]}${current.note ? `: ${current.note}.` : ' for this device.'}` : getState(selected.device, feature) === 'reported' ? 'A development report is recorded below.' : 'No result recorded for this device.';
+    body.append(text);
+    if (current) {
+      const link = document.createElement('a'); link.className = 'project-link'; link.href = selected.discussion; link.textContent = 'Hardware report ↗'; body.append(link);
+    }
+    for (const record of getHistory(selected.device, feature)) {
+      const detail = document.createElement('p'); detail.className = 'historic-detail'; detail.textContent = record.detail;
+      const source = document.createElement('a'); source.href = record.url || selected.discussion; source.textContent = `Earlier report · ${record.date}`; source.className = 'project-link'; body.append(detail, source);
+    }
+  });
+  seriesButtons.forEach(button => button.addEventListener('click', () => chooseSeries(button.dataset.series!)));
+  classButtons.forEach(button => button.addEventListener('click', () => chooseClass(button.dataset.deviceClass!)));
+  variants.addEventListener('click', event => {
+    const button = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-variant]');
+    if (button) chooseDevice(devices.find(device => device.device === button.dataset.variant));
+  });
+  const url = new URL(window.location.href);
+  const initial = devices.find(device => device.device === (url.searchParams.get('device') || url.hash.slice(1)));
+  chooseSeries(initial ? getChipGroup(initial) : getChipGroups(devices)[0].options[0], initial ? getDeviceClass(initial) : undefined, initial?.device);
+  const feature = url.searchParams.get('feature');
+  if (feature) [...groups.querySelectorAll<HTMLButtonElement>('[data-feature]')].find(pill => pill.dataset.feature === feature)?.click();
+
+</script>
+<style>
+  .device-finder { max-width: 940px; }
+  .series-picker { position: relative; display: flex; flex-wrap: wrap; gap: 8px 12px; overflow-x: auto; padding: 5px 3px 8px; margin: -5px -3px 22px; scrollbar-width: thin; }
+  .soc-family { display: flex; flex-shrink: 0; align-items: center; gap: 2px; padding-right: 10px; border-right: 1px solid var(--line); }
+  .soc-family:last-child { border-right: 0; padding-right: 0; }
+  .series-picker button { flex-shrink: 0; background: none; color: var(--muted); padding: 9px 10px; border: 1px solid transparent; border-radius: 7px; font-size: 13px; cursor: pointer; }
+  .series-picker button[aria-pressed='true'] { color: var(--text); border-color: var(--line); background: color-mix(in srgb, var(--text) 4%, var(--bg)); }
+  .series-picker button:hover { color: var(--text); }
+  .class-picker { position: relative; display: flex; gap: 8px; overflow-x: auto; padding: 5px 3px 9px; margin-inline: -3px; scrollbar-width: thin; }
+  .class-picker button { flex: 1; min-width: 110px; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 20px 8px 15px; background: none; color: var(--muted); border: 1px solid transparent; border-radius: 9px; font-size: 11px; white-space: nowrap; cursor: pointer; }
+  .class-picker button[aria-pressed='true'] { color: var(--text); border-color: var(--line); background: color-mix(in srgb, var(--text) 3%, var(--bg)); }
+  .class-picker button:hover:not(:disabled) { color: var(--text); }
+  .class-picker button:disabled { opacity: .25; cursor: default; }
+  .series-picker, .class-picker { scrollbar-color: var(--line) transparent; }
+  .series-picker::-webkit-scrollbar, .class-picker::-webkit-scrollbar { height: 3px; }
+  .series-picker::-webkit-scrollbar-thumb, .class-picker::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
+  .variant-picker { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 22px; }
+  .variant-picker :global(button) { padding: 9px 12px; border: 1px solid var(--line); border-radius: 6px; background: none; font: inherit; font-size: 11px; color: var(--muted); cursor: pointer; }
+  .variant-picker :global(button[aria-pressed='true']) { color: var(--text); border-color: var(--muted); }
+  .feature-results { margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--line); }
+  .result-heading { display: flex; justify-content: space-between; align-items: start; gap: 24px; margin-bottom: 16px; }
+  .result-heading h2 { font-size: 21px; }
+  .device-meta { margin-top: 9px; color: var(--muted); font-size: 11px; }
+  .support-summary { color: var(--muted); font-size: 12px; margin-bottom: 32px; }
+  .feature-groups :global(.feature-group + .feature-group) { margin-top: 27px; }
+  .feature-groups :global(.feature-group h3) { margin: 0 0 12px; font-size: 11px; color: var(--muted); font-weight: 500; }
+  .feature-groups :global(.feature-pills) { display: flex; flex-wrap: wrap; gap: 9px; }
+  .feature-groups :global(.feature-pill) { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 100px; padding: 10px 13px; background: var(--panel); color: var(--text); cursor: pointer; font: inherit; font-size: 12px; line-height: 1.4; }
+  .feature-groups :global(.feature-icon) { flex-shrink: 0; width: 16px; height: 16px; color: var(--muted); }
+  .feature-groups :global(.feature-state) { font-size: 10px; color: var(--muted); }
+  .feature-groups :global(.status-unknown) { color: var(--muted); border-style: dashed; }
+  .feature-groups :global(.feature-pill:hover), .feature-groups :global(.feature-pill[aria-expanded='true']) { border-color: var(--muted); }
+  .feature-groups :global(.status-works) { color: var(--status-working); border-color: var(--status-working-border); background: var(--status-working-bg); }
+  .feature-groups :global(.status-partial) { color: var(--status-partial); border-color: var(--status-partial-border); background: var(--status-partial-bg); }
+  .feature-groups :global(.status-works .feature-icon), .feature-groups :global(.status-works .feature-state), .feature-groups :global(.status-partial .feature-icon), .feature-groups :global(.status-partial .feature-state) { color: inherit; }
+  .feature-groups :global(.state-mark), .state-mark { width: 7px; height: 7px; flex-shrink: 0; display: inline-block; border-radius: 50%; border: 1px solid currentColor; }
+  .feature-groups :global(.state-works), .state-works { background: var(--status-working); color: var(--status-working); }
+  .feature-groups :global(.state-partial), .state-partial { color: var(--status-partial); background: linear-gradient(90deg, currentColor 50%, transparent 50%); }
+  .feature-groups :global(.state-none), .state-none { border-radius: 0; transform: rotate(45deg); }
+  .feature-groups :global(.state-unknown), .state-unknown { opacity: .4; }
+  .feature-groups :global(.state-reported) { background: var(--muted); }
+  .support-legend { display: flex; flex-wrap: wrap; gap: 12px 22px; list-style: none; margin: 32px 0 0; padding: 0; }
+  .support-legend li { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 10px; }
+  .feature-note { font-size: 11px; color: var(--muted); line-height: 1.8; margin-top: 15px; }
+  .feature-detail { padding: 20px 22px; margin-top: 26px; border: 1px solid var(--line); border-radius: 7px; background: var(--panel); }
+  .feature-detail h3 { margin: 0 0 10px; font-size: 14px; font-weight: 500; }
+  .feature-detail :global(p) { color: var(--muted); font-size: 12px; line-height: 1.9; }
+  .feature-detail :global(.historic-detail) { margin-top: 20px; }
+  .feature-detail :global(.project-link) { font-size: 11px; padding-top: 12px; }
+  .offline-devices { font-size: 13px; line-height: 1.8; }
+  .offline-devices details { border-bottom: 1px solid var(--line); padding-block: 16px; }
+  .offline-devices summary { cursor: pointer; }
+  .offline-devices h3 { font-size: 12px; margin-top: 20px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  @media (max-width: 600px) {
+    .series-picker { flex-wrap: nowrap; gap: 8px; }
+    .series-picker button { min-height: 40px; font-size: 12px; padding: 10px; }
+    .class-picker button { min-width: 99px; padding-block: 17px 13px; }
+    .variant-picker { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+    .variant-picker :global(button) { min-height: 42px; padding: 10px; line-height: 1.6; }
+    .feature-results { margin-top: 30px; }
+    .result-heading { flex-direction: column; gap: 10px; }
+    .feature-groups :global(.feature-pill) { min-height: 42px; padding: 10px 12px; gap: 8px; font-size: 12px; }
+    .feature-groups :global(.feature-state) { font-size: 10px; }
+  }
+</style>
