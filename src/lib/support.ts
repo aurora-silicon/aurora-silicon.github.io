@@ -55,8 +55,12 @@ export function getGroups(device: Device): FeatureGroup[] {
       return { ...group, features };
     });
   }
-  if (device.chip === 'M5 Pro' && device.profile === 'desktop') {
-    groups = groups.map(group => group.name === 'Power' ? { ...group, features: [...group.features, 'Fan control'] } : group);
+  if (device.generation === 'M4' && device.profile === 'imac') {
+    groups = groups.map(group => group.name === 'Display' ? { ...group, features: [...new Set([...group.features, 'External display'])] } : group);
+  }
+  if ((device.generation === 'M4' && ['desktop', 'imac'].includes(device.profile)) ||
+      (['M5 Pro', 'M5 Max'].includes(device.chip) && device.profile === 'desktop')) {
+    groups = groups.map(group => group.name === 'Power' ? { ...group, features: [...new Set([...group.features, 'Fan control'])] } : group);
   }
   return getHistory(device.device, 'Neural Engine').length
     ? [...groups, { name: 'Research', features: ['Neural Engine'] }]
