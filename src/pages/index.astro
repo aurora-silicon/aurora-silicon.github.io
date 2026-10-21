@@ -5,7 +5,7 @@ import DownloadIcon from '../components/DownloadIcon.astro';
 import SocialIcon from '../components/SocialIcon.astro';
 import FeaturedDevice from '../components/FeaturedDevice.astro';
 import { getCollection } from 'astro:content';
-import { auroraInstallerUrl, omarchyUrl, socialLinks } from '../config';
+import { auroraInstallerUrl, downloadsAvailable, omarchyUrl, socialLinks } from '../config';
 const latestPost = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())[0];
 ---
 <Site title="Aurora Silicon | Linux on Apple Silicon">
@@ -36,7 +36,7 @@ const latestPost = (await getCollection('blog')).sort((a, b) => b.data.date.valu
   <section id="omarchy" class="omarchy-section wrap" aria-labelledby="omarchy-title">
     <h2 id="omarchy-title">Omarchy Mac</h2>
     <a class="omarchy-art" href={omarchyUrl} aria-label="View Omarchy Mac"><img src="/images/omarchy-desktop.webp" width="1600" height="900" alt="Omarchy desktop with the Vantablack theme, showing tiled terminals and a file manager" loading="lazy" decoding="async" /></a>
-    <div class="omarchy-copy"><p>Omarchy is our flagship distribution as we worked together to bring you the best Linux experience on Apple Silicon Macs.</p><a class="button primary omarchy-download" href={omarchyUrl}><DownloadIcon /> Download</a></div>
+    <div class="omarchy-copy"><p>Omarchy is our flagship distribution as we worked together to bring you the best Linux experience on Apple Silicon Macs.</p>{downloadsAvailable ? <a class="button primary omarchy-download" href={omarchyUrl}><DownloadIcon /> Download</a> : <button class="button primary omarchy-download" type="button" disabled><DownloadIcon /> Coming soon</button>}</div>
   </section>
   <section class="aurora-linux-section wrap" aria-labelledby="aurora-linux-title">
     <h2 id="aurora-linux-title">Aurora Linux</h2>
@@ -45,7 +45,7 @@ const latestPost = (await getCollection('blog')).sort((a, b) => b.data.date.valu
       <img class="installer-light" src="/images/aurora-installer-light.png" width="1904" height="1584" alt="Aurora Linux installer with distribution and desktop choices for a MacBook Neo" loading="lazy" decoding="async" />
     </div>
     <p>Feel right at home with the distro of your choice. While Omarchy is our flagship distribution, we also offer installer setups for Fedora, Arch Linux, and NixOS.</p>
-    <a class="button primary aurora-linux-download" href={auroraInstallerUrl}><DownloadIcon /> Download</a>
+    {downloadsAvailable ? <a class="button primary aurora-linux-download" href={auroraInstallerUrl}><DownloadIcon /> Download</a> : <button class="button primary aurora-linux-download" type="button" disabled><DownloadIcon /> Coming soon</button>}
   </section>
 
   <section class="community-section wrap" aria-labelledby="community-title">

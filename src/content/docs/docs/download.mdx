@@ -4,6 +4,7 @@ description: Download Omarchy Mac or the Aurora Linux installer for Apple Silico
 ---
 
 import { LinkButton } from '@astrojs/starlight/components';
+import { auroraInstallerUrl, downloadsAvailable, omarchyUrl } from '../../../config';
 
 Check your Mac in [device support](/devices/) before installing. Support differs by model.
 
@@ -11,10 +12,10 @@ Check your Mac in [device support](/devices/) before installing. Support differs
 
 Omarchy is our flagship distribution, built together with the Omarchy team for Apple Silicon Macs.
 
-<LinkButton href="https://github.com/aurora-silicon/omarchy-mac" icon="external">Download Omarchy Mac</LinkButton>
+{downloadsAvailable ? <LinkButton href={omarchyUrl} icon="external">Download Omarchy Mac</LinkButton> : <button class="download-unavailable" type="button" disabled>Coming soon</button>}
 
 ## Aurora Linux
 
 The Aurora Linux installer sets up the distribution of your choice: Fedora, Arch Linux or NixOS.
 
-<LinkButton href="https://github.com/aurora-silicon/aurora-installer" icon="external" variant="secondary">Download Aurora Linux</LinkButton>
+{downloadsAvailable ? <LinkButton href={auroraInstallerUrl} icon="external" variant="secondary">Download Aurora Linux</LinkButton> : <button class="download-unavailable" type="button" disabled>Coming soon</button>}
