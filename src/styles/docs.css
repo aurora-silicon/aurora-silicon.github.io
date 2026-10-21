@@ -48,3 +48,4 @@ h1, h2, h3 { letter-spacing: -.035em; }
 }
 .starlight-aside .starlight-aside__title { color: var(--sl-color-white); }
 .starlight-aside a { color: var(--sl-color-white); }
+.download-unavailable { display: inline-flex; padding: .65rem 1.1rem; border: 1px solid var(--sl-color-gray-4); border-radius: .5rem; background: var(--sl-color-bg-nav); color: var(--sl-color-gray-2); font: inherit; font-size: .875rem; cursor: default; }

@@ -99,7 +99,8 @@ h1 { font-size: clamp(38px, 4vw, 49px); line-height: 1.16; font-weight: 500; let
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px; padding: 12px 20px; font-size: 13px; font-weight: 550; letter-spacing: -.015em; border-radius: 7px; border: 1px solid transparent; line-height: 1.4; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
 .button.primary { background: var(--button-bg); color: var(--button-text); }
 .button.primary { box-shadow: 0 1px 2px #00000020, inset 0 0 0 1px #00000012; }
-.button.primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px #00000022, inset 0 0 0 1px #00000012; }
+.button.primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 12px #00000022, inset 0 0 0 1px #00000012; }
+.button:disabled { cursor: default; opacity: .65; box-shadow: none; }
 .button.secondary { background: transparent; border-color: var(--line); color: var(--muted); }
 .button.secondary:hover { background: var(--hover); color: var(--text); border-color: var(--muted); }
 .hero-subtitle { font-size: 13px; color: var(--muted); line-height: 1.8; margin-top: 22px; text-align: left; }
