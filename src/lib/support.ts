@@ -49,9 +49,10 @@ export function getGroups(device: Device): FeatureGroup[] {
   let groups = support.profiles[device.profile] ?? support.profiles.laptop;
   if (device.generation === 'M1' || device.generation === 'M2') {
     groups = groups.map(group => {
-      if (group.name === 'Platform') return { ...group, features: [...group.features, 'Secure Enclave'] };
-      if (group.name === 'Display' || group.name === 'Display and input') return { ...group, features: [...group.features, 'USB-C display', 'Variable refresh rate'] };
-      return group;
+      const features = group.features.filter(feature => feature !== 'Ray tracing');
+      if (group.name === 'Platform') return { ...group, features: [...features, 'Secure Enclave'] };
+      if (group.name === 'Display' || group.name === 'Display and input') return { ...group, features: [...features, 'USB-C display', 'Variable refresh rate'] };
+      return { ...group, features };
     });
   }
   if (device.chip === 'M5 Pro' && device.profile === 'desktop') {
