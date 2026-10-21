@@ -6,3 +6,4 @@ export const socialLinks = [
 ];
 export const omarchyUrl = 'https://github.com/aurora-silicon/omarchy-mac';
 export const auroraInstallerUrl = 'https://github.com/aurora-silicon/aurora-installer';
+export const downloadsAvailable = false;

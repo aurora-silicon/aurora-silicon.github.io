@@ -70,7 +70,7 @@ h1, h2, p { margin: 0; }
 .wrap { width: min(1056px, calc(100% - 96px)); margin-inline: auto; }
 .skip-link { position: fixed; top: -100px; left: 16px; padding: 12px 20px; background: var(--button-bg); color: var(--button-text); z-index: 50; }
 .skip-link:focus { top: 16px; }
-.site-header { position: sticky; top: 0; z-index: 40; height: 64px; flex-shrink: 0; border-bottom: 1px solid transparent; background: color-mix(in srgb, var(--bg) 38%, transparent); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+.site-header { position: sticky; top: 0; z-index: 40; height: 64px; flex-shrink: 0; border-bottom: 1px solid transparent; background: color-mix(in srgb, var(--bg) 50%, transparent); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
 .header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .site-header.is-scrolled { border-bottom-color: var(--line); }
 .brand { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 550; letter-spacing: -.025em; white-space: nowrap; }
@@ -99,7 +99,8 @@ h1 { font-size: clamp(38px, 4vw, 49px); line-height: 1.16; font-weight: 500; let
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px; padding: 12px 20px; font-size: 13px; font-weight: 550; letter-spacing: -.015em; border-radius: 7px; border: 1px solid transparent; line-height: 1.4; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
 .button.primary { background: var(--button-bg); color: var(--button-text); }
 .button.primary { box-shadow: 0 1px 2px #00000020, inset 0 0 0 1px #00000012; }
-.button.primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px #00000022, inset 0 0 0 1px #00000012; }
+.button.primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 12px #00000022, inset 0 0 0 1px #00000012; }
+.button:disabled { cursor: default; opacity: .65; box-shadow: none; }
 .button.secondary { background: transparent; border-color: var(--line); color: var(--muted); }
 .button.secondary:hover { background: var(--hover); color: var(--text); border-color: var(--muted); }
 .hero-subtitle { font-size: 13px; color: var(--muted); line-height: 1.8; margin-top: 22px; text-align: left; }
