@@ -76,13 +76,13 @@ At this point I knew the kernel driver is looking significantly different. Getti
 
 The userspace/ISA looks very similar. M1/M2 were AGX2, and M3-M6 are all AGX3 but a slight variation of it. M3, M4, and A18 Pro are all AGX3b, M5 is AGX3c and M6 is AGX3d.
 
-AGX3 ISA is very different. The instruction packing has changed significantly. I had to make a whole new compiler backend in `mesa`. Command streams look very different as well, launch programs are different... the userspace GPU drivers, simply put, were a huge undertaking. I do not wish this upon humans to hand-write this, but if you really must, go ahead. My best wishes will be with you. And yes that means optimizations also look very different.
+AGX3 ISA is very different. The instruction packing has changed significantly. I had to make a whole new compiler backend in mesa. Command streams look very different as well, launch programs are different... the userspace GPU drivers, simply put, were a huge undertaking. I do not wish this upon humans to hand-write this, but if you really must, go ahead. My best wishes will be with you. And yes, that means optimizations also look very different.
 
 For the kernel driver, it took a long, long time to get this right. Agents would need continuous hand holding and be told where to profile what, but eventually, by asking what I would call the "right questions", you can genuinely make rocks think and write a full fledged GPU driver. Usually once they see where the cost is coming from, it's easy to optimize.
 
 Honestly, it was more of an engineering problem than reverse engineering because we know how to drive the GPU, but how do we make the driver squeeze out maximum juice? Except some bits of course where you have to say the magic values for certain power/state control commands and in the right sequence or you will be scratching your head why the GPU is performing bad. This is where AGX tracing under m1n1 hv came in handy. Boot BaseSystem with basic SSH and trace Metal workloads in isolation.
 
-I mean, if you have worked on similar systems at a low-level before and tried to squeeze out every bit of performance, you already think like a computer. Agents, trust me, are really good at this - but in bigger projects with lots of surface area they seem to get distracted easily and focus on the wrong thing.
+If you have worked on similar systems at a low-level before and tried to squeeze out every bit of performance, you already think like a computer. Agents, trust me, are really good at this - but in bigger projects with lots of surface area they seem to get distracted easily and focus on the wrong thing.
 
 I cannot emphasize this enough, to get value out of agents, your workflows/harness matters the MOST! If you or the agent can define problems into smaller sets of get X working with set of {constraints} - it will _eventually_ get there. Now obviously you don't want that eventually to be 2 months and burning billion tokens every day! You have to monitor it. If you have too many tokens you can make an agent monitor it too. But in my experience, they're too easily convinced of anything. So I manually monitored and hand held a lot throughout the GPU driver development. I would describe most of it as decision making and catching where the agent goes off the road. It's done stuff like letting GPU power on/off between each submission, so I bet it can't be trusted to `/goal Make Neo GPU drivers, make no mistake`.
 
@@ -116,7 +116,7 @@ This was the first still with no macOS in the picture at all, straight from m1n1
 
 About a week after we made that call, all of it was working on Linux, with the webcam running at 30 fps.
 
-One of my favourite moments of the whole bring-up was staring at a black screen on the Neo under m1n1 and watching the little camera dot pop up in the top right corner. The exclave drawing it itself, straight into a secure layer of the display pipe. On Linux there's no exclave to draw it by design (this _may_ change under Mach-O boot mode, more to follow). Staring at black screens and a KIS DebugUSB serial log is good fun, as most of the Linux on Apple Silicon community will likely agree.
+One of my favourite moments of the whole bring-up was staring at a black screen on the Neo under m1n1 and watching the little camera dot pop up in the top right corner. The exclave drawing it itself, straight into a secure layer of the display pipe. On Linux there's no exclave to draw it by design (this _may_ change under the non-raw boot mode, more to follow). Staring at black screens and a KIS DebugUSB serial log is good fun, as most of the Linux on Apple Silicon community will likely agree.
 
 Speakers needed their own bit of care. On the MacBooks Asahi supports, the amps report back the voltage and current going into each speaker, and speakersafetyd uses those V/I sense lines to keep an eye on how hot the voice coils are getting. Neo's amps (a fixed-gain MAX98360A per channel) don't have those lines at all. macOS gets away with it by running a model on the CPU instead, working out how hot the coils should be from what it's sending them.
 
@@ -150,7 +150,7 @@ They all ran quite well out of the box given the nature of a mobile processor!
 
 And yes, this is shipping in all devices we will support, not just Neo. This has serious unlocks for gaming on Linux. It eliminates the need for `muvm` on Apple Silicon!
 
-Note: It came to my attention _after_ I had developed this feature that Google engineers over at Android had come out with [something similar](https://lpc.events/event/20/contributions/2630/) for per-process page size, coincidentally literally 1-2 days later! But I'm confident what we have here is solid and upstreamable, so eventually an RFC will be posted after more review and testing.
+Note: It came to my attention _after_ I had developed this feature that Google engineers over at Android had come out with [something similar](https://lpc.events/event/20/contributions/2630/) for per-process page size, coincidentally literally 1-2 days later! But I'm confident what we have here is solid and upstreamable, so eventually an RFC will be posted after more review and testing. Our branch is [up here](https://github.com/aurora-silicon/linux/tree/mm-mixed-userspace-abi).
 
 Neo is of course not a gaming device by any means. It doesn't have that many resources, so AAA games won't run that well without lowering resolution to mobile scales and expect lower FPS as you would on an iPhone. Light games it handles incredibly well, and even with external display connected. I played Minecraft at 2K @ 120 Hz output and got a solid 120-150 FPS average gameplay! Just make sure to switch to the native Vulkan renderer :)
 
@@ -160,13 +160,13 @@ Yes, we added hardware ray tracing extensions as well as native mesh shading!
 
 ![Ray Tracing on Neo](/blog/macbook-neo/image-6.webp)
 
-It was a pain. It's a really complicated feature but it passes most if not all CTS finally.
+It was a pain. It's a really complicated feature but it passes most of the CTS finally. Still a WIP feature as we smooth it out further.
 
 <!-- REVIEW (Dj): mesa #12 numbers back "most" (ray_query 41/48, RT pipeline 2,504/2,507, mesh 6/9, tess-eval ray queries known-broken). Keep "if not all" only if the later RT PRs closed those gaps. -->
 
 ## x86 emulation is rough
 
-FEX does an incredible job. On M1/M2/M3 we're able to enable TSO (Total Store Ordering) which lets FEX do more efficient x86 emulation since memory semantics of x86 are pretty much built into the CPU and just need to be enabled (Rosetta uses it). But since M4, Apple has locked that sysreg. Consequently, it is not available on M4 and later anymore, including A18 Pro.
+[FEX does an incredible job](https://fex-emu.com/Scourge-of-emulation/). On M1/M2/M3 we're able to enable TSO (Total Store Ordering) which lets FEX do more efficient x86 emulation since memory semantics of x86 are pretty much built into the CPU and just need to be enabled (Rosetta uses it). But since M4, Apple has locked that sysreg. Consequently, it is not available on M4 and later anymore, including A18 Pro.
 
 But worry not! We're developing [Aura](https://github.com/aurora-silicon/aura), a new boot loader that can run in normal boot mode, mediate SPTM communications as well as the Secure Kernel, and stay resident as an EL2 monitor. KVM support for Linux guest is still togglable through nested virtualization, so we don't lose any features, except, we gain!
 
@@ -180,11 +180,13 @@ There's a lot we've glossed over here. Touch ID bring-up, Aura and its normal bo
 
 ## We can fix anything
 
-This is real. In a few days, Neo's Vulkan driver was ported to M5 Pro (thanks to Sol ultrafast!) and it can run some AAA games.
+This is real. In a few days, Neo's Vulkan driver was ported to M5 Pro quickly (thanks to Sol ultrafast!) and it can run some AAA games.
 
 Here is Elder Scrolls V: Skyrim Special Edition. Running on M5 Pro, under FEX and Wine, utilizing native 4 KiB pages. It delivers a smooth 45-60 FPS, usually leaning on the upper end.
 
-Minecraft runs at a solid 750-800 FPS (for now, can be more!)
+Minecraft runs at a solid 780-800 FPS (for now, can be more!)
+
+Many other games work already. Counter Strike 2, runs at 70 FPS (for now) on High settings, and more on Medium and Low on M5 Pro.
 
 Give us a little more time. We will not disappoint. We are embracing AI like the large majority of industry is, and not looking behind.
 
