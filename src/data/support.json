@@ -580,11 +580,115 @@
     "j616s": {
       "Boot": {
         "state": "works",
-        "note": "Basic boot (single core); broader hardware support pending"
+        "note": "boots with the M4 loader; m1n1 has no T6040 GPU setup yet"
+      },
+      "All CPU cores": {
+        "state": "works",
+        "note": "14 cores, cpufreq with the PMP (#402)"
+      },
+      "Internal storage": {
+        "state": "works",
+        "note": "NVMe (#387)"
       },
       "Internal display": {
         "state": "partial",
-        "note": "framebuffer"
+        "note": "full DCP driver only in the linux-m4 tree; framebuffer otherwise"
+      },
+      "External display": {
+        "state": "unknown",
+        "note": ""
+      },
+      "ProMotion": {
+        "state": "partial",
+        "note": "120 Hz in the linux-m4 tree; VRR off"
+      },
+      "Brightness control": {
+        "state": "partial",
+        "note": "with the linux-m4 display driver only"
+      },
+      "Keyboard": {
+        "state": "partial",
+        "note": "needs #409 (open)"
+      },
+      "Keyboard backlight": {
+        "state": "works",
+        "note": ""
+      },
+      "Trackpad": {
+        "state": "partial",
+        "note": "needs #409 (open)"
+      },
+      "Touch ID": {
+        "state": "none",
+        "note": "needs the Secure Enclave"
+      },
+      "Speakers": {
+        "state": "partial",
+        "note": "all six with speaker protection; needs #406, asahi-audio#8, alsa-ucm-conf-asahi#5 (open)"
+      },
+      "Microphone": {
+        "state": "partial",
+        "note": "three-mic array; needs #406 (open)"
+      },
+      "Camera": {
+        "state": "works",
+        "note": "ISP (#384)"
+      },
+      "Headset jack": {
+        "state": "partial",
+        "note": "output; needs #406 (open); headset microphone not tested"
+      },
+      "USB-C": {
+        "state": "partial",
+        "note": "USB 3 (5 Gbps) on all three ports at the first attach (#403); replug and flip need #410 (open)"
+      },
+      "Thunderbolt / USB4": {
+        "state": "none",
+        "note": "not supported yet"
+      },
+      "HDMI": {
+        "state": "unknown",
+        "note": ""
+      },
+      "SDXC card slot": {
+        "state": "unknown",
+        "note": ""
+      },
+      "Wi-Fi": {
+        "state": "works",
+        "note": "BCM4388 (#383)"
+      },
+      "Bluetooth": {
+        "state": "works",
+        "note": ""
+      },
+      "Battery / charging": {
+        "state": "works",
+        "note": "battery level and MagSafe charging"
+      },
+      "Fan control": {
+        "state": "works",
+        "note": "SMC automatic; speeds readable"
+      },
+      "Sleep / resume": {
+        "state": "partial",
+        "note": "suspend to idle, wakes on lid open; without #409 (open) any keyboard frame wakes it at once"
+      },
+      "GPU acceleration": {
+        "state": "partial",
+        "note": "needs #408 and mesa#55 (open)"
+      },
+      "Vulkan": {
+        "state": "partial",
+        "note": "1.4; needs #408 and mesa#55 (open)"
+      },
+      "Ray tracing": {
+        "state": "none",
+        "note": "disabled: wedges the 25G83 firmware"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "AV1 hardware decoding"
       }
     },
     "j613": {
