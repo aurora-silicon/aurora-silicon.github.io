@@ -124,5 +124,39 @@
         "url": "https://github.com/aurora-silicon/linux/pull/46"
       }
     ]
+  },
+  "j616s": {
+    "usb": [
+      {
+        "date": "2026-10-23",
+        "title": "USB 3 on every plug, replug and flip",
+        "detail": "A USB 3.2 Gen 1 stick came up at 5 Gbps in 6 of 6 attaches: each of the three USB-C ports, both cable orientations. The PHY coprocessor is stopped on every unplug and booted again on the next plug, as macOS does. Suspend with a USB 3 device attached, 10 Gbps and DisplayPort alt mode were not tested.",
+        "url": "https://github.com/aurora-silicon/linux/pull/410"
+      }
+    ],
+    "audio": [
+      {
+        "date": "2026-10-23",
+        "title": "Speakers, microphones and headphone jack",
+        "detail": "All six speakers play through the J616 speaker graph with Apple’s filters, with speakersafetyd watching the amplifiers’ voltage and current sense; the three internal microphones and the headphone output work. The headset microphone and the jack across a suspend were not tested.",
+        "url": "https://github.com/aurora-silicon/linux/pull/406"
+      }
+    ],
+    "graphics": [
+      {
+        "date": "2026-10-23",
+        "title": "GPU on the G17 backend with Mesa as G17P",
+        "detail": "The M4 Pro GPU (25G83 firmware) drives the desktop; vkmark completes all 13 scenes (about 13,000) and glmark2 runs with no GPU recovery or fault. Ray tracing is refused on 25G83. Needs the kernel series and the Mesa admission together.",
+        "url": "https://github.com/aurora-silicon/linux/pull/408"
+      }
+    ],
+    "suspend": [
+      {
+        "date": "2026-10-23",
+        "title": "Suspend to idle by lid and menu",
+        "detail": "The lid and the menu put the machine into suspend to idle; opening the lid wakes it and the keyboard and trackpad work after resume. The keyboard only wakes the system on real input (#409). Battery drain over a long sleep was not measured.",
+        "url": "https://github.com/aurora-silicon/linux/pull/409"
+      }
+    ]
   }
 }
