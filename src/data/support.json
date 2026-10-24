@@ -580,7 +580,7 @@
     "j616s": {
       "Boot": {
         "state": "works",
-        "note": "boots with the M4 loader; m1n1 has no T6040 GPU setup yet"
+        "note": "boots with m1n1 (T6040 support in Aurora m1n1); no GPU setup in m1n1 yet"
       },
       "All CPU cores": {
         "state": "works",
@@ -592,23 +592,23 @@
       },
       "Internal display": {
         "state": "partial",
-        "note": "full DCP driver only in the linux-m4 tree; framebuffer otherwise"
+        "note": "framebuffer only; no T6040 display coprocessor driver yet"
       },
       "External display": {
         "state": "unknown",
         "note": ""
       },
       "ProMotion": {
-        "state": "partial",
-        "note": "120 Hz in the linux-m4 tree; VRR off"
+        "state": "none",
+        "note": "needs the display coprocessor driver"
       },
       "Brightness control": {
-        "state": "partial",
-        "note": "with the linux-m4 display driver only"
+        "state": "none",
+        "note": "needs the display coprocessor driver"
       },
       "Keyboard": {
-        "state": "partial",
-        "note": "needs #409 (open)"
+        "state": "works",
+        "note": "#409"
       },
       "Keyboard backlight": {
         "state": "works",
@@ -616,7 +616,7 @@
       },
       "Trackpad": {
         "state": "partial",
-        "note": "needs #409 (open)"
+        "note": "driver merged (#409); needs the trackpad firmware (apple/tpmtfw-j616s.bin) copied from macOS"
       },
       "Touch ID": {
         "state": "none",
@@ -624,11 +624,11 @@
       },
       "Speakers": {
         "state": "partial",
-        "note": "all six with speaker protection; needs #406, asahi-audio#8, alsa-ucm-conf-asahi#5 (open)"
+        "note": "driver merged (#406); the speakers stay locked until a speaker protection config for the J616s ships"
       },
       "Microphone": {
-        "state": "partial",
-        "note": "three-mic array; needs #406 (open)"
+        "state": "works",
+        "note": "three-mic array (#406); float capture only for now, integer formats fixed in a pending change"
       },
       "Camera": {
         "state": "works",
@@ -636,11 +636,11 @@
       },
       "Headset jack": {
         "state": "partial",
-        "note": "output; needs #406 (open); headset microphone not tested"
+        "note": "jack card present (#406); headphone output and headset microphone not tested yet"
       },
       "USB-C": {
-        "state": "partial",
-        "note": "USB 3 (5 Gbps) on all three ports at the first attach (#403); replug and flip need #410 (open)"
+        "state": "works",
+        "note": "USB 3 (5 Gbps) on all three ports (#403); replug and flip (#410) tested by jgoyvaerts"
       },
       "Thunderbolt / USB4": {
         "state": "none",
@@ -672,19 +672,19 @@
       },
       "Sleep / resume": {
         "state": "partial",
-        "note": "suspend to idle, wakes on lid open; without #409 (open) any keyboard frame wakes it at once"
+        "note": "suspend to idle with keyboard wake filtering (#409); not tested on the merged tree yet"
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": "needs #408 and mesa#55 (open)"
+        "state": "none",
+        "note": "driver merged (#408) but disabled on the J616s until the boot loader fills in per-chip calibration; Mesa support pending (mesa#55)"
       },
       "Vulkan": {
-        "state": "partial",
-        "note": "1.4; needs #408 and mesa#55 (open)"
+        "state": "none",
+        "note": "needs the GPU (see GPU acceleration)"
       },
       "Ray tracing": {
         "state": "none",
-        "note": "disabled: wedges the 25G83 firmware"
+        "note": "not supported on this GPU firmware yet"
       },
       "Video decoding": {
         "state": "works",
