@@ -580,11 +580,115 @@
     "j616s": {
       "Boot": {
         "state": "works",
-        "note": "Basic boot (single core); broader hardware support pending"
+        "note": "boots with m1n1 (T6040 support in Aurora m1n1); no GPU setup in m1n1 yet"
+      },
+      "All CPU cores": {
+        "state": "works",
+        "note": "14 cores, cpufreq with the PMP (#402)"
+      },
+      "Internal storage": {
+        "state": "works",
+        "note": "NVMe (#387)"
       },
       "Internal display": {
         "state": "partial",
-        "note": "framebuffer"
+        "note": "framebuffer only; no T6040 display coprocessor driver yet"
+      },
+      "External display": {
+        "state": "unknown",
+        "note": ""
+      },
+      "ProMotion": {
+        "state": "none",
+        "note": "needs the display coprocessor driver"
+      },
+      "Brightness control": {
+        "state": "none",
+        "note": "needs the display coprocessor driver"
+      },
+      "Keyboard": {
+        "state": "works",
+        "note": "#409"
+      },
+      "Keyboard backlight": {
+        "state": "works",
+        "note": ""
+      },
+      "Trackpad": {
+        "state": "partial",
+        "note": "driver merged (#409); needs the trackpad firmware (apple/tpmtfw-j616s.bin) copied from macOS"
+      },
+      "Touch ID": {
+        "state": "none",
+        "note": "needs the Secure Enclave"
+      },
+      "Speakers": {
+        "state": "partial",
+        "note": "driver merged (#406); the speakers stay locked until a speaker protection config for the J616s ships"
+      },
+      "Microphone": {
+        "state": "works",
+        "note": "three-mic array (#406); float capture only for now, integer formats fixed in a pending change"
+      },
+      "Camera": {
+        "state": "works",
+        "note": "ISP (#384)"
+      },
+      "Headset jack": {
+        "state": "partial",
+        "note": "jack card present (#406); headphone output and headset microphone not tested yet"
+      },
+      "USB-C": {
+        "state": "works",
+        "note": "USB 3 (5 Gbps) on all three ports (#403); replug and flip (#410) tested by jgoyvaerts"
+      },
+      "Thunderbolt / USB4": {
+        "state": "none",
+        "note": "not supported yet"
+      },
+      "HDMI": {
+        "state": "unknown",
+        "note": ""
+      },
+      "SDXC card slot": {
+        "state": "unknown",
+        "note": ""
+      },
+      "Wi-Fi": {
+        "state": "works",
+        "note": "BCM4388 (#383)"
+      },
+      "Bluetooth": {
+        "state": "works",
+        "note": ""
+      },
+      "Battery / charging": {
+        "state": "works",
+        "note": "battery level and MagSafe charging"
+      },
+      "Fan control": {
+        "state": "works",
+        "note": "SMC automatic; speeds readable"
+      },
+      "Sleep / resume": {
+        "state": "partial",
+        "note": "suspend to idle with keyboard wake filtering (#409); not tested on the merged tree yet"
+      },
+      "GPU acceleration": {
+        "state": "none",
+        "note": "driver merged (#408) but disabled on the J616s until the boot loader fills in per-chip calibration; Mesa support pending (mesa#55)"
+      },
+      "Vulkan": {
+        "state": "none",
+        "note": "needs the GPU (see GPU acceleration)"
+      },
+      "Ray tracing": {
+        "state": "none",
+        "note": "not supported on this GPU firmware yet"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "AV1 hardware decoding"
       }
     },
     "j613": {
