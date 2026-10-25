@@ -158,5 +158,63 @@
         "url": "https://github.com/aurora-silicon/linux/pull/409"
       }
     ]
+  },
+  "j873g": {
+    "boot": [
+      {
+        "date": "2026-10-26",
+        "title": "Linux from the SSD through aura, without a host",
+        "detail": "Tested by Thomas Glanzmann on his own J873g; not merged yet. aura brings up the USB, Wi-Fi/Bluetooth and PCIe hardware itself, reads the kernel, device tree and initramfs from an EFI system partition on the internal SSD and boots Linux with all 12 CPUs, USB, Wi-Fi, Bluetooth and both displays. aura is still chainloaded from the installed stage 1 over the USB debug link for this.",
+        "url": "https://github.com/aurora-silicon/aura/pull/12"
+      }
+    ],
+    "usb": [
+      {
+        "date": "2026-10-25",
+        "title": "USB 2 on the back-left and front ports",
+        "detail": "Tested by Thomas Glanzmann on his own J873g, booted through the m1n1/aura proxy; not merged yet. A keyboard and an RTL8153 USB Ethernet adapter work on the front ports (behind the on-board VL822 hub), a keyboard on the back-left port, at high speed. The loader has to wake the back-left port controller and release the hub reset first. USB 3, the back-middle and back-right ports and Thunderbolt are not supported.",
+        "url": "https://github.com/aurora-silicon/linux-aurora/pull/15"
+      }
+    ],
+    "storage": [
+      {
+        "date": "2026-10-25",
+        "title": "Internal SSD",
+        "detail": "Tested by Thomas Glanzmann on his own J873g, booted through the m1n1/aura proxy; not merged yet. The ANS2 controller with the T8152 register layout: fio reaches 3.8 GiB/s sequential read, 2.9 GiB/s sequential write and 140k IOPS 4K random read on ext4. With the power-off series the SSD reports a clean shutdown on the next boot.",
+        "url": "https://github.com/aurora-silicon/linux-aurora/pull/16"
+      }
+    ],
+    "ethernet": [
+      {
+        "date": "2026-10-25",
+        "title": "On-board 10GbE (Realtek RTL8127)",
+        "detail": "Tested by Thomas Glanzmann on his own J873g, booted through the m1n1/aura proxy; not merged yet. TCP runs at 9.4 Gbit/s in both directions at MTU 1500 once the link is retrained to 16 GT/s (from userspace for now). Keeping the read request size at 512 bytes matters for sending: UDP out is 8.9 Gbit/s at 512 and 7.9 at 4096 (five paired runs each). The r8169 transmit changes are a separate pull request (#21).",
+        "url": "https://github.com/aurora-silicon/linux-aurora/pull/17"
+      }
+    ],
+    "cpu": [
+      {
+        "date": "2026-10-25",
+        "title": "All CPU performance states",
+        "detail": "Tested by Thomas Glanzmann on his own J873g, booted through the m1n1/aura proxy; not merged yet. All twelve cores run every performance state (P/M up to 4.79 GHz, E up to 2.94 GHz) with load-driven governors, after the fix for the WFxT erratum that corrupted data. The SMC leaves the fan at its minimum, so a fan control service is part of the same change; how warm it gets depends on the load: one full 12-core load held the top states at 67 C with the fan at about 2900 RPM, while stress-ng on all 12 cores reaches 82 C with the fan at about 4500 RPM and the 75 C thermal trips throttle the cores.",
+        "url": "https://github.com/aurora-silicon/linux-aurora/pull/20"
+      }
+    ],
+    "hdmi": [
+      {
+        "date": "2026-10-25",
+        "title": "HDMI and dual display",
+        "detail": "Tested by Thomas Glanzmann on his own J873g, booted through the m1n1/aura proxy; not merged yet. HDMI through the dptx-phy and the Parade PS190 converter at 2560x1440 next to the USB-C display at 1280x720; Linux gets both as framebuffers. Mode changes after boot and hotplug are not supported.",
+        "url": "https://github.com/aurora-silicon/aura/pull/9"
+      }
+    ],
+    "audio": [
+      {
+        "date": "2026-10-25",
+        "title": "Speaker and headphone jack",
+        "detail": "Tested by Thomas Glanzmann on his own J873g, booted through the m1n1/aura proxy; not merged yet. Playback works on the headphone jack and on the internal speaker. The speaker stays off unless explicitly enabled, until a speaker protection profile for the J873g exists. The headset microphone was not tested.",
+        "url": "https://github.com/aurora-silicon/linux-aurora/pull/23"
+      }
+    ]
   }
 }
