@@ -580,7 +580,7 @@
     "j616s": {
       "Boot": {
         "state": "works",
-        "note": "boots with m1n1 (T6040 support in Aurora m1n1); no GPU setup in m1n1 yet"
+        "note": "boots with aura Stage 1 and Stage 2 and U-Boot, from the 26.6.2 stub"
       },
       "All CPU cores": {
         "state": "works",
@@ -591,20 +591,20 @@
         "note": "NVMe (#387)"
       },
       "Internal display": {
-        "state": "partial",
-        "note": "framebuffer only; no T6040 display coprocessor driver yet"
+        "state": "works",
+        "note": "3456x2160 at 120 Hz through the display coprocessor (#446, #452), 3456x2234 with appledrm show_notch=1; HDR to the 1600 nit peak (#553, #789)"
       },
       "External display": {
-        "state": "unknown",
-        "note": ""
+        "state": "works",
+        "note": "USB-C DisplayPort and docks (#451, #526), HDR (#553, #764); no audio yet (#729)"
       },
       "ProMotion": {
-        "state": "none",
-        "note": "needs the display coprocessor driver"
+        "state": "works",
+        "note": "120 Hz, with variable refresh from 24 Hz (#451, #763)"
       },
       "Brightness control": {
-        "state": "none",
-        "note": "needs the display coprocessor driver"
+        "state": "works",
+        "note": "backlight through the display coprocessor, also in HDR (#789)"
       },
       "Keyboard": {
         "state": "works",
@@ -615,20 +615,20 @@
         "note": ""
       },
       "Trackpad": {
-        "state": "partial",
-        "note": "driver merged (#409); needs the trackpad firmware (apple/tpmtfw-j616s.bin) copied from macOS"
+        "state": "works",
+        "note": "driver merged (#409); the firmware comes from macOS through the installer, not yet tested on a fresh J616s install"
       },
       "Touch ID": {
-        "state": "none",
-        "note": "needs the Secure Enclave"
+        "state": "works",
+        "note": "Secure Enclave and fprintd (#498, #545); an enrolled finger matches across reboots"
       },
       "Speakers": {
         "state": "partial",
-        "note": "driver merged (#406); the speakers stay locked until a speaker protection config for the J616s ships"
+        "note": "speakers unlock with speakersafetyd (alarm-aurora#36), whose J616 profile still uses J316 model values; silent after a sleep until #820"
       },
       "Microphone": {
         "state": "works",
-        "note": "three-mic array (#406); float capture only for now, integer formats fixed in a pending change"
+        "note": "three-mic array (#406) through the DSP source (asahi-audio#11); float capture, converted by ALSA or PipeWire (#422)"
       },
       "Camera": {
         "state": "works",
@@ -636,19 +636,19 @@
       },
       "Headset jack": {
         "state": "partial",
-        "note": "jack card present (#406); headphone output and headset microphone not tested yet"
+        "note": "headphone output works (tested by ear by jgoyvaerts); headset microphone not tested yet"
       },
       "USB-C": {
         "state": "works",
-        "note": "USB 3 (5 Gbps) on all three ports (#403); replug and flip (#410) tested by jgoyvaerts"
+        "note": "USB 3 (5 Gbps) on all three ports (#403); replug and flip (#410) tested by jgoyvaerts; DisplayPort Alt Mode (#526)"
       },
       "Thunderbolt / USB4": {
         "state": "none",
         "note": "not supported yet"
       },
       "HDMI": {
-        "state": "unknown",
-        "note": ""
+        "state": "works",
+        "note": "3840x2160 at 60 Hz with hotplug (#451); no audio yet (#729)"
       },
       "SDXC card slot": {
         "state": "unknown",
@@ -668,27 +668,27 @@
       },
       "Fan control": {
         "state": "works",
-        "note": "SMC automatic; speeds readable"
+        "note": "SMC automatic (#670); speeds readable, manual targets through hwmon (#639)"
       },
       "Sleep / resume": {
         "state": "partial",
-        "note": "suspend to idle with keyboard wake filtering (#409); not tested on the merged tree yet"
+        "note": "suspend to idle by lid and menu, wake by RTC alarm (#836), Wi-Fi back on every wake (#854), also with the Neural Engine running (#851); speakers silent after a sleep until #820"
       },
       "GPU acceleration": {
-        "state": "none",
-        "note": "driver merged (#408) but disabled on the J616s until the boot loader fills in per-chip calibration; Mesa support pending (mesa#55)"
+        "state": "works",
+        "note": "20-core GPU with per-chip calibration from the boot loader (#463); OpenGL 4.6 and OpenGL ES 3.2 (mesa#55)"
       },
       "Vulkan": {
-        "state": "none",
-        "note": "needs the GPU (see GPU acceleration)"
+        "state": "works",
+        "note": "Vulkan 1.4 (mesa#55)"
       },
       "Ray tracing": {
         "state": "none",
-        "note": "not supported on this GPU firmware yet"
+        "note": "off on 25G83 in Aurora as merged; #837 enables it and mesa#139 fixes the last CTS failures: 49,711 pass, 0 fail with both"
       },
       "Video decoding": {
         "state": "works",
-        "note": "AV1 hardware decoding"
+        "note": "H.264, VP9 and AV1 hardware decoding"
       }
     },
     "j613": {

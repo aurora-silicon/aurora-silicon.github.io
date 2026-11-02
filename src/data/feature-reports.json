@@ -144,6 +144,18 @@
     ],
     "graphics": [
       {
+        "date": "2026-11-02",
+        "title": "Ray tracing on 25G83 with #837 and mesa#139",
+        "detail": "With both open patches on jgoyvaerts's J616s (Mesa ec38aea3): the Vulkan CTS ray-query, ray-tracing-pipeline and acceleration structure groups ran 74,833 cases, 49,711 Pass, 25,122 NotSupported, 0 Fail, 0 GPU recoveries. A ray tracing demo with 16.8 M instanced triangles ran 1,337 frames at about 53 fps. Compute jobs stop at 38.9 s, and a long fragment traversal freezes the desktop: 14 s passed, 28 s failed. Proton, vkd3d and ray tracing pipelines on the x86 driver were not tested.",
+        "url": "https://github.com/aurora-silicon/linux/pull/837"
+      },
+      {
+        "date": "2026-10-28",
+        "title": "GPU enabled on the J616s",
+        "detail": "The calibrated 20-core GPU is on in Aurora as merged: the boot loader fills in the per-chip values, and the kernel refuses the GPU if they are missing. On the preceding stack Vulkan reported Apple M4 Pro (G16S B1), vkcube ran, glmark2-es2 scored 6271 and a ten-minute soak had no GPU or DART faults. jgoyvaerts runs the desktop on it daily (OpenGL 4.6, Vulkan 1.4). Vulkan is not formally conformant.",
+        "url": "https://github.com/aurora-silicon/linux/pull/463"
+      },
+      {
         "date": "2026-10-23",
         "title": "GPU on the G17 backend with Mesa as G17P",
         "detail": "Tested by jgoyvaerts on his own J616s with per-unit values his boot loader fills in: the M4 Pro GPU (25G83 firmware) drives the desktop, vkmark completes all 13 scenes and glmark2 runs with no GPU recovery or fault. In Aurora as merged, the J616s GPU stays disabled until m1n1 fills in per-chip calibration, and the Mesa side (mesa#55) is still open. Ray tracing is refused on 25G83.",
@@ -152,10 +164,40 @@
     ],
     "suspend": [
       {
+        "date": "2026-11-02",
+        "title": "RTC wake, Wi-Fi and the Neural Engine",
+        "detail": "rtcwake on the PMU RTC suspended and woke the machine 3 of 3 times (#836). 21 of 21 RTC cycles with the Neural Engine up brought Wi-Fi back in 1.3 to 3.4 s with no bus errors, and Bluetooth stayed up (#854). On jgoyvaerts's J616s, last run 2026-10-30, a lid sleep woke cleanly but the speakers stayed silent until speakersafetyd restarted (#820). Battery drain over a long sleep was not measured.",
+        "url": "https://github.com/aurora-silicon/linux/pull/854"
+      },
+      {
         "date": "2026-10-23",
         "title": "Suspend to idle by lid and menu",
         "detail": "The lid and the menu put the machine into suspend to idle; opening the lid wakes it and the keyboard and trackpad work after resume. The keyboard only wakes the system on real input (#409). Battery drain over a long sleep was not measured.",
         "url": "https://github.com/aurora-silicon/linux/pull/409"
+      }
+    ],
+    "display": [
+      {
+        "date": "2026-11-02",
+        "title": "Panel at 120 Hz with HDR",
+        "detail": "The panel runs at 120 Hz through the display coprocessor. HDR reaches the 1600 nit peak under GNOME 51 (#553) and a PQ reference white keeps headroom for HDR content (#789). On jgoyvaerts's J616s under Hyprland (7.3.0-m4.102), mpv passes HDR10 through to the panel: the backlight rail drew 9.83 W on PQ 1600 bars against 5.47 W for the same bars without HDR. HDR across a sleep, screen sharing and HDR on battery were not tested.",
+        "url": "https://github.com/aurora-silicon/linux/pull/789"
+      }
+    ],
+    "touch-id": [
+      {
+        "date": "2026-10-29",
+        "title": "Touch ID enrolment and match",
+        "detail": "The Secure Enclave attaches warm, fprintd lists the sensor, and an enrolled finger matched in fprintd-verify and kept matching after later reboots. After a Stage 1 reinstall, a one-time allowance brought Touch ID and the enrolled finger back (#545). A second Stage 1 change with no manual step was not tested, and this was not repeated on jgoyvaerts's J616s.",
+        "url": "https://github.com/aurora-silicon/linux/pull/545"
+      }
+    ],
+    "neural-engine": [
+      {
+        "date": "2026-11-02",
+        "title": "MobileNet on the M4 Pro Neural Engine",
+        "detail": "MobileNetV1 got 16 of 16 images right at 0.68 ms per image (macOS Core ML: 0.30 ms), add-128 was exact, and 12 load cycles passed. The remaining speed gap is most likely the DRAM rail. Not repeated on jgoyvaerts's J616s.",
+        "url": "https://github.com/aurora-silicon/linux/pull/824"
       }
     ]
   }
