@@ -140,7 +140,7 @@ When it comes to Windows games, they'd usually run under Wine and FEX, and well,
 
 I looked further into it. Rosetta on macOS supports 4 KiB page size for apps. Hmm. Hardware clearly supports it. Kernel must be 16 KiB page size because of hardware interfaces like GPU, but user space has no such restrictions, and clearly, Rosetta does just fine?
 
-However, Linux kernel supports one static page size that you specify at build time. But you have to be ambitious! So we set out on an adventure to add support for what I coined "mixed userspace ABI". 16 KiB kernel should be able to run both 16 KiB and 4 KiB userspace processes, if the hardware permits. But this breaks a lot of assumptions in the kernel, and AI was exactly the kind of tool to relentlessly work on this feature, test it thoroughly, and review it. Not only that, we also made sure it supports AArch32 and 64 KiB kernels to allow 64, 16, 4 KiB userspace support. It's a well executed series of patches for Linux kernel in general that we plan to upstream, for now, it is added as an experimental option in the kernel (`CONFIG_ARM64_USER4K_EXPERIMENTAL`) and you pick 4 KiB per process with our `userpages` launcher.
+However, Linux kernel supports one static page size that you specify at build time. But you have to be ambitious! So we set out on an adventure to add support for what I coined "mixed userspace ABI". 16 KiB kernel should be able to run both 16 KiB and 4 KiB userspace processes, if the hardware permits. But this breaks a lot of assumptions in the kernel, and AI was exactly the kind of tool to relentlessly work on this feature, test it thoroughly, and review it. Not only that, we also made sure it supports AArch32 and 64 KiB kernels to allow 64, 16, 4 KiB userspace support. It's a well executed series of patches for Linux kernel memory management in general that we plan to upstream, for now, it is added as an experimental option in the kernel (`CONFIG_ARM64_USER4K_EXPERIMENTAL`) and you pick 4 KiB per process with our `userpages` launcher.
 
 After like 2 days, I was able to run Steam under just FEX and Wine and run a couple of games through it like Portal 2, Fallout: New Vegas, Subnautica and Geometry Dash. Ryan validated quite a few other games such as The Binding of Issac: Afterbirth, Five Nights at Freddy's 1, Firewatch, Goat Simulator, The Stanley Parable Ultra Deluxe and Undertail. He also spent time packaging and validating native steam under arm64 utilising patches where needed for FEX and Proton.
 
@@ -162,15 +162,15 @@ Yes, we added hardware ray tracing extensions as well as native mesh shading!
 
 It was a pain. It's a really complicated feature but it passes most of the CTS finally. Still a WIP feature as we smooth it out further.
 
-<!-- REVIEW (Dj): mesa #12 numbers back "most" (ray_query 41/48, RT pipeline 2,504/2,507, mesh 6/9, tess-eval ray queries known-broken). Keep "if not all" only if the later RT PRs closed those gaps. -->
-
 ## x86 emulation is rough
 
 [FEX does an incredible job](https://fex-emu.com/Scourge-of-emulation/). On M1/M2/M3 we're able to enable TSO (Total Store Ordering) which lets FEX do more efficient x86 emulation since memory semantics of x86 are pretty much built into the CPU and just need to be enabled (Rosetta uses it). But since M4, Apple has locked that sysreg. Consequently, it is not available on M4 and later anymore, including A18 Pro.
 
-But worry not! We're developing [Aura](https://github.com/aurora-silicon/aura), a new boot loader that can run in normal boot mode, mediate SPTM communications as well as the Secure Kernel, and stay resident as an EL2 monitor. KVM support for Linux guest is still togglable through nested virtualization, so we don't lose any features, except, we gain!
+But worry not! We're developing [Aura](https://github.com/aurora-silicon/aura), a new boot loader that can run in normal boot mode, stay resident as an EL2 monitor (due to CTXR limitations that iBoot enforces, EL2 is not realistic for kernel). KVM support for Linux guest is still togglable through nested virtualization, so we don't lose any features, except, we gain! Eventually, we will add paravirtualized KVM support which is a bigger kernel-side effort that will allow full performance host side while allowing KVM to work all the time without being opt-in.
 
-Aura actually started on my M5 Pro, where raw boot mode is broken won't let the secondary CPUs run any code at all. A normal boot object can start them just fine, but then you're stuck running under SPTM, so Aura sits in between.
+Aura actually started on my M5 Pro, where raw boot mode is broken won't let the secondary CPUs run any code at all. A normal boot object can start them just fine. This actually solves a lot of problems. Raw boot mode which Asahi Linux has used all this time, has been constantly broken by Apple since M4. Restricted sysreg access, which not only takes away features but causes bugs such as broken virtual timers / PMU causing issues in VMs, and particularly Windows VMs being entirely broken.
+
+Jeff Queisser[^jq], our hero, came to our Discord not realizing the gold they struck. They got secondary CPUs to work on their M5 Ultra Mac Studio, and I was really interested in that. Hmm.. that must use the normal boot mode then, but that's a lot of effort to bring up DART/SART under that mode especially due to SPTM. But they had figured out something new: normal boot object with a special `kcbz` property set to 0 - this made iBoot jump to our boot object _just_ like a raw object, but with the sysregs unlocked. Not only this fixes SMP on M5 Pro/Max/Ultra, it also comes with all the goodies we talked about earlier. This lets us not have to deal with SPTM and just have raw boot object-like environment.
 
 TSO is one of the interesting sysregs it will unlock, and in turn enable much better x86 emulation performance on Neo. On top of that, it will also unlock sysregs needed for deep suspend support which we are working on cracking.
 
@@ -214,3 +214,4 @@ More to come!
 [^niteria]: Bartosz Nitka, [niteria](https://github.com/niteria) on GitHub.
 [^iconidentify]: [iconidentify](https://github.com/iconidentify) on GitHub.
 [^cody]: Cody Ho's M4+ hypervisor work in [m1n1 #622](https://github.com/AsahiLinux/m1n1/pull/622) and his [SPTM and exclaves docs](https://github.com/ADevWithAnIdea/apple-silicon-re). He later wrote up his side in [I Came, I Prompted, I Left Part 1](https://codyho.dev/blog/hypervisor-macbook-neo/).
+[^jq]: Jeff Queisser
