@@ -54,9 +54,9 @@ Wi-Fi was a proper team effort. Ryan wrote the driver, and Eryk, who already had
 
 Onto Dj for the GPU fun, since going from zero to Vulkan is not an easy path!
 
-Dj here! In parallel to Ryan's effort, as soon as I got a Neo, I got compute working through GPU and wired it up to Vulkan pretty quickly.
+Dj here! In parallel to Ryan's effort, as soon as I got a Neo, I got compute working through GPU and wired it up to the Vulkan driver pretty quickly.
 
-Rendering was a PITA. Apple changed how the rendering scheduler works in A18 Pro GPU - which is actually just M4 Pro / Max-like as we found out later. Compute was very similar to M3/M4 and M1/M2 in turn. After a lot of bruteforcing and trying to trace macOS, I finally rendered the first triangle using Vulkan on Neo:
+Rendering was a PITA. Apple changed how the rendering scheduler works in A18 Pro GPU - which is actually just a smaller M4 Pro / Max GPU as we found out later. Compute was very similar to M3 / M4 and M1 / M2 even. After a lot of trial and error and trying to trace macOS, I finally rendered the first triangle using Vulkan on Neo:
 
 ![Neo Triangle](/blog/macbook-neo/image-1.png)
 
@@ -72,23 +72,39 @@ Yeah it's just an offscreen render while DCP was still being brought up. There w
 
 ## GPU was pain but fun
 
-At this point I knew the kernel driver is looking significantly different. Getting basic stuff to render is one thing, but now we have a whole new architecture to implement for render work submission and whole concurrency/asynchronous submission needs to be modeled around it. And yes, the new scheduler changed some power semantics. To make it more weird, compute work is still the classic queue style from M1/M2 era, but now we need to support both asynchronously! Well, it gets simpler with M5 and M6 GPUs since they are entirely on new architecture for both compute and rendering work (the "SKSM queues" as Apple calls it).
+At a high level, GPUs run two kinds of jobs: rendering and compute. Both can be submitted asynchronously, and on Apple GPUs they go to different kinds of firmware queues. We never talk to the GPU directly, only through its firmware.
 
-The userspace/ISA looks very similar. M1/M2 were AGX2, and M3-M6 are all AGX3 but a slight variation of it. M3, M4, and A18 Pro are all AGX3b, M5 is AGX3c and M6 is AGX3d.
+At this point I knew the kernel driver would look significantly different. Getting basic stuff to render is one thing, but now we have a whole new architecture to implement for render work submission and whole concurrency/asynchronous submission needs to be modeled around it. And yes, the new scheduler changed some power semantics. To make it more weird, compute work is still the classic queue style from M1 / M2 era, but now we need to support both asynchronously!
+
+Compute on Neo was the simpler half, because architecture-wise it looked like what the Asahi GPU driver already does. The structures and ABI had still changed, since we're on a newer macOS firmware (26.6.2).
+
+Things get simpler again with M5 and M6 GPUs, which are entirely on the new architecture for both compute and rendering work (the "SKSM queues", as Apple calls them).
+
+The firmware itself moved too. Previously there was a single mailbox, but on A18 Pro it is split in two, `gfx` and `gfx1`. The primary takes all of our submissions and control messages. We set up the secondary at boot, and from then on we only read events and traces back from it. Whatever else it does inside the firmware hasn't mattered to us yet.
+
+M1 / M2 were AGX2, and M3-M6 are all AGX3 so far, but a slight variation of it happening every gen since M5. We can call it a superset, but there are pretty significant changes. M3, M4, and A18 Pro are all AGX3b, M5 is AGX3c and M6 is AGX3d.
 
 AGX3 ISA is very different. The instruction packing has changed significantly. I had to make a whole new compiler backend in Mesa. Command streams look very different as well, launch programs are different... the userspace GPU drivers, simply put, were a huge undertaking. I do not wish this upon humans to hand-write this, but if you really must, go ahead. My best wishes will be with you. And yes, that means optimizations also look very different.
 
+The encoding is much bigger. AGX2 has 136 instruction forms, 2-10 bytes long. AGX3b on the other hand has 333 forms, 2-20 bytes. AGX3c has 404 such forms (!), up to 22 bytes. The shader cores were significantly reworked too, around what Apple calls Dynamic Caching: on-chip memory for registers is allocated as shaders run, so register usage no longer decides how many threads fit on a core the way it did on M1.
+
+For example, `iadd` is 8 bytes on AGX2 with a 6-bit opcode, and 10 bytes on AGX3b with an 11-bit one. On M5 (AGX3c) it splits into `iadd32` / `iadd64` at 12 bytes, with the opcode spread across four separate bit fields.
+
+Furthermore, on AGX2 `wait` was its own instruction, with 2 scoreboard slots. AGX3b puts a 6-bit wait mask inside _every instruction_, and AGX3c has 8 such slots. Instruction scheduling and load latency now work in a completely different way.
+
 For the kernel driver, it took a long, long time to get this right. Agents would need continuous hand holding and be told where to profile what, but eventually, by asking what I would call the "right questions", you can genuinely make rocks think and write a full-fledged GPU driver. Usually once they see where the cost is coming from, it's easy to optimize.
 
-Honestly, it was more of an engineering problem than reverse engineering because we know how to drive the GPU, but how do we make the driver squeeze out maximum juice? Except some bits of course where you have to say the magic values for certain power/state control commands and in the right sequence or you will be scratching your head why the GPU is performing bad. This is where AGX tracing under m1n1 hv came in handy. Boot BaseSystem with basic SSH and trace Metal workloads in isolation.
+Honestly, it was more of an engineering problem than reverse engineering because we know how to drive the GPU, but how do we make the driver squeeze out maximum juice? Except some bits of course where you have to say the magic values for certain power/state control commands and in the right sequence or you will be scratching your head why the GPU is performing bad. This is where AGX tracing under m1n1 hv came in handy. To capture the AGX traces with minimal noise, boot BaseSystem with basic SSH and trace Metal workloads in isolation. This way you wouldn't be capturing the whole macOS GUI rendering during startup or while you trace your workloads which are easier to relate for agents.
 
 If you have worked on similar systems at a low-level before and tried to squeeze out every bit of performance, you already think like a computer. Agents, trust me, are really good at this - but in bigger projects with lots of surface area they seem to get distracted easily and focus on the wrong thing.
 
-I cannot emphasize this enough, to get value out of agents, your workflows/harness matters the MOST! If you or the agent can define problems into smaller sets of get X working with set of {constraints} - it will _eventually_ get there. Now obviously you don't want that eventually to be 2 months and burning a billion tokens every day! You have to monitor it. If you have too many tokens you can make an agent monitor it too. But in my experience, they're too easily convinced of anything. So I manually monitored and hand held a lot throughout the GPU driver development. I would describe most of it as decision making and catching where the agent goes off the road. It's done stuff like letting GPU power on/off between each submission, so I bet it can't be trusted to `/goal Make Neo GPU drivers, make no mistake`.
+Your workflow matters the most here. If you or the agent can define problems into smaller sets of get X working with set of `{constraints}` - it will _eventually_ get there. Now obviously you don't want that eventually to be 2 months and burning a billion tokens every day. You have to monitor it. If you have too many tokens you can make an agent monitor it too. But in my experience, they're too easily convinced of anything. So I manually monitored and hand held a lot throughout the GPU driver development. I would describe most of it as decision making and catching where the agent goes off the road. It's done stuff like letting GPU power on/off between each submission, because it misunderstood macOS's power management commands submitted to GPU firmware, so I don't think it can be trusted to `/goal Make Neo GPU drivers, make no mistake`.
 
 While I bet on doing Vulkan 1.4 first since GL support comes easy with Zink (with its own set of bugs that we had to patch...), Miguel did a lot of the base OpenGL work, getting us to 3.3.
 
 After roughly 6 weeks, what we had is a GPU driver that supports Vulkan 1.4 and it performs on par with macOS in terms of raw performance. Optimizing the compiler is still a long-term problem which cannot be solved at once, you need to throw many resources at it. After finishing Vulkan 1.4 CTS suite at 100% pass rate, Gallium came easy. In a matter of a few hours, OpenGL 4.6 was fully supported, however some further testing revealed how its CTS is not enough (I mean, compared to the scale of 3.2 million tests in Vulkan 1.4 suite!) and you can run into trivial bugs in browsers, and I fixed all of the ones I could find.
+
+Relying on Zink early on also turned up a few Zink bugs. For example, the [Three.js WebGL clipping demo](https://threejs.org/examples/webgl_clipping.html) crashed the GPU in Chromium when it ran through Zink, but not when Chromium used its Vulkan backend directly. (Our native Gallium driver had already been fixed separately.)
 
 ## Security, security
 
@@ -166,7 +182,7 @@ It was a pain. It's a really complicated feature but it passes most of the CTS f
 
 [FEX does an incredible job](https://fex-emu.com/Scourge-of-emulation/). On M1/M2/M3 we're able to enable TSO (Total Store Ordering) which lets FEX do more efficient x86 emulation since memory semantics of x86 are pretty much built into the CPU and just need to be enabled (Rosetta uses it). But since M4, Apple has locked that sysreg. Consequently, it is not available on M4 and later anymore, including A18 Pro.
 
-But worry not! We're developing [Aura](https://github.com/aurora-silicon/aura), a new boot loader that can run in normal boot mode, stay resident as an EL2 monitor (due to CTXR limitations that iBoot enforces, EL2 is not realistic for kernel). KVM support for Linux guest is still togglable through nested virtualization, so we don't lose any features, except, we gain! Eventually, we will add paravirtualized KVM support which is a bigger kernel-side effort that will allow full performance host side while allowing KVM to work all the time without being opt-in.
+But worry not! We're developing [Aura](https://github.com/aurora-silicon/aura), a new boot loader based on m1n1 that can run in normal boot mode, stay resident as an EL2 monitor (due to CTXR limitations that iBoot enforces, EL2 is not realistic for kernel). KVM support for Linux guest is still togglable through nested virtualization, so we don't lose any features, except, we gain! Eventually, we will add paravirtualized KVM support which is a bigger kernel-side effort that will allow full performance host side while allowing KVM to work all the time without being opt-in.
 
 Aura actually started on my M5 Pro, where broken raw boot mode won't let the secondary CPUs run any code at all. A normal boot object can start them just fine. This actually solves a lot of problems. Raw boot mode, which Asahi Linux has used all this time, has been constantly broken by Apple since M4. Restricted sysreg access, which not only takes away features but causes bugs such as broken virtual timers / PMU causing issues in VMs, and particularly Windows VMs being entirely broken.
 
