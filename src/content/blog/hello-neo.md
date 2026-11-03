@@ -196,6 +196,14 @@ All in all, we believe TSO support and native 4 KiB userspace processes without 
 
 There's a lot we've glossed over here. Touch ID bring-up, Aura and its normal boot mode, and the M5 and M6 bring-up sagas all really deserve write-ups of their own.
 
+**Update:** Apple actually fixed the SMP issue on M5 Pro / Max / Ultra for raw boot object!
+
+Quote from [macOS 27.3 beta](https://developer.apple.com/documentation/macos-release-notes/macos-27_3-release-notes#mBoot):
+
+> Fixed: Only a single core is available when you boot Linux or other third-party operating systems from a custom raw boot object on Mac computers with M5 Pro, M5 Max, and M5 Ultra chips. (182898702) (FB23916610)
+
+It references the feedback I posted 3 months ago :D So amazing to see Apple recognizing Linux on Apple Silicon. For now raw boot object is still quite limited and has other bugs, but we will try to submit more such reports to bring it on par if everything goes well.
+
 ## We can fix anything
 
 This is real. In a few days, Neo's Vulkan driver was ported to M5 Pro (thanks to Sol ultrafast!) and it can run some AAA games.
@@ -211,6 +219,8 @@ Minecraft runs at a solid 780-800 FPS (for now, can be more!).
 Many other games work already. Counter-Strike 2 runs at 70 FPS (for now) on High settings, and more on Medium and Low on M5 Pro.
 
 <video src="/blog/macbook-neo/cs2_m5pro.mp4" poster="/blog/macbook-neo/cs2_m5pro_poster.webp" aria-label="CS2 on M5 Pro" controls playsinline preload="metadata" width="960" height="540"></video>
+
+Moreover, our Vulkan driver works amazingly on M5 Max and M5 Ultra too, thanks to Erik[^erik] and Jeff[^jq]. I had optimized LLM inference on M5 Pro 64 GB enough that it runs Qwen 3.8 27B 6-bit quant at about 50 tokens/sec. Erik adapted that and took it further on M5 Max, which has double the bandwidth and it reaches just short of 100 tokens/sec!
 
 Give us a little more time. We will not disappoint. We are embracing AI like the large majority of the industry is, and not looking behind.
 
@@ -239,3 +249,4 @@ More to come!
 [^iconidentify]: [iconidentify](https://github.com/iconidentify) on GitHub.
 [^cody]: Cody Ho's M4+ hypervisor work in [m1n1 #622](https://github.com/AsahiLinux/m1n1/pull/622) and his [SPTM and exclaves docs](https://github.com/ADevWithAnIdea/apple-silicon-re). He later wrote up his side in [I Came, I Prompted, I Left Part 1](https://codyho.dev/blog/hypervisor-macbook-neo/).
 [^jq]: Jeff Queisser, [funkzy](https://github.com/funkzy) on GitHub.
+[^erik]: Erik, [erikwb](https://github.com/erikwb) on GitHub.
