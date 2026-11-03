@@ -170,7 +170,7 @@ But worry not! We're developing [Aura](https://github.com/aurora-silicon/aura), 
 
 Aura actually started on my M5 Pro, where raw boot mode is broken won't let the secondary CPUs run any code at all. A normal boot object can start them just fine. This actually solves a lot of problems. Raw boot mode which Asahi Linux has used all this time, has been constantly broken by Apple since M4. Restricted sysreg access, which not only takes away features but causes bugs such as broken virtual timers / PMU causing issues in VMs, and particularly Windows VMs being entirely broken.
 
-Jeff Queisser[^jq], our hero, came to our Discord not realizing the gold they struck. They got secondary CPUs to work on their M5 Ultra Mac Studio, and I was really interested in that. Hmm.. that must use the normal boot mode then, but that's a lot of effort to bring up DART/SART under that mode especially due to SPTM. But they had figured out something new: normal boot object with a special `kcbz` property set to 0 - this made iBoot jump to our boot object _just_ like a raw object, but with the sysregs unlocked. Not only this fixes SMP on M5 Pro/Max/Ultra, it also comes with all the goodies we talked about earlier. This lets us not have to deal with SPTM and just have raw boot object-like environment.
+Jeff Queisser[^jq], our hero, came to our Discord having got the secondary CPUs running on his M5 Ultra Mac Studio, and I was really interested in that. Hmm.. that must use the normal boot mode then, but that's a lot of effort to bring up DART/SART under that mode especially due to SPTM. But he had figured out something new: normal boot object with a special `kcbz` property set to 0 - this made iBoot jump to our boot object just like a raw object, but with the sysregs unlocked. Not only this fixes SMP on M5 Pro/Max/Ultra, it also comes with all the goodies we talked about earlier. This lets us not have to deal with SPTM and just have raw boot object-like environment.
 
 TSO is one of the interesting sysregs it will unlock, and in turn enable much better x86 emulation performance on Neo. On top of that, it will also unlock sysregs needed for deep suspend support which we are working on cracking.
 
@@ -214,4 +214,4 @@ More to come!
 [^niteria]: Bartosz Nitka, [niteria](https://github.com/niteria) on GitHub.
 [^iconidentify]: [iconidentify](https://github.com/iconidentify) on GitHub.
 [^cody]: Cody Ho's M4+ hypervisor work in [m1n1 #622](https://github.com/AsahiLinux/m1n1/pull/622) and his [SPTM and exclaves docs](https://github.com/ADevWithAnIdea/apple-silicon-re). He later wrote up his side in [I Came, I Prompted, I Left Part 1](https://codyho.dev/blog/hypervisor-macbook-neo/).
-[^jq]: Jeff Queisser
+[^jq]: Jeff Queisser, [funkzy](https://github.com/funzky) on GitHub.
