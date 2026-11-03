@@ -220,7 +220,7 @@ Many other games work already. Counter-Strike 2 runs at 70 FPS (for now) on High
 
 <video src="/blog/macbook-neo/cs2_m5pro.mp4" poster="/blog/macbook-neo/cs2_m5pro_poster.webp" aria-label="CS2 on M5 Pro" controls playsinline preload="metadata" width="960" height="540"></video>
 
-Moreover, our Vulkan driver works amazingly on M5 Max and M5 Ultra too, thanks to Erik[^erik] and Jeff[^jq]. I had optimized LLM inference on M5 Pro 64 GB enough that it runs Qwen 3.8 27B 6-bit quant at about 50 tokens/sec. Erik adapted that and took it further on M5 Max, which has double the bandwidth and it reaches just short of 100 tokens/sec!
+Moreover, our Vulkan driver works amazingly on M5 Max and M5 Ultra too, thanks to Erik[^erik] and Jeff[^jq]. I had optimized LLM inference through our Vulkan driver on M5 Pro 64 GB enough that it runs Qwen 3.8 27B 6-bit quant at about 50 tokens/sec. Erik adapted that and took it further on M5 Max, which has double the bandwidth and it reaches just short of 100 tokens/sec!
 
 Give us a little more time. We will not disappoint. We are embracing AI like the large majority of the industry is, and not looking behind.
 
