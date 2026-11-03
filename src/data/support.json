@@ -683,8 +683,8 @@
         "note": "Vulkan 1.4 (mesa#55)"
       },
       "Ray tracing": {
-        "state": "none",
-        "note": "off on 25G83 in Aurora as merged; #837 enables it and mesa#139 fixes the last CTS failures: 49,711 pass, 0 fail with both"
+        "state": "works",
+        "note": "VK_KHR_ray_query and VK_KHR_ray_tracing_pipeline on 25G83 (#837, mesa#139): 49,711 pass, 0 fail in the ray tracing CTS groups"
       },
       "Video decoding": {
         "state": "works",
