@@ -86,11 +86,13 @@ M1 / M2 were AGX2, and M3-M6 are all AGX3 so far, but a slight variation of it h
 
 AGX3 ISA is very different. The instruction packing has changed significantly. I had to make a whole new compiler backend in Mesa. Command streams look very different as well, launch programs are different... the userspace GPU drivers, simply put, were a huge undertaking. I do not wish this upon humans to hand-write this, but if you really must, go ahead. My best wishes will be with you. And yes, that means optimizations also look very different.
 
-The encoding is much bigger. AGX2 has 136 instruction forms, 2-10 bytes long. AGX3b on the other hand has 333 forms, 2-20 bytes. AGX3c has 404 such forms (!), up to 22 bytes. The shader cores were significantly reworked too, around what Apple calls Dynamic Caching: on-chip memory for registers is allocated as shaders run, so register usage no longer decides how many threads fit on a core the way it did on M1.
+The encoding is much bigger. AGX2 has 136 instruction forms, 2-10 bytes long. AGX3b on the other hand has 333 forms, 2-20 bytes. AGX3c has 404 such forms (!), up to 22 bytes.
 
 For example, `iadd` is 8 bytes on AGX2 with a 6-bit opcode, and 10 bytes on AGX3b with an 11-bit one. On M5 (AGX3c) it splits into `iadd32` / `iadd64` at 12 bytes, with the opcode spread across four separate bit fields.
 
 Furthermore, on AGX2 `wait` was its own instruction, with 2 scoreboard slots. AGX3b puts a 6-bit wait mask inside _every instruction_, and AGX3c has 8 such slots. Instruction scheduling and load latency now work in a completely different way.
+
+The shader cores were significantly reworked too, around what Apple calls Dynamic Caching: on-chip memory for registers is allocated as shaders run, so register usage no longer decides how many threads fit on a core the way it did on M1.
 
 For the kernel driver, it took a long, long time to get this right. Agents would need continuous hand holding and be told where to profile what, but eventually, by asking what I would call the "right questions", you can genuinely make rocks think and write a full-fledged GPU driver. Usually once they see where the cost is coming from, it's easy to optimize.
 
