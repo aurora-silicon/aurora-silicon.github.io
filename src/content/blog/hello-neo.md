@@ -10,7 +10,7 @@ We're proud to finally present to you an alpha release of Linux support for MacB
 - Full-featured display controller with support for an external display up to 4K @ 60 Hz.
 - GPU drivers featuring Vulkan 1.4 and OpenGL 4.6 (passing CTS - not certified) with amazing performance & efficiency in games, on top of daily use productivity apps.
 - Full media stack: Speakers (protected by speakerguardd, our own safety daemon), Mics (high-quality array and low-power for developers), Webcam (ISP), and 3.5mm audio jack (including support for Apple's EarPods remote).
-- WiFi and Bluetooth via a fullmac MediaTek driver (MediaTek being a Neo only/first for Apple Silicon Macs).
+- Wi-Fi and Bluetooth via a fullmac MediaTek driver (MediaTek being a Neo only/first for Apple Silicon Macs).
 - Touch ID (on models that have it), and yes, it works alongside macOS.
 - Support for both USB3 and USB2 ports, with graceful hotplug support and platform quirk handling.
 - Hardware Video Decoding (via AVD).
@@ -78,11 +78,11 @@ At this point I knew the kernel driver would look significantly different. Getti
 
 Compute on Neo was the simpler half, because architecture-wise it looked like what the Asahi GPU driver already does. The structures and ABI had still changed, since we're on a newer macOS firmware (26.6.2).
 
-Things get simpler again with M5 and M6 GPUs, which are entirely on the new architecture for both compute and rendering work (the "SKSM queues", as Apple calls them).
+Things get simpler with M5 and M6 GPUs, which are entirely on the new architecture for both compute and rendering work (the "SKSM queues", as Apple calls them).
 
 The firmware itself moved too. Previously there was a single mailbox, but on A18 Pro it is split in two, `gfx` and `gfx1`. The primary takes all of our submissions and control messages. We set up the secondary at boot, and from then on we only read events and traces back from it. Whatever else it does inside the firmware hasn't mattered to us yet.
 
-M1 / M2 were AGX2, and M3-M6 are all AGX3 so far, but a slight variation of it happening every gen since M5. We can call it a superset, but there are pretty significant changes. M3, M4, and A18 Pro are all AGX3b, M5 is AGX3c and M6 is AGX3d.
+M1 / M2 were AGX2, and M3-M6 are all AGX3 so far, with a new variant each generation since M5. We can call it a superset, but there are pretty significant changes. M3, M4, and A18 Pro are all AGX3b, M5 is AGX3c and M6 is AGX3d.
 
 AGX3 ISA is very different. The instruction packing has changed significantly. I had to make a whole new compiler backend in Mesa. Command streams look very different as well, launch programs are different... the userspace GPU drivers, simply put, were a huge undertaking. I do not wish this upon humans to hand-write this, but if you really must, go ahead. My best wishes will be with you. And yes, that means optimizations also look very different.
 
@@ -96,7 +96,7 @@ The shader cores were significantly reworked too, around what Apple calls Dynami
 
 For the kernel driver, it took a long, long time to get this right. Agents would need continuous hand holding and be told where to profile what, but eventually, by asking what I would call the "right questions", you can genuinely make rocks think and write a full-fledged GPU driver. Usually once they see where the cost is coming from, it's easy to optimize.
 
-Honestly, it was more of an engineering problem than reverse engineering because we know how to drive the GPU, but how do we make the driver squeeze out maximum juice? Except some bits of course where you have to say the magic values for certain power/state control commands and in the right sequence or you will be scratching your head why the GPU is performing bad. This is where AGX tracing under m1n1 hv came in handy. To capture the AGX traces with minimal noise, boot BaseSystem with basic SSH and trace Metal workloads in isolation. This way you wouldn't be capturing the whole macOS GUI rendering during startup or while you trace your workloads which are easier to relate for agents.
+Honestly, it was more of an engineering problem than reverse engineering because we know how to drive the GPU, but how do we make the driver squeeze out maximum juice? Except some bits of course where you have to say the magic values for certain power/state control commands and in the right sequence or you will be scratching your head why the GPU is performing bad. This is where AGX tracing under m1n1 hv came in handy. To capture the AGX traces with minimal noise, boot BaseSystem with basic SSH and trace Metal workloads in isolation. This way you wouldn't be capturing the whole macOS GUI rendering during startup or while you trace your workloads, so the traces are easier for agents to make sense of.
 
 If you have worked on similar systems at a low-level before and tried to squeeze out every bit of performance, you already think like a computer. Agents, trust me, are really good at this - but in bigger projects with lots of surface area they seem to get distracted easily and focus on the wrong thing.
 
@@ -198,7 +198,7 @@ There's a lot we've glossed over here. Touch ID bring-up, Aura and its normal bo
 
 ## We can fix anything
 
-This is real. In a few days, Neo's Vulkan driver was ported to M5 Pro quickly (thanks to Sol ultrafast!) and it can run some AAA games.
+This is real. In a few days, Neo's Vulkan driver was ported to M5 Pro (thanks to Sol ultrafast!) and it can run some AAA games.
 
 Here is The Elder Scrolls V: Skyrim Special Edition. Running on M5 Pro, under FEX and Wine, utilizing native 4 KiB pages. It delivers a smooth 45-60 FPS, usually leaning on the upper end.
 
