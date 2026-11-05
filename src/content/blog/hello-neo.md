@@ -192,7 +192,34 @@ Jeff Queisser[^jq], our hero, came to our Discord having got the secondary CPUs 
 
 TSO is one of the interesting sysregs it will unlock, and in turn enable much better x86 emulation performance on Neo. On top of that, it will also unlock sysregs needed for deep suspend support which we are working on cracking.
 
-All in all, we believe TSO support and native 4 KiB userspace processes without `muvm` will be huge for gaming on Linux on Apple Silicon. We're also going to keep optimizing our drivers to ensure a smooth experience all across the board.
+## Rosetta has more tricks than TSO
+
+TSO isn't the only thing Rosetta leans on. Apple's cores hide a few more x86 helpers behind implementation-defined (impdef) bits.
+
+- **APFLG** makes ordinary `ADDS`/`SUBS`/`CMP` also compute x86's parity and adjust flags (PF and AF) into two spare bits of the NZCV register
+- **AFP** switches the FPU to x86 SSE behavior (NaNs, min/max, and DAZ/FTZ for denormals)
+- **PRSV** makes scalar FP ops keep the upper vector lanes, like `addss` does
+
+Without APFLG, an emulator has to work out PF and AF in software after nearly every arithmetic instruction, because `lahf`, `pushf`, `setp` and every `jp` read them.
+
+APFLG has one catch: on every exception the CPU stashes PF/AF in a separate register (ASPSR), and Linux never saves it, so a context switch silently corrupts the flags. We taught the kernel to save and restore all of this per task, KVM guests included, and taught [FEX](https://github.com/aurora-silicon/fex/pull/6) to keep PF/AF in hardware with APFLG.
+
+On an M2 Pro, with the same FEX build and APFLG turned on:
+
+| Workload | Faster by |
+| --- | --- |
+| `lahf` | 40% |
+| Recursive calls | 20% |
+| `pushf` | 14% |
+| `setnp` (parity) | 12.5% |
+| Octane Crypto | 9% |
+| gzip -6 | 5.7% |
+
+Hardware TSO does even more. On the same Mac, compared with FEX's software TSO: Python 85% faster, Octane 48-58%, multithreaded 7-Zip 50%, zstd 45-48%, SQLite 41.5%. With both, FEX runs compression workloads at 85-92% of native arm64 speed, and Python, SQLite and Lua at 70-75%.
+
+M3 and later, including Neo's A18 Pro, have Arm's own FEAT_AFP, which covers the floating-point part. On Neo that leaves TSO and APFLG. Like TSO, these are all ACTLR_EL1 bits, so they're locked on Neo under raw boot, and Aura unlocks them.
+
+All in all, we believe TSO and APFLG support and native 4 KiB userspace processes without `muvm` will be huge for gaming on Linux on Apple Silicon. We're also going to keep optimizing our drivers to ensure a smooth experience all across the board.
 
 There's a lot we've glossed over here. Touch ID bring-up, Aura and its normal boot mode, and the M5 and M6 bring-up sagas all really deserve write-ups of their own.
 
