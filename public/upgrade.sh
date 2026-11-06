@@ -69,8 +69,7 @@ confirm() {
 
 This replaces your bootloader's Stage 2, kernel, Mesa, audio stack and system
 identity with Aurora's, using its testing channel, and removes the Asahi
-repositories. Your files and settings stay. The Asahi kernel stays as a GRUB
-entry, but it no longer receives updates.
+repositories. Your files and settings stay. Reboot as soon as it finishes.
 
 EOF
     [ "$YES" = 1 ] && return
@@ -143,15 +142,18 @@ check_boot_chain() {
 finish() {
     cat <<EOF
 
-Done: kernel $kernel with Aurora's Stage 2. Reboot to start it.
+Done: kernel $kernel with Aurora's Stage 2.
+
+Reboot now with: systemctl reboot
+Until then, newly opened windows may draw wrongly, because Aurora's Mesa needs
+Aurora's kernel.
 
 Touch ID sets itself up on the next boot. Enroll with: fprintd-enroll
-M1 and M1 Pro/Max also need the xart_guard=0 opt-in described in
-https://github.com/aurora-silicon/fedora-aurora/blob/main/packages/aurora-sep/XART-SAFETY.md
 
 If the Mac doesn't boot Linux after this, boot macOS or recoveryOS, mount this
 install's EFI system partition and copy m1n1/boot.bin.pre-aurora over
-m1n1/boot.bin. The Asahi kernel is still in the GRUB menu.
+m1n1/boot.bin. The Asahi kernel is still in the GRUB menu for repairs, but
+its graphics don't work with Aurora's Mesa.
 EOF
 }
 
