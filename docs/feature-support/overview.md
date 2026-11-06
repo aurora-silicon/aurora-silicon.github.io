@@ -5,7 +5,7 @@ title: Feature Support
 # Feature Support
 
 Apple sells one marketing name across several different chips, and puts one chip
-in several different machines. Support has to be tracked per machine, so this
+in several different machines. Support has to be tracked per machine and operating system, so this
 section is organised the way the hardware actually is rather than the way it is
 advertised.
 
@@ -68,17 +68,31 @@ device ID.
 
 ## Reading a support state
 
-!!! warning "Support states are not recorded yet"
+Select a device ID on a generation page, then choose **Windows** or **Linux**
+in the dialog. No operating system is assumed on your first selection; your
+choice is kept while navigating the site, until the page is reloaded.
 
-    The catalog below identifies hardware; it does not yet claim anything about
-    what works. Per-machine support states, and the legend that goes with them,
-    still need to be defined and filled in.
+| State | Meaning |
+| --- | --- |
+| Working | A working result is recorded for this device and OS; read any limitations |
+| Partial | Some functionality works, with the stated restrictions |
+| Not working | An observed failure or missing implementation is recorded |
+| Not recorded | This catalog has no result for that device, OS and feature |
 
-Two rules apply once states do appear here. A state is recorded against a device
-ID, not a marketing name — "M2 Pro works" is not a claim this section can make,
-because the M2 Pro appears in four different machines. And a result on one
-machine never transfers to a sibling, however similar: the chip may be shared,
-but the board, display, and peripherals are not.
+Existing Windows records are available for `j316s` and `j414s`. Linux records
+have not yet been published in this catalog. This is not a claim about the
+extent of upstream Linux support. Feature lists are provisional and may include
+hardware absent from a particular model; an empty entry is not a known failure.
+
+A state belongs to a **device ID, operating system and feature**. A result on
+one machine never transfers to a sibling, and a result on Windows never
+transfers to Linux or vice versa. Boot entries differ by OS; neither a boot
+milestone nor a graphics research result establishes a complete usable system.
+
+The inherited Windows records lack exact build and evidence references. Read
+them as recorded bring-up reports, not release certification. New and updated
+records should follow [Testing](../developers/testing.md#recording-a-result),
+including the OS/build, firmware, date, limitations and evidence.
 
 ## Where the identifiers come from
 

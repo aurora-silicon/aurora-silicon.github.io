@@ -4,47 +4,44 @@ title: Getting Started
 
 # Getting Started
 
-This section is for people who want to run Windows on an Apple Silicon Mac. If
-you'd rather work on Aurora Silicon itself, start with the
+This section is for people interested in running Windows or Linux on an Apple
+Silicon Mac. To work on Aurora Silicon itself, use the
 [developer guide](../developers/getting-started.md).
 
-!!! warning "Draft"
+## Choose your operating system
 
-    This page is an outline. The sections below describe what still needs to be
-    written, and no technical detail here should be treated as accurate yet.
+Start with the [Windows guide](../platforms/windows.md) or
+[Linux guide](../platforms/linux.md). They explain the work covered here and
+where installation documentation stands for each OS.
 
-## Is this ready for me?
+Aurora Silicon is experimental. The site does not yet publish validated
+end-to-end installation procedures for either platform, so the draft
+installation pages are not ready-to-follow instructions.
 
-Aurora Silicon is experimental. It is a project you can follow, test, and help
-with — not something to depend on.
+## Check your exact machine
 
-*To write: an honest statement of where the project actually stands. Who should
-try it today, who should wait, and what "experimental" means in practice for
-someone's daily-driver machine.*
+Find your machine in [Feature Support](../feature-support/overview.md), select
+its device ID and choose the target operating system. Read the per-feature
+notes as well as the state labels. **Not recorded** means there is no published
+result for that combination, and a working boot entry does not imply every
+peripheral works.
 
-## What you'll need
+## Before attempting an installation
 
-*To write: the hardware and software prerequisites — which Macs are supported,
-the minimum macOS version, free disk space, and anything the user must obtain
-themselves (Windows media, licences, a second machine, a USB drive).*
+Confirm the current procedure and prerequisites with the team for your device
+and OS. These include the OS image or distribution, matching boot and driver
+builds, required macOS version, disk space, and any second machine or debug
+hardware. Windows media and licensing requirements belong to the Windows
+procedure; Linux distribution and kernel requirements belong to the Linux one.
 
-## How installation works
-
-*To write: a short, plain-language overview of what the installer actually does
-to the machine, so the user understands the change they're making before they
-make it. Two or three paragraphs, no command lines — those belong on the
-[installation page](installation.md).*
-
-## What works today
-
-*To write: a brief pointer into [feature support](../feature-support/overview.md)
-with a sentence on how to read it, rather than duplicating the matrix here.*
+Back up data you need and understand the recovery and removal procedure for
+the installation you intend to use. Those procedures still need to be written
+and validated in the [installation](installation.md) and [removal](removal.md)
+guides.
 
 ## Getting help
 
-*To write: where to ask questions and how to report problems — the Discord
-server, GitHub issues, and what information to include in a report.*
-
-## Next step
-
-When you're ready, continue to [Installation](installation.md).
+Ask in the [Aurora Silicon Discord](https://discord.gg/DXmsSSc5aY). Include your
+Mac model and device ID if known, the target OS and version or distribution,
+the build or instructions you are following, and the step that failed. Remove
+personal data and secrets from logs before sharing them.

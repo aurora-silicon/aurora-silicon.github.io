@@ -4,8 +4,8 @@ title: Attribution
 
 # Attribution
 
-Aurora Silicon is built on a great deal of work done by other people. Booting
-Windows on Apple Silicon depends on years of reverse engineering, firmware and
+Aurora Silicon is built on a great deal of work done by other people. Bringing operating
+systems to Apple Silicon depends on years of reverse engineering, firmware and
 driver work that we did not do, and much of our own tree started as someone
 else's.
 

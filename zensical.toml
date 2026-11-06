@@ -4,7 +4,7 @@
 [project]
 site_name = "Aurora Silicon"
 site_url = "https://aurorasilicon.org/"
-site_description = "Aurora Silicon"
+site_description = "Windows, Linux and hardware research on Apple Silicon Macs. Platform guides, per-machine support records and developer documentation."
 repo_url = "https://github.com/aurora-silicon"
 repo_name = "aurora-silicon"
 copyright = "&copy; 2026 Aurora Silicon contributors"
@@ -15,6 +15,11 @@ extra_javascript = ["javascripts/device-support.js"]
 
 nav = [
   { "Home" = "index.md" },
+  { "Platforms" = [
+    { "Overview" = "platforms/overview.md" },
+    { "Windows" = "platforms/windows.md" },
+    { "Linux" = "platforms/linux.md" },
+  ] },
   { "Feature Support" = [
     { "Overview" = "feature-support/overview.md" },
     { "M1 Series" = "feature-support/m1.md" },

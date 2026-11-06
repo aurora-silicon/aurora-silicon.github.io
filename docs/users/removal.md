@@ -4,7 +4,10 @@ title: Removal
 
 # Removal
 
-How to take Aurora Silicon off a Mac and return it to how it was.
+Removal depends on the installed operating system and the installer used.
+Identify whether you installed [Windows](../platforms/windows.md) or
+[Linux](../platforms/linux.md) before seeking removal instructions. A procedure
+for one OS may not match the other OS's partitions or boot setup.
 
 !!! warning "Draft"
 
@@ -14,7 +17,7 @@ How to take Aurora Silicon off a Mac and return it to how it was.
 ## Before you begin
 
 *To write: what the user should save or back up first, since removal is
-destructive to anything kept on the Windows side.*
+destructive to anything kept on the installed Windows or Linux system.*
 
 ## What removal does
 

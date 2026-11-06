@@ -5,8 +5,8 @@ title: A18 Pro
 # A18 Pro
 
 The A18 Pro (`t8140`) is catalogued separately because it is not an M-series
-chip. It belongs to Apple's phone-class silicon line, and anything running it
-differs enough from a Mac to be worth tracking on its own page.
+chip. The MacBook Neo is still a Mac; this page tracks its distinct silicon
+and board rather than implying support for phones or tablets.
 
 ## Primary targets
 
@@ -24,7 +24,12 @@ other machines besides these.</p>
 
 ## Machines
 
-Select a device ID to see its feature detail.
+Select a device ID, then choose Windows or Linux to see its feature detail.
+Results apply only to that device and OS. See the
+[support legend](overview.md#reading-a-support-state) for what each state means.
+
+<noscript>Interactive feature details require JavaScript. The Support section
+below summarises published records; no unlisted result implies support.</noscript>
 
 <div class="id-table" markdown>
 
@@ -42,5 +47,5 @@ machines need adding the same way.
 
 !!! warning "Not recorded yet"
 
-    Per-machine support states still need to be defined and filled in. Nothing
-    on this page is a support claim.
+    No Windows or Linux per-machine feature states are published here yet.
+    Cataloguing a machine does not claim support.

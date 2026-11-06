@@ -4,15 +4,10 @@ title: Project Overview
 
 # Project Overview
 
-Aurora Silicon is working to bring Windows on ARM to Apple Silicon Macs. This
-page is the wider picture: what the problem actually is, how the project is put
-together, and how we decide what we are willing to claim.
-
-!!! warning "Partly drafted"
-
-    The sections describing the project and how it works are settled. Those
-    covering the technical approach and current position are still marked as
-    outstanding.
+Aurora Silicon develops Windows and Linux support for Apple Silicon Macs,
+alongside boot firmware and hardware research. This page explains how those
+parts fit together and how we track what works. Start with
+[Platforms](../platforms/overview.md) for the individual operating systems.
 
 ## The problem
 
@@ -21,34 +16,39 @@ through their own boot chain and describe their hardware with an Apple-specific
 device tree. Windows on ARM expects neither of those things — it expects UEFI
 firmware and ACPI tables.
 
-So the work splits roughly into three parts. Something has to take over from
-Apple's firmware and hand control to a bootloader Windows understands. That
-bootloader needs to describe Apple's hardware in terms Windows can read. And
-then every piece of hardware in the machine — display, storage, input,
-networking — needs a driver, because none of Apple's exist for Windows.
+Linux needs its own kernel drivers, device descriptions and boot integration.
+The hardware knowledge can be shared, but the operating-system interfaces and
+validation differ. Neither a Windows driver nor a Linux driver proves support
+on the other OS.
 
-Very little of this is a matter of writing code against documentation. Apple
-does not publish the interfaces involved, so most of the effort is working out
-what the hardware does before anything can be written for it.
+Apple does not publish many of the hardware interfaces involved, so a large
+part of the work is understanding the hardware before implementing drivers.
 
 ## The technical approach
 
-*To write: the actual boot chain we are building, component by component, and
-where each piece comes from — what we fork, what we write, and what we take as
-it ships. Keep it to a page; the detail belongs under
-[Research](../research/overview.md) and in the repositories.*
+The work has three connected layers:
+
+- **Boot and hardware foundations:** m1n1, firmware integration and tools for
+  understanding and bringing up individual machines.
+- **Operating-system integration:** UEFI, ACPI and HAL/driver work for Windows;
+  kernel, device-tree and boot integration for Linux.
+- **Subsystems and research:** graphics, networking, power and other hardware
+  features, with results qualified by the OS and machine used.
+
+These layers describe the work, not a single installation chain used by every
+machine. The exact components and revisions belong in each platform's testing
+and installation documentation.
 
 ## How the project is organised
 
-*To write: what our repositories are and how they relate — which holds the
-bootloader, which the kernel work, which the installer, and which the
-per-platform bring-up. The [developer guide](../developers/getting-started.md)
-covers this for contributors; here it only needs enough for a reader to
-understand the shape.*
+The [developer guide](../developers/getting-started.md) links the public source
+entry points for boot firmware, Linux and Windows integration. The
+[research notes](../research/overview.md) cover hardware findings and explain
+which OS a particular implementation targets.
 
 ## How we track support
 
-Support is recorded per machine, never per chip. Apple ships one chip across
+Support is recorded per machine and operating system, never per chip alone. Apple ships one chip across
 several different machines, and a result on one does not transfer to a sibling —
 the silicon may be shared but the board, display and peripherals are not. Every
 machine is recorded against its own device ID, and a feature with no recorded
@@ -59,10 +59,10 @@ The full catalog, and the current state of each machine, is under
 
 ## Where the project is now
 
-*To write: an honest summary of the current position — which machines are being
-actively worked on, what the nearest milestone is, and what is deliberately not
-being attempted yet. This section will date faster than the rest of the page, so
-keep it short and keep it current.*
+The site records experimental Windows results for `j316s` and `j414s`. Linux
+per-machine feature records and validated installation guides for both OSes are
+still outstanding. The [platform guides](../platforms/overview.md) distinguish
+those documentation gaps from the work described in the research pages.
 
 ## Who works on it
 

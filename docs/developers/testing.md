@@ -9,8 +9,8 @@ recorded.
 
 !!! warning "Draft"
 
-    This page is an outline. The sections below describe what still needs to be
-    written, and no technical detail here should be treated as accurate yet.
+    Test procedures and commands are still outlines. The result-recording
+    guidance below explains what a new support claim needs to include.
 
 ## What we test
 
@@ -31,10 +31,20 @@ machine back afterwards.*
 
 ## Recording a result
 
-*To write: how a result becomes a recorded support state on
-[feature support](../feature-support/overview.md). Cover the rule that matters
-most — a result is recorded against a device ID, never a chip or a marketing
-name, and never generalised to a sibling machine.*
+Record the device ID **and target operating system**. Results in the
+[support catalog](../feature-support/overview.md) are stored by OS, then device,
+then feature. Never transfer a result to a sibling machine or another OS.
+
+For a new or updated result, include the OS version (and distribution for
+Linux), exact source/build revisions, boot and firmware configuration, test
+date, tested behaviour and limitations, and a reviewable evidence reference.
+The host OS alone is not enough to identify the system under test. Follow the
+website repository's README when editing its support data.
+
+Leave an untested feature at **Not recorded**. Use **Not working** for an observed
+failure, and **Partial** when the recorded limitations matter. Existing Windows
+records predate this format and still need build and evidence references before
+they can be treated as reproducible qualification results.
 
 ## Evidence
 

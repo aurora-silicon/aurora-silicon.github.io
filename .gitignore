@@ -1,6 +1,8 @@
 # Zensical build output
 site/
 .cache/
+.venv/
+__pycache__/
 
 # macOS metadata
 .DS_Store

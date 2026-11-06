@@ -12,6 +12,15 @@ and getting it onto a machine.
     This page is an outline. The sections below describe what still needs to be
     written, and no technical detail here should be treated as accurate yet.
 
+## Target OS and host OS
+
+Choose the [target platform](../platforms/overview.md) and component first.
+Windows driver work, Linux kernel work and shared boot tooling have different
+build requirements. The OS of the development host is a separate choice: a
+Linux target does not imply every tool runs on Linux, and a Windows target does
+not imply all shared tools require Windows. Check each tree's documented host
+requirements rather than extending one component's setup to the whole project.
+
 ## Toolchain
 
 *To write: the compilers and language toolchains required, with versions. The

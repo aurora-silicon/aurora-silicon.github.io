@@ -5,8 +5,9 @@ title: Installation
 # Installation
 
 Read [Getting Started](getting-started.md) first if you haven't. It covers what
-Aurora Silicon is, what it needs, and whether your machine is a sensible
-candidate.
+Aurora Silicon is and how to check your machine and target operating system.
+Choose [Windows](../platforms/windows.md) or [Linux](../platforms/linux.md) first;
+there is no common installer procedure documented for both.
 
 !!! warning "Draft"
 
@@ -24,6 +25,12 @@ they are accepting.*
 *To write: the backup advice, stated plainly and early. What a backup does and
 does not protect against here, and why it matters for this particular process.*
 
+## Platform-specific procedures
+
+The Windows procedure must identify its Windows media and boot/driver builds.
+The Linux procedure must identify its distribution, kernel and boot components.
+Neither procedure is published here yet. Do not use one OS's steps for the other.
+
 ## Prepare the installer
 
 *To write: obtaining the installer and verifying it, including checksums or
@@ -40,7 +47,7 @@ password, or a recovery-mode boot.*
 *To write: what the user should see the first time the system comes up, and the
 initial setup they need to complete.*
 
-## Switching between macOS and Windows
+## Switching between macOS and the installed operating system
 
 *To write: how the user chooses which system to boot, and how to change the
 default.*

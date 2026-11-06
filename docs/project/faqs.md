@@ -26,23 +26,38 @@ rather than depend on. For how far along any particular machine is,
 
 ### Does *(some feature)* work yet?
 
-Check [feature support](../feature-support/overview.md) rather than asking. Each
-machine has its own page listing what has been recorded against it. A feature
+Check [feature support](../feature-support/overview.md) rather than asking. Select your
+device ID in its generation page and choose the operating system to see its records. A feature
 with no recorded state means untested, not working — we do not claim anything we
 have not measured on that exact machine.
 
 ### Is this the same as Asahi Linux?
 
-No. Asahi Linux is a separate project bringing Linux to Apple Silicon; we are a
-separate effort aimed at Windows. Much of our tree began as forks of theirs,
-and their work — along with NT-for-ASi and others — is credited under
-[Attribution](attribution.md).
+No. Aurora Silicon is a separate project working on Windows, Linux and shared
+hardware research. Much of our tree began as forks of Asahi's work, which is
+credited alongside NT-for-ASi and others under [Attribution](attribution.md).
+Asahi's support statements do not automatically apply to Aurora builds, and
+Aurora-derived reports stay within Aurora spaces under our
+[policies](policies-and-guidelines.md).
+
+### Which operating systems does Aurora cover?
+
+[Windows](../platforms/windows.md) and [Linux](../platforms/linux.md), with
+separate support records for each device and OS. macOS is also used for setup,
+recovery and research; it is not an Aurora port. Neither platform listing is a
+promise that every catalogued Mac has an installable system.
+
+### Does a working Windows feature also work on Linux?
+
+Not necessarily, and the reverse is also true. Select the operating system in
+the device support dialog. **Not recorded** means this site has no result for
+that combination; it must not inherit a result from another OS.
 
 ## Hardware
 
 ### Which Macs does it support?
 
-Support is tracked per machine, not per chip, because Apple ships one chip
+Support is tracked per machine and operating system, not per chip, because Apple ships one chip
 across several different machines. The catalog and the state of each machine are
 under [feature support](../feature-support/overview.md).
 
@@ -66,8 +81,11 @@ because of phones or tablets.
 
 ### How do I install it?
 
-*To write: the real answer for the current state of the project, linking to
-[installation](../users/installation.md).*
+Choose [Windows or Linux](../platforms/overview.md) first. The shared
+[installation page](../users/installation.md) is still a draft; this site does
+not yet publish a validated end-to-end procedure for either OS. Ask in the
+[Aurora Silicon Discord](https://discord.gg/DXmsSSc5aY) for current guidance for
+your exact machine and target OS.
 
 ### Can I install it from an external macOS installation?
 

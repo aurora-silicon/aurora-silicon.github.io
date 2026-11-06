@@ -1,11 +1,11 @@
 /* Device support modals for the feature-support catalog.
  *
  * Adding a machine:   add one CATALOG line, keyed by its device ID.
- * Recording a state:  add an entry to STATES, keyed by device ID, mapping a
- *                     feature name to "works", "partial" or "none".
+ * Recording a state:  add an entry to STATES, keyed by OS, then device ID,
+ *                     mapping a feature name to "works", "partial" or "none".
  *
  * Any feature without a recorded state renders as "not recorded". Nothing here
- * asserts support; the states are deliberately empty until measured.
+ * transfers a result between operating systems or machines.
  */
 
 (function () {
@@ -15,7 +15,7 @@
    * hardware as states are recorded — port sets differ between models. */
   var FEATURES = {
     laptop: [
-      ["Platform", ["UEFI boot", "Windows Boot Manager", "SMP / all cores", "Internal storage"]],
+      ["Platform", ["SMP / all cores", "Internal storage"]],
       ["Display & input", ["Internal display", "Brightness control", "Keyboard", "Keyboard backlight", "Trackpad"]],
       ["Media", ["Speakers", "Microphone", "Camera", "Headset jack"]],
       ["Connectivity", ["USB-C", "Thunderbolt / USB4", "Wi-Fi", "Bluetooth"]],
@@ -26,7 +26,7 @@
      * these machines — HDMI, SDXC slot, Touch ID, a ProMotion display and
      * active cooling. */
     mbp: [
-      ["Platform", ["UEFI boot", "Windows Boot Manager", "SMP / all cores", "Internal storage", "Nested virtualization"]],
+      ["Platform", ["SMP / all cores", "Internal storage", "Nested virtualization"]],
       ["Display & input", ["Internal display", "ProMotion (120 Hz / VRR / HDR)", "Brightness control", "Keyboard", "Keyboard backlight", "Trackpad", "Power button", "Touch ID"]],
       ["Media", ["Speakers", "Microphone", "Camera", "Headset jack"]],
       ["Connectivity", ["USB-C", "Thunderbolt / USB4", "HDMI", "SDXC card slot", "Wi-Fi", "Bluetooth"]],
@@ -34,7 +34,7 @@
       ["Graphics", ["GPU acceleration"]]
     ],
     desktop: [
-      ["Platform", ["UEFI boot", "Windows Boot Manager", "SMP / all cores", "Internal storage"]],
+      ["Platform", ["SMP / all cores", "Internal storage"]],
       ["Display", ["Display output", "HDMI"]],
       ["Media", ["Speaker", "Headset jack"]],
       ["Connectivity", ["USB-A", "USB-C", "Thunderbolt / USB4", "Ethernet", "Wi-Fi", "Bluetooth"]],
@@ -42,7 +42,7 @@
       ["Graphics", ["GPU acceleration"]]
     ],
     imac: [
-      ["Platform", ["UEFI boot", "Windows Boot Manager", "SMP / all cores", "Internal storage"]],
+      ["Platform", ["SMP / all cores", "Internal storage"]],
       ["Display", ["Internal display", "Brightness control"]],
       ["Media", ["Speakers", "Microphone", "Camera", "Headset jack"]],
       ["Connectivity", ["USB-C", "Thunderbolt / USB4", "Ethernet", "Wi-Fi", "Bluetooth"]],
@@ -107,9 +107,14 @@
     j700:  ["MacBook Neo", "A18 Pro", "t8140", "laptop"]
   };
 
-  /* Recorded support states, keyed by device ID then feature name. Feature
-   * names must match the FEATURES strings above exactly; unmatched names are
-   * reported in the browser console rather than failing silently.
+  var PLATFORMS = {
+    windows: { label: "Windows", boot: ["UEFI boot", "Windows Boot Manager"] },
+    linux: { label: "Linux", boot: ["Bootloader handoff", "Linux kernel boot"] }
+  };
+
+  /* Recorded support states, keyed by OS, device ID, then feature name. Feature
+   * names must match FEATURES or PLATFORMS boot strings exactly; unmatched
+   * names are reported in the browser console rather than failing silently.
    *
    * Valid states: "works" (green), "partial" (amber), "none" (red).
    * Leave a feature out entirely to keep it at "not recorded" — that is the
@@ -122,52 +127,54 @@
    *   "USB-C": ["partial", "no hotplug or USB 3.0"]
    */
   var STATES = {
-    j316s: {
-      "UEFI boot": "works",
-      "Windows Boot Manager": "works",
-      "SMP / all cores": "works",
-      "Internal display": "works",
-      "Keyboard": "works",
-      "Trackpad": "works",
-      "USB-C": ["partial", "no hotplug or USB 3.0"]
+    windows: {
+      j316s: {
+        "UEFI boot": "works",
+        "Windows Boot Manager": "works",
+        "SMP / all cores": "works",
+        "Internal display": "works",
+        "Keyboard": "works",
+        "Trackpad": "works",
+        "USB-C": ["partial", "no hotplug or USB 3.0"]
+      },
+
+      /* MacBook Pro 14-inch, M2 Pro — the M2-series primary target. Recorded
+       * from Windows bring-up, 2026-08. Do not transfer to other devices or OSes. */
+      j414s: {
+        "UEFI boot": "works",
+        "Windows Boot Manager": "works",
+        "SMP / all cores": ["works", "native P/E scheduling, cpufreq, power modes"],
+        "Internal storage": "works",
+        "Nested virtualization": ["none", "needed for WSL and VMs"],
+
+        "Internal display": "works",
+        "ProMotion (120 Hz / VRR / HDR)": ["none", "in progress"],
+        "Keyboard": "works",
+        "Keyboard backlight": "works",
+        "Trackpad": ["works", "full gesture support"],
+        "Power button": ["works", "bound to Win+L"],
+        "Touch ID": ["none", "driver in development"],
+
+        "Speakers": "none",
+        "Microphone": "none",
+        "Camera": "none",
+        "Headset jack": "none",
+
+        "USB-C": ["works", "USB 3; Ethernet via Realtek arm64 driver"],
+        "Thunderbolt / USB4": "none",
+        "HDMI": "none",
+        "SDXC card slot": ["none", "in progress"],
+        "Wi-Fi": "works",
+        "Bluetooth": "works",
+
+        "Battery / charging": ["works", "SMC battery and health reporting"],
+        "Fan control": "works",
+        "Sleep / resume": ["none", "deep sleep not implemented yet"],
+
+        "GPU acceleration": ["partial", "Honeykrisp Vulkan and DXVK run; WDDM 2.1 in progress"]
+      }
     },
-
-    /* MacBook Pro 14-inch, M2 Pro — the M2-series primary target. Recorded
-     * from bring-up, 2026-08. The Windows side of these drivers is shared,
-     * so most of this translates directly to the other chips. */
-    j414s: {
-      "UEFI boot": "works",
-      "Windows Boot Manager": "works",
-      "SMP / all cores": ["works", "native P/E scheduling, cpufreq, power modes"],
-      "Internal storage": "works",
-      "Nested virtualization": ["none", "needed for WSL and VMs"],
-
-      "Internal display": "works",
-      "ProMotion (120 Hz / VRR / HDR)": ["none", "in progress"],
-      "Keyboard": "works",
-      "Keyboard backlight": "works",
-      "Trackpad": ["works", "full gesture support"],
-      "Power button": ["works", "bound to Win+L"],
-      "Touch ID": ["none", "driver in development"],
-
-      "Speakers": "none",
-      "Microphone": "none",
-      "Camera": "none",
-      "Headset jack": "none",
-
-      "USB-C": ["works", "USB 3; Ethernet via Realtek arm64 driver"],
-      "Thunderbolt / USB4": "none",
-      "HDMI": "none",
-      "SDXC card slot": ["none", "in progress"],
-      "Wi-Fi": "works",
-      "Bluetooth": "works",
-
-      "Battery / charging": ["works", "SMC battery and health reporting"],
-      "Fan control": "works",
-      "Sleep / resume": ["none", "deep sleep not implemented yet"],
-
-      "GPU acceleration": ["partial", "Honeykrisp Vulkan and DXVK run; WDDM 2.1 in progress"]
-    }
+    linux: {}
   };
 
   var LABELS = {
@@ -178,6 +185,8 @@
   };
 
   var dialog = null;
+  var activeDevice = null;
+  var selectedPlatform = "";
 
   function el(tag, cls, text) {
     var node = document.createElement(tag);
@@ -188,14 +197,19 @@
 
   function buildDialog() {
     dialog = el("dialog", "device-modal");
+    dialog.setAttribute("aria-labelledby", "device-modal-title");
+    dialog.setAttribute("aria-describedby", "device-modal-summary");
 
     var head = el("div", "device-modal__head");
     var heading = el("div");
-    heading.appendChild(el("p", "device-modal__title"));
+    var title = el("h2", "device-modal__title");
+    title.id = "device-modal-title";
+    heading.appendChild(title);
     heading.appendChild(el("p", "device-modal__meta"));
     head.appendChild(heading);
 
     var close = el("button", "device-modal__close", "✕");
+    close.type = "button";
     close.setAttribute("aria-label", "Close");
     close.addEventListener("click", function () {
       dialog.close();
@@ -203,12 +217,37 @@
     head.appendChild(close);
 
     dialog.appendChild(head);
+    var controls = el("div", "device-modal__controls");
+    var label = el("label", "", "Operating system");
+    label.htmlFor = "device-modal-platform";
+    var select = el("select", "device-modal__platform");
+    select.id = "device-modal-platform";
+    var prompt = el("option", "", "Choose an operating system");
+    prompt.value = "";
+    select.appendChild(prompt);
+    Object.keys(PLATFORMS).forEach(function (key) {
+      var option = el("option", "", PLATFORMS[key].label);
+      option.value = key;
+      select.appendChild(option);
+    });
+    select.value = selectedPlatform;
+    select.addEventListener("change", function () {
+      selectedPlatform = select.value;
+      renderDevice();
+    });
+    controls.appendChild(label);
+    controls.appendChild(select);
+    var summary = el("p", "device-modal__summary");
+    summary.id = "device-modal-summary";
+    summary.setAttribute("role", "status");
+    controls.appendChild(summary);
+    dialog.appendChild(controls);
     dialog.appendChild(el("div", "device-modal__body"));
 
     var note = el("p", "device-modal__note");
     note.textContent =
-      "No support states are recorded for this machine yet. The feature list " +
-      "is provisional and will be trimmed to the machine's actual hardware.";
+      "Results apply only to this device and operating system. Feature lists " +
+      "are provisional; an unrecorded feature is not a support claim.";
     dialog.appendChild(note);
 
     /* Clicking the backdrop closes; clicking the panel must not. */
@@ -223,16 +262,31 @@
     var entry = CATALOG[id];
     if (!entry) return;
     if (!dialog || !dialog.isConnected) buildDialog();
+    activeDevice = id;
 
     dialog.querySelector(".device-modal__title").textContent = entry[0];
     dialog.querySelector(".device-modal__meta").textContent =
       entry[1] + " · " + entry[2] + " · " + id;
 
+    renderDevice();
+    dialog.showModal();
+    dialog.querySelector(".device-modal__platform").focus();
+  }
+
+  function renderDevice() {
+    var id = activeDevice;
+    var entry = CATALOG[id];
     var body = dialog.querySelector(".device-modal__body");
     body.textContent = "";
 
-    var recorded = STATES[id] || {};
-    var groups = FEATURES[entry[3]] || FEATURES.laptop;
+    var summary = dialog.querySelector(".device-modal__summary");
+    var platform = PLATFORMS[selectedPlatform];
+    if (!platform) {
+      summary.textContent = "Choose Windows or Linux to view records for " + id + ".";
+      return;
+    }
+    var recorded = STATES[selectedPlatform][id] || {};
+    var groups = [["Boot", platform.boot]].concat(FEATURES[entry[3]] || FEATURES.laptop);
     var anyRecorded = false;
 
     /* A state keyed to a feature name this profile does not list would render
@@ -266,9 +320,12 @@
           state = value[0];
           note = value[1] || "";
         }
+        if (!Object.prototype.hasOwnProperty.call(LABELS, state)) state = "unknown";
         if (state !== "unknown") anyRecorded = true;
 
-        var pill = el("span", "feat feat--" + state, feature);
+        var pill = el("span", "feat feat--" + state);
+        pill.appendChild(el("span", "feat__name", feature));
+        pill.appendChild(el("span", "feat__state", LABELS[state]));
         if (note) pill.appendChild(el("span", "feat__note", note));
         pill.title = (LABELS[state] || LABELS.unknown) + (note ? " — " + note : "");
         list.appendChild(pill);
@@ -276,8 +333,10 @@
       body.appendChild(list);
     });
 
-    dialog.querySelector(".device-modal__note").hidden = anyRecorded;
-    dialog.showModal();
+    summary.textContent = anyRecorded
+      ? platform.label + " · " + id + " · Recorded bring-up results"
+      : "No " + platform.label + " support states are recorded for " + id + " yet.";
+    body.scrollTop = 0;
   }
 
   function wire() {

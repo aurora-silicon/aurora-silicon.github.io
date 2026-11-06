@@ -4,9 +4,13 @@ title: Research Overview
 
 # Research
 
-Notes on how Apple's hardware actually behaves, and what a Windows
-implementation has to do about it. These pages record findings rather than
-instructions — the working detail lives in the repositories.
+Notes on how Apple's hardware behaves and how Windows and Linux implementations
+use it. These pages record findings rather than installation instructions; the
+working detail lives in the repositories. Each implementation's OS matters:
+Linux research results do not establish Windows driver support, or vice versa.
+
+For kernel and boot integration, start with the [Linux guide](../platforms/linux.md)
+and [developer source map](../developers/getting-started.md#the-repositories).
 
 ## Areas
 
@@ -31,8 +35,8 @@ extension work around it.
 
 ### GPU
 
-Graphics work on Apple's AGX, including a Direct3D 12 driver written directly
-against the hardware.
+Graphics work on Apple's AGX, including d3d12agx, a Direct3D 12 library running
+on Linux. Its API name does not make it a Windows driver.
 
 <p class="topic-links" markdown>
 [d3d12agx](gpu/d3d12agx.md)
@@ -57,7 +61,8 @@ The wireless hardware, which changes vendor at the M5 generation.
 
 ### Security
 
-Apple's boot policy and secure hardware, and what Windows expects of them.
+Apple's boot policy and secure hardware, with OS-specific integration notes
+for Windows and Linux.
 
 <p class="topic-links" markdown>
 [Touch ID](security/touch-id.md)

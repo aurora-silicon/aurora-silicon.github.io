@@ -7,47 +7,58 @@ hide:
 # Aurora Silicon {.home-page-title}
 
 <div class="home-hero">
+  <div class="home-hero__copy">
+    <p class="home-eyebrow">Boot firmware · Drivers · Hardware research</p>
+    <p class="home-tagline">Windows and Linux.<br>On Apple Silicon.</p>
+    <p class="home-intro">Building the foundations for more operating systems
+    on Apple Silicon Macs.</p>
+  </div>
   <img class="home-mark" src="assets/brand/aurora-mark-512.png"
-       alt="Aurora Silicon mark" width="176" height="176">
-  <p class="home-tagline">Windows on ARM for Apple Silicon</p>
+       alt="" width="176" height="176">
 </div>
 
-Aurora Silicon is working to bring Windows to Apple Silicon Macs. That means
-understanding Apple's hardware, building the pieces Windows needs to boot, and
-writing the drivers needed to make the platform useful.
+## Choose your platform
 
-!!! info "This site is still under construction"
+<div class="platform-grid">
+  <a class="platform-card" href="platforms/windows/" aria-label="Windows guide">
+    <span class="platform-card__eyebrow">Windows on ARM</span>
+    <span class="platform-card__title">Windows</span>
+    <span class="platform-card__description">Boot integration, HAL extensions and device drivers.</span>
+    <span class="platform-card__footer">Explore Windows <span aria-hidden="true">→</span></span>
+  </a>
+  <a class="platform-card" href="platforms/linux/" aria-label="Linux guide">
+    <span class="platform-card__eyebrow">Kernel &amp; device bring-up</span>
+    <span class="platform-card__title">Linux</span>
+    <span class="platform-card__description">Kernel development, boot tooling and graphics research.</span>
+    <span class="platform-card__footer">Explore Linux <span aria-hidden="true">→</span></span>
+  </a>
+</div>
 
-    These pages are a work in progress. Plenty of them are incomplete, nothing
-    here is definitive, and some of it will already be out of date.
+<p class="home-status" markdown>
+**Experimental, and still being documented.** Support varies by machine and OS.
+Check [feature support](feature-support/overview.md) before planning an install;
+ask in [Discord](https://discord.gg/DXmsSSc5aY) for current guidance.
+</p>
 
-    In the meantime the best path forward is our
-    [Discord server](https://discord.gg/DXmsSSc5aY) — join and ask directly, and
-    you will get a current answer rather than whatever this site last said.
-
-## Where to start
+## Get involved
 
 <div class="home-paths" markdown>
 
 <div class="home-path" markdown>
 
-### [Using Aurora Silicon](users/getting-started.md)
+### [Find your starting point](users/getting-started.md)
 
-Start with the user guide, then check [feature support](feature-support/overview.md)
-for your hardware.
+Identify your Mac, read the support records and understand what to expect.
 
 </div>
 
 <div class="home-path" markdown>
 
-### [Developing Aurora Silicon](developers/getting-started.md)
+### [Build with us](developers/getting-started.md)
 
-Set up the development tools, contribute code, or explore the
+Find the source, set up your tools and explore the
 [research notes](research/overview.md).
 
 </div>
 
 </div>
-
-The project is still experimental, but you're welcome to follow along, try it on
-supported hardware, or get involved.

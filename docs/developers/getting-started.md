@@ -5,13 +5,14 @@ title: Getting Started
 # Getting Started
 
 This section is for people who want to work on Aurora Silicon itself. If you
-only want to run Windows on a Mac, the [user guide](../users/getting-started.md)
+want to run Windows or Linux on a Mac, the [user guide](../users/getting-started.md)
 is the place to start.
 
 !!! warning "Draft"
 
-    This page is an outline. The sections below describe what still needs to be
-    written, and no technical detail here should be treated as accurate yet.
+    The source map below provides entry points. Hardware setup and build
+    instructions are still outlines; check the relevant repository for current
+    requirements.
 
 ## What you'll need
 
@@ -21,10 +22,22 @@ for tethered work. Say plainly which parts are optional.*
 
 ## The repositories
 
-*To write: the map of our repositories and what each one is for — the bootloader
-tree, the kernel tree, the installer, and the per-platform bring-up trees. This
-is the page's most useful section for a newcomer, because the split between them
-is not obvious from the outside.*
+These are public source entry points. Consult each repository's README,
+`AGENTS.md` and branch documentation before building; a repository's existence
+does not establish that it supports your target machine.
+
+| Area | Source entry point | Scope |
+| --- | --- | --- |
+| Boot and experimentation | [m1n1](https://github.com/aurora-silicon/m1n1) | Low-level boot and hardware work; integration varies by target |
+| Linux | [linux](https://github.com/aurora-silicon/linux) | Kernel drivers and device trees |
+| Boot firmware | [U-Boot](https://github.com/aurora-silicon/u-boot) | Bootloader work; check the target branch |
+| Windows firmware | [mu](https://github.com/aurora-silicon/mu) | Project Mu implementation for Apple Silicon |
+| Windows installer | [aurora-installer](https://github.com/aurora-silicon/aurora-installer) | Windows installer development; not a Linux installation guide |
+| Website | [aurora-silicon.github.io](https://github.com/aurora-silicon/aurora-silicon.github.io) | Platform guides, support records and research notes |
+
+Additional component access and target branches should be confirmed with the
+team. The [Windows](../platforms/windows.md) and [Linux](../platforms/linux.md)
+guides explain which results are currently documented.
 
 ## Getting the source
 
