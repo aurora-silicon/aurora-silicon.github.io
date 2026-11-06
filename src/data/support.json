@@ -554,7 +554,7 @@
       },
       "External display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "up to two 3840x2160 60 Hz displays through a USB4 or Thunderbolt dock (#960); the M4 has no DisplayPort alt mode"
       },
       "Internal display": {
         "state": "works",
@@ -575,6 +575,34 @@
       "Wi-Fi": {
         "state": "works",
         "note": "Confirmed by Aurora, 2026-10-21"
+      },
+      "USB-C": {
+        "state": "partial",
+        "note": "USB 3 on the back port and USB 2 on the front (#528, #846); USB devices wake the Mac from sleep (#832)"
+      },
+      "Thunderbolt / USB4": {
+        "state": "partial",
+        "note": "USB4 docks with PCIe Ethernet, USB and DisplayPort tunnels (#844, #846, #960); tested with one dock"
+      },
+      "Sleep / resume": {
+        "state": "works",
+        "note": "suspend to idle by lid and menu (#830, #831), wake by USB on both ports (#832)"
+      },
+      "Touch ID": {
+        "state": "partial",
+        "note": "Secure Enclave and fprintd (#457); the installer does not collect the J713 sensor files yet"
+      },
+      "Speakers": {
+        "state": "partial",
+        "note": "kernel support merged (#820); the speakers stay locked until a J713 speaker protection profile and UCM are merged"
+      },
+      "Microphone": {
+        "state": "partial",
+        "note": "three internal microphones (#820); the J713 UCM and DSP profiles are not merged yet"
+      },
+      "Headset jack": {
+        "state": "partial",
+        "note": "headphone output, headset microphone and plug detection (#820); the J713 UCM profile is not merged yet"
       }
     },
     "j616s": {
@@ -651,8 +679,8 @@
         "note": "3840x2160 at 60 Hz with hotplug (#451); no audio yet (#729)"
       },
       "SDXC card slot": {
-        "state": "unknown",
-        "note": ""
+        "state": "partial",
+        "note": "GL9755 reader detected (#867); no card tested in the slot yet"
       },
       "Wi-Fi": {
         "state": "works",
@@ -3967,6 +3995,38 @@
       "Internal display": {
         "state": "partial",
         "note": "Basic display output; full support pending"
+      },
+      "HDMI": {
+        "state": "partial",
+        "note": "worked with the aura display handoff (aura#44) on a combined test stack; not tested on a stock install"
+      },
+      "Keyboard": {
+        "state": "partial",
+        "note": "#817 with the U-Boot handoff (u-boot#29); tested on a combined test stack"
+      },
+      "Trackpad": {
+        "state": "partial",
+        "note": "#817 with the U-Boot handoff (u-boot#29); tested on a combined test stack"
+      },
+      "Microphone": {
+        "state": "partial",
+        "note": "three-mic array through the DSP source (asahi-audio#16, alsa-ucm-conf-asahi#9); tested on a combined test stack"
+      },
+      "USB-C": {
+        "state": "partial",
+        "note": "USB devices on all three ports with the aura tuning handoff (aura#49); USB 3 not tested"
+      },
+      "Camera": {
+        "state": "partial",
+        "note": "ISP with the aura firmware handoff (#821, aura#48); tested on a combined test stack"
+      },
+      "SDXC card slot": {
+        "state": "partial",
+        "note": "GL9755 reader read an SDXC card at SDR104 (#867); tested on a combined test stack"
+      },
+      "Speakers": {
+        "state": "none",
+        "note": "disabled in the device tree until J614s speaker protection ships"
       }
     },
     "j614c": {
@@ -3985,8 +4045,40 @@
         "note": "Basic boot; broader hardware support pending"
       },
       "Internal display": {
+        "state": "works",
+        "note": "3456x2234 at 120 Hz through the display coprocessor (#525) with the aura handoff (aura#67)"
+      },
+      "Keyboard": {
+        "state": "works",
+        "note": "#525"
+      },
+      "Trackpad": {
+        "state": "works",
+        "note": "with palm rejection (#636)"
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": "Secure Enclave and fprintd (#732); an enrolled finger matches after a reboot; not tested through the installer"
+      },
+      "External display": {
         "state": "partial",
-        "note": "Basic display output; full support pending"
+        "note": "USB-C DisplayPort on the left front port (#749)"
+      },
+      "HDMI": {
+        "state": "partial",
+        "note": "1920x1080 tested (#749); the first mode-sets at boot can fail"
+      },
+      "GPU acceleration": {
+        "state": "partial",
+        "note": "40-core GPU driver and Mesa merged (#958, mesa#85); the GPU stays off in the device tree until the boot loader hands over its values"
+      },
+      "Vulkan": {
+        "state": "partial",
+        "note": "Mesa support merged (mesa#85); the GPU stays off in the device tree for now"
+      },
+      "Video decoding": {
+        "state": "partial",
+        "note": "HEVC output matches software decoding (#958); other codecs not tested on this Mac"
       }
     },
     "j773g": {
