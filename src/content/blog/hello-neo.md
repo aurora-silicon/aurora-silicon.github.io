@@ -138,7 +138,9 @@ One of my favorite moments of the whole bring-up was staring at a black screen o
 
 Speakers needed their own bit of care. On the MacBooks Asahi supports, the amps report back the voltage and current going into each speaker, and speakersafetyd uses those V/I sense lines to keep an eye on how hot the voice coils are getting. Neo's amps (a fixed-gain MAX98360A per channel) don't have those lines at all. macOS gets away with it by running a model on the CPU instead, working out how hot the coils should be from what it's sending them.
 
-So we wrote [speakerguardd](https://github.com/aurora-silicon/speakerguardd), our own speaker protection daemon that does the same on Linux. It reads back the exact audio the amps are being fed and runs it through a thermal model of the coil and magnet, turning the volume down before anything gets too hot. The constants come from the Neo's own speaker tuning, read through Apple's public AudioUnit API. It speaks the same interlock as speakersafetyd, so until it's running the kernel keeps the speakers locked 20 dB below full scale, and if it ever stops they lock again within 250 ms. We plan to make it the default on every Mac we support. And for the record, my test song through all of this was La La Land by Bryce Vine (ft. YG).
+So we wrote [speakerguardd](https://github.com/aurora-silicon/speakerguardd), our own speaker protection daemon that does the same on Linux. It reads back the exact audio the amps are being fed and runs it through a thermal model of the coil and magnet, turning the volume down before anything gets too hot. The constants come from the Neo's own speaker tuning, read through Apple's public AudioUnit API. It speaks the same interlock as speakersafetyd, so until it's running the kernel keeps the speakers locked 20 dB below full scale, and if it ever stops they lock again within 250 ms. And for the record, my test song through all of this was La La Land by Bryce Vine (ft. YG).
+
+**Edit:** speakerguardd v2 is a clean-room take on how macOS protects its speakers, covering all three of Apple's protection models. Every safety value comes from the Mac it runs on, read at install from its device tree, factory calibration and tuning, so we can't go past Apple's limits and we don't redistribute any of Apple's work. If the daemon dies, the kernel pulls the speakers within milliseconds.
 
 <video src="/blog/macbook-neo/neo_speaker_demo.mp4" poster="/blog/macbook-neo/neo_speaker_demo_poster.webp" controls playsinline preload="metadata" width="960" height="600"></video>
 
@@ -251,6 +253,20 @@ Moreover, our Vulkan driver works amazingly on M5 Max and M5 Ultra too, thanks t
 
 Give us a little more time. We will not disappoint. We are embracing AI like the large majority of the industry is, and not looking behind.
 
+## What's in flight
+
+**Edit:** A lot has moved since we started writing this.
+
+speakerguardd v2 goes live on every Mac at once, as soon as testing and validation is complete. Ryan is also porting macOS's speaker tuning, built on Saku's[^saku] proof-of-concept scripts, so Linux sounds like macOS too and new Macs get protected speakers on day one.
+
+Ryan brought the Neural Engine up on our machines, building on Joshua Warren's[^joshua] driver, and is putting it to work on webcam denoising, background blur and Center Stage style framing, mic noise suppression, and local live captions.
+
+All of the M5 work builds on Dj's[^dj] groundwork on M5 Pro. Thomas Glanzmann (sithglan)[^sithglan] has the MacBook Air M5, Erik[^erik] the M5 Max MacBook Pro, and Jeff[^jq] with Erik the M5 Ultra Mac Studio. Miguel (Ace)[^ace] wrote the first Mac mini M6 GPU backend.
+
+The M4 Pro MacBook Pro runs our kernel daily. Jonathan Goyvaerts[^jonathan] started it, and he and Ryan are taking it much further, for example refining, polishing and adding features such as working HDR and VRR on internal and external panels. He also has D3D12 fixes for vkd3d-proton and compile fixes from games like Astro Bot and Diablo IV. František Balázsy[^fbalazsy] is adding hibernation, AxxzyWasTaken[^axxzy] the M4 Max and Erik the M4 MacBook Air, while Justin Pfister[^jjrpf] and Satya[^satchlj] are working on M2 and M3.
+
+On Neo, hardware video encoding is in, the thermal framework now follows macOS's policy, and deep suspend is on the way. Dj has Aura running the kernel confined to a fixed executable window at EL2, and Ryan is working on a big Touch ID rework, starting with multi-user support. Fedora, Arch Linux ARM and NixOS are moving to one unified kernel, Fedora 45 packages are live, and Michal[^michal] is getting NixOS 26.11 ready.
+
 ## Support us
 
 Everything we do lives on [GitHub](https://github.com/aurora-silicon). If you'd like to support the work, you can sponsor us directly:
@@ -277,3 +293,11 @@ More to come!
 [^cody]: Cody Ho's M4+ hypervisor work in [m1n1 #622](https://github.com/AsahiLinux/m1n1/pull/622) and his [SPTM and exclaves docs](https://github.com/ADevWithAnIdea/apple-silicon-re). He later wrote up his side in [I Came, I Prompted, I Left Part 1](https://codyho.dev/blog/hypervisor-macbook-neo/).
 [^jq]: Jeff Queisser, [funkzy](https://github.com/funkzy) on GitHub.
 [^erik]: Erik, [erikwb](https://github.com/erikwb) on GitHub.
+[^joshua]: Joshua Warren, [joshuaswarren](https://github.com/joshuaswarren) on GitHub.
+[^sithglan]: Thomas Glanzmann, [sithglan](https://github.com/sithglan) on GitHub.
+[^fbalazsy]: František Balázsy, [fbalazsy](https://github.com/fbalazsy) on GitHub.
+[^axxzy]: [AxxzyWasTaken](https://github.com/AxxzyWasTaken) on GitHub.
+[^jjrpf]: Justin Pfister, [JJRPF](https://github.com/JJRPF) on GitHub.
+[^jonathan]: Jonathan Goyvaerts, [jgoyvaerts](https://github.com/jgoyvaerts) on GitHub.
+[^michal]: Michal S., [mchalunderscore](https://github.com/mchalunderscore) on GitHub.
+[^saku]: Saku, whose proof-of-concept scripts are the basis of our speaker tuning extraction.
