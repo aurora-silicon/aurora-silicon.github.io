@@ -3,7 +3,7 @@
 #
 #   curl -fsSL https://aurorasilicon.org/upgrade.sh | sh
 #
-# To skip the confirmation: curl -fsSL https://aurorasilicon.org/upgrade.sh | sh -s -- --yes
+# To answer yes to both questions, including the reboot: curl -fsSL https://aurorasilicon.org/upgrade.sh | sh -s -- --yes
 #
 # Stage 1 stays as it is. Nothing changes until you confirm, and the current
 # Stage 2 is kept on the ESP as m1n1/boot.bin.pre-aurora.
@@ -69,7 +69,11 @@ confirm() {
 
 This replaces your bootloader's Stage 2, kernel, Mesa, audio stack and system
 identity with Aurora's, using its testing channel, and removes the Asahi
-repositories. Your files and settings stay. Reboot as soon as it finishes.
+repositories. Your files and settings stay.
+
+Don't use the system until it has finished and rebooted. It replaces the
+graphics libraries, so applications started before the reboot may fail to
+open or draw wrongly.
 
 EOF
     [ "$YES" = 1 ] && return
@@ -144,17 +148,33 @@ finish() {
 
 Done: kernel $kernel with Aurora's Stage 2.
 
-Reboot now with: systemctl reboot
-Until then, newly opened windows may draw wrongly, because Aurora's Mesa needs
-Aurora's kernel.
-
 Touch ID sets itself up on the next boot. Enroll with: fprintd-enroll
 
 If the Mac doesn't boot Linux after this, boot macOS or recoveryOS, mount this
 install's EFI system partition and copy m1n1/boot.bin.pre-aurora over
 m1n1/boot.bin. The Asahi kernel is still in the GRUB menu for repairs, but
 its graphics don't work with Aurora's Mesa.
+
 EOF
+}
+
+reboot_now() {
+    if [ "$YES" != 1 ]; then
+        printf 'The system must reboot now. Reboot? [Y/n] '
+        { read -r answer </dev/tty; } 2>/dev/null || {
+            echo
+            answer=n
+        }
+        case $answer in
+        '' | y | Y | yes | YES) ;;
+        *)
+            echo "Reboot as soon as you can with: systemctl reboot"
+            return
+            ;;
+        esac
+    fi
+    # Aurora's Mesa needs Aurora's kernel, so new applications fail until then.
+    $SUDO systemctl reboot || echo "Reboot as soon as you can with: systemctl reboot"
 }
 
 main() {
@@ -178,6 +198,7 @@ main() {
     switch_packages
     check_boot_chain
     finish
+    reboot_now
 }
 
 # Last, so a truncated download runs nothing.
