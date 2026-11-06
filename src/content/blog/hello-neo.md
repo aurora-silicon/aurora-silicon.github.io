@@ -186,7 +186,7 @@ It was a pain. It's a really complicated feature but it passes most of the CTS f
 
 [FEX does an incredible job](https://fex-emu.com/Scourge-of-emulation/). On M1/M2/M3 we're able to enable TSO (Total Store Ordering) which lets FEX do more efficient x86 emulation since memory semantics of x86 are pretty much built into the CPU and just need to be enabled (Rosetta uses it). But since M4, Apple has locked that sysreg. Consequently, it is not available on M4 and later anymore, including A18 Pro.
 
-But worry not! We're developing [Aura](https://github.com/aurora-silicon/aura), a new boot loader based on m1n1 that can run in normal boot mode, stay resident as an EL2 monitor (due to CTXR limitations that iBoot enforces, EL2 is not realistic for kernel). KVM support for Linux guest is still togglable through nested virtualization, so we don't lose any features, except, we gain! Eventually, we will add paravirtualized KVM support which is a bigger kernel-side effort that will allow full performance host side while allowing KVM to work all the time without being opt-in.
+But worry not! We're developing [Aura](https://github.com/aurora-silicon/aura), a new boot loader based on m1n1 that can run in normal boot mode. Due to CTXR limitations that iBoot enforces, the kernel needed some adjustments to fit its executable pages only within the iBoot enforced CTXR. KVM support for Linux guest is still available, and since virtual FIQ timer register is unlocked, VMs work fine. And HACR bits can also be reconfigured that allow Windows VMs to work that are otherwise broken. Yep it unlocks ACTLR_EL1 too :D
 
 Aura actually started on my M5 Pro, where broken raw boot mode won't let the secondary CPUs run any code at all. A normal boot object can start them just fine. This actually solves a lot of problems. Raw boot mode, which Asahi Linux has used all this time, has been constantly broken by Apple since M4. Restricted sysreg access, which not only takes away features but causes bugs such as broken virtual timers / PMU causing issues in VMs, and particularly Windows VMs being entirely broken.
 
@@ -265,7 +265,7 @@ All of the M5 work builds on Dj's[^dj] groundwork on M5 Pro. Thomas Glanzmann (s
 
 The M4 Pro MacBook Pro runs our kernel daily. Jonathan Goyvaerts[^jonathan] started it, and he and Ryan are taking it much further, for example refining, polishing and adding features such as working HDR and VRR on internal and external panels. He also has D3D12 fixes for vkd3d-proton and compile fixes from games like Astro Bot and Diablo IV. František Balázsy[^fbalazsy] is adding hibernation, AxxzyWasTaken[^axxzy] the M4 Max and Erik the M4 MacBook Air, while Justin Pfister[^jjrpf] and Satya[^satchlj] are working on M2 and M3.
 
-On Neo, hardware video encoding is in, the thermal framework now follows macOS's policy, and deep suspend is on the way. Dj has Aura running the kernel confined to a fixed executable window at EL2, and Ryan is working on a big Touch ID rework, starting with multi-user support. Fedora, Arch Linux ARM and NixOS are moving to one unified kernel, Fedora 45 packages are live, and Michal[^michal] is getting NixOS 26.11 ready.
+On Neo, hardware video encoding is in, the thermal framework now follows macOS's policy, and deep suspend is on the way. Ryan is working on a big Touch ID rework, starting with multi-user support. Fedora, Arch Linux ARM and NixOS are moving to one unified kernel, Fedora 45 packages are live, and Michal[^michal] is getting NixOS 26.11 ready.
 
 ## Support us
 
