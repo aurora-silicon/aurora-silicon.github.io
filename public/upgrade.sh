@@ -55,7 +55,7 @@ check_system() {
         grep -qE '^apple,t(8103|8112|600[012]|602[012])$' ||
         die "this script supports M1 and M2 Macs"
 
-    [ -s "$STAGE2" ] || die "$STAGE2 not found; is the EFI system partition mounted at $ESP?"
+    findmnt -n "$ESP" >/dev/null || die "the EFI system partition isn't mounted at $ESP"
 
     [ "$(free_mb /)" -ge "$MIN_ROOT_MB" ] || die "need ${MIN_ROOT_MB} MB free on /"
     [ "$(free_mb /boot)" -ge "$MIN_BOOT_MB" ] || die "need ${MIN_BOOT_MB} MB free on /boot"
@@ -86,8 +86,10 @@ EOF
 }
 
 back_up_stage2() {
+    # Only root can read the ESP.
+    $SUDO test -s "$STAGE2" || die "$STAGE2 not found"
     # update-m1n1 keeps only the previous boot.bin, and it runs several times here.
-    [ -e "$BACKUP" ] || $SUDO cp --preserve=timestamps "$STAGE2" "$BACKUP"
+    $SUDO test -e "$BACKUP" || $SUDO cp --preserve=timestamps "$STAGE2" "$BACKUP"
 }
 
 add_repository() {
@@ -135,7 +137,7 @@ check_boot_chain() {
 
     $SUDO update-m1n1
     # boot.bin starts with the Stage 2 binary, followed by device trees and U-Boot.
-    $SUDO cmp -s -n "$(stat -c %s "$AURA")" "$AURA" "$STAGE2" || die "$STAGE2 is not Aurora's Stage 2"
+    $SUDO cmp -s -n "$(stat -L -c %s "$AURA")" "$AURA" "$STAGE2" || die "$STAGE2 is not Aurora's Stage 2"
 }
 
 finish() {
