@@ -11,7 +11,6 @@
 set -eu
 
 FEED=https://aurorasilicon.org/fedora-aurora
-FEDORA=44
 ESP=/boot/efi
 STAGE2=$ESP/m1n1/boot.bin
 BACKUP=$ESP/m1n1/boot.bin.pre-aurora
@@ -44,7 +43,12 @@ check_system() {
     if ! rpm -q aurora-release >/dev/null 2>&1; then
         [ "${ID:-}" = fedora-asahi-remix ] || die "this script is for Fedora Asahi Remix (found: ${PRETTY_NAME:-unknown})"
     fi
-    [ "${VERSION_ID:-}" = "$FEDORA" ] || die "this script supports Fedora Asahi Remix $FEDORA (found: ${VERSION_ID:-unknown})"
+    FEDORA=${VERSION_ID:-}
+    # The releases the Aurora feed publishes.
+    case $FEDORA in
+    44 | 45) ;;
+    *) die "this script supports Fedora Asahi Remix 44 and 45 (found: ${FEDORA:-unknown})" ;;
+    esac
 
     # Fedora Asahi Remix runs on M1 and M2. Other SoCs need the Aurora installer.
     tr '\0' '\n' </proc/device-tree/compatible 2>/dev/null |
