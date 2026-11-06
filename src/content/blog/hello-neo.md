@@ -16,7 +16,7 @@ We're proud to finally present to you an alpha release of Linux support for MacB
 - Hardware Video Decoding (via AVD).
 - Of course, the keyboard and trackpad (somehow, Apple managed to change up the trackpad a little).
 
-And it goes without saying, much thanks to the incredible work of the Asahi team & its contributors, for all the work they've done. This project does rest strongly on the shoulders of giants. We provide clear attribution throughout all our work, and respect where it is due.
+And it goes without saying, much thanks to the Asahi team & its contributors for all the incredible work they've done. This project does rest strongly on the shoulders of giants. We provide clear attribution throughout all our work, and respect where it is due.
 
 Omarchy is the flagship experience on Neo, and we can't thank David and the Omarchy team[^omacom] enough for the support they've given us, in both tokens and hardware.
 
@@ -172,7 +172,7 @@ And yes, this is shipping in all devices we will support, not just Neo. This has
 
 Note: It came to my attention _after_ I had developed this feature that Google engineers over at Android had come out with [something similar](https://lpc.events/event/20/contributions/2630/) for per-process page size, coincidentally literally 1-2 days later! But I'm confident what we have here is solid and upstreamable, so eventually an RFC will be posted after more review and testing. Our branch is [up here](https://github.com/aurora-silicon/linux/tree/mm-mixed-userspace-abi).
 
-Neo is of course not a gaming device by any means. It doesn't have that many resources, so AAA games won't run that well without lowering resolution to mobile scales and expect lower FPS as you would on an iPhone. Light games it handles incredibly well, and even with external display connected. I played Minecraft at 2K @ 120 Hz output and got a solid 120-150 FPS average gameplay! Just make sure to switch to the native Vulkan renderer :)
+Neo is of course not a gaming device by any means. It doesn't have that many resources, so AAA games won't run that well without lowering resolution to mobile scales, and expect lower FPS as you would on an iPhone. Light games it handles incredibly well, and even with external display connected. I played Minecraft at 2K @ 120 Hz output and got a solid 120-150 FPS average gameplay! Just make sure to switch to the native Vulkan renderer :)
 
 ## Newer GPU features
 
@@ -188,11 +188,11 @@ It was a pain. It's a really complicated feature but it passes most of the CTS f
 
 But worry not! We're developing [Aura](https://github.com/aurora-silicon/aura), a new boot loader based on m1n1 that can run in normal boot mode. Due to CTXR limitations that iBoot enforces, the kernel needed some adjustments to fit its executable pages only within the iBoot enforced CTXR. KVM support for Linux guest is still available, and since virtual FIQ timer register is unlocked, VMs work fine. And HACR bits can also be reconfigured that allow Windows VMs to work that are otherwise broken. Yep it unlocks ACTLR_EL1 too :D
 
-Aura actually started on my M5 Pro, where broken raw boot mode won't let the secondary CPUs run any code at all. A normal boot object can start them just fine. This actually solves a lot of problems. Raw boot mode, which Asahi Linux has used all this time, has been constantly broken by Apple since M4. Restricted sysreg access, which not only takes away features but causes bugs such as broken virtual timers / PMU causing issues in VMs, and particularly Windows VMs being entirely broken.
+Aura actually started on my M5 Pro, where raw boot mode wouldn't let the secondary CPUs run any code at all (Apple has since fixed that in the macOS 27.3 beta, more on that below). A normal boot object could start them just fine. This actually solves a lot of problems. Raw boot mode, which Asahi Linux has used all this time, has been constantly broken by Apple since M4. Restricted sysreg access, which not only takes away features but causes bugs such as broken virtual timers / PMU causing issues in VMs, and particularly Windows VMs being entirely broken.
 
-Jeff Queisser[^jq], our hero, came to our Discord having got the secondary CPUs running on his M5 Ultra Mac Studio, and I was really interested in that. Hmm... that must use the normal boot mode then, but that's a lot of effort to bring up DART/SART under that mode especially due to SPTM. But he had figured out something new: normal boot object with a special `kcbz` property set to 0 - this made iBoot jump to our boot object just like a raw object, but with the sysregs unlocked. Not only does this fix SMP on M5 Pro/Max/Ultra, it also comes with all the goodies we talked about earlier. This lets us not have to deal with SPTM and just have a raw boot object-like environment.
+Jeff Queisser[^jq], our hero, came to our Discord having got the secondary CPUs running on his M5 Ultra Mac Studio, and I was really interested in that. Hmm... that must use the normal boot mode then, but that's a lot of effort to bring up DART/SART under that mode especially due to SPTM. But he had figured out something new: normal boot object with a special `kcbz` property set to 0 - this made iBoot jump to our boot object just like a raw object, but with the sysregs unlocked. Not only did this fix SMP on M5 Pro/Max/Ultra before Apple did, it also comes with all the goodies we talked about earlier. This lets us not have to deal with SPTM and just have a raw boot object-like environment.
 
-TSO is one of the interesting sysregs it will unlock, and in turn enable much better x86 emulation performance on Neo. On top of that, it will also unlock sysregs needed for deep suspend support which we are working on cracking.
+TSO is one of the sysregs it unlocks, and every Mac on the latest Aura has it now, so x86 emulation is much faster. It also unlocks the sysregs we need for deep suspend, and that's coming to Neo soon.
 
 ## Rosetta has more tricks than TSO
 
@@ -263,9 +263,9 @@ Ryan brought the Neural Engine up on our machines, building on Joshua Warren's[^
 
 All of the M5 work builds on Dj's[^dj] groundwork on M5 Pro. Thomas Glanzmann (sithglan)[^sithglan] has the MacBook Air M5, Erik[^erik] the M5 Max MacBook Pro, and Jeff[^jq] with Erik the M5 Ultra Mac Studio. Miguel (Ace)[^ace] wrote the first Mac mini M6 GPU backend.
 
-The M4 Pro MacBook Pro runs our kernel daily. Jonathan Goyvaerts[^jonathan] started it, and he and Ryan are taking it much further, for example refining, polishing and adding features such as working HDR and VRR on internal and external panels. He also has D3D12 fixes for vkd3d-proton and compile fixes from games like Astro Bot and Diablo IV. František Balázsy[^fbalazsy] is adding hibernation, AxxzyWasTaken[^axxzy] the M4 Max and Erik the M4 MacBook Air, while Justin Pfister[^jjrpf] and Satya[^satchlj] are working on M2 and M3.
+The M4 Pro MacBook Pro runs our kernel daily. Jonathan Goyvaerts[^jonathan] started it, and he and Ryan are taking it much further, for example refining, polishing and adding features such as working HDR and VRR on internal and external panels. He also has D3D12 fixes for vkd3d-proton and compile fixes from games like Astro Bot and Diablo IV. František Balázsy[^fbalazsy] is adding hibernation, AxxzyWasTaken[^axxzy] the M4 Max and Erik the M4 MacBook Air, while Justin Pfister[^jjrpf] and Satya[^satchlj] are working on M2 and M3. M1 and M2 panels now fade brightness smoothly, and the keyboard backlight follows the light sensor like it does on macOS.
 
-On Neo, hardware video encoding is in, the thermal framework now follows macOS's policy, and deep suspend is on the way. Ryan is working on a big Touch ID rework, starting with multi-user support. Fedora, Arch Linux ARM and NixOS are moving to one unified kernel, Fedora 45 packages are live, and Michal[^michal] is getting NixOS 26.11 ready.
+On Neo, hardware video encoding is in and the thermal framework now follows macOS's policy. Dj has macOS booting to the desktop under Aura with Apple's real SPTM and exclaves, and tracing it has brought deep suspend close. macOS under Aura sleeps at about 0.1 W and Linux, now running at EL2, goes all the way to the final step, so keep an eye out for updates. Ryan is working on a big Touch ID rework, starting with multi-user support. Fedora, Arch Linux ARM and NixOS are moving to one unified kernel, Fedora 45 packages are live, and Michal[^michal] is getting NixOS 26.11 ready.
 
 ## Support us
 
