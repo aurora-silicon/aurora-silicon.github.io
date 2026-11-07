@@ -131,7 +131,7 @@ This was the first still with no macOS in the picture at all, straight from m1n1
 
 About a week after we made that call, all of it was working on Linux, with the webcam running at 30 fps.
 
-One of my favorite moments of the whole bring-up was staring at a black screen on the Neo under m1n1 and watching the little camera dot pop up in the top right corner. The exclave drawing it itself, straight into a secure layer of the display pipe. On Linux there's no exclave to draw it by design (this _may_ change under the non-raw boot mode, more to follow). Staring at black screens and a KIS DebugUSB serial log is good fun, as most of the Linux on Apple Silicon community will likely agree.
+One of my favorite moments of the whole bring-up was staring at a black screen on the Neo under m1n1 and watching the little camera dot pop up in the top right corner. The exclave drawing it itself, straight into a secure layer of the display pipe. On Linux there's no exclave to draw it by design. Staring at black screens and a KIS DebugUSB serial log is good fun, as most of the Linux on Apple Silicon community will likely agree.
 
 Speakers needed their own bit of care. On the MacBooks Asahi supports, the amps report back the voltage and current going into each speaker, and speakersafetyd uses those V/I sense lines to keep an eye on how hot the voice coils are getting. Neo's amps (a fixed-gain MAX98360A per channel) don't have those lines at all. macOS gets away with it by running a model on the CPU instead, working out how hot the coils should be from what it's sending them.
 
@@ -183,13 +183,13 @@ It was a pain. It's a really complicated feature but it passes most of the CTS f
 
 [FEX does an incredible job](https://fex-emu.com/Scourge-of-emulation/). On M1/M2/M3 we're able to enable TSO (Total Store Ordering) which lets FEX do more efficient x86 emulation since memory semantics of x86 are pretty much built into the CPU and just need to be enabled (Rosetta uses it). But since M4, Apple has locked that sysreg. Consequently, it is not available on M4 and later anymore, including A18 Pro.
 
-But worry not! We're developing [Aura](https://github.com/aurora-silicon/aura), a new boot loader based on m1n1 that can run in normal boot mode. Due to CTXR limitations that iBoot enforces, the kernel needed some adjustments to fit its executable pages only within the iBoot enforced CTXR. KVM support for Linux guest is still available, and since virtual FIQ timer register is unlocked, VMs work fine. And HACR bits can also be reconfigured that allow Windows VMs to work that are otherwise broken. Yep it unlocks ACTLR_EL1 too :D
+But worry not! We're developing [Aura](https://github.com/aurora-silicon/aura), a new boot loader based on m1n1 that can run in normal boot mode. Due to CTXR limitations that iBoot enforces, the kernel needed some adjustments to fit its executable pages only within the iBoot enforced CTXR. KVM support for Linux guest is still available, and since virtual FIQ timer register is unlocked, VMs work fine. And HACR bits can also be reconfigured that allow Windows VMs to work that are otherwise broken. Yep, it unlocks ACTLR_EL1 too, which turns on the CPU features Rosetta uses for fast x86 emulation (TSO, APFLG, AFP and PRSV, more on these below) :D
 
-Aura actually started on my M5 Pro, where raw boot mode wouldn't let the secondary CPUs run any code at all (Apple has since fixed that in the macOS 27.3 beta, more on that below). A normal boot object could start them just fine. This actually solves a lot of problems. Raw boot mode, which Asahi Linux has used all this time, has been constantly broken by Apple since M4. Restricted sysreg access, which not only takes away features but causes bugs such as broken virtual timers / PMU causing issues in VMs, and particularly Windows VMs being entirely broken.
+Aura actually started on my M5 Pro, where raw boot mode wouldn't let the secondary CPUs run any code at all (Apple has since fixed that in the macOS 27.3 beta, more on that below). A normal boot object could start them just fine. This actually solves a lot of problems. Raw boot mode, which Asahi Linux has used for most of its life, has been constantly broken by Apple since M4. Restricted sysreg access, which not only takes away features but causes bugs such as broken virtual timers / PMU causing issues in VMs, and particularly Windows VMs being entirely broken.
 
-Jeff Queisser[^jq], our hero, came to our Discord having got the secondary CPUs running on his M5 Ultra Mac Studio, and I was really interested in that. Hmm... that must use the normal boot mode then, but that's a lot of effort to bring up DART/SART under that mode especially due to SPTM. But he had figured out something new: normal boot object with a special `kcbz` property set to 0 - this made iBoot jump to our boot object just like a raw object, but with the sysregs unlocked. Not only did this fix SMP on M5 Pro/Max/Ultra before Apple did, it also comes with all the goodies we talked about earlier. This lets us not have to deal with SPTM and just have a raw boot object-like environment.
+Jeff Queisser[^jq], our hero, came to our Discord having got the secondary CPUs running on his M5 Ultra Mac Studio, and I was really interested in that. Hmm... that must use the normal boot mode then, but that's a lot of effort to bring up DART/SART under that mode especially due to SPTM. But he had figured out something new: normal boot object with a special `kcbz` property set to 0 - this made iBoot jump to our boot object just like a raw object, but with the sysregs unlocked. Not only did this fix SMP on M5 Pro/Max/Ultra before Apple did, it also comes with all the goodies we talked about earlier. This lets us not have to deal with SPTM and just have a raw boot object-like environment. And no, this isn't a bug. It's how XNU booted before SPTM: the Mach-O is laid out that way, and it's perfectly valid. Asahi Linux booted m1n1 as a Mach-O in its very early days too, until macOS 12.1 added raw boot objects.
 
-TSO is one of the sysregs it unlocks, and every Mac on the latest Aura has it now, so x86 emulation is much faster. It also unlocks the sysregs we need for deep sleep, which ships on Neo in this release (more on that below).
+So every Mac on the latest Aura has TSO now, and x86 emulation is much faster. Aura also unlocks the sysreg we need for deep sleep, which ships on Neo in this release (more on that below).
 
 ## Rosetta has more tricks than TSO
 
@@ -228,11 +228,11 @@ Quote from [macOS 27.3 beta](https://developer.apple.com/documentation/macos-rel
 
 > Fixed: Only a single core is available when you boot Linux or other third-party operating systems from a custom raw boot object on Mac computers with M5 Pro, M5 Max, and M5 Ultra chips. (182898702) (FB23916610)
 
-It references the feedback I posted 3 months ago :D So amazing to see Apple recognizing Linux on Apple Silicon. For now raw boot object is still quite limited and has other bugs, but we will try to submit more such reports to bring it on par if everything goes well.
+It references the feedback I posted 3 months ago :D So amazing to see Apple recognizing Linux on Apple Silicon. For now raw boot object is still quite limited and has other bugs, but we will try to submit more such reports to Apple and see if we can bring it on par with normal boot.
 
 ## We can fix anything
 
-This is real. In a few days, Neo's Vulkan driver was ported to M5 Pro (thanks to Sol ultrafast!) and it can run some AAA games.
+This is real. In a few days, Neo's Vulkan driver was ported to M5 Pro (thanks to Sol 6.1 ultrafast!) and it can run some AAA games.
 
 Here is The Elder Scrolls V: Skyrim Special Edition. Running on M5 Pro, under FEX and Wine, utilizing native 4 KiB pages. It delivers a smooth 45-60 FPS, usually leaning on the upper end.
 
@@ -248,6 +248,8 @@ Many other games work already. Counter-Strike 2 runs at 70 FPS (for now) on High
 
 Moreover, our Vulkan driver works amazingly on M5 Max and M5 Ultra too, thanks to Erik[^erik] and Jeff[^jq]. I gave the Splash inference engine a new Vulkan backend with optimized SPIR-V kernels, and on our driver it runs Qwen 3.8 27B (6-bit quant) at about 50 tokens/sec on an M5 Pro with 64 GB. Erik adapted that and took it further on M5 Max, which has double the bandwidth and it reaches just short of 100 tokens/sec!
 
+Nothing is perfect yet, but we've polished it as much as we could in such a short time, and we'll keep at it.
+
 Give us a little more time. We will not disappoint. We are embracing AI like the large majority of the industry is, and not looking behind.
 
 ## What's in flight
@@ -260,7 +262,7 @@ Ryan brought the Neural Engine up on our machines, building on Joshua Warren's[^
 
 All of the M5 work builds on Dj's[^dj] groundwork on M5 Pro. Thomas Glanzmann (sithglan)[^sithglan] has the MacBook Air M5, Erik[^erik] the M5 Max MacBook Pro, and Jeff[^jq] with Erik the M5 Ultra Mac Studio. Miguel (Ace)[^ace] wrote the first Mac mini M6 GPU backend.
 
-The M4 Pro MacBook Pro runs our kernel daily. Jonathan Goyvaerts[^jonathan] started it, and he and Ryan are taking it much further, for example refining, polishing and adding features such as working HDR and VRR on internal and external panels. He also has D3D12 fixes for vkd3d-proton and compile fixes from games like Astro Bot and Diablo IV. František Balázsy[^fbalazsy] is adding hibernation, AxxzyWasTaken[^axxzy] the M4 Max and Erik the M4 MacBook Air, while Justin Pfister[^jjrpf] and Satya[^satchlj] are working on M2 and M3. M1 and M2 panels now fade brightness smoothly, and the keyboard backlight follows the light sensor like it does on macOS.
+The M4 Pro MacBook Pro runs our kernel daily. Jonathan Goyvaerts[^jonathan] started it, and he and Ryan are taking it much further, for example refining, polishing and adding features such as working HDR and VRR on internal and external panels. He also has D3D12 fixes for vkd3d-proton and compile fixes from games like Astro Bot and Diablo IV. AxxzyWasTaken[^axxzy] has been testing and improving gaming on M4 Max and Erik working on M3 Pro MacBook Pro and M4 MacBook Air, while Justin Pfister[^jjrpf] and Satya[^satchlj] are working on M2 and M3.
 
 On Neo, hardware video encoding is in and the thermal framework now follows macOS's policy. Deep sleep made it in just in time, more on that next. Ryan is working on a big Touch ID rework, starting with multi-user support. Fedora, Arch Linux ARM and NixOS are moving to one unified kernel, Fedora 45 packages are live, and Michal[^michal] is getting NixOS 26.11 ready.
 
@@ -272,7 +274,7 @@ How do we start? Let's look at what we got here. Asahi supports at least `s2idle
 
 If you `/goal` and ask an agent to do this, it will try cutting corners like this. But the real deal is deep sleep that macOS does. We _have_ to learn how it does that and just implement it in Linux!
 
-My initial goal was to get macOS running under the hypervisor, we already had that using an SPTM emulator - but I wanted to redo it for the sake of a cleaner approach. In normal boot mode, GXF is unlocked. We can set up GXF and have real GL2 going in Aura. It took about 2 days to get this thing going, and here is the new approach in a nutshell:
+My initial goal was to get macOS running under the hypervisor, we already had that using an SPTM emulator - but I wanted to redo it for the sake of a cleaner approach. In normal boot mode, GXF is unlocked and hardware SPRR is available. We can set up GXF and have real GL2 going in Aura. It took about 2 days to get this thing going, and here is the new approach in a nutshell:
 
 - Instead of emulating SPTM, we run the real SPTM binary, virtualized at GL1 (as we run XNU at EL1 under hypervisor)
 - Using nested virtualization, we can make XNU think it's running in EL2 normally, and SPTM think it's in GL2 but both are physically in EL1 and GL1 respectively
@@ -306,7 +308,7 @@ There were some painful things when doing bring-up on the Linux side. At first t
 
 Neo measures 0.109 W in sleep now, down from 1.4 W, roughly 13× less. Yeah, that's a pretty damn big difference and a huge deciding factor whether you would ever put Linux on your MacBook or not.
 
-Deep sleep ships in this release. It runs on Aura, since raw boot keeps the sysregs it needs locked.
+Deep sleep ships on day one, in this release. It runs on Aura, since raw boot keeps the sysreg it needs locked.
 
 ## Support us
 
