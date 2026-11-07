@@ -260,5 +260,45 @@
         "url": "https://github.com/aurora-silicon/linux/pull/920"
       }
     ]
+  },
+  "k114s": {
+    "boot": [
+      {
+        "date": "2026-11-06",
+        "title": "Preliminary (untested) installer support",
+        "detail": "The installer admits this Mac as experimental. Nobody on the team has one yet, so nothing has been tested on hardware. The kernel device tree is preliminary, the touchscreen and the glowing Apple logo do not work yet, and the OLED panel works only as a boot screen until the display driver supports it.",
+        "url": "https://github.com/aurora-silicon/aurora-installer/pull/107"
+      }
+    ]
+  },
+  "k114c": {
+    "boot": [
+      {
+        "date": "2026-11-06",
+        "title": "Preliminary (untested) installer support",
+        "detail": "The installer admits this Mac as experimental. Nobody on the team has one yet, so nothing has been tested on hardware. The kernel device tree is preliminary, the touchscreen and the glowing Apple logo do not work yet, and the OLED panel works only as a boot screen until the display driver supports it.",
+        "url": "https://github.com/aurora-silicon/aurora-installer/pull/107"
+      }
+    ]
+  },
+  "k116s": {
+    "boot": [
+      {
+        "date": "2026-11-06",
+        "title": "Preliminary (untested) installer support",
+        "detail": "The installer admits this Mac as experimental. Nobody on the team has one yet, so nothing has been tested on hardware. The kernel device tree is preliminary, the touchscreen and the glowing Apple logo do not work yet, and the OLED panel works only as a boot screen until the display driver supports it.",
+        "url": "https://github.com/aurora-silicon/aurora-installer/pull/107"
+      }
+    ]
+  },
+  "k116c": {
+    "boot": [
+      {
+        "date": "2026-11-06",
+        "title": "Preliminary (untested) installer support",
+        "detail": "The installer admits this Mac as experimental. Nobody on the team has one yet, so nothing has been tested on hardware. The kernel device tree is preliminary, the touchscreen and the glowing Apple logo do not work yet, and the OLED panel works only as a boot screen until the display driver supports it.",
+        "url": "https://github.com/aurora-silicon/aurora-installer/pull/107"
+      }
+    ]
   }
 }
