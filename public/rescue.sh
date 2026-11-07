@@ -2,7 +2,7 @@
 # Updates the kernel of an Aurora Fedora Remix or Aurora Arch Linux ARM install
 # that has no network, from macOS on the same Mac. Run it in macOS:
 #
-#   curl -fsSL https://aurorasilicon.org/kernel-from-macos.sh | sudo sh
+#   curl -fsSL https://aurorasilicon.org/rescue.sh | sudo sh
 #
 # It downloads the kernel from Aurora's package feed and copies it, with an
 # installer, to the install's EFI system partition. Then start Linux and run:
@@ -48,7 +48,7 @@ die() {
 
 usage() {
     cat <<EOF
-usage: sudo sh kernel-from-macos.sh [--version V-R] [--fedora 44|45 | --alarm] [--esp DISK] [--yes]
+usage: sudo sh rescue.sh [--version V-R] [--fedora 44|45 | --alarm] [--esp DISK] [--yes]
 
 Copies an Aurora kernel to an Aurora Fedora or Arch Linux ARM install's EFI
 system partition, to install from Linux with no network:
@@ -91,7 +91,7 @@ check_macos() {
         die "run this in macOS; in Linux with a network, use: sudo dnf upgrade kernel-aurora (Fedora) or sudo pacman -Syu (Arch Linux ARM)"
     [ "$(sysctl -n hw.optional.arm64 2>/dev/null)" = 1 ] || die "this script is for Apple Silicon Macs"
     # macOS only lets root mount an EFI system partition.
-    [ "$(id -u)" = 0 ] || die "run it as root: curl -fsSL https://aurorasilicon.org/kernel-from-macos.sh | sudo sh"
+    [ "$(id -u)" = 0 ] || die "run it as root: curl -fsSL https://aurorasilicon.org/rescue.sh | sudo sh"
     for tool in curl diskutil plutil shasum; do
         command -v "$tool" >/dev/null || die "$tool is missing"
     done
@@ -505,7 +505,7 @@ write_installer() {
     {
         cat <<'EOF'
 #!/bin/sh
-# Installs the Aurora kernel that kernel-from-macos.sh copied to this folder,
+# Installs the Aurora kernel that rescue.sh copied to this folder,
 # without a network, then removes the folder. Run it in Linux:
 #
 #   sudo sh /boot/efi/aurora-kernel/install.sh
@@ -515,7 +515,7 @@ write_installer() {
 set -eu
 
 EOF
-        echo "# Written by kernel-from-macos.sh."
+        echo "# Written by rescue.sh."
         echo "FEDORA=$FEDORA"
         echo "CORE_RPM=kernel-aurora-core-$rest"
         echo "KERNEL_RPMS=\"kernel-aurora-$rest kernel-aurora-core-$rest kernel-aurora-modules-extra-$rest\""
@@ -545,14 +545,14 @@ check_system() {
     # shellcheck disable=SC1091
     release=$(. /etc/os-release && echo "${VERSION_ID:-}")
     [ "$release" = "$FEDORA" ] ||
-        die "this kernel is for Fedora $FEDORA, but this install runs Fedora ${release:-unknown}; in macOS, run kernel-from-macos.sh again with --fedora $release"
+        die "this kernel is for Fedora $FEDORA, but this install runs Fedora ${release:-unknown}; in macOS, run rescue.sh again with --fedora $release"
     findmnt -n "$ESP" >/dev/null || die "the EFI system partition isn't mounted at $ESP"
 }
 
 verify() {
     say "Checking the packages"
     cd "$DIR"
-    sha256sum -c --quiet SHA256SUMS || die "files in $DIR are damaged; in macOS, run kernel-from-macos.sh again"
+    sha256sum -c --quiet SHA256SUMS || die "files in $DIR are damaged; in macOS, run rescue.sh again"
     for rpm in $KERNEL_RPMS $USERPAGES_RPM $AURA_RPM; do
         out=$(rpm -Kv "$rpm" 2>&1) || {
             printf '%s\n' "$out" >&2
@@ -660,7 +660,7 @@ check_boot_chain() {
         die "$STAGE2 doesn't carry kernel $KREL's device trees"
 }
 
-# Removes the files kernel-from-macos.sh wrote, by name.
+# Removes the files rescue.sh wrote, by name.
 remove_folder() {
     cd /
     # macOS can leave ._ and .DS_Store files on FAT.
@@ -727,7 +727,7 @@ write_alarm_installer() {
     {
         cat <<'EOF'
 #!/bin/sh
-# Installs the Aurora kernel that kernel-from-macos.sh copied to this folder,
+# Installs the Aurora kernel that rescue.sh copied to this folder,
 # without a network, then removes the folder. Run it in Linux:
 #
 #   sudo sh /boot/efi/aurora-kernel/install.sh
@@ -737,7 +737,7 @@ write_alarm_installer() {
 set -eu
 
 EOF
-        echo "# Written by kernel-from-macos.sh."
+        echo "# Written by rescue.sh."
         echo "KERNEL_PKG=$1"
         echo "USERPAGES_PKG=$2"
         echo "AURA_PKG=$3"
@@ -771,7 +771,7 @@ check_system() {
 verify() {
     say "Checking the packages"
     cd "$DIR"
-    sha256sum -c --quiet SHA256SUMS || die "files in $DIR are damaged; in macOS, run kernel-from-macos.sh again"
+    sha256sum -c --quiet SHA256SUMS || die "files in $DIR are damaged; in macOS, run rescue.sh again"
     for pkg in $KERNEL_PKG $USERPAGES_PKG $AURA_PKG; do
         # pacman-key --verify's test, and the signer must be Aurora's key.
         out=$(gpg --homedir "$KEYRING" --no-permission-warning --batch --status-fd 1 \
@@ -941,7 +941,7 @@ check_boot_chain() {
     fi
 }
 
-# Removes the files kernel-from-macos.sh wrote, by name.
+# Removes the files rescue.sh wrote, by name.
 remove_folder() {
     cd /
     # macOS can leave ._ and .DS_Store files on FAT.
