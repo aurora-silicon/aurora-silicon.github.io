@@ -14,6 +14,7 @@ We're proud to finally present to you an alpha release of Linux support for MacB
 - Touch ID (on models that have it), and yes, it works alongside macOS.
 - Support for both USB3 and USB2 ports, with graceful hotplug support and platform quirk handling.
 - Hardware Video Decoding (via AVD).
+- Real deep sleep at about 0.1 W, through our new Aura boot loader.
 - Of course, the keyboard and trackpad (somehow, Apple managed to change up the trackpad a little).
 
 And it goes without saying, much thanks to the Asahi team & its contributors for all the incredible work they've done. This project does rest strongly on the shoulders of giants. We provide clear attribution throughout all our work, and respect where it is due.
@@ -37,10 +38,6 @@ We expect(ed) it would be smooth sailing from there. Since agents can just itera
 ## But, it's Apple!
 
 There were however some quirks with SMP (err, AMP, as Ryan corrected, but we can just use it ~interchangeably) handling, and especially WFI since the secondary cores lose their state after wake. Yureka has since written up the [same quirk on M4](https://yuka.dev/blog-2026-10-02-linux-m4.html).
-
-And of course, there are certain things changed up entirely in new Macs, we believe since M4 or since macOS 26 firmware in general (we could find out, but it doesn't really matter). Co-processors seemingly cannot be reset. It only happens during deep suspend, and a full fabric reset happens on wake while DCS stays active. So things like quiescing a controller and letting the next stage start it again will not work in our boot chain anymore. Which, as you can imagine, was the status quo beforehand.
-
-First we ran into these problems in ANS, the NVMe controller. m1n1 has to read from the ESP to load stage 2, and U-Boot in turn has to load its EFI payload from the SSD as well. But now, all of them must adopt the live controller. While a little tricky, it worked. You just need to make sure the controller is in a clean state, essentially "reset".
 
 After a couple of iterations (and days), Ryan got both SMP and NVMe stable in Linux.
 
@@ -192,7 +189,7 @@ Aura actually started on my M5 Pro, where raw boot mode wouldn't let the seconda
 
 Jeff Queisser[^jq], our hero, came to our Discord having got the secondary CPUs running on his M5 Ultra Mac Studio, and I was really interested in that. Hmm... that must use the normal boot mode then, but that's a lot of effort to bring up DART/SART under that mode especially due to SPTM. But he had figured out something new: normal boot object with a special `kcbz` property set to 0 - this made iBoot jump to our boot object just like a raw object, but with the sysregs unlocked. Not only did this fix SMP on M5 Pro/Max/Ultra before Apple did, it also comes with all the goodies we talked about earlier. This lets us not have to deal with SPTM and just have a raw boot object-like environment.
 
-TSO is one of the sysregs it unlocks, and every Mac on the latest Aura has it now, so x86 emulation is much faster. It also unlocks the sysregs we need for deep suspend, and that's coming to Neo soon.
+TSO is one of the sysregs it unlocks, and every Mac on the latest Aura has it now, so x86 emulation is much faster. It also unlocks the sysregs we need for deep sleep, which ships on Neo in this release (more on that below).
 
 ## Rosetta has more tricks than TSO
 
@@ -265,7 +262,51 @@ All of the M5 work builds on Dj's[^dj] groundwork on M5 Pro. Thomas Glanzmann (s
 
 The M4 Pro MacBook Pro runs our kernel daily. Jonathan Goyvaerts[^jonathan] started it, and he and Ryan are taking it much further, for example refining, polishing and adding features such as working HDR and VRR on internal and external panels. He also has D3D12 fixes for vkd3d-proton and compile fixes from games like Astro Bot and Diablo IV. František Balázsy[^fbalazsy] is adding hibernation, AxxzyWasTaken[^axxzy] the M4 Max and Erik the M4 MacBook Air, while Justin Pfister[^jjrpf] and Satya[^satchlj] are working on M2 and M3. M1 and M2 panels now fade brightness smoothly, and the keyboard backlight follows the light sensor like it does on macOS.
 
-On Neo, hardware video encoding is in and the thermal framework now follows macOS's policy. Dj has macOS booting to the desktop under Aura with Apple's real SPTM and exclaves, and tracing it has brought deep suspend close. macOS under Aura sleeps at about 0.1 W and Linux, now running at EL2, goes all the way to the final step, so keep an eye out for updates. Ryan is working on a big Touch ID rework, starting with multi-user support. Fedora, Arch Linux ARM and NixOS are moving to one unified kernel, Fedora 45 packages are live, and Michal[^michal] is getting NixOS 26.11 ready.
+On Neo, hardware video encoding is in and the thermal framework now follows macOS's policy. Deep sleep made it in just in time, more on that next. Ryan is working on a big Touch ID rework, starting with multi-user support. Fedora, Arch Linux ARM and NixOS are moving to one unified kernel, Fedora 45 packages are live, and Michal[^michal] is getting NixOS 26.11 ready.
+
+## One more thing...
+
+A long-standing problem in the Apple Silicon Linux ecosystem has been power management. Sleep on Linux has never been real sleep, which makes the standby time ridiculous, and you can never leave it asleep overnight. I cannot wrap my head around how this was acceptable for this many years. It cannot be that hard to poke the right things and make the system _actually_ sleep. This is 100% one of the most essential features of MacBooks. Unless you shut it down, but let's be real, no one is doing that each time.
+
+How do we start? Let's look at what we got here. Asahi supports at least `s2idle`: the cores can sleep using `wfi`, and a lot of hardware is stopped or put to sleep, like the display, Wi-Fi and Bluetooth. On MacBook Neo, that still leaves you at around 1.4 W, and no matter how many more knobs you turn, there is a limit to this. The furthest that got us was turning off DCP's power domain itself, literally shutting the coprocessor down, which brings power usage down to around 0.7 W during sleep.
+
+If you `/goal` and ask an agent to do this, it will try cutting corners like this. But the real deal is deep sleep that macOS does. We _have_ to learn how it does that and just implement it in Linux!
+
+My initial goal was to get macOS running under the hypervisor, we already had that using an SPTM emulator - but I wanted to redo it for the sake of a cleaner approach. In normal boot mode, GXF is unlocked. We can set up GXF and have real GL2 going in Aura. It took about 2 days to get this thing going, and here is the new approach in a nutshell:
+
+- Instead of emulating SPTM, we run the real SPTM binary, virtualized at GL1 (as we run XNU at EL1 under hypervisor)
+- Using nested virtualization, we can make XNU think it's running in EL2 normally, and SPTM think it's in GL2 but both are physically in EL1 and GL1 respectively
+- We need to have context switching between TXM/XNU/SPTM since all run at the same physical exception level, so some sort of save/restore is needed there otherwise there is state loss/corruption
+- Secure Kernel / Exclaves also needed a bit more handling for context switching but mostly worked out of the box
+
+With everything in place cleanly, macOS boots under the Aura hypervisor with Secure Kernel up. Great. Now that I feel happy about the hypervisor, let's see what happens when macOS tries to sleep.
+
+The screen goes off and then it resets in 5 s, back to proxy. WTF!?
+
+I was stuck there for some time until I realized one thing: when committing sleep, macOS essentially does this:
+
+- Tells all coprocessors to shut down / sleep, so they stop cleanly
+- Arms a 5 s watchdog in the AON (always-on) domain, which resets the machine if it doesn't reach a proper sleep state
+- Commits the sleep which is essentially a few PMU writes, arms wake sources (it's just like a filter, what can wake up the AP) + sets `S3_5_C15_C6_2` bits 0 and 63 to enable deep WFI, then all cores just do WFI
+- PMU cuts off the power rail to the SoC after the cluster is down in deep WFI
+
+Essentially, most of the things which can be powered off, go off. What needs to stay awake are explicitly AON domains so we don't touch them. A lot of coprocessors like MTP (which can wake the AP), AOP, etc. are always on, and some USB domains with an `_AON` suffix stay on for purposes like wake from USB.
+
+Now clearly, macOS knows how to program its sleep. The only difference is the hypervisor here. It had something to do with Aura not power gating the boot core, and keeping the debug USB link on, which makes AON panic and think the system is in an inconsistent state. And trapping too much to trace could make the 5 s timeout hit because the sleep commit was too slow.
+
+After fixing those, macOS gets into sleep. But it doesn't wake up, great. Fortunately, it puts together some nice panic reports for us telling us what exactly broke! The very first one was a Secure Kernel state corruption, which turned out to be, again, the hypervisor just not saving the state of the register banks it maintains for each world, XNU / SPTM / TXM, so it caused some state loss. A couple more fixes like that later, and wow, macOS can sleep under the hypervisor! And when it wakes, Aura's debug link comes right back on letting us trace the wake sequence as well.
+
+There's more going on behind the scenes. On wake, a reconfig engine restores SoC state, and iBoot jumps back to its reset vector and enters Aura stage 1 at RVBAR. The rest runs normally from there, so we don't need to handle anything special. The reconfig engine's program is readable from NUB SRAM, where iBoot builds it.
+
+Now being able to trace what macOS does to commit sleep and to wake, we should be able to `/goal` deep sleep in Linux. That was pretty much it but damn these agents are stupid. I'm glad I hand held them and sped up the process otherwise it was going to take way longer. There are many little gotchas. Linux doesn't talk to everything macOS does, and skips many messages it doesn't need. After wiring up all of those fixes in each driver to implement a suspend / wake sequence for all coprocessors, and all the MMIO to properly restore state, everything just works. The system goes to real deep sleep, and it wakes up perfectly.
+
+How did I automate most of this? `sudo pmset relative wake 10 && pmset sleepnow`! This lets you schedule a wakeup in X seconds (X = 10) and make the system sleep, on macOS. Under the hood, it writes to the PMU, so by tracing the PMU, I figured out how to replicate it on Linux as well. There are some other useful pmset options, like disabling Wi-Fi wake, to get clean, interruption-free measurements.
+
+There were some painful things when doing bring-up on the Linux side. At first the ANS (NVMe controller) firmware would not talk, but that was because of missing GPIO state save/restore across suspend. Then it wouldn't train PCIe links due to, again, state not being restored. Debugging the vague silent errors or errors that make no sense in firmware was tricky. Another interesting bit here is that sleeping PMP or `gfx`/`gfx1` is a one-shot thing and they never come back until a full SoC power reset that PMU does on deep suspend. But I think this might be a way to improve GPU iteration times too, if GFX firmware crashes, could we just sleep and wake to fresh GFX? Not sure, maybe.
+
+Neo measures 0.109 W in sleep now, down from 1.4 W, roughly 13× less. Yeah, that's a pretty damn big difference and a huge deciding factor whether you would ever put Linux on your MacBook or not.
+
+Deep sleep ships in this release. It runs on Aura, since raw boot keeps the sysregs it needs locked.
 
 ## Support us
 
