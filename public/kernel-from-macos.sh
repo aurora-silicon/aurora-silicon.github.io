@@ -926,10 +926,14 @@ check_boot_chain() {
     fi
     [ "$(stat -c %Y "$STAGE2")" -ge $((START - 2)) ] || update-m1n1
     [ "$(stat -c %Y "$STAGE2")" -ge $((START - 2)) ] || die "update-m1n1 didn't rewrite $STAGE2"
-    stage=$(m1n1_setting M1N1)
-    stage=${stage:-/usr/lib/asahi-boot/m1n1.bin}
+    pinned=$(m1n1_setting M1N1)
+    stage=${pinned:-/usr/lib/asahi-boot/m1n1.bin}
     size=$(stat -L -c %s "$stage")
     [ "$(head -c "$size" "$STAGE2" | sha)" = "$(sha <"$stage")" ] || die "$STAGE2 doesn't start with $stage"
+    if [ -n "$pinned" ] && [ -n "$need" ]; then
+        echo "Stage 2 is $pinned, set by M1N1 in $M1N1_CONFIG, not the aura package's."
+        echo "This kernel needs aura $need or newer; with an older one, the speakers stay off."
+    fi
     if [ -n "$(m1n1_setting DTBS)" ]; then
         echo "$STAGE2 takes its device trees from DTBS in $M1N1_CONFIG."
     else
