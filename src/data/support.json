@@ -4070,15 +4070,39 @@
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "40-core GPU driver and Mesa merged (#958, mesa#85); the GPU stays off in the device tree until the boot loader hands over its values"
+        "note": "40-core GPU driver and Mesa merged (#958, mesa#85), boot loader handoff merged (aura#68); the 25G83 firmware profile a 32-core Max needs is still open (#1050)"
       },
       "Vulkan": {
         "state": "partial",
-        "note": "Mesa support merged (mesa#85); the GPU stays off in the device tree for now"
+        "note": "Mesa support merged (mesa#85); on 25G83 firmware it needs #1050, still open"
       },
       "Video decoding": {
         "state": "partial",
         "note": "HEVC output matches software decoding (#958); other codecs not tested on this Mac"
+      },
+      "Speakers": {
+        "state": "partial",
+        "note": "unlock with speakersafetyd on a J616C running a private 7.3 tree; the tuning is still the J616 stand-in (asahi-audio#14 open)"
+      },
+      "Microphone": {
+        "state": "partial",
+        "note": "AUX0 and AUX1 work; AUX2 is silent on this Mac"
+      },
+      "Camera": {
+        "state": "partial",
+        "note": "capture works with the loader handoff (aura#71) and the device tree change, still open (#931)"
+      },
+      "Wi-Fi": {
+        "state": "works",
+        "note": "5 GHz 80 MHz, daily use on a private 7.3 tree"
+      },
+      "Bluetooth": {
+        "state": "partial",
+        "note": "adapter up with an audio output; no long test"
+      },
+      "Sleep / resume": {
+        "state": "partial",
+        "note": "s2idle only, about 1.83 W overnight; timed wake works (#930)"
       }
     },
     "j773g": {
