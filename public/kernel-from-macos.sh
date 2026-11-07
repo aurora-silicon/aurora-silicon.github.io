@@ -2,14 +2,14 @@
 # Updates the kernel of an Aurora Fedora Remix install that has no network,
 # from macOS on the same Mac. Run it in macOS:
 #
-#   curl -fsSL https://aurorasilicon.org/kernel-from-macos.sh | sh
+#   curl -fsSL https://aurorasilicon.org/kernel-from-macos.sh | sudo sh
 #
 # It downloads the kernel from Aurora's package feed and copies it, with an
 # installer, to the install's EFI system partition. Then start Linux and run:
 #
 #   sudo sh /boot/efi/aurora-kernel/install.sh
 #
-# Options (after "sh -s --" when piped):
+# Options (after "sudo sh -s --" when piped):
 #   --version 7.3.0-20   a kernel other than the newest in the feed
 #   --fedora 44|45       the install's Fedora release, if it isn't detected
 #   --esp disk0s5        the install's EFI system partition, if there are several;
@@ -39,7 +39,7 @@ die() {
 
 usage() {
     cat <<EOF
-usage: sh kernel-from-macos.sh [--version V-R] [--fedora 44|45] [--esp DISK] [--yes]
+usage: sudo sh kernel-from-macos.sh [--version V-R] [--fedora 44|45] [--esp DISK] [--yes]
 
 Copies an Aurora kernel to an Aurora Fedora install's EFI system partition, to
 install from Linux with no network: sudo sh /boot/efi/$FOLDER/install.sh
@@ -79,6 +79,8 @@ ask() {
 check_macos() {
     [ "$(uname -s)" = Darwin ] || die "run this in macOS; in Linux with a network, use: sudo dnf upgrade kernel-aurora"
     [ "$(sysctl -n hw.optional.arm64 2>/dev/null)" = 1 ] || die "this script is for Apple Silicon Macs"
+    # macOS only lets root mount an EFI system partition.
+    [ "$(id -u)" = 0 ] || die "run it as root: curl -fsSL https://aurorasilicon.org/kernel-from-macos.sh | sudo sh"
     for tool in curl diskutil plutil shasum; do
         command -v "$tool" >/dev/null || die "$tool is missing"
     done
@@ -153,7 +155,10 @@ find_esps() {
         fi
         mnt=$(pget "$TMP/part.plist" MountPoint) || mnt=
         if [ -z "$mnt" ]; then
-            diskutil mount readOnly -mountOptions nobrowse "$dev" >/dev/null || continue
+            diskutil mount readOnly -mountOptions nobrowse "$dev" >/dev/null || {
+                warn "couldn't mount $dev to look at it"
+                continue
+            }
             MOUNTED="$MOUNTED $dev"
             part_info "$dev" || continue
             mnt=$(pget "$TMP/part.plist" MountPoint) || continue
@@ -401,11 +406,12 @@ vercmp() { rpm --eval "%{lua: print(rpm.vercmp('$1', '$2'))}"; }
 check_system() {
     [ "$(id -u)" = 0 ] || die "run it as root: sudo sh $0"
     [ "$(uname -m)" = aarch64 ] || die "run it in the Aurora Fedora install"
+    { command -v rpm >/dev/null && rpm -q --quiet kernel-aurora-core; } ||
+        die "this isn't an Aurora Fedora install: kernel-aurora-core isn't installed"
     # shellcheck disable=SC1091
     release=$(. /etc/os-release && echo "${VERSION_ID:-}")
     [ "$release" = "$FEDORA" ] ||
         die "this kernel is for Fedora $FEDORA, but this install runs Fedora ${release:-unknown}; in macOS, run kernel-from-macos.sh again with --fedora $release"
-    rpm -q --quiet kernel-aurora-core || die "this isn't an Aurora Fedora install: kernel-aurora-core isn't installed"
     findmnt -n "$ESP" >/dev/null || die "the EFI system partition isn't mounted at $ESP"
 }
 
