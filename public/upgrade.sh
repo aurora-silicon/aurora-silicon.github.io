@@ -108,6 +108,10 @@ switch_packages() {
     extra=
     # Only systems with a boot splash get Aurora's.
     rpm -q plymouth >/dev/null 2>&1 && extra=plymouth-theme-aurora
+    # Asahi ran FEX in muvm, which brought the x86 root filesystem along.
+    # Aurora's fex-emu, from the upgrade below, reads it on the host. Fedora's
+    # fex-emu already recommends it, so that upgrade won't add it.
+    rpm -q fex-emu >/dev/null 2>&1 && extra="$extra fex-emu-rootfs-fedora"
     # One transaction, so a failure leaves the system as it was. The vendor
     # switch is needed once: Asahi's protected metapackage blocks it otherwise.
     # shellcheck disable=SC2086
@@ -121,6 +125,32 @@ switch_packages() {
 
     say "Updating the rest of the system"
     $SUDO dnf -y upgrade
+}
+
+# muvm mounted FEX's root filesystem at /run/fex-emu/rootfs inside its VM. A
+# user config that names that path would override Aurora's global RootFS.
+drop_muvm_fex_rootfs() {
+    for config in "$HOME/.fex-emu/Config.json" "${XDG_CONFIG_HOME:-$HOME/.config}/fex-emu/Config.json"; do
+        grep -qs '"/run/fex-emu/' "$config" || continue
+        if ! command -v python3 >/dev/null 2>&1; then
+            echo "warning: remove RootFS from $config; it names muvm's root filesystem" >&2
+            continue
+        fi
+        say "Removing muvm's RootFS from $config"
+        cp -p "$config" "$config.pre-aurora"
+        python3 - "$config" <<'EOF'
+import json, sys
+path = sys.argv[1]
+with open(path) as f:
+    data = json.load(f)
+config = data.get("Config", {})
+if str(config.get("RootFS", "")).startswith("/run/fex-emu/"):
+    del config["RootFS"]
+    with open(path, "w") as f:
+        json.dump(data, f, indent=2)
+        f.write("\n")
+EOF
+    done
 }
 
 check_boot_chain() {
@@ -196,6 +226,7 @@ main() {
     back_up_stage2
     add_repository
     switch_packages
+    drop_muvm_fex_rootfs
     check_boot_chain
     finish
     reboot_now
