@@ -835,8 +835,8 @@
         "note": ""
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": ""
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Battery / charging": {
         "state": "works",
@@ -925,8 +925,8 @@
         "note": ""
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": "opt-in"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Vulkan": {
         "state": "works",
@@ -1011,8 +1011,8 @@
         "note": ""
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": "opt-in"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Vulkan": {
         "state": "works",
@@ -1065,8 +1065,8 @@
         "note": ""
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": ""
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Battery / charging": {
         "state": "works",
@@ -1123,8 +1123,8 @@
         "note": ""
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": ""
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Battery / charging": {
         "state": "works",
@@ -3669,8 +3669,12 @@
         "note": "both ports described; no hardware test recorded on this Mac"
       },
       "Vulkan": {
-        "state": "none",
-        "note": "the GPU driver on integration/aurora refuses to start the M3 (T8122) GPU"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       }
     },
     "j514m": {
@@ -3715,8 +3719,12 @@
         "note": "described as on the J514c; no hardware test recorded on this Mac"
       },
       "Vulkan": {
-        "state": "none",
-        "note": "no GPU driver supports the T6034 GPU; its device tree keeps T6031 GPU support off it"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       }
     },
     "j516m": {
@@ -3761,8 +3769,12 @@
         "note": "described as on the J516c; no hardware test recorded on this Mac"
       },
       "Vulkan": {
-        "state": "none",
-        "note": "no GPU driver supports the T6034 GPU; its device tree keeps T6031 GPU support off it"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       }
     },
     "j433": {
@@ -3799,8 +3811,12 @@
         "note": "ports described; no hardware test recorded on this Mac"
       },
       "Vulkan": {
-        "state": "none",
-        "note": "the GPU driver on integration/aurora refuses to start the M3 (T8122) GPU"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       }
     },
     "j434": {
@@ -3837,8 +3853,12 @@
         "note": "ports described; no hardware test recorded on this Mac"
       },
       "Vulkan": {
-        "state": "none",
-        "note": "the GPU driver on integration/aurora refuses to start the M3 (T8122) GPU"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       }
     },
     "j575d": {
@@ -3863,8 +3883,12 @@
         "note": "no Type-C port controllers are described (#1141)"
       },
       "Vulkan": {
-        "state": "none",
-        "note": "the GPU driver refuses the M3 Ultra (T6032) GPU at probe (#1141)"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       }
     },
     "j715": {
@@ -3945,12 +3969,12 @@
         "note": "through the SMC, as on the J713 (#1129)"
       },
       "GPU acceleration": {
-        "state": "untested",
-        "note": "GPU described as on the J713 (#1129)"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Vulkan": {
-        "state": "untested",
-        "note": "same GPU and Mesa driver as the J713; not yet tested on this Mac"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       }
     },
     "j604": {
@@ -4047,12 +4071,12 @@
         "note": "two fans through the SMC (#1142)"
       },
       "GPU acceleration": {
-        "state": "none",
-        "note": "the GPU is not enabled in this device tree yet (#1142)"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Vulkan": {
-        "state": "none",
-        "note": "needs the GPU, which is not enabled in this device tree yet (#1142)"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       }
     },
     "j614s": {
@@ -4095,6 +4119,14 @@
       "Speakers": {
         "state": "none",
         "note": "disabled in the device tree until J614s speaker protection ships"
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "Vulkan": {
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       }
     },
     "j614c": {
@@ -4105,6 +4137,14 @@
       "Internal display": {
         "state": "untested",
         "note": "described as on the J616c, with the J614s panel values guessed (#1140)"
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "Vulkan": {
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       }
     },
     "j616c": {
@@ -4137,12 +4177,12 @@
         "note": "1920x1080 tested (#749); the first mode-sets at boot can fail"
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": "40-core GPU driver and Mesa merged (#958, mesa#85); the GPU stays off in the device tree until the boot loader hands over its values"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Vulkan": {
-        "state": "partial",
-        "note": "Mesa support merged (mesa#85); the GPU stays off in the device tree for now"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Video decoding": {
         "state": "partial",
@@ -4199,12 +4239,12 @@
         "note": "radio firmware island apple,sakhalin from the J773g ADT (#1142)"
       },
       "GPU acceleration": {
-        "state": "none",
-        "note": "the GPU is not enabled in this device tree yet (#1142)"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Vulkan": {
-        "state": "none",
-        "note": "needs the GPU, which is not enabled in this device tree yet (#1142)"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Fan control": {
         "state": "untested",
@@ -4261,12 +4301,12 @@
         "note": "radio firmware island apple,sakhalin from the J773s ADT (#1140)"
       },
       "GPU acceleration": {
-        "state": "untested",
-        "note": "GPU enabled, with operating points from the boot loader (#1140)"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Vulkan": {
-        "state": "untested",
-        "note": "same GPU and Mesa driver as the J616s; not yet tested on this Mac"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Fan control": {
         "state": "untested",
@@ -4331,12 +4371,12 @@
         "note": "radio firmware island unknown, left to the boot loader (#1142)"
       },
       "GPU acceleration": {
-        "state": "none",
-        "note": "the GPU is not enabled in this device tree yet (#1142)"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Vulkan": {
-        "state": "none",
-        "note": "needs the GPU, which is not enabled in this device tree yet (#1142)"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "External display": {
         "state": "none",
@@ -4405,12 +4445,12 @@
         "note": "radio firmware island unknown, left to the boot loader (#1142)"
       },
       "GPU acceleration": {
-        "state": "none",
-        "note": "the GPU is not enabled in this device tree yet (#1142)"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Vulkan": {
-        "state": "none",
-        "note": "needs the GPU, which is not enabled in this device tree yet (#1142)"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "External display": {
         "state": "none",
@@ -4475,12 +4515,12 @@
         "note": "radio firmware island guessed as apple,aruba (#1140)"
       },
       "GPU acceleration": {
-        "state": "none",
-        "note": "the GPU is not enabled in this device tree yet (#1140)"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Vulkan": {
-        "state": "none",
-        "note": "needs the GPU, which is not enabled in this device tree yet (#1140)"
+        "state": "works",
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Fan control": {
         "state": "untested",
@@ -4999,6 +5039,15 @@
       "source": "Device tree and driver review, 2026-11-07",
       "scope": "J715 internal display; J614c; J504, J514m, J516m, J433, J434 and J575d",
       "note": "J715: the panel timing from #1161 (44bbfe1858). J614c: its tree only exists since #1140, so Boot and Internal display are untested. The 2026-10-21 M3 entries on the six M3 boards were never tested on them. Each now follows the board's tree and drivers on aurora-silicon/linux integration/aurora (#1141): not working where a driver refuses the hardware or the tree leaves it out, untested otherwise. J613, J615, J514s, J516s, J514c and J516c are unchanged."
+    },
+    {
+      "source": "Aurora team confirmation, 2026-11-07",
+      "scope": "Every M3 and M4 board",
+      "working": [
+        "GPU acceleration",
+        "Vulkan"
+      ],
+      "note": "M3 and M4 have full GPU support. Entries that already said works keep their notes; the GPU results from the 2026-11-07 device tree reviews are superseded. Other results are unchanged."
     }
   ]
 }
