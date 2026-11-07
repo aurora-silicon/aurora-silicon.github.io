@@ -3629,242 +3629,242 @@
     },
     "j504": {
       "Battery / charging": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "through the SMC; no hardware test recorded on this Mac"
       },
       "Brightness control": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "none",
+        "note": "the display coprocessor driver has no J504 board record, so the display stays on the boot framebuffer"
       },
       "Camera": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "front camera described; no hardware test recorded on this Mac"
       },
       "Headset jack": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "jack codec and sound card described; no hardware test recorded on this Mac"
       },
       "Keyboard backlight": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "PWM backlight described; no hardware test recorded on this Mac"
       },
       "Microphone": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "microphone stream described; no hardware test recorded on this Mac"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "no hardware test recorded on this Mac"
       },
       "Speakers": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "six amps and the sound card described; no hardware test recorded on this Mac"
       },
       "Thunderbolt / USB4": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "USB4 described on both ports; no hardware test recorded on this Mac"
       },
       "USB-C": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "both ports described; no hardware test recorded on this Mac"
       },
       "Vulkan": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "none",
+        "note": "the GPU driver on integration/aurora refuses to start the M3 (T8122) GPU"
       }
     },
     "j514m": {
       "Battery / charging": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "through the SMC; no hardware test recorded on this Mac"
       },
       "Brightness control": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "none",
+        "note": "the display nodes added on 2026-11-07 (#1141) stay disabled: the display gate only enables them on T6031 Macs"
       },
       "Camera": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "front camera described as on the J514c; no hardware test recorded on this Mac"
       },
       "Headset jack": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "described as on the J514c; no hardware test recorded on this Mac"
       },
       "Keyboard backlight": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "described as on the J514c; no hardware test recorded on this Mac"
       },
       "Microphone": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "described as on the J514c; no hardware test recorded on this Mac"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "no hardware test recorded on this Mac"
       },
       "Speakers": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "described as on the J514c; no hardware test recorded on this Mac"
       },
       "Thunderbolt / USB4": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "USB4 described as on the J514c; no hardware test recorded on this Mac"
       },
       "USB-C": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "described as on the J514c; no hardware test recorded on this Mac"
       },
       "Vulkan": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "none",
+        "note": "no GPU driver supports the T6034 GPU; its device tree keeps T6031 GPU support off it"
       }
     },
     "j516m": {
       "Battery / charging": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "through the SMC; no hardware test recorded on this Mac"
       },
       "Brightness control": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "none",
+        "note": "the display nodes added on 2026-11-07 (#1141) stay disabled: the display gate only enables them on T6031 Macs"
       },
       "Camera": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "front camera described as on the J516c; no hardware test recorded on this Mac"
       },
       "Headset jack": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "described as on the J516c; no hardware test recorded on this Mac"
       },
       "Keyboard backlight": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "described as on the J516c; no hardware test recorded on this Mac"
       },
       "Microphone": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "described as on the J516c; no hardware test recorded on this Mac"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "no hardware test recorded on this Mac"
       },
       "Speakers": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "described as on the J516c; no hardware test recorded on this Mac"
       },
       "Thunderbolt / USB4": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "USB4 described as on the J516c; no hardware test recorded on this Mac"
       },
       "USB-C": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "described as on the J516c; no hardware test recorded on this Mac"
       },
       "Vulkan": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "none",
+        "note": "no GPU driver supports the T6034 GPU; its device tree keeps T6031 GPU support off it"
       }
     },
     "j433": {
       "Brightness control": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "none",
+        "note": "the display coprocessor driver has no J433 board record, so the display stays on the boot framebuffer"
       },
       "Camera": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "front camera described; no hardware test recorded on this Mac"
       },
       "Headset jack": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "jack codec and sound card described; no hardware test recorded on this Mac"
       },
       "Microphone": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "microphones enabled in the device tree on 2026-11-07 (#1141); not yet tested on an M3 iMac"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "no hardware test recorded on this Mac"
       },
       "Speakers": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "none",
+        "note": "not described: there are no ADT values for the M3 iMac speakers yet (#1141)"
       },
       "Thunderbolt / USB4": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "USB4 described; no hardware test recorded on this Mac"
       },
       "USB-C": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "ports described; no hardware test recorded on this Mac"
       },
       "Vulkan": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "none",
+        "note": "the GPU driver on integration/aurora refuses to start the M3 (T8122) GPU"
       }
     },
     "j434": {
       "Brightness control": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "none",
+        "note": "the display coprocessor driver has no J434 board record, so the display stays on the boot framebuffer"
       },
       "Camera": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "front camera described; no hardware test recorded on this Mac"
       },
       "Headset jack": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "jack codec and sound card described; no hardware test recorded on this Mac"
       },
       "Microphone": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "microphones enabled in the device tree on 2026-11-07 (#1141); not yet tested on an M3 iMac"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "no hardware test recorded on this Mac"
       },
       "Speakers": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "none",
+        "note": "not described: there are no ADT values for the M3 iMac speakers yet (#1141)"
       },
       "Thunderbolt / USB4": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "USB4 described; no hardware test recorded on this Mac"
       },
       "USB-C": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "ports described; no hardware test recorded on this Mac"
       },
       "Vulkan": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "none",
+        "note": "the GPU driver on integration/aurora refuses to start the M3 (T8122) GPU"
       }
     },
     "j575d": {
       "Headset jack": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "jack codec and sound card described; no hardware test recorded on this Mac"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "no hardware test recorded on this Mac"
       },
       "Speaker": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "untested",
+        "note": "amp and sound card described; no hardware test recorded on this Mac"
       },
       "Thunderbolt / USB4": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "none",
+        "note": "no Type-C port controllers are described (#1141)"
       },
       "USB-C": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "none",
+        "note": "no Type-C port controllers are described (#1141)"
       },
       "Vulkan": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "none",
+        "note": "the GPU driver refuses the M3 Ultra (T6032) GPU at probe (#1141)"
       }
     },
     "j715": {
@@ -3882,7 +3882,7 @@
       },
       "Internal display": {
         "state": "untested",
-        "note": "boot framebuffer only until the J715 panel timing (#1161) is merged"
+        "note": "the J715 profile carries the panel timing macOS reports (#1161), so the display coprocessor driver takes the panel over when the DCP reports exactly that timing; ships with the CTXR release kernel pin (44bbfe1858)"
       },
       "External display": {
         "state": "untested",
@@ -3890,7 +3890,7 @@
       },
       "Brightness control": {
         "state": "untested",
-        "note": "needs the display coprocessor driver, which waits for the J715 panel timing (#1161)"
+        "note": "through the display coprocessor, which takes the panel over with the J715 timing (#1161)"
       },
       "Keyboard": {
         "state": "untested",
@@ -4099,12 +4099,12 @@
     },
     "j614c": {
       "Boot": {
-        "state": "works",
-        "note": "Basic boot; broader hardware support pending"
+        "state": "untested",
+        "note": "device tree added 2026-11-07 (#1140); there is no ADT for this Mac, so many values are guesses; not yet tested on hardware"
       },
       "Internal display": {
-        "state": "partial",
-        "note": "Basic display output; full support pending"
+        "state": "untested",
+        "note": "described as on the J616c, with the J614s panel values guessed (#1140)"
       }
     },
     "j616c": {
@@ -4994,6 +4994,11 @@
       "source": "Device tree review, 2026-11-07",
       "scope": "J715, J604, J773g, J623, J624, J773s and J575c",
       "note": "Replaces the 2026-10-21 M4 results on these Macs, which were copied from the J713 and never tested on them. Each result now follows the board's device tree on aurora-silicon/linux integration/aurora (#1129, #1140, #1142): untested where the hardware is described, not working where it is disabled or left out. Aurora has not boot-tested any of these Macs."
+    },
+    {
+      "source": "Device tree and driver review, 2026-11-07",
+      "scope": "J715 internal display; J614c; J504, J514m, J516m, J433, J434 and J575d",
+      "note": "J715: the panel timing from #1161 (44bbfe1858). J614c: its tree only exists since #1140, so Boot and Internal display are untested. The 2026-10-21 M3 entries on the six M3 boards were never tested on them. Each now follows the board's tree and drivers on aurora-silicon/linux integration/aurora (#1141): not working where a driver refuses the hardware or the tree leaves it out, untested otherwise. J613, J615, J514s, J516s, J514c and J516c are unchanged."
     }
   ]
 }
