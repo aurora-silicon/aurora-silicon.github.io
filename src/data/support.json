@@ -1174,7 +1174,7 @@
     "j873g": {
       "Boot": {
         "state": "partial",
-        "note": "RAM boot through aura on the public stack, retested 2026-11-08 (aura#85, aura#87); an installed system on the internal SSD needs the SSD support in linux#1197 (draft)"
+        "note": "RAM boot through aura on the public stack (aura#85, aura#87), with restart through the SMC (linux#1197); SSD support is in aurora-wip, but booting an installed system has not been tested"
       },
       "All CPU cores": {
         "state": "works",
@@ -1182,7 +1182,7 @@
       },
       "Internal storage": {
         "state": "partial",
-        "note": "in linux#1197 (draft), not yet in aurora-wip; read-only probe on 2026-11-08; reads and writes tested by Thomas Glanzmann on his original series"
+        "note": "in aurora-wip (linux#1197); read-only probe and clean shutdown tested on 2026-11-08; reads and writes tested by Thomas Glanzmann on his original series"
       },
       "Display output": {
         "state": "partial",
@@ -1198,11 +1198,11 @@
       },
       "Headset jack": {
         "state": "partial",
-        "note": "in linux#1197 (draft); headphone playback tested by Thomas Glanzmann, silent playback and capture retested 2026-11-08; headset microphone not tested"
+        "note": "in aurora-wip (linux#1197); headphone playback tested by Thomas Glanzmann, silent playback and capture retested 2026-11-08; headset microphone not tested"
       },
       "USB-C": {
         "state": "partial",
-        "note": "USB 2 on the back-left and front ports in linux#1197 (draft); no USB 3, and the back-middle and back-right ports are not host ports yet"
+        "note": "USB 2 on the back-left and front ports in aurora-wip (linux#1205); a USB device enumerates behind the front-port hub, but one plugged in while the hub is runtime-suspended is not seen until it resumes; no USB 3, and the back-middle and back-right ports are not host ports yet"
       },
       "Thunderbolt / USB4": {
         "state": "none",
@@ -1210,7 +1210,7 @@
       },
       "Ethernet": {
         "state": "partial",
-        "note": "on-board 10GbE in linux#1197 (draft); 9.4 Gbit/s TCP measured by Thomas Glanzmann on his series; transmit changes in linux#1198 (draft)"
+        "note": "on-board 10GbE in aurora-wip (linux#1197); the driver binds, and Thomas Glanzmann measured 9.4 Gbit/s TCP on his series; transmit changes in linux#1198 (draft)"
       },
       "Wi-Fi": {
         "state": "works",
