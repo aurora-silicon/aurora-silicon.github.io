@@ -4621,7 +4621,9 @@
         "state": "partial",
         "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
       }
-    }
+    },
+    "j804": {},
+    "j833ct": {}
   },
   "corrections": [
     {

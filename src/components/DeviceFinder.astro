@@ -31,7 +31,7 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   <template data-feature-icons>{iconNames.map(name => <span data-icon-name={name}><FeatureIcon name={name} /></span>)}</template>
   <noscript>
     <style>.series-selection,.class-selection,.variant-picker{display:none}</style>
-    <div class="offline-devices"><p>Select a chip series, then a device.</p>{seriesList.map(series => <details><summary>{series}</summary>{deviceClasses.filter(name => devices.some(device => device.generation === series && getDeviceClass(device) === name)).map(name => <details><summary>{name}</summary>{devices.filter(device => device.generation === series && getDeviceClass(device) === name).map(device => <details><summary>{device.model} · {device.chip} · {device.device}</summary>{getGroups(device).map(group => <div><h3>{group.name}</h3><ul>{group.features.map(feature => <li>{feature}: {labels[getState(device.device, feature)]}{support.results[device.device]?.[feature]?.note ? ` · ${support.results[device.device][feature].note}` : ''}</li>)}</ul></div>)}<a href={device.discussion}>Hardware reports</a></details>)}</details>)}</details>)}</div>
+    <div class="offline-devices"><p>Select a chip series, then a device.</p>{seriesList.map(series => <details><summary>{series}</summary>{deviceClasses.filter(name => devices.some(device => device.generation === series && getDeviceClass(device) === name)).map(name => <details><summary>{name}</summary>{devices.filter(device => device.generation === series && getDeviceClass(device) === name).map(device => <details><summary>{device.model} · {device.chip} · {device.device}{device.experimental ? ' · Experimental, untested' : ''}</summary>{getGroups(device).map(group => <div><h3>{group.name}</h3><ul>{group.features.map(feature => <li>{feature}: {labels[getState(device.device, feature)]}{support.results[device.device]?.[feature]?.note ? ` · ${support.results[device.device][feature].note}` : ''}</li>)}</ul></div>)}<a href={device.discussion}>Hardware reports</a></details>)}</details>)}</details>)}</div>
   </noscript>
   <span class="sr-only" data-device-announcement role="status" aria-live="polite"></span>
 </section>
@@ -167,7 +167,7 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
     results.hidden = !selected; resetDetails();
     if (!selected) { clearUrl(); return; }
     document.querySelector<HTMLElement>('[data-model-name]')!.textContent = selected.model;
-    document.querySelector<HTMLElement>('[data-device-meta]')!.textContent = [selected.chip, selected.soc, selected.device, selected.year].filter(Boolean).join(' · ');
+    document.querySelector<HTMLElement>('[data-device-meta]')!.textContent = [selected.chip, selected.soc, selected.device, selected.year, selected.experimental ? 'Experimental, untested' : ''].filter(Boolean).join(' · ');
     document.querySelector<HTMLAnchorElement>('[data-hardware-link]')!.href = selected.discussion;
     const summary = getSummary(selected);
     document.querySelector<HTMLElement>('[data-support-summary]')!.textContent = summary.recorded

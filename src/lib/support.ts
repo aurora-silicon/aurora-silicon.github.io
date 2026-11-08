@@ -5,6 +5,8 @@ export type State = 'works' | 'partial' | 'none' | 'unknown' | 'reported';
 export interface Device {
   model: string; device: string; chip: string; soc: string; year: string;
   generation: string; discussion: string; profile: string;
+  // Listed from its device tree before anyone on the team has tested one.
+  experimental?: boolean;
 }
 export interface FeatureGroup { name: string; features: string[]; }
 export interface Record { state: Exclude<State, 'unknown' | 'reported'>; note: string; }
