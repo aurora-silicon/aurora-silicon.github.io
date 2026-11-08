@@ -1,10 +1,12 @@
 import supportData from '../data/support.json';
 import historyData from '../data/feature-reports.json';
 
-export type State = 'works' | 'partial' | 'none' | 'unknown' | 'reported';
+export type State = 'works' | 'partial' | 'untested' | 'none' | 'unknown' | 'reported';
 export interface Device {
   model: string; device: string; chip: string; soc: string; year: string;
   generation: string; discussion: string; profile: string;
+  // Listed from its device tree before anyone on the team has tested one.
+  experimental?: boolean;
 }
 export interface FeatureGroup { name: string; features: string[]; }
 export interface Record { state: Exclude<State, 'unknown' | 'reported'>; note: string; }
@@ -30,7 +32,7 @@ export function getChipTier(device: Device): number {
 }
 export const history = historyData as { [device: string]: { [feature: string]: History[] } };
 export const labels: { [state in State]: string } = {
-  works: 'Working', partial: 'Partial', none: 'Not working', unknown: 'Not recorded', reported: 'Reported',
+  works: 'Working', partial: 'Partial', untested: 'Untested', none: 'Not working', unknown: 'Not recorded', reported: 'Reported',
 };
 const historyKeys: { [feature: string]: string } = {
   Boot: 'boot', 'GPU acceleration': 'graphics', 'Internal display': 'display',
@@ -38,6 +40,8 @@ const historyKeys: { [feature: string]: string } = {
   'Wi-Fi': 'wifi', Bluetooth: 'bluetooth', Speakers: 'audio', Camera: 'camera',
   'USB-C': 'usb', 'Thunderbolt / USB4': 'thunderbolt', 'Touch ID': 'touch-id',
   'Sleep / resume': 'suspend', 'Neural Engine': 'neural-engine',
+  'Display output': 'display', HDMI: 'hdmi', Speaker: 'audio', 'Headset jack': 'audio',
+  Ethernet: 'ethernet', 'All CPU cores': 'cpu',
 };
 export function getHistory(device: string, feature: string): History[] {
   return history[device]?.[historyKeys[feature]] ?? [];
@@ -72,6 +76,7 @@ export function getSummary(device: Device) {
     total: features.length,
     working: features.filter(feature => getState(device.device, feature) === 'works').length,
     partial: features.filter(feature => getState(device.device, feature) === 'partial').length,
+    untested: features.filter(feature => getState(device.device, feature) === 'untested').length,
     notWorking: features.filter(feature => getState(device.device, feature) === 'none').length,
     reported: features.filter(feature => getState(device.device, feature) === 'reported').length,
     recorded: features.filter(feature => getState(device.device, feature) !== 'unknown').length,

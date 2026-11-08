@@ -22,7 +22,7 @@ Support is recorded **per machine and per feature**, rather than inferred from a
 - **Not working:** The feature was tested and failed in the recorded conditions.
 - **Untested:** There is no recorded test. This means unknown.
 
-The device page groups features by the hardware in each Mac. Its current support snapshot uses **Working**, **Partial**, **Not working**, and **Not recorded**. Where only an earlier development report is available, it shows **Reported**.
+The device page groups features by the hardware in each Mac. Its current support snapshot uses **Working**, **Partial**, **Untested**, **Not working**, and **Not recorded**. **Untested** means the hardware is described in the kernel but nobody has run it on that Mac yet. Where only an earlier development report is available, it shows **Reported**.
 
 Open a feature pill for any restrictions and earlier dated reports. Historical results describe their named software revisions and may differ from the current status.
 
