@@ -20,6 +20,28 @@
     "profile": "desktop"
   },
   {
+    "model": "MacBook Pro 14-inch",
+    "device": "j804",
+    "chip": "M6",
+    "soc": "t8152",
+    "year": "",
+    "generation": "M6",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp",
+    "experimental": true
+  },
+  {
+    "model": "iMac 24-inch",
+    "device": "j833ct",
+    "chip": "M6",
+    "soc": "t8152",
+    "year": "",
+    "generation": "M6",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "imac",
+    "experimental": true
+  },
+  {
     "model": "MacBook Air 13-inch",
     "device": "j813",
     "chip": "M5",

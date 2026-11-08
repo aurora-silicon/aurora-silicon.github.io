@@ -25,13 +25,13 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
     <p class="support-summary" data-support-summary></p>
     <div class="feature-groups" data-feature-groups></div>
     <div id="feature-detail" class="feature-detail" data-feature-detail hidden><h3 data-feature-title></h3><div data-feature-body></div></div>
-    <ul class="support-legend" aria-label="Status key">{(['works', 'partial', 'none', 'unknown'] as const).map(state => <li><span class={`state-mark state-${state}`} aria-hidden="true"></span>{labels[state]}</li>)}</ul>
+    <ul class="support-legend" aria-label="Status key">{(['works', 'partial', 'untested', 'none', 'unknown'] as const).map(state => <li><span class={`state-mark state-${state}`} aria-hidden="true"></span>{labels[state]}</li>)}</ul>
     <p class="feature-note">Open a feature for its notes. Results apply to this device only.</p>
   </section>
   <template data-feature-icons>{iconNames.map(name => <span data-icon-name={name}><FeatureIcon name={name} /></span>)}</template>
   <noscript>
     <style>.series-selection,.class-selection,.variant-picker{display:none}</style>
-    <div class="offline-devices"><p>Select a chip series, then a device.</p>{seriesList.map(series => <details><summary>{series}</summary>{deviceClasses.filter(name => devices.some(device => device.generation === series && getDeviceClass(device) === name)).map(name => <details><summary>{name}</summary>{devices.filter(device => device.generation === series && getDeviceClass(device) === name).map(device => <details><summary>{device.model} · {device.chip} · {device.device}</summary>{getGroups(device).map(group => <div><h3>{group.name}</h3><ul>{group.features.map(feature => <li>{feature}: {labels[getState(device.device, feature)]}{support.results[device.device]?.[feature]?.note ? ` · ${support.results[device.device][feature].note}` : ''}</li>)}</ul></div>)}<a href={device.discussion}>Hardware reports</a></details>)}</details>)}</details>)}</div>
+    <div class="offline-devices"><p>Select a chip series, then a device.</p>{seriesList.map(series => <details><summary>{series}</summary>{deviceClasses.filter(name => devices.some(device => device.generation === series && getDeviceClass(device) === name)).map(name => <details><summary>{name}</summary>{devices.filter(device => device.generation === series && getDeviceClass(device) === name).map(device => <details><summary>{device.model} · {device.chip} · {device.device}{device.experimental ? ' · Experimental, untested' : ''}</summary>{getGroups(device).map(group => <div><h3>{group.name}</h3><ul>{group.features.map(feature => <li>{feature}: {labels[getState(device.device, feature)]}{support.results[device.device]?.[feature]?.note ? ` · ${support.results[device.device][feature].note}` : ''}</li>)}</ul></div>)}<a href={device.discussion}>Hardware reports</a></details>)}</details>)}</details>)}</div>
   </noscript>
   <span class="sr-only" data-device-announcement role="status" aria-live="polite"></span>
 </section>
@@ -167,11 +167,11 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
     results.hidden = !selected; resetDetails();
     if (!selected) { clearUrl(); return; }
     document.querySelector<HTMLElement>('[data-model-name]')!.textContent = selected.model;
-    document.querySelector<HTMLElement>('[data-device-meta]')!.textContent = [selected.chip, selected.soc, selected.device, selected.year].filter(Boolean).join(' · ');
+    document.querySelector<HTMLElement>('[data-device-meta]')!.textContent = [selected.chip, selected.soc, selected.device, selected.year, selected.experimental ? 'Experimental, untested' : ''].filter(Boolean).join(' · ');
     document.querySelector<HTMLAnchorElement>('[data-hardware-link]')!.href = selected.discussion;
     const summary = getSummary(selected);
     document.querySelector<HTMLElement>('[data-support-summary]')!.textContent = summary.recorded
-      ? [`${summary.working} working`, `${summary.partial} partial`, summary.notWorking ? `${summary.notWorking} not working` : '', summary.reported ? `${summary.reported} reported` : '', `${summary.total - summary.recorded} not recorded`].filter(Boolean).join(' · ')
+      ? [`${summary.working} working`, `${summary.partial} partial`, summary.untested ? `${summary.untested} untested` : '', summary.notWorking ? `${summary.notWorking} not working` : '', summary.reported ? `${summary.reported} reported` : '', `${summary.total - summary.recorded} not recorded`].filter(Boolean).join(' · ')
       : 'No feature results recorded yet.';
     renderFeatures();
     announce.textContent = `Features for ${selected.model}, ${selected.chip}. ${summary.working} working, ${summary.partial} partial.`;
@@ -291,6 +291,7 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   .feature-groups :global(.feature-icon) { flex-shrink: 0; width: 16px; height: 16px; color: var(--muted); }
   .feature-groups :global(.feature-state) { font-size: 10px; color: var(--muted); }
   .feature-groups :global(.status-unknown) { color: var(--muted); border-style: dashed; }
+  .feature-groups :global(.status-untested) { border-style: dashed; }
   .feature-groups :global(.feature-pill:hover), .feature-groups :global(.feature-pill[aria-expanded='true']) { border-color: var(--muted); }
   .feature-groups :global(.status-works) { color: var(--status-working); border-color: var(--status-working-border); background: var(--status-working-bg); }
   .feature-groups :global(.status-partial) { color: var(--status-partial); border-color: var(--status-partial-border); background: var(--status-partial-bg); }
