@@ -1173,32 +1173,60 @@
     },
     "j873g": {
       "Boot": {
-        "state": "works",
-        "note": "Full boot confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "RAM boot through aura on the public stack, retested 2026-11-08 (aura#85, aura#87); an installed system on the internal SSD needs the SSD support in linux#1197 (draft)"
       },
       "All CPU cores": {
         "state": "works",
-        "note": "12 cores"
+        "note": "12 cores (linux#161); two performance states per cluster until a thermal policy exists"
       },
       "Internal storage": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "in linux#1197 (draft), not yet in aurora-wip; read-only probe on 2026-11-08; reads and writes tested by Thomas Glanzmann on his original series"
       },
       "Display output": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "boot framebuffer on the back-right USB-C port through aura (aura#16); the Linux display driver is still a draft (linux#1019)"
+      },
+      "HDMI": {
+        "state": "partial",
+        "note": "second framebuffer through aura (aura#16), reported by Thomas Glanzmann; no mode changes or hotplug"
+      },
+      "Speaker": {
+        "state": "none",
+        "note": "disabled on purpose until speaker protection is set up for the J873g (aura#115, linux#1051)"
+      },
+      "Headset jack": {
+        "state": "partial",
+        "note": "in linux#1197 (draft); headphone playback tested by Thomas Glanzmann, silent playback and capture retested 2026-11-08; headset microphone not tested"
+      },
+      "USB-C": {
+        "state": "partial",
+        "note": "USB 2 on the back-left and front ports in linux#1197 (draft); no USB 3, and the back-middle and back-right ports are not host ports yet"
+      },
+      "Thunderbolt / USB4": {
+        "state": "none",
+        "note": "not described yet"
+      },
+      "Ethernet": {
+        "state": "partial",
+        "note": "on-board 10GbE in linux#1197 (draft); 9.4 Gbit/s TCP measured by Thomas Glanzmann on his series; transmit changes in linux#1198 (draft)"
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "scan, WPA2 join and 10 minutes of capped two-way TCP (linux#1013)"
       },
       "Bluetooth": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "LE discovery only (linux#1013); pairing and audio not tested"
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "OpenGL and OpenGL ES on Mesa aurora-wip (mesa#164, mesa#175) with linux#984; smoke and texture tests retested 2026-11-08; no full conformance run on this stack"
+      },
+      "Vulkan": {
+        "state": "untested",
+        "note": "Honeykrisp builds for G18G but has not run on an M6"
       }
     },
     "j413": {
