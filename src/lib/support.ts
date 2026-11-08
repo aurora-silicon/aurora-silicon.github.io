@@ -40,6 +40,8 @@ const historyKeys: { [feature: string]: string } = {
   'Wi-Fi': 'wifi', Bluetooth: 'bluetooth', Speakers: 'audio', Camera: 'camera',
   'USB-C': 'usb', 'Thunderbolt / USB4': 'thunderbolt', 'Touch ID': 'touch-id',
   'Sleep / resume': 'suspend', 'Neural Engine': 'neural-engine',
+  'Display output': 'display', HDMI: 'hdmi', Speaker: 'audio', 'Headset jack': 'audio',
+  Ethernet: 'ethernet', 'All CPU cores': 'cpu',
 };
 export function getHistory(device: string, feature: string): History[] {
   return history[device]?.[historyKeys[feature]] ?? [];
