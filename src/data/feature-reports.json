@@ -260,5 +260,23 @@
         "url": "https://github.com/aurora-silicon/linux/pull/920"
       }
     ]
+  },
+  "j704": {
+    "boot": [
+      {
+        "date": "2026-11-07",
+        "title": "J704 boots on hardware",
+        "detail": "dmitzsaz booted his J704 on the macOS 27.0 stub with aurora-wip plus linux#1060, #1122, #1123 and #1124. CPU frequency scaling, NVMe, Wi-Fi, Bluetooth, the SD reader, keyboard and trackpad, USB, the SMC and s2idle worked. The internal display stayed on the boot framebuffer.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1106#issuecomment-6707088677"
+      }
+    ],
+    "display": [
+      {
+        "date": "2026-11-07",
+        "title": "Internal display stays on the boot framebuffer",
+        "detail": "On the J704 the display coprocessor does not take over the panel, so it stays on the boot framebuffer. quank123wip saw the same coprocessor fail with -110 on the macOS 27.0 stub.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1106#issuecomment-6707088677"
+      }
+    ]
   }
 }

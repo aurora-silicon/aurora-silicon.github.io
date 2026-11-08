@@ -4797,57 +4797,61 @@
       }
     },
     "j704": {
-      "All CPU cores": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
-      },
-      "Battery / charging": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
-      },
-      "Bluetooth": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
-      },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "Reported by owner dmitzsaz on his J704 (macOS 27.0 stub, aurora-wip with his open PRs)"
       },
-      "Fan control": {
+      "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
-      },
-      "Internal display": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "Reported by owner dmitzsaz on his J704, all 10 cores with cpufreq (4 P, 6 E)"
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "Reported by owner dmitzsaz on his J704, NVMe with linux#1060"
+      },
+      "Internal display": {
+        "state": "none",
+        "note": "Does not work yet, the display coprocessor stays on the boot framebuffer (reported by dmitzsaz, and quank123wip saw it fail with -110)"
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "Reported by owner dmitzsaz on his J704, needs his open PRs linux#1122 and linux#1123 (live MTP handoff), without them the keyboard is dead"
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "Reported by owner dmitzsaz on his J704, needs his open PRs linux#1122 and linux#1123 (live MTP handoff), without them the keyboard is dead"
+      },
+      "USB-C": {
+        "state": "works",
+        "note": "Reported by owner dmitzsaz on his J704, USB on all three USB-C ports"
+      },
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": "Reported by owner dmitzsaz on his J704, needs his open PR linux#1150"
+      },
+      "SDXC card slot": {
+        "state": "works",
+        "note": "Reported by owner dmitzsaz on his J704, needs his open PR linux#1124"
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "Reported by owner dmitzsaz on his J704, needs his open PR linux#1124"
       },
-      "GPU acceleration": {
-        "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+      "Bluetooth": {
+        "state": "works",
+        "note": "Reported by owner dmitzsaz on his J704, needs his open PR linux#1124"
       },
-      "Vulkan": {
-        "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+      "Battery / charging": {
+        "state": "works",
+        "note": "Reported by owner dmitzsaz on his J704, battery and AC through the SMC"
       },
-      "Ray tracing": {
+      "Fan control": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": "Reported by owner dmitzsaz on his J704, the fan reads through the SMC, control not reported"
+      },
+      "Sleep / resume": {
+        "state": "works",
+        "note": "Reported by owner dmitzsaz on his J704, s2idle, with Wi-Fi, Bluetooth and the SD reader working after resume, needs his open PR linux#1124"
       }
     },
     "j804": {},
