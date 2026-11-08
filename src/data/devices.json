@@ -112,6 +112,46 @@
     "profile": "mbp"
   },
   {
+    "model": "MacBook Pro 14-inch",
+    "device": "k114s",
+    "chip": "M5 Pro, OLED",
+    "soc": "t6050",
+    "year": "",
+    "generation": "M5",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 14-inch",
+    "device": "k114c",
+    "chip": "M5 Max, OLED",
+    "soc": "t6050",
+    "year": "",
+    "generation": "M5",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 16-inch",
+    "device": "k116s",
+    "chip": "M5 Pro, OLED",
+    "soc": "t6050",
+    "year": "",
+    "generation": "M5",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
+    "model": "MacBook Pro 16-inch",
+    "device": "k116c",
+    "chip": "M5 Max, OLED",
+    "soc": "t6050",
+    "year": "",
+    "generation": "M5",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "profile": "mbp"
+  },
+  {
     "model": "Mac mini",
     "device": "j873s",
     "chip": "M5 Pro",
