@@ -1,0 +1,82 @@
+---
+// A sortable table of board tags from the device catalog, used by the J tag
+// guide. `prefix` picks the tag family (j or k). Selecting a column heading
+// sorts ascending, then descending, then back to the catalog's order.
+import devices from '../data/devices.json';
+
+interface Props { prefix: string; label: string; }
+const { prefix, label } = Astro.props;
+const rows = devices.filter(device => device.device.startsWith(prefix));
+const columns = [label, 'Mac', 'Chip', 'SoC ID'];
+---
+<table class="tag-table" data-sortable-table>
+  <thead>
+    <tr>
+      {columns.map(name => <th scope="col"><button type="button">{name}</button></th>)}
+    </tr>
+  </thead>
+  <tbody>
+    {rows.map(device => (
+      <tr>
+        <td><a href={`/devices/?device=${device.device}`}><code>{device.device}</code></a></td>
+        <td>{device.year ? `${device.model} (${device.year})` : device.model}</td>
+        <td>{device.chip}</td>
+        <td><code>{device.soc}</code></td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+<script>
+  // Natural order, so j614s sorts before j1000 and M2 before M10.
+  const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+  const cellText = (row: HTMLTableRowElement, column: number) => row.cells[column]?.textContent?.trim() ?? '';
+
+  for (const table of document.querySelectorAll<HTMLTableElement>('[data-sortable-table]')) {
+    const body = table.tBodies[0];
+    const headers = [...(table.tHead?.rows[0]?.cells ?? [])];
+    if (!body || !headers.length) continue;
+    const catalogOrder = [...body.rows];
+    let sortedColumn = -1;
+    let direction: 'ascending' | 'descending' | null = null;
+
+    headers.forEach((header, column) => {
+      header.querySelector('button')?.addEventListener('click', () => {
+        if (column !== sortedColumn) direction = 'ascending';
+        else direction = direction === 'ascending' ? 'descending' : null;
+        sortedColumn = direction ? column : -1;
+
+        headers.forEach((other, index) => {
+          if (index === sortedColumn && direction) other.setAttribute('aria-sort', direction);
+          else other.removeAttribute('aria-sort');
+        });
+
+        const sign = direction === 'descending' ? -1 : 1;
+        const rows = direction
+          ? [...catalogOrder].sort((a, b) => sign * collator.compare(cellText(a, column), cellText(b, column)))
+          : catalogOrder;
+        body.append(...rows);
+      });
+    });
+  }
+</script>
+
+<style>
+  .tag-table th { white-space: nowrap; }
+  .tag-table button {
+    display: inline-flex;
+    align-items: baseline;
+    gap: .375rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+  .tag-table button::after { content: '↕'; content: '↕' / ''; color: var(--sl-color-gray-4); font-size: .8em; }
+  .tag-table button:hover::after { color: var(--sl-color-gray-2); }
+  .tag-table th[aria-sort='ascending'] button::after { content: '↑'; content: '↑' / ''; color: var(--sl-color-white); }
+  .tag-table th[aria-sort='descending'] button::after { content: '↓'; content: '↓' / ''; color: var(--sl-color-white); }
+  .tag-table button:focus-visible { outline: 2px solid var(--sl-color-accent); outline-offset: 2px; border-radius: 2px; }
+</style>

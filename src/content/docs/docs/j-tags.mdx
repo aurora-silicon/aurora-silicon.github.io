@@ -1,0 +1,97 @@
+---
+title: J tag guide
+description: How to find, read, and use the board codename that identifies each Apple Silicon Mac.
+---
+
+import DeviceTagTable from "../../../components/DeviceTagTable.astro";
+
+Every Apple Silicon Mac has an internal board codename, which I (Liam) call a **J tag**: `j314s`, `j413`, `j773g`. The model name tells you the product line. The J tag tells you the exact board, and support/development depends on the board. (Please do not send model numbers like A3536)
+
+Aurora uses J/K tags wherever hardware is discussed: on the [device page](/devices/), in [support records](/docs/hardware/), in hardware reports, and in the Linux device trees that describe each Mac to the kernel.
+
+## Why the model name isn’t enough
+
+*“The rules dictate that you must be precise, as the law is a precise endeavor.”*
+
+Saying you have a “2020 MacBook Pro” when you ask for help or contribute doesn’t tell us enough. One product name can cover several boards. The 14-inch MacBook Pro with M1 Pro is `j314s`, while the same chassis with M1 Max is `j314c`. The M4 iMac is `j623` with two USB-C ports and `j624` with four. A result recorded on one of these boards does not carry over to the other.
+
+## Find your J tag
+
+### On macOS
+
+Open Terminal and run:
+
+```sh
+ioreg -d2 -l | grep target-type
+```
+
+The output includes your Mac’s J tag, such as `J314s`. Aurora writes J tags in lowercase, so that board is `j314s`.
+
+### On Linux
+
+The kernel reads the board from the device tree:
+
+```sh
+tr '\0' '\n' < /proc/device-tree/compatible
+```
+
+The first line is the J tag after `apple,`. On a 14-inch MacBook Pro with M1 Pro:
+
+```text
+apple,j314s
+apple,t6000
+apple,arm-platform
+```
+
+For the full product name, run `cat /proc/device-tree/model`. That Mac reports `Apple MacBook Pro (14-inch, M1 Pro, 2021)`.
+
+### From the table
+
+If you know your Mac’s model and chip, find it in [the table below](#every-j-tag). About This Mac shows both.
+
+:::note[J tags ending in AP]
+Some tools print the J tag with `AP` on the end, as in `J314sAP`. It is the same board. Drop the `AP`.
+:::
+
+## Reading a J tag
+
+A J tag has a letter, a board number, and sometimes a suffix. In `j314s`, those are `j`, `314`, and `s`.
+
+- **Letter:** Almost every Mac uses `j`. Currently only PROLED (OLED) boards use `k` instead. They work the same way. See [K tags](#k-tags).
+- **Number:** The board design. Macs that share a chassis and differ only in chip tier share a number: `j375c` and `j375d` are both Mac Studio. The 14-inch and 16-inch MacBook Pro sit side by side, from `j314` and `j316` through `j714` and `j716`. Numbers climb with newer generations but don’t map neatly to a chip. The M3 iMac is `j433`, while the M3 14-inch MacBook Pro is `j504`.
+- **Suffix:** The chip tier, when one board comes with more than one chip.
+
+Apple has not published what the suffix letters stand for. Across the Macs Aurora has catalogued, they tend to follow this pattern:
+
+| Suffix | Chip tier | Examples |
+| --- | --- | --- |
+| None | The board’s only chip | `j313` M1 MacBook Air, `j604` M4 14-inch MacBook Pro |
+| `g` | Base chip, on a board that also takes a Pro chip | `j773g` M4 Mac mini, `j873g` M6 Mac mini |
+| `s` | Pro | `j314s` M1 Pro, `j474s` M2 Pro, `j773s` M4 Pro |
+| `c` | Max | `j314c` M1 Max, `j475c` M2 Max, `j575c` M4 Max |
+| `m` | The 14-core M3 Max | `j514m`, `j516m` |
+| `d` | Ultra | `j375d` M1 Ultra, `j475d` M2 Ultra, `j180d` Mac Pro |
+
+Newer boards can break the pattern. The M6 iMac is `j833ct`, and what `ct` marks is not yet known. Always use the full J tag your Mac reports.
+
+## J tags and SoC IDs
+
+The J tag names the board. The SoC ID names the chip on it: `t8103` is M1, `t6000` is M1 Pro, and `t6001` is M1 Max.
+
+Linux uses both. Each Mac’s device tree file is named after its SoC ID and J tag, such as `t6000-j314s.dts`, and its compatible string lists them in the same order shown above: `apple,j314s`, then `apple,t6000`. The boot chain matches on that pair to load the right hardware description for your Mac.
+
+## Use it in reports
+
+Include your J tag whenever you report a hardware result. It is the device ID that [support records](/docs/hardware/) ask for, and it lets others find results for the same board.
+
+## Every J tag
+
+This table comes from the same catalog as the [device page](/devices/). Select a column heading to sort by it, or a J tag to see that Mac’s support status. Being listed does not mean a Mac is supported.
+
+<DeviceTagTable prefix="j" label="J tag" />
+
+## K tags
+
+A few newer boards use a `k` prefix instead of `j`. So far, these are the OLED MacBook Pro boards. They read the same way as J tags: `114` and `116` pair the 14-inch and 16-inch models, and `s` and `c` mark Pro and Max. Use the full K tag anywhere a J tag is asked for.
+
+<DeviceTagTable prefix="k" label="K tag" />

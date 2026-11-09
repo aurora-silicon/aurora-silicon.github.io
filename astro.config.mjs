@@ -33,6 +33,9 @@ export default defineConfig({
           { label: 'Download', slug: 'docs/download' },
           { label: 'Project overview', slug: 'docs/project' },
           { label: 'Attribution', slug: 'docs/attribution' },
+        ] },
+        { label: 'Learn Hardware', items: [
+          { label: 'J tag guide', slug: 'docs/j-tags' },
           { label: 'Support records', slug: 'docs/hardware' },
         ] },
         { label: 'Linux', slug: 'docs/linux' },
