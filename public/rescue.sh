@@ -19,7 +19,7 @@
 #   --yes                don't ask before writing to the partition
 #
 # Nothing is written until you confirm, and then only the aurora-kernel folder
-# on that partition.
+# on that partition. A partition Linux left dirty is checked only if you agree.
 
 set -eu
 
@@ -155,6 +155,30 @@ alarm_esp() {
         [ ! -d "$1/loader" ] && LC_ALL=C grep -aqF grub_mod_init "$1/EFI/BOOT/BOOTAA64.EFI"
 }
 
+# Mounts a FAT partition read-only. macOS won't mount one read-only while it's
+# marked dirty, as Linux leaves it after a hard power-off, so offer to have
+# fsck_msdos check it and mark it clean first.
+mount_readonly() {
+    diskutil mount readOnly -mountOptions nobrowse "$1" >/dev/null 2>&1 && return
+    rc=0
+    /sbin/fsck_msdos -q "/dev/r$1" >/dev/null 2>&1 || rc=$?
+    [ "$rc" = 200 ] || return 1
+    warn "$1 is marked dirty: Linux didn't unmount it cleanly, maybe after a forced
+power-off. macOS can read it only after fsck_msdos checks it and marks it clean."
+    if [ "$YES" != 1 ]; then
+        ask "Check $1 and mark it clean? [y/N] " "pass --yes to check it without asking"
+        case $answer in
+        y | Y | yes | YES) ;;
+        *) return 1 ;;
+        esac
+    fi
+    /sbin/fsck_msdos -y "/dev/r$1" >"$TMP/fsck.log" 2>&1 || {
+        cat "$TMP/fsck.log" >&2
+        return 1
+    }
+    diskutil mount readOnly -mountOptions nobrowse "$1" >/dev/null
+}
+
 # Mounts each EFI partition read-only if needed and keeps the ones holding a
 # Stage 2 and a Fedora or Arch Linux ARM GRUB, one per line: disk|name|size
 # MB|Fedora|mount point|fedora, alarm or other. --fedora and --alarm keep only
@@ -175,7 +199,7 @@ find_esps() {
         fi
         mnt=$(pget "$TMP/part.plist" MountPoint) || mnt=
         if [ -z "$mnt" ]; then
-            diskutil mount readOnly -mountOptions nobrowse "$dev" >/dev/null || {
+            mount_readonly "$dev" || {
                 warn "couldn't mount $dev to look at it"
                 continue
             }

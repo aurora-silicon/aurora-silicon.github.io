@@ -201,6 +201,132 @@
       }
     ]
   },
+  "j873g": {
+    "boot": [
+      {
+        "date": "2026-11-08",
+        "title": "RAM boot and restart with the J873g platform series",
+        "detail": "Tested by Acelogic on a J873g. Guarded RAM boots through aura main (1.0.0b9) with the J873g platform series (linux#1197, now in aurora-wip): every boot check passed, the GPU smoke rendered correct pixels and the kernel stayed untainted. Restart through the SMC (reboot -f with macsmc-reboot) brought the Mac back through iBoot into aura three times, with no boot error left in the PMU. Power-off was not tested.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1197"
+      },
+      {
+        "date": "2026-10-26",
+        "title": "Linux from the SSD through aura, without a host",
+        "detail": "Tested by Thomas Glanzmann on his own J873g. aura brings up the USB, Wi-Fi/Bluetooth and PCIe hardware itself, reads the kernel, device tree and initramfs from an EFI system partition on the internal SSD and boots Linux with all 12 CPUs, USB, Wi-Fi, Bluetooth and both displays. aura is still chainloaded from the installed stage 1 over the USB debug link for this. The aura side is now in aura main (aura#16); Linux's own SSD support is in aurora-wip (linux#1197).",
+        "url": "https://github.com/aurora-silicon/aura/pull/16"
+      }
+    ],
+    "cpu": [
+      {
+        "date": "2026-10-25",
+        "title": "All CPU performance states",
+        "detail": "Tested by Thomas Glanzmann on his own J873g, booted through the m1n1/aura proxy. All twelve cores run every performance state (P/M up to 4.79 GHz, E up to 2.94 GHz) with load-driven governors, after the fix for the WFxT erratum that corrupted data. The SMC leaves the fan at its minimum, so a fan control service was part of the same change; stress-ng on all 12 cores reached 82 C with the fan at about 4500 RPM. Not in the public kernel: apple-soc-cpufreq keeps the J873g at two states per cluster until a thermal policy exists, so the public kernel (linux#1197) leaves the higher states out.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1197"
+      },
+      {
+        "date": "2026-10-02",
+        "title": "All 12 cores with bounded frequency scaling",
+        "detail": "Linux runs on all twelve CPUs, with two performance states per cluster (972/1152 MHz E, 1440/1728 MHz P/M).",
+        "url": "https://github.com/aurora-silicon/linux/pull/161"
+      }
+    ],
+    "storage": [
+      {
+        "date": "2026-11-08",
+        "title": "Read-only SSD probe on the public port",
+        "detail": "Tested by Acelogic with linux#1197, now in aurora-wip, read-only: the controller comes up with its namespaces, the partition table and direct reads work, and removing the driver sends the shutdown notification. No writes were made.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1197"
+      },
+      {
+        "date": "2026-10-25",
+        "title": "Internal SSD",
+        "detail": "Tested by Thomas Glanzmann on his own J873g, booted through the m1n1/aura proxy. The ANS2 controller with the T8152 register layout: fio reaches 3.8 GiB/s sequential read, 2.9 GiB/s sequential write and 140k IOPS 4K random read on ext4. With the power-off series the SSD reports a clean shutdown on the next boot. Ported to aurora-wip in linux#1197 (merged), where write testing has not been repeated.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1197"
+      }
+    ],
+    "usb": [
+      {
+        "date": "2026-11-08",
+        "title": "USB 2 hosts in aurora-wip",
+        "detail": "Tested by Acelogic with linux#1205: both hosts bind as apple,t8152-dwc3, the on-board hub behind the front ports enumerates at high speed, and a USB HID device in a front port enumerated behind it at full speed. A device plugged in while the hub is runtime-suspended is only seen once the hub resumes.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1205"
+      },
+      {
+        "date": "2026-10-25",
+        "title": "USB 2 on the back-left and front ports",
+        "detail": "Tested by Thomas Glanzmann on his own J873g, booted through the m1n1/aura proxy. A keyboard and an RTL8153 USB Ethernet adapter work on the front ports (behind the on-board VL822 hub), a keyboard on the back-left port, at high speed. The loader has to wake the back-left port controller and release the hub reset first, which aura main does (aura#16). USB 3, the back-middle and back-right ports and Thunderbolt are not supported. Now in aurora-wip through linux#1205, which describes the hosts as apple,t8152-dwc3.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1197"
+      }
+    ],
+    "ethernet": [
+      {
+        "date": "2026-11-08",
+        "title": "10GbE driver on the public port",
+        "detail": "Tested by Acelogic with linux#1197, now in aurora-wip: the on-board NIC (it identifies as RTL8125CP) binds and its PHY attaches. No cable was connected, so traffic was not tested.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1197"
+      },
+      {
+        "date": "2026-10-25",
+        "title": "On-board 10GbE",
+        "detail": "Tested by Thomas Glanzmann on his own J873g, booted through the m1n1/aura proxy. TCP runs at 9.4 Gbit/s in both directions at MTU 1500 once the link is retrained to 16 GT/s (from userspace for now). Keeping the read request size at 512 bytes matters for sending: UDP out is 8.9 Gbit/s at 512 and 7.9 at 4096 (five paired runs each). Ported to aurora-wip in linux#1197 (merged); the r8169 transmit changes are in linux#1198 (draft).",
+        "url": "https://github.com/aurora-silicon/linux/pull/1197"
+      }
+    ],
+    "display": [
+      {
+        "date": "2026-10-26",
+        "title": "USB-C display on the back-right port",
+        "detail": "Tested by Acelogic on a J873g. aura brings up the back-right USB-C display from a cold boot at 1280x720 and hands Linux its framebuffer; this is in aura main (aura#16). The Linux display driver is still a draft (linux#1019).",
+        "url": "https://github.com/aurora-silicon/aura/pull/16"
+      }
+    ],
+    "hdmi": [
+      {
+        "date": "2026-10-25",
+        "title": "HDMI and dual display",
+        "detail": "Tested by Thomas Glanzmann on his own J873g, booted through the m1n1/aura proxy. HDMI through the dptx-phy and the Parade PS190 converter at 2560x1440 next to the USB-C display at 1280x720; Linux gets both as framebuffers. This is now in aura main (aura#16). Mode changes after boot and hotplug are not supported.",
+        "url": "https://github.com/aurora-silicon/aura/pull/16"
+      }
+    ],
+    "audio": [
+      {
+        "date": "2026-11-08",
+        "title": "Headphone jack on the public port; speaker held off",
+        "detail": "Tested by Acelogic with linux#1197, now in aurora-wip: the sound card registers, silent playback and capture on the headphone jack work, and the speaker stays disabled. aura#115 (draft) passes the speaker amp's configuration from the ADT, which speaker protection needs.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1197"
+      },
+      {
+        "date": "2026-10-25",
+        "title": "Speaker and headphone jack",
+        "detail": "Tested by Thomas Glanzmann on his own J873g, booted through the m1n1/aura proxy. Playback works on the headphone jack and on the internal speaker. The speaker stays off unless explicitly enabled, until a speaker protection profile for the J873g exists. The headset microphone was not tested. Ported to aurora-wip in linux#1197 (merged).",
+        "url": "https://github.com/aurora-silicon/linux/pull/1197"
+      }
+    ],
+    "graphics": [
+      {
+        "date": "2026-11-08",
+        "title": "OpenGL on Mesa aurora-wip",
+        "detail": "Tested by Acelogic on a J873g: Mesa aurora-wip, which includes mesa#175, renders on Apple M6 (G18G) with the G18 kernel backend (linux#984). The GPU smoke and texture LOD tests pass with correct pixels, also with mesa#178. No full conformance run on this stack yet.",
+        "url": "https://github.com/aurora-silicon/mesa/pull/164"
+      }
+    ],
+    "wifi": [
+      {
+        "date": "2026-11-06",
+        "title": "N1 Wi-Fi on aurora-wip",
+        "detail": "Tested by Acelogic on a J873g: the native N1 Wi-Fi scans, joins a WPA2 network and ran 10 minutes of two-way TCP at a 30 Mbit/s cap (linux#1013, with linux#998). Suspend was not tested.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1013"
+      }
+    ],
+    "bluetooth": [
+      {
+        "date": "2026-11-06",
+        "title": "Bluetooth LE discovery",
+        "detail": "Tested by Acelogic on a J873g with linux#1013: LE discovery alongside Wi-Fi traffic. Pairing, ACL and audio were not tested.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1013"
+      }
+    ]
+  },
   "j713": {
     "suspend": [
       {
@@ -292,6 +418,64 @@
         "title": "s2idle overnight on the M4 Max",
         "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware): lid closed unplugged for 8.48 h, 3284 to 1932 mAh, 1.83 W on average, one clean suspend and a wake on lid with no errors. A timed wake on the PMU RTC also worked. This is s2idle, not deep sleep; macOS is about 0.1 W.",
         "url": "https://github.com/aurora-silicon/linux/pull/930"
+      }
+    ]
+  },
+  "k114s": {
+    "boot": [
+      {
+        "date": "2026-11-06",
+        "title": "Preliminary (untested) installer support",
+        "detail": "The installer admits this Mac as experimental. Nobody on the team has one yet, so nothing has been tested on hardware. The kernel device tree is preliminary, the touchscreen and the glowing Apple logo do not work yet, and the OLED panel works only as a boot screen until the display driver supports it.",
+        "url": "https://github.com/aurora-silicon/aurora-installer/pull/107"
+      }
+    ]
+  },
+  "k114c": {
+    "boot": [
+      {
+        "date": "2026-11-06",
+        "title": "Preliminary (untested) installer support",
+        "detail": "The installer admits this Mac as experimental. Nobody on the team has one yet, so nothing has been tested on hardware. The kernel device tree is preliminary, the touchscreen and the glowing Apple logo do not work yet, and the OLED panel works only as a boot screen until the display driver supports it.",
+        "url": "https://github.com/aurora-silicon/aurora-installer/pull/107"
+      }
+    ]
+  },
+  "k116s": {
+    "boot": [
+      {
+        "date": "2026-11-06",
+        "title": "Preliminary (untested) installer support",
+        "detail": "The installer admits this Mac as experimental. Nobody on the team has one yet, so nothing has been tested on hardware. The kernel device tree is preliminary, the touchscreen and the glowing Apple logo do not work yet, and the OLED panel works only as a boot screen until the display driver supports it.",
+        "url": "https://github.com/aurora-silicon/aurora-installer/pull/107"
+      }
+    ]
+  },
+  "k116c": {
+    "boot": [
+      {
+        "date": "2026-11-06",
+        "title": "Preliminary (untested) installer support",
+        "detail": "The installer admits this Mac as experimental. Nobody on the team has one yet, so nothing has been tested on hardware. The kernel device tree is preliminary, the touchscreen and the glowing Apple logo do not work yet, and the OLED panel works only as a boot screen until the display driver supports it.",
+        "url": "https://github.com/aurora-silicon/aurora-installer/pull/107"
+      }
+    ]
+  },
+  "j704": {
+    "boot": [
+      {
+        "date": "2026-11-07",
+        "title": "J704 boots on hardware",
+        "detail": "dmitzsaz booted his J704 on the macOS 27.0 stub with aurora-wip plus linux#1060, #1122, #1123 and #1124. CPU frequency scaling, NVMe, Wi-Fi, Bluetooth, the SD reader, keyboard and trackpad, USB, the SMC and s2idle worked. The internal display stayed on the boot framebuffer.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1106#issuecomment-6707088677"
+      }
+    ],
+    "display": [
+      {
+        "date": "2026-11-07",
+        "title": "Internal display stays on the boot framebuffer",
+        "detail": "On the J704 the display coprocessor does not take over the panel, so it stays on the boot framebuffer. quank123wip saw the same coprocessor fail with -110 on the macOS 27.0 stub.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1106#issuecomment-6707088677"
       }
     ]
   }
