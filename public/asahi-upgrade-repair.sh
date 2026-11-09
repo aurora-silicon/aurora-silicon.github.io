@@ -16,6 +16,8 @@
 #
 # - boot entries whose kernel is gone (an Asahi kernel removed while the
 #   updater refused) move to /var/lib/aurora-repair;
+# - the /boot files and entries of kernels whose package is gone (dnf removed
+#   it, but the updater stopped kernel-install's cleanup) move there too;
 # - kernels from before the DT ABI marker (kernel-aurora 7.3.0-22 and older,
 #   Asahi kernels) are declared generation 1, as update-m1n1 20261107-6 does;
 # - the system is updated, then each Aurora kernel newer than every kernel
@@ -29,7 +31,8 @@ set -eu
 ESP=/boot/efi
 STAGE2=$ESP/m1n1/boot.bin
 BACKUP=$ESP/m1n1/boot.bin.pre-repair
-ENTRIES=/boot/loader/entries
+BOOT=/boot
+ENTRIES=$BOOT/loader/entries
 MODULES=/usr/lib/modules
 SAVE=/var/lib/aurora-repair/$(date +%Y%m%d-%H%M%S)
 
@@ -59,9 +62,31 @@ gone_entries() {
         version=$(field "$entry" version)
         [ -n "$image" ] || continue
         image=${image#/}
-        $SUDO test -e "/boot/$image" || $SUDO test -e "/$image" && continue
+        $SUDO test -e "$BOOT/$image" || $SUDO test -e "/$image" && continue
         [ -n "$version" ] && $SUDO test -e "$MODULES/$version/vmlinuz" && continue
         echo "$entry"
+    done
+}
+
+# Kernels with a /boot image or a boot entry but no package: no modules
+# folder image, no RPM owning the image, and not running. kernel-install
+# remove would have deleted them, had the updater not stopped it.
+leftover_kernels() {
+    {
+        for image in $($SUDO find "$BOOT" -maxdepth 1 -name 'vmlinuz-*' ! -name 'vmlinuz-0-rescue-*' 2>/dev/null); do
+            echo "${image##*/vmlinuz-}"
+        done
+        for entry in $($SUDO find "$ENTRIES" -maxdepth 1 -name '*.conf' 2>/dev/null); do
+            field "$entry" version
+        done
+    } | sort -u | while read -r krel; do
+        [ -n "$krel" ] && [ "$krel" != "$(uname -r)" ] || continue
+        # Only a full release; the file globs below must not match other kernels.
+        case $krel in [0-9]*.[0-9]*-?*.?*) ;; *) continue ;; esac
+        $SUDO test -e "$MODULES/$krel/vmlinuz" && continue
+        rpm -qf "$BOOT/vmlinuz-$krel" >/dev/null 2>&1 && continue
+        aurora_kernels | grep -qxF "$krel" && continue
+        echo "$krel"
     done
 }
 
@@ -73,7 +98,7 @@ unmarked_kernels() {
         dir=${image%/vmlinuz}
         [ -e "$dir/dtb-abi" ] || echo "${dir##*/}"
     done
-    for image in $($SUDO find /boot -maxdepth 1 -name 'vmlinuz-0-rescue-*' 2>/dev/null); do
+    for image in $($SUDO find "$BOOT" -maxdepth 1 -name 'vmlinuz-0-rescue-*' 2>/dev/null); do
         name=${image##*/vmlinuz-}
         [ -e "$MODULES/$name/dtb-abi" ] || echo "$name"
     done
@@ -107,14 +132,16 @@ survey() {
     RUNNING=$(uname -r)
     NEWEST=$(aurora_kernels | tail -n 1)
     GONE=$(gone_entries)
+    LEFTOVER=$(leftover_kernels)
     UNMARKED=$(unmarked_kernels)
     STRANDED=$(stranded_kernels)
     echo "Running kernel:         $RUNNING"
     echo "Newest Aurora kernel:   $NEWEST"
     echo "Entries without kernel: ${GONE:-none}"
+    echo "Removed kernels' files: $(echo "${LEFTOVER:-none}" | tr '\n' ' ')"
     echo "Kernels without marker: $(echo "${UNMARKED:-none}" | tr '\n' ' ')"
     echo "Kernels without entry:  $(echo "${STRANDED:-none}" | tr '\n' ' ')"
-    if [ -z "$GONE$UNMARKED$STRANDED" ] && [ "$RUNNING" = "$NEWEST" ]; then
+    if [ -z "$GONE$LEFTOVER$UNMARKED$STRANDED" ] && [ "$RUNNING" = "$NEWEST" ]; then
         echo
         echo "Nothing to repair: the newest Aurora kernel is running."
         exit 0
@@ -124,7 +151,8 @@ survey() {
 confirm() {
     cat <<EOF
 
-This moves the entries above to $SAVE, declares the kernels above generation 1
+This moves the entries and removed kernels' files above to $SAVE, declares the
+kernels without a marker generation 1
 (their device trees work with every later kernel's), updates the system with
 dnf, finishes installing the newest Aurora kernel and makes it the default.
 Your files and settings stay.
@@ -159,6 +187,22 @@ move_gone_entries() {
     done
 }
 
+move_leftover_kernels() {
+    [ -n "$LEFTOVER" ] || return 0
+    say "Moving the files of kernels whose package is gone"
+    $SUDO mkdir -p "$SAVE/boot" "$SAVE/entries"
+    for krel in $LEFTOVER; do
+        echo "$krel"
+        for file in $($SUDO find "$BOOT" -maxdepth 1 \( -name "*-$krel" -o -name "*-$krel.*" \
+            -o -name ".vmlinuz-$krel.hmac" \) 2>/dev/null); do
+            $SUDO mv "$file" "$SAVE/boot/"
+        done
+        for entry in $($SUDO find "$ENTRIES" -maxdepth 1 -name '*.conf' 2>/dev/null); do
+            [ "$(field "$entry" version)" = "$krel" ] && $SUDO mv "$entry" "$SAVE/entries/"
+        done
+    done
+}
+
 mark_kernels() {
     [ -n "$UNMARKED" ] || return 0
     say "Declaring kernels from before the DT ABI marker generation 1"
@@ -190,8 +234,8 @@ finish_kernels() {
 check_boot_chain() {
     say "Checking the boot chain"
     kernel=$(aurora_kernels | tail -n 1)
-    $SUDO test -s "/boot/vmlinuz-$kernel" || die "/boot/vmlinuz-$kernel is missing"
-    $SUDO test -s "/boot/initramfs-$kernel.img" || die "/boot/initramfs-$kernel.img is missing"
+    $SUDO test -s "$BOOT/vmlinuz-$kernel" || die "$BOOT/vmlinuz-$kernel is missing"
+    $SUDO test -s "$BOOT/initramfs-$kernel.img" || die "$BOOT/initramfs-$kernel.img is missing"
     has_entry "$kernel" || die "kernel $kernel has no boot entry"
     case $($SUDO grubby --default-kernel) in
     *"/vmlinuz-$kernel") ;;
@@ -250,6 +294,7 @@ main() {
     exec </dev/null
     back_up_stage2
     move_gone_entries
+    move_leftover_kernels
     mark_kernels
     update_system
     finish_kernels
