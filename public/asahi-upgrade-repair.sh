@@ -151,11 +151,11 @@ survey() {
 confirm() {
     cat <<EOF
 
-This moves the entries and removed kernels' files above to $SAVE, declares the
-kernels without a marker generation 1
+This moves the entries and the removed kernels' files listed above to
+$SAVE, declares the kernels without a marker generation 1
 (their device trees work with every later kernel's), updates the system with
 dnf, finishes installing the newest Aurora kernel and makes it the default.
-Your files and settings stay.
+Your files and settings stay. Running it again picks up where it stopped.
 
 EOF
     [ "$YES" = 1 ] && return
@@ -198,7 +198,9 @@ move_leftover_kernels() {
             $SUDO mv "$file" "$SAVE/boot/"
         done
         for entry in $($SUDO find "$ENTRIES" -maxdepth 1 -name '*.conf' 2>/dev/null); do
-            [ "$(field "$entry" version)" = "$krel" ] && $SUDO mv "$entry" "$SAVE/entries/"
+            if [ "$(field "$entry" version)" = "$krel" ]; then
+                $SUDO mv "$entry" "$SAVE/entries/"
+            fi
         done
     done
 }
