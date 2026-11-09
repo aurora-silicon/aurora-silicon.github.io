@@ -419,6 +419,30 @@
         "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware): lid closed unplugged for 8.48 h, 3284 to 1932 mAh, 1.83 W on average, one clean suspend and a wake on lid with no errors. A timed wake on the PMU RTC also worked. This is s2idle, not deep sleep; macOS is about 0.1 W.",
         "url": "https://github.com/aurora-silicon/linux/pull/930"
       }
+    ],
+    "wifi": [
+      {
+        "date": "2026-11-07",
+        "title": "Wi-Fi on a private 7.3 tree",
+        "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware), a private 7.3 tree: the BCM4388 joins at 5 GHz with an 80 MHz channel and is in daily use. Not as merged, and no throughput or suspend test was recorded.",
+        "url": "https://github.com/aurora-silicon/linux/discussions/129"
+      }
+    ],
+    "camera": [
+      {
+        "date": "2026-11-07",
+        "title": "Camera capture with the ISP enabled",
+        "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware), a 7.3 kernel with the loader handoff (aura#71, merged) and an earlier version of the device tree change (#931, still open): the camera came up as FaceTime HD Camera at 1920x1080, and a 6-second capture gave a live image, checked by its brightness only.",
+        "url": "https://github.com/aurora-silicon/linux/pull/931"
+      }
+    ],
+    "bluetooth": [
+      {
+        "date": "2026-11-07",
+        "title": "Bluetooth on a private 7.3 tree",
+        "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware), a private 7.3 tree: the adapter comes up and plays to an audio output. No long test was run.",
+        "url": "https://github.com/aurora-silicon/linux/discussions/129"
+      }
     ]
   },
   "k114s": {

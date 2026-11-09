@@ -4206,11 +4206,11 @@
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07); a 32-core GPU on 25G83 firmware still needs #1050, still open"
       },
       "Vulkan": {
         "state": "works",
-        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07); with a 32-core GPU on 25G83 firmware it needs #1050, still open"
       },
       "Video decoding": {
         "state": "partial",
