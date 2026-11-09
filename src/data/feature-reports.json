@@ -432,8 +432,8 @@
       {
         "date": "2026-11-07",
         "title": "Camera capture with the ISP enabled",
-        "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware), a 7.3 kernel with the loader handoff (aura#71, merged) and an earlier version of the device tree change (#931, still open): the camera came up as FaceTime HD Camera at 1920x1080, and a 6-second capture gave a live image, checked by its brightness only.",
-        "url": "https://github.com/aurora-silicon/linux/pull/931"
+        "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware), a 7.3 kernel with the loader handoff (aura#71, merged) and an earlier version of the device tree change (#1368, still open): the camera came up as FaceTime HD Camera at 1920x1080, and a 6-second capture gave a live image, checked by its brightness only.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1368"
       }
     ],
     "bluetooth": [
