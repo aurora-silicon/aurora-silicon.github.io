@@ -6,7 +6,7 @@
     "soc": "t8140",
     "year": "",
     "generation": "A18 Pro",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/72",
     "profile": "neo"
   },
   {
@@ -16,7 +16,7 @@
     "soc": "t8152",
     "year": "",
     "generation": "M6",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/93",
     "profile": "desktop"
   },
   {
@@ -26,7 +26,7 @@
     "soc": "t8152",
     "year": "",
     "generation": "M6",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/1222",
     "profile": "mbp",
     "experimental": true
   },
@@ -37,7 +37,7 @@
     "soc": "t8152",
     "year": "",
     "generation": "M6",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/1221",
     "profile": "imac",
     "experimental": true
   },
@@ -48,7 +48,7 @@
     "soc": "t8142",
     "year": "",
     "generation": "M5",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/135",
     "profile": "laptop"
   },
   {
@@ -58,7 +58,7 @@
     "soc": "t8142",
     "year": "",
     "generation": "M5",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/135",
     "profile": "laptop"
   },
   {
@@ -68,7 +68,7 @@
     "soc": "t8142",
     "year": "",
     "generation": "M5",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/142",
     "profile": "mbp"
   },
   {
@@ -78,7 +78,7 @@
     "soc": "t6050",
     "year": "",
     "generation": "M5",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/142",
     "profile": "mbp"
   },
   {
@@ -88,7 +88,7 @@
     "soc": "t6051",
     "year": "",
     "generation": "M5",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/142",
     "profile": "mbp"
   },
   {
@@ -98,7 +98,7 @@
     "soc": "t6050",
     "year": "",
     "generation": "M5",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/142",
     "profile": "mbp"
   },
   {
@@ -108,7 +108,7 @@
     "soc": "t6051",
     "year": "",
     "generation": "M5",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/142",
     "profile": "mbp"
   },
   {
@@ -118,7 +118,7 @@
     "soc": "t6050",
     "year": "",
     "generation": "M5",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/142",
     "profile": "mbp"
   },
   {
@@ -128,7 +128,7 @@
     "soc": "t6050",
     "year": "",
     "generation": "M5",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/142",
     "profile": "mbp"
   },
   {
@@ -138,7 +138,7 @@
     "soc": "t6050",
     "year": "",
     "generation": "M5",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/142",
     "profile": "mbp"
   },
   {
@@ -148,7 +148,7 @@
     "soc": "t6050",
     "year": "",
     "generation": "M5",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/142",
     "profile": "mbp"
   },
   {
@@ -158,7 +158,7 @@
     "soc": "t6050",
     "year": "",
     "generation": "M5",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/146",
     "profile": "desktop"
   },
   {
@@ -168,7 +168,7 @@
     "soc": "t6051",
     "year": "",
     "generation": "M5",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/92",
     "profile": "desktop"
   },
   {
@@ -178,7 +178,7 @@
     "soc": "t6052",
     "year": "",
     "generation": "M5",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/92",
     "profile": "desktop"
   },
   {
@@ -308,7 +308,7 @@
     "soc": "t8122",
     "year": "2024",
     "generation": "M3",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/120",
     "profile": "laptop"
   },
   {
@@ -318,7 +318,7 @@
     "soc": "t8122",
     "year": "2024",
     "generation": "M3",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/120",
     "profile": "laptop"
   },
   {
@@ -328,7 +328,7 @@
     "soc": "t8122",
     "year": "2023",
     "generation": "M3",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/119",
     "profile": "mbp"
   },
   {
@@ -338,7 +338,7 @@
     "soc": "t6030",
     "year": "2023",
     "generation": "M3",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/119",
     "profile": "mbp"
   },
   {
@@ -348,7 +348,7 @@
     "soc": "t6030",
     "year": "2023",
     "generation": "M3",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/119",
     "profile": "mbp"
   },
   {
@@ -358,7 +358,7 @@
     "soc": "t6031",
     "year": "2023",
     "generation": "M3",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/119",
     "profile": "mbp"
   },
   {
@@ -368,7 +368,7 @@
     "soc": "t6031",
     "year": "2023",
     "generation": "M3",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/119",
     "profile": "mbp"
   },
   {
@@ -378,7 +378,7 @@
     "soc": "t6034",
     "year": "2023",
     "generation": "M3",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/119",
     "profile": "mbp"
   },
   {
@@ -388,7 +388,7 @@
     "soc": "t6034",
     "year": "2023",
     "generation": "M3",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/119",
     "profile": "mbp"
   },
   {
@@ -418,7 +418,7 @@
     "soc": "t6032",
     "year": "2025",
     "generation": "M3",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/128",
     "profile": "desktop"
   },
   {
@@ -428,7 +428,7 @@
     "soc": "t8112",
     "year": "2022",
     "generation": "M2",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/105",
     "profile": "laptop"
   },
   {
@@ -438,7 +438,7 @@
     "soc": "t8112",
     "year": "2023",
     "generation": "M2",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/105",
     "profile": "laptop"
   },
   {
@@ -448,7 +448,7 @@
     "soc": "t8112",
     "year": "2022",
     "generation": "M2",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/106",
     "profile": "laptop"
   },
   {
@@ -458,7 +458,7 @@
     "soc": "t6020",
     "year": "2023",
     "generation": "M2",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/106",
     "profile": "mbp"
   },
   {
@@ -468,7 +468,7 @@
     "soc": "t6021",
     "year": "2023",
     "generation": "M2",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/106",
     "profile": "mbp"
   },
   {
@@ -478,7 +478,7 @@
     "soc": "t6020",
     "year": "2023",
     "generation": "M2",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/106",
     "profile": "mbp"
   },
   {
@@ -488,7 +488,7 @@
     "soc": "t6021",
     "year": "2023",
     "generation": "M2",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/106",
     "profile": "mbp"
   },
   {
@@ -498,7 +498,7 @@
     "soc": "t8112",
     "year": "2023",
     "generation": "M2",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/107",
     "profile": "desktop"
   },
   {
@@ -508,7 +508,7 @@
     "soc": "t6020",
     "year": "2023",
     "generation": "M2",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/107",
     "profile": "desktop"
   },
   {
@@ -518,7 +518,7 @@
     "soc": "t6021",
     "year": "2023",
     "generation": "M2",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/114",
     "profile": "desktop"
   },
   {
@@ -528,7 +528,7 @@
     "soc": "t6022",
     "year": "2023",
     "generation": "M2",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/114",
     "profile": "desktop"
   },
   {
@@ -538,7 +538,7 @@
     "soc": "t6022",
     "year": "2023",
     "generation": "M2",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/116",
     "profile": "desktop"
   },
   {
@@ -608,7 +608,7 @@
     "soc": "t8103",
     "year": "2020",
     "generation": "M1",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/94",
     "profile": "desktop"
   },
   {
@@ -618,7 +618,7 @@
     "soc": "t8103",
     "year": "2021",
     "generation": "M1",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/97",
     "profile": "imac"
   },
   {
@@ -628,7 +628,7 @@
     "soc": "t8103",
     "year": "2021",
     "generation": "M1",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/97",
     "profile": "imac"
   },
   {
@@ -638,7 +638,7 @@
     "soc": "t6001",
     "year": "2022",
     "generation": "M1",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/103",
     "profile": "desktop"
   },
   {
@@ -648,7 +648,7 @@
     "soc": "t6002",
     "year": "2022",
     "generation": "M1",
-    "discussion": "https://github.com/aurora-silicon/linux/discussions",
+    "discussion": "https://github.com/aurora-silicon/linux/discussions/103",
     "profile": "desktop"
   }
 ]
