@@ -364,6 +364,12 @@
   "j616c": {
     "graphics": [
       {
+        "date": "2026-11-07",
+        "title": "32-core GPU on 25G83 firmware",
+        "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware), a private 7.3 tree with #1050, the larger clustering metadata and a 96-block render pool runs the Hyprland desktop and x86 games under FEX; SCP:SL held about 117 fps at its cap, and 55 of 55 offscreen tests passed. Not as merged: #1050 is still open, and upstream's 44-block pool is untested here.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1050"
+      },
+      {
         "date": "2026-11-05",
         "title": "40-core GPU on the M4 Max",
         "detail": "With the driver (#958) and Mesa (mesa#85), 20 gpu-niri replays, 10 minutes of mixed rendering and 123 whisper.cpp runs finished with no GPU recoveries. HEVC decoding matched software decoding on 4 of 4 samples. The GPU uses a static calibration from one part and stays off in the merged device tree until the boot loader handoff lands. CTS, sustained load and suspend were not qualified.",
@@ -371,6 +377,12 @@
       }
     ],
     "touch-id": [
+      {
+        "date": "2026-11-04",
+        "title": "Touch ID unlock on 7.3",
+        "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware), the lock screen unlocked from a finger in about 2 s with libfprint-aurora 1.94.100-3, which handles the v5 interface. Two lock and unlock cycles in a row worked after a reboot. Not tested through the installer.",
+        "url": "https://github.com/aurora-silicon/linux/pull/732"
+      },
       {
         "date": "2026-11-05",
         "title": "Touch ID enrolment and match",
@@ -380,10 +392,56 @@
     ],
     "neural-engine": [
       {
+        "date": "2026-11-07",
+        "title": "Neural Engine startup on a 32-core M4 Max",
+        "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware), startup completed on 40 of 44 boots. The 4 failures match the H16 stall that #1066 restarts; two of them fell in boots with other faults, and the restart path has not run here yet. This part's preload is not admitted upstream yet. No inference job was run.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1066"
+      },
+      {
         "date": "2026-11-05",
         "title": "Neural Engine on the M4 Max",
         "detail": "A conv3x3 test matched the macOS reference over 200 runs with no faults. It needs a boot loader handoff that fills and enables the Neural Engine nodes. Long runs and the MobileNet test were not measured.",
         "url": "https://github.com/aurora-silicon/linux/pull/920"
+      }
+    ],
+    "audio": [
+      {
+        "date": "2026-11-04",
+        "title": "Speakers and microphones on the M4 Max",
+        "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware) and a private 7.3 tree: three sound cards, the J616 speaker graph with speaker protection running and volumes unlocked, and the microphone filter. AUX2 is silent here, so only AUX0 and AUX1 are mixed. The tuning work is in asahi-audio#14, still open. Speaker protection values for this model were not measured.",
+        "url": "https://github.com/aurora-silicon/asahi-audio/pull/14"
+      }
+    ],
+    "suspend": [
+      {
+        "date": "2026-11-05",
+        "title": "s2idle overnight on the M4 Max",
+        "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware): lid closed unplugged for 8.48 h, 3284 to 1932 mAh, 1.83 W on average, one clean suspend and a wake on lid with no errors. A timed wake on the PMU RTC also worked. This is s2idle, not deep sleep; macOS is about 0.1 W.",
+        "url": "https://github.com/aurora-silicon/linux/pull/930"
+      }
+    ],
+    "wifi": [
+      {
+        "date": "2026-11-07",
+        "title": "Wi-Fi on a private 7.3 tree",
+        "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware), a private 7.3 tree: the BCM4388 joins at 5 GHz with an 80 MHz channel and is in daily use. Not as merged, and no throughput or suspend test was recorded.",
+        "url": "https://github.com/aurora-silicon/linux/discussions/129"
+      }
+    ],
+    "camera": [
+      {
+        "date": "2026-11-07",
+        "title": "Camera capture with the ISP enabled",
+        "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware), a 7.3 kernel with the loader handoff (aura#71, merged) and an earlier version of the device tree change (#1368, still open): the camera came up as FaceTime HD Camera at 1920x1080, and a 6-second capture gave a live image, checked by its brightness only.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1368"
+      }
+    ],
+    "bluetooth": [
+      {
+        "date": "2026-11-07",
+        "title": "Bluetooth on a private 7.3 tree",
+        "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware), a private 7.3 tree: the adapter comes up and plays to an audio output. No long test was run.",
+        "url": "https://github.com/aurora-silicon/linux/discussions/129"
       }
     ]
   },
