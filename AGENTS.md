@@ -36,5 +36,6 @@ Upstream policy text names Asahi Linux, NT-for-ASi, Mesa, FEX and any project th
 ## Commits and publishing
 
 - Commit trailers: Ryan's `Signed-off-by` and `Assisted-by: LLM`, nothing else. Never a Claude co-author or session line.
+- When you contribute, add the human contributor, and anyone whose report or work the change builds on, to `AUTHORS` in the same pull request. One person per line with their GitHub handle. No bots, no AI.
 - Never merge or deploy without Ryan's OK.
 - `npm run build` must pass, with the internal link check clean.
