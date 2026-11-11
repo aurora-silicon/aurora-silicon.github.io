@@ -436,8 +436,8 @@
         "note": "Working: models end to end.\nPartial: resume after sleep, sometimes needs a reboot."
       },
       "Sleep": {
-        "state": "works",
-        "note": "Working: suspend to idle.\nWorking: suspend to RAM (deep sleep)."
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j813": {
@@ -4409,218 +4409,18 @@
       }
     },
     "j714c": {
-      "Boot": {
-        "state": "works",
-        "note": ""
-      },
-      "All CPU cores": {
-        "state": "works",
-        "note": ""
-      },
-      "Internal storage": {
-        "state": "works",
-        "note": ""
-      },
-      "Internal display": {
-        "state": "partial",
-        "note": ""
-      },
-      "Wi-Fi": {
-        "state": "works",
-        "note": ""
-      },
-      "Bluetooth": {
-        "state": "works",
-        "note": ""
-      },
-      "External display": {
-        "state": "works",
-        "note": ""
-      },
-      "ProMotion": {
-        "state": "works",
-        "note": ""
-      },
-      "Brightness control": {
-        "state": "works",
-        "note": ""
-      },
-      "Keyboard": {
-        "state": "works",
-        "note": ""
-      },
-      "Keyboard backlight": {
-        "state": "works",
-        "note": ""
-      },
-      "Trackpad": {
-        "state": "works",
-        "note": ""
-      },
-      "USB-C": {
-        "state": "works",
-        "note": ""
-      },
-      "HDMI": {
-        "state": "works",
-        "note": ""
-      },
-      "Battery / charging": {
-        "state": "works",
-        "note": ""
-      },
-      "Fan control": {
-        "state": "works",
-        "note": ""
-      },
-      "GPU acceleration": {
-        "state": "partial",
-        "note": ""
-      },
-      "Vulkan": {
-        "state": "partial",
-        "note": ""
-      },
-      "Ray tracing": {
-        "state": "partial",
-        "note": ""
-      },
       "Sleep": {
         "state": "partial",
         "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j716c": {
-      "Boot": {
-        "state": "works",
-        "note": ""
-      },
-      "External display": {
-        "state": "works",
-        "note": ""
-      },
-      "ProMotion": {
-        "state": "works",
-        "note": ""
-      },
-      "Brightness control": {
-        "state": "works",
-        "note": ""
-      },
-      "Keyboard": {
-        "state": "works",
-        "note": ""
-      },
-      "Keyboard backlight": {
-        "state": "works",
-        "note": ""
-      },
-      "Trackpad": {
-        "state": "works",
-        "note": ""
-      },
-      "USB-C": {
-        "state": "works",
-        "note": ""
-      },
-      "HDMI": {
-        "state": "works",
-        "note": ""
-      },
-      "Battery / charging": {
-        "state": "works",
-        "note": ""
-      },
-      "Fan control": {
-        "state": "works",
-        "note": ""
-      },
-      "GPU acceleration": {
-        "state": "partial",
-        "note": ""
-      },
-      "Vulkan": {
-        "state": "partial",
-        "note": ""
-      },
-      "Ray tracing": {
-        "state": "partial",
-        "note": ""
-      },
-      "All CPU cores": {
-        "state": "works",
-        "note": ""
-      },
-      "Internal storage": {
-        "state": "works",
-        "note": ""
-      },
-      "Internal display": {
-        "state": "partial",
-        "note": ""
-      },
-      "Wi-Fi": {
-        "state": "works",
-        "note": ""
-      },
-      "Bluetooth": {
-        "state": "works",
-        "note": ""
-      },
       "Sleep": {
         "state": "partial",
         "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j775c": {
-      "Boot": {
-        "state": "works",
-        "note": ""
-      },
-      "Display output": {
-        "state": "works",
-        "note": ""
-      },
-      "USB-C": {
-        "state": "works",
-        "note": ""
-      },
-      "HDMI": {
-        "state": "works",
-        "note": ""
-      },
-      "Fan control": {
-        "state": "works",
-        "note": ""
-      },
-      "GPU acceleration": {
-        "state": "partial",
-        "note": ""
-      },
-      "Vulkan": {
-        "state": "partial",
-        "note": ""
-      },
-      "Ray tracing": {
-        "state": "partial",
-        "note": ""
-      },
-      "All CPU cores": {
-        "state": "works",
-        "note": ""
-      },
-      "Internal storage": {
-        "state": "works",
-        "note": ""
-      },
-      "Wi-Fi": {
-        "state": "works",
-        "note": ""
-      },
-      "Bluetooth": {
-        "state": "works",
-        "note": ""
-      },
       "Sleep": {
         "state": "partial",
         "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."

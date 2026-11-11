@@ -6,11 +6,16 @@ Rules for anyone, person or agent, changing aurora-silicon.github.io. Ryan set t
 
 The data is `src/data/support.json`. Device support lives there and nowhere else: other pages link to `/devices/`, never repeat it.
 
-- Working: the whole feature works, with the code merged in our trees.
+A hardware status may only be raised once the code is merged in `integration/aurora`, our kernel release branch, or for userspace, merged in the shipping package repos (fedora-aurora, alarm-aurora, nixos-aurora). Code on other branches, lab test kernels and open pull requests does not count, whatever it did on a test machine.
+
+There are exactly four states, with this wording everywhere:
+
+- Working: the whole feature works, with the code merged as above.
 - Partial: part of the feature works in merged code. Say which part.
 - Not working: nothing usable is merged.
-- Lab test kernels and open pull requests do not count.
-- Windows: every row is Not working until a Windows release ships.
+- Not recorded: not tested, or no evidence. Never guess a state; leave the entry out.
+
+Windows: every row is Not working until a Windows release ships.
 
 A note is one line per part, in the form `State: part.`, for example `Working: low-power mic.` The pill is derived from its lines: all Working is Working, all Not working is Not working, anything mixed is Partial. Sleep is one feature with two lines, `suspend to idle` and `suspend to RAM (deep sleep)`.
 
