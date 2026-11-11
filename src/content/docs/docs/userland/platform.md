@@ -1,6 +1,6 @@
 ---
 title: Platform packages
-description: The Aurora metapackages and the smaller fixes Aurora carries in its distributions.
+description: Metapackages and the fixes Aurora carries.
 ---
 
 ## Metapackages

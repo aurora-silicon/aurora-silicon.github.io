@@ -1,9 +1,9 @@
 ---
 title: Touch ID
-description: Fingerprint unlock on Aurora, backed by the Mac's Secure Enclave.
+description: Fingerprint unlock backed by the Secure Enclave.
 ---
 
-Touch ID works for the lock screen, sudo and polkit prompts. The Secure Enclave stores your fingerprints and does the matching, the same as on macOS. Linux only gets told whether it matched.
+Touch ID works for the lock screen, sudo and polkit. The Secure Enclave stores and matches fingerprints; Linux only gets the result.
 
 Login screens, the text console, `su` and SSH still ask for your password. After a boot you type your password once before Touch ID is accepted, like macOS.
 

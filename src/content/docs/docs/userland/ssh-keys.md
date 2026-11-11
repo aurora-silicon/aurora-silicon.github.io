@@ -1,11 +1,11 @@
 ---
 title: SSH keys in the Secure Enclave
-description: aurora-sep-sk, an OpenSSH security-key provider that keeps your SSH key inside the Secure Enclave.
+description: OpenSSH security-key provider with keys inside the Secure Enclave.
 sidebar:
   label: SSH keys in the enclave
 ---
 
-`aurora-sep-sk` is a small OpenSSH plugin. It creates `ecdsa-sk` keys inside the Secure Enclave and signs with them there, so the private key never touches the disk. It talks to the enclave directly, without the [security key daemon](/docs/userland/security-key/).
+`aurora-sep-sk` creates `ecdsa-sk` keys inside the Secure Enclave and signs there; the private key never touches the disk. It talks to the enclave directly, without the [security key daemon](/docs/userland/security-key/).
 
 Installed by default on Fedora and ALARM, and on NixOS through the Secure Enclave module.
 

@@ -1,9 +1,9 @@
 ---
 title: Graphics
-description: The Aurora OpenGL driver and the Borealis Vulkan driver, and how Flatpak apps get the same driver.
+description: Aurora OpenGL and Borealis Vulkan drivers, and Flatpak.
 ---
 
-Aurora's Mesa build gives you hardware OpenGL, OpenGL ES and Vulkan on the Apple GPU. The OpenGL driver is called Aurora and the Vulkan driver is called Borealis. Both are preinstalled.
+Mesa with OpenGL, OpenGL ES and Vulkan on the Apple GPU. The OpenGL driver is Aurora, the Vulkan driver is Borealis. Both are preinstalled.
 
 ## Packages
 

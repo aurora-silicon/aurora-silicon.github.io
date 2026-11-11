@@ -1,6 +1,6 @@
 ---
 title: Boot and updates
-description: How an Aurora Mac boots, how to choose the default OS, and how to keep each distribution up to date.
+description: Boot chain, default OS and updates.
 ---
 
 ## Boot chain

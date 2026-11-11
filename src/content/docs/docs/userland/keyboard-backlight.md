@@ -1,9 +1,9 @@
 ---
 title: Keyboard backlight
-description: aurora-kbd-light sets the keyboard backlight from the ambient light sensor, the way macOS does.
+description: Keyboard backlight follows the ambient light sensor.
 ---
 
-`aurora-kbd-light` turns the keyboard backlight up in the dark and off in bright rooms, with short fades. It is on by default on every distribution.
+`aurora-kbd-light` raises the backlight in the dark and turns it off in bright rooms. On by default.
 
 ## Which Macs
 

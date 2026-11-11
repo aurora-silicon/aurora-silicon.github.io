@@ -1,6 +1,6 @@
 ---
 title: First boot and encryption
-description: aurora-firstboot encrypts the disk in place and creates your account the first time Aurora starts.
+description: "First start: disk encryption and your account."
 ---
 
 The first time an Aurora system starts, `aurora-firstboot` sets it up:

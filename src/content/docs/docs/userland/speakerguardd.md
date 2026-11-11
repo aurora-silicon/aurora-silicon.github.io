@@ -1,11 +1,11 @@
 ---
 title: Speaker protection (speakerguardd)
-description: speakerguardd v2 protects your Mac's speakers from inside the PipeWire graph, using the Mac's own tuning and calibration.
+description: "speakerguardd v2: speaker protection inside the PipeWire graph, from the Mac's own tuning and calibration."
 sidebar:
   label: Speaker protection
 ---
 
-speakerguardd v2 keeps the built-in speakers inside their safe limits while letting them play as loud and clear as they do on macOS. It runs inside the PipeWire speaker graph, the same place macOS runs its protection, and it is driven by your own Mac's speaker tuning and factory calibration.
+speakerguardd v2 keeps the built-in speakers within their limits. It runs inside the PipeWire speaker graph, driven by the Mac's own speaker tuning and factory calibration.
 
 :::caution[Preview]
 Version 1.0.0-alpha.1. It is opt-in and does not fully match macOS yet. The current protection stack (see [Audio stack](/docs/userland/audio/)) stays the default until you switch.

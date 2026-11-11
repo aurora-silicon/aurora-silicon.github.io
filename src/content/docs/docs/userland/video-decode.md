@@ -1,9 +1,9 @@
 ---
 title: Hardware video decode
-description: VA-API on the Apple Video Decoder for video players and Firefox. Experimental.
+description: VA-API on the Apple Video Decoder. Experimental.
 ---
 
-Aurora drives the Mac's video decoder (AVD) through the standard V4L2 request interface. Two packages connect it to apps:
+The AVD through the V4L2 request interface. Two packages connect it to apps:
 
 - `avd-fw`, open firmware for the decoder, built from source by us
 - `libva-v4l2-request-avd`, the VA-API driver that players and browsers use

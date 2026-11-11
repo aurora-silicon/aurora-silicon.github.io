@@ -1,14 +1,14 @@
 ---
 title: Neural Engine
-description: Tools to run programs on the Apple Neural Engine from Linux.
+description: Apple Neural Engine driver and tools.
 ---
 
-The Aurora kernel has a driver for the Apple Neural Engine (ANE). Two packages let you use it:
+The Aurora kernel has an ANE driver. Two packages use it:
 
 - `omarchy-ane-tools`, with `omarchy-ane-run`, `omarchy-ane-smoke` and `omarchy-ane-firmware-fetch`
 - `mil-hwx-compiler`, with `mil-hwxc`, a research compiler that turns MIL programs into ANE programs
 
-There is no ready-made inference runtime yet, so this is for developers for now.
+No inference runtime yet. Which Macs run models: [device support](/devices/), under Neural Engine.
 
 ## Set up
 

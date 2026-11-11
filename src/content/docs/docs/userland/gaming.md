@@ -1,6 +1,6 @@
 ---
 title: x86 apps and Steam
-description: Run x86 programs with FEX and play games with Valve's native ARM64 Steam client.
+description: FEX for x86 programs and the native ARM64 Steam client.
 ---
 
 ## FEX

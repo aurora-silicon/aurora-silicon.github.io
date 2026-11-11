@@ -1,6 +1,6 @@
 ---
 title: Brightness and boot splash
-description: Keep the panel brightness the same across the boot loader, Linux and macOS, and show one still logo from power-on to login.
+description: One panel brightness across the boot loader, Linux and macOS, and a still logo from power-on to login.
 ---
 
 ## Panel brightness

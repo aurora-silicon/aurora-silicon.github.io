@@ -1,7 +1,7 @@
 ---
 import devices from '../data/devices.json';
 import FeatureIcon from './FeatureIcon.astro';
-import { getGroups, getState, hasResults, labels, osLabels, osList, support, deviceClasses, getDeviceClass, getSeries } from '../lib/support';
+import { getGroups, getRecord, getState, hasResults, labels, noteLines, osLabels, osList, deviceClasses, getDeviceClass, getSeries } from '../lib/support';
 import DeviceIcon from './DeviceIcon.astro';
 const seriesList = getSeries(devices);
 const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMap(group => group.features)))];
@@ -27,7 +27,7 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   <section class="feature-results" data-feature-results hidden aria-label="Selected device features">
     <div class="result-heading"><div><h2 data-model-name></h2><p class="device-meta" data-device-meta></p></div><a class="project-link" data-hardware-link href="https://github.com/aurora-silicon/linux/discussions">Hardware reports ↗</a></div>
     <p class="support-summary" data-support-summary></p>
-    <p class="os-note" data-os-note hidden>Windows starts through <a href="https://github.com/aurora-silicon/mu">Mu</a>, our UEFI firmware, and then needs its own driver for each part of the Mac. There is no installer or driver release yet, so these are bring-up results on the named Mac.</p>
+    <p class="os-note" data-os-note hidden>Windows boots through <a href="https://github.com/aurora-silicon/mu">Mu</a>, our UEFI firmware. No installer or driver release yet.</p>
     <div class="feature-groups" data-feature-groups></div>
     <div id="feature-detail" class="feature-detail" data-feature-detail hidden><h3 data-feature-title></h3><div data-feature-body></div></div>
     <ul class="support-legend" aria-label="Status key">{(['works', 'partial', 'none', 'unknown'] as const).map(state => <li><span class={`state-mark state-${state}`} aria-hidden="true"></span>{labels[state]}</li>)}</ul>
@@ -36,13 +36,13 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   <template data-feature-icons>{iconNames.map(name => <span data-icon-name={name}><FeatureIcon name={name} /></span>)}</template>
   <noscript>
     <style>.series-selection,.class-selection,.variant-picker{display:none}</style>
-    <div class="offline-devices"><p>Select a chip series, then a device.</p>{seriesList.map(series => <details><summary>{series}</summary>{deviceClasses.filter(name => devices.some(device => device.generation === series && getDeviceClass(device) === name)).map(name => <details><summary>{name}</summary>{devices.filter(device => device.generation === series && getDeviceClass(device) === name).map(device => <details><summary>{device.model} · {device.chip} · {device.device}</summary>{osList.filter(os => os === 'linux' || hasResults(device.device, os)).map(os => <div><h3>{osLabels[os]}</h3>{getGroups(device, os).map(group => <div><h4>{group.name}</h4><ul>{group.features.map(feature => <li>{feature}: {labels[getState(device.device, feature, os)]}{support.results[device.device]?.[feature]?.note && os === 'linux' ? ` · ${support.results[device.device][feature].note}` : ''}{support.windows.results[device.device]?.[feature]?.note && os === 'windows' ? ` · ${support.windows.results[device.device][feature].note}` : ''}</li>)}</ul></div>)}</div>)}<a href={device.discussion}>Hardware reports</a></details>)}</details>)}</details>)}</div>
+    <div class="offline-devices"><p>Select a chip series, then a device.</p>{seriesList.map(series => <details><summary>{series}</summary>{deviceClasses.filter(name => devices.some(device => device.generation === series && getDeviceClass(device) === name)).map(name => <details><summary>{name}</summary>{devices.filter(device => device.generation === series && getDeviceClass(device) === name).map(device => <details><summary>{device.model} · {device.chip} · {device.device}</summary>{osList.filter(os => os === 'linux' || hasResults(device.device, os)).map(os => <div><h3>{osLabels[os]}</h3>{getGroups(device, os).map(group => <div><h4>{group.name}</h4><ul>{group.features.map(feature => <li>{feature}: {getRecord(device.device, feature, os) ? noteLines(getRecord(device.device, feature, os), os).join(' ') : labels.unknown}</li>)}</ul></div>)}</div>)}<a href={device.discussion}>Hardware reports</a></details>)}</details>)}</details>)}</div>
   </noscript>
   <span class="sr-only" data-device-announcement role="status" aria-live="polite"></span>
 </section>
 <script>
   import devices from '../data/devices.json';
-  import { getGroups, getState, getSummary, getRecord, labels, osLabels, getDeviceClass, getSeries, getChipTier } from '../lib/support';
+  import { getGroups, getState, getSummary, getRecord, labels, osLabels, noteLines, getDeviceClass, getSeries, getChipTier } from '../lib/support';
   import type { Device, Os } from '../lib/support';
   const classButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-device-class]')];
   const osButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-os]')];
@@ -207,9 +207,11 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
     document.querySelector<HTMLElement>('[data-feature-title]')!.textContent = feature;
     const body = document.querySelector<HTMLElement>('[data-feature-body]')!; body.replaceChildren();
     const current = getRecord(selected.device, feature, os);
-    const text = document.createElement('p');
-    text.textContent = current ? `${labels[current.state]}${current.note ? `: ${current.note}.` : ` on ${osLabels[os]} for this device.`}` : `No ${osLabels[os]} result recorded for this device.`;
-    body.append(text);
+    // One line per part, each in the form "State: part." A plain note gets
+    // the feature's own state in front of it.
+    for (const line of noteLines(current, os)) {
+      const text = document.createElement('p'); text.textContent = line; body.append(text);
+    }
     if (current) {
       const link = document.createElement('a'); link.className = 'project-link'; link.href = os === 'windows' ? MU_URL : selected.discussion; link.textContent = os === 'windows' ? 'Mu firmware ↗' : 'Hardware report ↗'; body.append(link);
     }

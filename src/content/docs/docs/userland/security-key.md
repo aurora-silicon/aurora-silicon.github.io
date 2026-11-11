@@ -1,11 +1,11 @@
 ---
 title: Touch ID security key (aurora-fido)
-description: Use your Mac's Secure Enclave and Touch ID as a FIDO2/U2F security key for websites, SSH, sudo and disk unlock.
+description: The Secure Enclave and Touch ID as a FIDO2/U2F security key.
 sidebar:
   label: Touch ID security key
 ---
 
-aurora-fido makes your Mac look like a plugged-in USB security key, the YubiKey kind. Websites, SSH, `pam_u2f` and `systemd-cryptenroll` use it without any changes. Each sign-in needs your finger on the Touch ID sensor.
+aurora-fido presents the Mac as a USB security key. Websites, SSH, `pam_u2f` and `systemd-cryptenroll` use it unchanged. Each sign-in needs a finger on the sensor.
 
 ## How it keeps keys safe
 

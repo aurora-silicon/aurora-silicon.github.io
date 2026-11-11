@@ -52,7 +52,7 @@
         "name": "Power and sensors",
         "features": [
           "Battery / charging",
-          "Sleep / resume",
+          "Sleep",
           "Ambient light"
         ]
       },
@@ -118,7 +118,7 @@
         "name": "Power",
         "features": [
           "Battery / charging",
-          "Sleep / resume"
+          "Sleep"
         ]
       },
       {
@@ -187,7 +187,7 @@
         "features": [
           "Battery / charging",
           "Fan control",
-          "Sleep / resume"
+          "Sleep"
         ]
       },
       {
@@ -246,7 +246,7 @@
       {
         "name": "Power",
         "features": [
-          "Sleep / resume"
+          "Sleep"
         ]
       },
       {
@@ -306,7 +306,7 @@
       {
         "name": "Power",
         "features": [
-          "Sleep / resume"
+          "Sleep"
         ]
       },
       {
@@ -385,7 +385,7 @@
       },
       "USB-C": {
         "state": "works",
-        "note": "USB 3 rear, USB 2 front"
+        "note": "Working: USB 3 on the rear port.\nWorking: USB 2 on the front port."
       },
       "Wi-Fi": {
         "state": "works",
@@ -398,10 +398,6 @@
       "Battery / charging": {
         "state": "works",
         "note": ""
-      },
-      "Sleep / resume": {
-        "state": "works",
-        "note": "suspend to idle"
       },
       "Ambient light": {
         "state": "works",
@@ -425,11 +421,11 @@
       },
       "Video encoding": {
         "state": "works",
-        "note": "H.264 and HEVC, Main 10 included, with constant quality and a speed mode"
+        "note": "Working: H.264.\nWorking: HEVC, Main 10 included.\nWorking: constant quality and speed mode."
       },
       "ProRes encoding": {
         "state": "works",
-        "note": "all profiles, output matches macOS"
+        "note": "Working: all profiles.\nWorking: output matches macOS."
       },
       "JPEG encoding": {
         "state": "works",
@@ -437,7 +433,11 @@
       },
       "Neural Engine": {
         "state": "partial",
-        "note": "runs models end to end; can fail to come back after sleep and then needs a reboot"
+        "note": "Working: models end to end.\nPartial: resume after sleep, sometimes needs a reboot."
+      },
+      "Sleep": {
+        "state": "works",
+        "note": "Working: suspend to idle.\nWorking: suspend to RAM (deep sleep)."
       }
     },
     "j813": {
@@ -481,10 +481,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "partial",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "partial",
         "note": ""
@@ -500,6 +496,10 @@
       "Ray tracing": {
         "state": "partial",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Partial: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j714s": {
@@ -524,10 +524,6 @@
         "note": ""
       },
       "Bluetooth": {
-        "state": "works",
-        "note": ""
-      },
-      "Sleep / resume": {
         "state": "works",
         "note": ""
       },
@@ -582,6 +578,10 @@
       "Ray tracing": {
         "state": "partial",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j713": {
@@ -639,31 +639,31 @@
       },
       "USB-C": {
         "state": "partial",
-        "note": "USB 3 on the back port, USB 2 on the front; USB devices wake the Mac from sleep"
+        "note": "Working: USB 3 on the back port.\nPartial: USB 2 on the front port.\nWorking: wake from sleep by USB devices."
       },
       "Thunderbolt / USB4": {
         "state": "partial",
-        "note": "USB4 docks with Ethernet, USB and DisplayPort; tested with one dock"
-      },
-      "Sleep / resume": {
-        "state": "works",
-        "note": "suspend to idle; wake by USB on both ports"
+        "note": "Working: USB4 docks with Ethernet, USB and DisplayPort.\nPartial: one dock tested."
       },
       "Touch ID": {
         "state": "partial",
-        "note": "fingerprint unlock; the installer does not collect this model's sensor files yet"
+        "note": "Working: fingerprint unlock.\nNot working: sensor files collected by the installer."
       },
       "Speakers": {
-        "state": "partial",
-        "note": "speakers stay locked for now"
+        "state": "none",
+        "note": "Not working: speakers stay locked for now."
       },
       "Microphone": {
         "state": "partial",
-        "note": "three internal microphones; no sound profile for this model yet"
+        "note": "Working: three internal microphones.\nNot working: sound profile for this model."
       },
       "Headset jack": {
         "state": "partial",
-        "note": "headphone output, headset microphone and plug detection; no sound profile for this model yet"
+        "note": "Working: headphone output.\nWorking: headset microphone.\nWorking: plug detection.\nNot working: sound profile for this model."
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nWorking: wake by USB on both ports.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j616s": {
@@ -673,7 +673,7 @@
       },
       "All CPU cores": {
         "state": "works",
-        "note": "14 cores with frequency scaling"
+        "note": "Working: 14 cores.\nWorking: frequency scaling."
       },
       "Internal storage": {
         "state": "works",
@@ -681,11 +681,11 @@
       },
       "Internal display": {
         "state": "works",
-        "note": "3456x2160 at 120 Hz, 3456x2234 with the notch area, HDR to the 1600 nit peak"
+        "note": "Working: 3456x2160 at 120 Hz.\nWorking: 3456x2234 with the notch area.\nWorking: HDR to the 1600 nit peak."
       },
       "External display": {
-        "state": "works",
-        "note": "USB-C DisplayPort and docks, HDR; no audio over the display yet"
+        "state": "partial",
+        "note": "Working: USB-C DisplayPort and docks.\nWorking: HDR.\nNot working: audio over DisplayPort."
       },
       "ProMotion": {
         "state": "works",
@@ -717,7 +717,7 @@
       },
       "Microphone": {
         "state": "works",
-        "note": "three-mic array"
+        "note": "Working: high-quality three-mic array.\nWorking: low-power mic."
       },
       "Camera": {
         "state": "works",
@@ -729,15 +729,15 @@
       },
       "USB-C": {
         "state": "works",
-        "note": "USB 3 on all three ports, DisplayPort alt mode"
+        "note": "Working: USB 3 on all three ports.\nWorking: DisplayPort alt mode."
       },
       "Thunderbolt / USB4": {
         "state": "works",
         "note": ""
       },
       "HDMI": {
-        "state": "works",
-        "note": "3840x2160 at 60 Hz with hotplug; no audio over HDMI yet"
+        "state": "partial",
+        "note": "Working: 3840x2160 at 60 Hz with hotplug.\nNot working: audio over HDMI."
       },
       "SDXC card slot": {
         "state": "works",
@@ -757,15 +757,11 @@
       },
       "Fan control": {
         "state": "works",
-        "note": "automatic; speeds readable and manual targets settable"
-      },
-      "Sleep / resume": {
-        "state": "works",
-        "note": "suspend to idle"
+        "note": "Working: automatic control.\nWorking: speed readout and manual targets."
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "OpenGL 4.6 and OpenGL ES 3.2"
+        "note": "Working: OpenGL 4.6.\nWorking: OpenGL ES 3.2."
       },
       "Vulkan": {
         "state": "works",
@@ -781,7 +777,7 @@
       },
       "Video encoding": {
         "state": "works",
-        "note": "H.264 and HEVC at macOS speed"
+        "note": "Working: H.264.\nWorking: HEVC."
       },
       "ProRes encoding": {
         "state": "none",
@@ -794,6 +790,10 @@
       "Neural Engine": {
         "state": "works",
         "note": "runs models end to end"
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j613": {
@@ -869,10 +869,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "Speakers": {
         "state": "works",
         "note": ""
@@ -884,6 +880,10 @@
       "USB-C": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j615": {
@@ -939,10 +939,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "Speakers": {
         "state": "works",
         "note": ""
@@ -958,6 +954,10 @@
       "Vulkan": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j514s": {
@@ -1033,10 +1033,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "Speakers": {
         "state": "works",
         "note": ""
@@ -1044,6 +1040,10 @@
       "USB-C": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j516s": {
@@ -1119,10 +1119,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "Speakers": {
         "state": "works",
         "note": ""
@@ -1130,6 +1126,10 @@
       "USB-C": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j514c": {
@@ -1169,10 +1169,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "Speakers": {
         "state": "works",
         "note": ""
@@ -1188,6 +1184,10 @@
       "Vulkan": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j516c": {
@@ -1227,10 +1227,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "Speakers": {
         "state": "works",
         "note": ""
@@ -1246,6 +1242,10 @@
       "Vulkan": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j873g": {
@@ -1375,17 +1375,13 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "Video decoding": {
         "state": "works",
         "note": ""
       },
       "Video encoding": {
-        "state": "partial",
-        "note": "H.264 ready but not switched on yet; no HEVC yet"
+        "state": "none",
+        "note": "Not working: H.264, not switched on yet.\nNot working: HEVC."
       },
       "ProRes encoding": {
         "state": "none",
@@ -1397,7 +1393,11 @@
       },
       "Neural Engine": {
         "state": "partial",
-        "note": "runs small models; a hung job needs a reboot"
+        "note": "Working: small models.\nNot working: recovery after a hung job, needs a reboot."
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j414s": {
@@ -1505,10 +1505,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -1520,6 +1516,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j313": {
@@ -1611,10 +1611,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -1626,6 +1622,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j316s": {
@@ -1684,10 +1684,6 @@
       "Battery / charging": {
         "state": "works",
         "note": ""
-      },
-      "Sleep / resume": {
-        "state": "partial",
-        "note": "Touch ID lost after resume"
       },
       "GPU acceleration": {
         "state": "works",
@@ -1750,8 +1746,8 @@
         "note": ""
       },
       "Video encoding": {
-        "state": "partial",
-        "note": "H.264 ready but not switched on yet; no HEVC yet"
+        "state": "none",
+        "note": "Not working: H.264, not switched on yet.\nNot working: HEVC."
       },
       "ProRes encoding": {
         "state": "works",
@@ -1763,7 +1759,11 @@
       },
       "Neural Engine": {
         "state": "partial",
-        "note": "runs small models; a hung job needs a reboot"
+        "note": "Working: small models.\nNot working: recovery after a hung job, needs a reboot."
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: Touch ID after resume.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j415": {
@@ -1855,10 +1855,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -1870,6 +1866,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j414c": {
@@ -1977,10 +1977,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -1992,6 +1988,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j416s": {
@@ -2007,10 +2007,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "ProMotion": {
         "state": "works",
         "note": "Adaptive refresh supported."
@@ -2114,6 +2110,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j416c": {
@@ -2126,10 +2126,6 @@
         "note": "Adaptive refresh supported."
       },
       "Thunderbolt / USB4": {
-        "state": "works",
-        "note": ""
-      },
-      "Sleep / resume": {
         "state": "works",
         "note": ""
       },
@@ -2236,6 +2232,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j473": {
@@ -2303,10 +2303,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -2318,6 +2314,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j293": {
@@ -2409,10 +2409,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -2424,6 +2420,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j314s": {
@@ -2442,10 +2442,6 @@
       "HDMI": {
         "state": "works",
         "note": "4K with audio"
-      },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
       },
       "ProMotion": {
         "state": "works",
@@ -2546,6 +2542,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j274": {
@@ -2617,10 +2617,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -2628,6 +2624,10 @@
       "Vulkan": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j493": {
@@ -2719,10 +2719,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -2734,6 +2730,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j474s": {
@@ -2801,10 +2801,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -2816,6 +2812,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j475c": {
@@ -2883,10 +2883,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -2898,6 +2894,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j475d": {
@@ -2965,10 +2965,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -2980,6 +2976,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j180d": {
@@ -3047,10 +3047,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -3062,6 +3058,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j314c": {
@@ -3169,10 +3169,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -3184,6 +3180,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j316c": {
@@ -3291,10 +3291,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -3306,6 +3302,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j456": {
@@ -3377,10 +3377,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -3392,6 +3388,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j457": {
@@ -3463,10 +3463,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -3478,6 +3474,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j375c": {
@@ -3545,10 +3545,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -3560,6 +3556,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j375d": {
@@ -3627,10 +3627,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "GPU acceleration": {
         "state": "works",
         "note": ""
@@ -3642,6 +3638,10 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j716s": {
@@ -3761,10 +3761,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "Speakers": {
         "state": "works",
         "note": ""
@@ -3780,6 +3776,10 @@
       "Vulkan": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j514m": {
@@ -3807,10 +3807,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "Speakers": {
         "state": "works",
         "note": ""
@@ -3826,6 +3822,10 @@
       "Vulkan": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j516m": {
@@ -3853,10 +3853,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "Speakers": {
         "state": "works",
         "note": ""
@@ -3872,6 +3868,10 @@
       "Vulkan": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j433": {
@@ -3891,10 +3891,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "Speakers": {
         "state": "works",
         "note": ""
@@ -3910,6 +3906,10 @@
       "Vulkan": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j434": {
@@ -3929,10 +3929,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "Speakers": {
         "state": "works",
         "note": ""
@@ -3948,14 +3944,14 @@
       "Vulkan": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j575d": {
       "Headset jack": {
-        "state": "works",
-        "note": ""
-      },
-      "Sleep / resume": {
         "state": "works",
         "note": ""
       },
@@ -3974,6 +3970,10 @@
       "Vulkan": {
         "state": "works",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j715": {
@@ -4123,7 +4123,7 @@
       },
       "USB-C": {
         "state": "partial",
-        "note": "USB devices on all three ports; USB 3 not tested"
+        "note": "Working: USB devices on all three ports.\nPartial: USB 3 not tested."
       },
       "Camera": {
         "state": "partial",
@@ -4135,7 +4135,7 @@
       },
       "Speakers": {
         "state": "none",
-        "note": "speakers stay locked for now"
+        "note": "Not working: speakers stay locked for now."
       }
     },
     "j614c": {
@@ -4175,19 +4175,19 @@
       },
       "HDMI": {
         "state": "partial",
-        "note": "1920x1080 tested; the first mode-sets at boot can fail"
+        "note": "Working: 1920x1080.\nPartial: the first mode-sets at boot can fail."
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": "40-core GPU; off by default for now"
+        "state": "none",
+        "note": "Not working: the GPU is off by default for now."
       },
       "Vulkan": {
-        "state": "partial",
-        "note": "off by default for now"
+        "state": "none",
+        "note": "Not working: the GPU is off by default for now."
       },
       "Video decoding": {
         "state": "partial",
-        "note": "HEVC matches software decoding; other codecs not tested"
+        "note": "Working: HEVC, matches software decoding.\nPartial: other codecs not tested."
       }
     },
     "j773g": {
@@ -4433,10 +4433,6 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
-      },
       "External display": {
         "state": "works",
         "note": ""
@@ -4488,6 +4484,10 @@
       "Ray tracing": {
         "state": "partial",
         "note": ""
+      },
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j716c": {
@@ -4567,9 +4567,9 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j775c": {
@@ -4621,9 +4621,9 @@
         "state": "works",
         "note": ""
       },
-      "Sleep / resume": {
-        "state": "works",
-        "note": ""
+      "Sleep": {
+        "state": "partial",
+        "note": "Working: suspend to idle.\nNot working: suspend to RAM (deep sleep)."
       }
     },
     "j775d": {},
@@ -4794,7 +4794,7 @@
         "ProMotion",
         "SDXC card slot",
         "Secure Enclave",
-        "Sleep / resume",
+        "Sleep",
         "Speaker",
         "Speakers",
         "Thunderbolt / USB4",
@@ -4820,7 +4820,7 @@
         "Headset jack",
         "Keyboard backlight",
         "Microphone",
-        "Sleep / resume",
+        "Sleep",
         "Speaker",
         "Speakers",
         "Thunderbolt / USB4",
@@ -4922,7 +4922,7 @@
         },
         "All CPU cores": {
           "state": "works",
-          "note": "P/E scheduling, frequency scaling and power modes. No nested virtualization yet, so no WSL or Hyper-V"
+          "note": "Working: P/E scheduling, frequency scaling and power modes."
         },
         "Internal storage": {
           "state": "works",
@@ -4970,7 +4970,7 @@
         },
         "USB-C": {
           "state": "works",
-          "note": "USB 3; Ethernet adapters with Realtek's arm64 driver"
+          "note": "Working: USB 3.\nWorking: Ethernet adapters with Realtek's arm64 driver."
         },
         "Thunderbolt / USB4": {
           "state": "none",
@@ -5000,13 +5000,13 @@
           "state": "works",
           "note": ""
         },
-        "Sleep / resume": {
-          "state": "none",
-          "note": "deep sleep not implemented yet"
-        },
         "GPU acceleration": {
           "state": "partial",
-          "note": "Vulkan and DXVK run; the desktop is not accelerated yet"
+          "note": "Working: Vulkan and DXVK.\nNot working: desktop acceleration, no display driver yet."
+        },
+        "Sleep": {
+          "state": "none",
+          "note": "Not working: suspend to RAM (deep sleep)."
         }
       },
       "j316s": {

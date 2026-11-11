@@ -1,9 +1,9 @@
 ---
 title: AirDrop
-description: omdrop-awdl sends and receives files with iPhones, iPads and Macs over Apple Wireless Direct Link.
+description: AirDrop with iPhones, iPads and Macs over AWDL.
 ---
 
-`omdrop-awdl` speaks AirDrop over the Wi-Fi chip's own AWDL support, which the Aurora kernel exposes as the `awdl0` interface.
+`omdrop-awdl` speaks AirDrop over the Wi-Fi chip's AWDL support, the `awdl0` interface.
 
 ## Which Macs
 

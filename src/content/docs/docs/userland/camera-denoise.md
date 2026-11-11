@@ -1,9 +1,9 @@
 ---
 title: Camera denoise
-description: aurora-camera-denoise cleans up the built-in camera picture in every app, with an extra stage for low light.
+description: PipeWire video filter for the built-in camera, with a low-light stage.
 ---
 
-`aurora-camera-denoise` is a PipeWire video filter for the built-in FaceTime HD camera. Apps pick the filtered camera by default. The unfiltered one is still there as "FaceTime HD Camera (V4L2)".
+`aurora-camera-denoise` is a PipeWire video filter for the built-in camera. Apps get the filtered camera by default; the unfiltered one stays as "FaceTime HD Camera (V4L2)".
 
 On by default on every distribution. It only touches the camera while an app is using it.
 

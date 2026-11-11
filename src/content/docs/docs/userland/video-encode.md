@@ -1,11 +1,11 @@
 ---
 title: Hardware video encode
-description: The Apple Video Encoder, ProRes and JPEG engines through V4L2, for GStreamer and FFmpeg.
+description: AVE, ProRes and JPEG encoders through V4L2.
 ---
 
-The Aurora kernel drives the Mac's video encoder (AVE) and its separate ProRes and JPEG engines as V4L2 memory-to-memory devices. Any app that uses the V4L2 encoders can use them, and no extra package is needed.
+The AVE and the separate ProRes and JPEG engines are V4L2 memory-to-memory devices. Any V4L2 encoder client works; no extra package.
 
-The engines differ by chip, and on some Macs the AVE is not switched on yet. Check your Mac in [device support](/devices/) under Video encoding, ProRes encoding and JPEG encoding.
+Which engines your Mac has: [device support](/devices/), under Video encoding, ProRes encoding and JPEG encoding.
 
 ## Devices
 

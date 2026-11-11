@@ -1,9 +1,9 @@
 ---
 title: Installer
-description: The Aurora installer is a macOS app that sets up Fedora, Arch Linux ARM or NixOS next to macOS, and copies your Mac's own firmware and calibration.
+description: macOS app that installs Fedora, Arch Linux ARM or NixOS next to macOS.
 ---
 
-The Aurora installer is a native macOS app (macOS 15 or later). It makes room for Linux next to macOS and installs the distribution you pick. macOS stays and you choose which one to start at boot.
+A native macOS app, macOS 15 or later. It makes room next to macOS and installs the distribution you pick. macOS stays; you choose the default at boot.
 
 ## What you can install
 

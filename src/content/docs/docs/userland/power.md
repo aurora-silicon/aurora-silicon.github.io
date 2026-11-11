@@ -1,6 +1,6 @@
 ---
 title: Power and battery
-description: Power profiles, the Power Saver frequency limit, battery reporting and wake for network on Aurora.
+description: Power profiles, the Power Saver frequency limit, battery reporting and wake for network.
 ---
 
 ## Power profiles

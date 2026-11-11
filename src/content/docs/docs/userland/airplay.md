@@ -1,9 +1,9 @@
 ---
 title: AirPlay receiver
-description: Play audio to your Mac from an iPhone, iPad or another Mac with AirPlay 2.
+description: AirPlay 2 audio receiver.
 ---
 
-Aurora packages shairport-sync with AirPlay 2 and its timing helper nqptp, so your Mac shows up as a speaker in the AirPlay menu on Apple devices.
+shairport-sync with AirPlay 2 and nqptp. The Mac appears as a speaker in the AirPlay menu.
 
 Available on Fedora. ALARM does not package the receiver yet. On NixOS use the stock `services.shairport-sync` module, and Aurora's overlay adds the nqptp idle fix.
 

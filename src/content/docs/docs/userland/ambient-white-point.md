@@ -1,9 +1,9 @@
 ---
 title: Ambient white point
-description: Shift the display's colour temperature to match the room light, similar to True Tone on macOS.
+description: Display colour temperature follows the room light.
 ---
 
-On Macs with a colour light sensor, GNOME and KDE can warm or cool the display to match the room. Aurora adds this to iio-sensor-proxy, gnome-settings-daemon and KWin. It is off by default.
+iio-sensor-proxy, gnome-settings-daemon and KWin with colour light sensor support. Off by default.
 
 ## Which Macs
 

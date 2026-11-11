@@ -1,9 +1,9 @@
 ---
 title: Audio stack
-description: The PipeWire profiles, ALSA files, plugins and safety daemon that make the built-in speakers, jack and microphones work.
+description: PipeWire profiles, ALSA files, plugins and the speaker safety daemon for the built-in speakers, jack and microphones.
 ---
 
-The audio stack is preinstalled on every Aurora system. It turns the raw speaker, headphone and microphone devices into the outputs and inputs you see in your desktop's sound settings.
+Preinstalled on every Aurora system.
 
 ## The pieces
 

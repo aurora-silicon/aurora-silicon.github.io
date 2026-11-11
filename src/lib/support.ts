@@ -45,6 +45,18 @@ export function getChipTier(device: Device): number {
 export const labels: { [state in State]: string } = {
   works: 'Working', partial: 'Partial', none: 'Not working', unknown: 'Not recorded',
 };
+// A note is one line per part in the form "State: part." A plain note gets
+// the feature's own state in front of it; no note means the state alone.
+const partPattern = /^(Working|Partial|Not working): /;
+export function noteLines(record: Record | undefined, os: Os = 'linux'): string[] {
+  if (!record) return [`No ${osLabels[os]} result recorded for this device.`];
+  const lines = record.note.split('\n').map(line => line.trim()).filter(Boolean);
+  if (!lines.length) return [`${labels[record.state]}.`];
+  return lines.map(line => {
+    const text = partPattern.test(line) ? line : `${labels[record.state]}: ${line}`;
+    return text.endsWith('.') ? text : `${text}.`;
+  });
+}
 export function getState(device: string, feature: string, os: Os = 'linux'): State {
   return getRecord(device, feature, os)?.state ?? 'unknown';
 }

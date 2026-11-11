@@ -1,11 +1,11 @@
 ---
 title: Disk unlock with the Secure Enclave
-description: aurora-sep-luks unlocks LUKS2 data volumes with a key sealed by the Mac's Secure Enclave, like TPM2 enrolment on a PC.
+description: LUKS2 volumes unlocked by a key sealed in the Secure Enclave.
 sidebar:
   label: Disk unlock
 ---
 
-`aurora-sep-luks` adds a LUKS2 keyslot whose secret is sealed by the Secure Enclave. The volume then unlocks on its own on this Mac and this install, the way TPM2 enrolment works on a PC. Your passphrase keyslot always stays.
+`aurora-sep-luks` adds a LUKS2 keyslot sealed by the Secure Enclave. The volume unlocks on its own on this Mac and this install. The passphrase keyslot stays.
 
 :::note[Data volumes only]
 Unlocking the root volume this way is not possible yet. Use it for a second partition or an external disk.
