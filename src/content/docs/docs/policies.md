@@ -3,7 +3,7 @@ title: Policies & Guidelines
 description: Aurora Silicon’s existing provenance, disclosure, and contribution policies.
 ---
 
-These apply everywhere Aurora Silicon operates — our Discord, our repositories,
+These apply everywhere Aurora Silicon operates: our Discord, our repositories,
 and anywhere else the project's work is discussed. They are deliberately short,
 and they are subject to change.
 
@@ -19,8 +19,8 @@ where commercial, proprietary, or confidential material is concerned.
 
 ## Apple and Microsoft employees and contractors
 
-If you work for Apple or Microsoft — including as a contractor or subcontractor
-for either company — do not contribute code to this project or to any of our
+If you work for Apple or Microsoft, including as a contractor or subcontractor
+for either company, do not contribute code to this project or to any of our
 repositories unless both of the following are true:
 
 - You have been explicitly authorised to do so by your employer, and
@@ -47,7 +47,7 @@ may also disclose the incident to the appropriate parties.
 
 ## LLMs and generative AI
 
-If you use an LLM — ChatGPT, Claude, GLM or any other — you remain solely
+If you use an LLM (ChatGPT, Claude, GLM or any other), you remain solely
 responsible for everything you produce and submit with it. The tool does not
 carry the responsibility; you do.
 
@@ -73,27 +73,27 @@ AI involvement may result in the contribution being rejected or removed and,
 where appropriate, further action being taken by the project administrators.
 
 If an AI generated it under your direction, treat it as your contribution and
-your responsibility — and disclose it.
+your responsibility, and disclose it.
 
-## Do not contact upstream projects
+## Asahi Linux and NT-for-ASi
 
-Do not, under any circumstances, report bugs, submit issues, open pull requests,
-make suggestions, or otherwise send project-derived findings to upstream
-repositories or their maintainers.
+Do not report bugs, open issues or pull requests, make suggestions, or send
+project-derived findings to Asahi Linux or NT-for-ASi, or to their maintainers.
 
-Our approach to LLM usage and decompilation differs significantly from both
-Asahi Linux and NT-for-ASi. Content produced by Aurora Silicon — or produced as
-a result of work conducted within this project — should be treated as unusable
-from the perspective of those upstream projects.
+Our approach to LLM usage and decompilation differs from theirs. They treat
+anything produced by Aurora Silicon, or as a result of work done within this
+project, as unusable, so keep our development, findings, patches,
+reverse-engineering work and related technical discussion out of their spaces.
 
-:::caution[Do not upstream our work]
-Keep Aurora Silicon development, findings, patches, reverse-engineering work
-and related technical discussion within Aurora Silicon-controlled spaces.
+:::caution[Those two projects only]
+This rule covers Asahi Linux and NT-for-ASi. Contributing to upstream Linux,
+Mesa, U-Boot or any other project is fine, under that project's own rules and
+the rest of this page.
 :::
 
-This is not about credit or secrecy. We depend heavily on the projects listed
-under [the project repositories](https://github.com/aurora-silicon), and this rule exists to protect their work
-from contamination by ours — not to keep ours to ourselves.
+This is not about credit or secrecy. We depend heavily on both projects, and
+the rule protects their work from contamination by ours. It is not there to
+keep our work to ourselves.
 
 ## If you are unsure
 
