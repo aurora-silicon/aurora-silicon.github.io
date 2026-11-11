@@ -39,6 +39,43 @@ export default defineConfig({
           { label: 'Support records', slug: 'docs/hardware' },
         ] },
         { label: 'Linux', slug: 'docs/linux' },
+        { label: 'Windows', slug: 'docs/windows' },
+        { label: 'Userland and packages', items: [
+          { label: 'Overview', slug: 'docs/userland' },
+          { label: 'Audio', collapsed: true, items: [
+            'docs/userland/speakerguardd',
+            'docs/userland/audio',
+            'docs/userland/airplay',
+          ] },
+          { label: 'Touch ID and Secure Enclave', collapsed: true, items: [
+            'docs/userland/touch-id',
+            'docs/userland/security-key',
+            'docs/userland/ssh-keys',
+            'docs/userland/disk-unlock',
+          ] },
+          { label: 'Display, keyboard and camera', collapsed: true, items: [
+            'docs/userland/keyboard-backlight',
+            'docs/userland/ambient-white-point',
+            'docs/userland/boot-splash',
+            'docs/userland/camera-denoise',
+          ] },
+          { label: 'Graphics, media and apps', collapsed: true, items: [
+            'docs/userland/graphics',
+            'docs/userland/video-decode',
+            'docs/userland/gaming',
+            'docs/userland/neural-engine',
+          ] },
+          { label: 'Network and power', collapsed: true, items: [
+            'docs/userland/airdrop',
+            'docs/userland/power',
+          ] },
+          { label: 'System', collapsed: true, items: [
+            'docs/userland/installer',
+            'docs/userland/first-boot',
+            'docs/userland/boot-and-updates',
+            'docs/userland/platform',
+          ] },
+        ] },
         { label: 'Contribute', items: [
           { label: 'Getting involved', slug: 'docs/contributing' },
           { label: 'Policies & guidelines', slug: 'docs/policies' },

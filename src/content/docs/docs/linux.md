@@ -11,6 +11,10 @@ Find your Mac in [device support](/devices/) and read its hardware report before
 
 Support is recorded per device and software revision. Results for one Mac do not apply automatically to another model with the same chip.
 
+## What Aurora adds
+
+The [userland and packages](/docs/userland/) pages cover every Mac-specific package in Aurora's Fedora, Arch Linux ARM and NixOS distributions, from speaker protection and Touch ID to the keyboard backlight.
+
 ## Source code
 
 The [Aurora repositories](https://github.com/aurora-silicon) contain the code and build instructions. The [Linux repository](https://github.com/aurora-silicon/linux) tracks kernel work and hardware discussions.
