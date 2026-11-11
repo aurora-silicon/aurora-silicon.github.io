@@ -102,6 +102,7 @@ export default defineConfig({
           { label: 'Graphics, media and apps', collapsed: true, items: [
             'docs/userland/graphics',
             'docs/userland/video-decode',
+            'docs/userland/video-encode',
             'docs/userland/gaming',
             'docs/userland/neural-engine',
           ] },

@@ -25,6 +25,15 @@ M2-family Macs need the ANE firmware from Apple, fetched on your own machine:
 sudo omarchy-ane-firmware-fetch   # then reboot
 ```
 
+## Compile and run a program
+
+The driver shows the engine as `/dev/accel/accel0`, a DRM compute device. `mil-hwxc` compiles a text MIL program (fp16, static shapes, a small set of ops such as conv, matmul, relu, softmax and layer_norm) for your chip's generation, and `omarchy-ane-run` runs the result:
+
+```sh
+mil-hwxc --target H13 --mil add.mil --output build/add   # H13 is M1, H14 is M2, H16 is M4
+omarchy-ane-run build/add
+```
+
 ## Check it works
 
 ```sh

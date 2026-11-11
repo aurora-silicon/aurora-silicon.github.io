@@ -8,7 +8,7 @@ Aurora drives the Mac's video decoder (AVD) through the standard V4L2 request in
 - `avd-fw`, open firmware for the decoder, built from source by us
 - `libva-v4l2-request-avd`, the VA-API driver that players and browsers use
 
-Both are installed by default on Fedora and available on ALARM and NixOS. Apps find the driver on their own, no environment variable needed. It decodes only, there is no hardware encode yet.
+Both are installed by default on Fedora and available on ALARM and NixOS. Apps find the driver on their own, no environment variable needed. Encoding is separate, see [hardware video encode](/docs/userland/video-encode/).
 
 :::caution[Experimental]
 Tested on M1 Macs so far. A codec showing up in `vainfo` means the driver offered it, which is not proof every video plays correctly. Players fall back to software when something fails.

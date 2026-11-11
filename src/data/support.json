@@ -64,6 +64,16 @@
           "Ray tracing",
           "Video decoding"
         ]
+      },
+      {
+        "name": "Encoders and Neural Engine",
+        "features": [
+          "Video encoding",
+          "ProRes encoding",
+          "JPEG encoding",
+          "Camera noise filter",
+          "Neural Engine"
+        ]
       }
     ],
     "laptop": [
@@ -119,6 +129,16 @@
           "Vulkan",
           "Ray tracing",
           "Video decoding"
+        ]
+      },
+      {
+        "name": "Encoders and Neural Engine",
+        "features": [
+          "Video encoding",
+          "ProRes encoding",
+          "JPEG encoding",
+          "Camera noise filter",
+          "Neural Engine"
         ]
       }
     ],
@@ -180,6 +200,16 @@
           "Ray tracing",
           "Video decoding"
         ]
+      },
+      {
+        "name": "Encoders and Neural Engine",
+        "features": [
+          "Video encoding",
+          "ProRes encoding",
+          "JPEG encoding",
+          "Camera noise filter",
+          "Neural Engine"
+        ]
       }
     ],
     "desktop": [
@@ -229,6 +259,15 @@
           "Vulkan",
           "Ray tracing",
           "Video decoding"
+        ]
+      },
+      {
+        "name": "Encoders and Neural Engine",
+        "features": [
+          "Video encoding",
+          "ProRes encoding",
+          "JPEG encoding",
+          "Neural Engine"
         ]
       }
     ],
@@ -280,6 +319,16 @@
           "Vulkan",
           "Ray tracing",
           "Video decoding"
+        ]
+      },
+      {
+        "name": "Encoders and Neural Engine",
+        "features": [
+          "Video encoding",
+          "ProRes encoding",
+          "JPEG encoding",
+          "Camera noise filter",
+          "Neural Engine"
         ]
       }
     ]
@@ -377,6 +426,26 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "Video encoding": {
+        "state": "works",
+        "note": "H.264 and HEVC, Main 10 included, with constant quality and a speed mode"
+      },
+      "ProRes encoding": {
+        "state": "works",
+        "note": "all profiles, output matches macOS"
+      },
+      "JPEG encoding": {
+        "state": "works",
+        "note": ""
+      },
+      "Camera noise filter": {
+        "state": "partial",
+        "note": "in the kernel and matching macOS output; reaches users with the next kernel and camera denoise update"
+      },
+      "Neural Engine": {
+        "state": "partial",
+        "note": "runs models end to end; can fail to come back after sleep and then needs a reboot"
       }
     },
     "j813": {
@@ -717,6 +786,26 @@
       "Video decoding": {
         "state": "works",
         "note": "H.264, VP9 and AV1 hardware decoding"
+      },
+      "Video encoding": {
+        "state": "works",
+        "note": "H.264 and HEVC at macOS speed"
+      },
+      "ProRes encoding": {
+        "state": "none",
+        "note": "the ProRes engine is not enabled on this chip yet"
+      },
+      "JPEG encoding": {
+        "state": "works",
+        "note": "both engines"
+      },
+      "Camera noise filter": {
+        "state": "none",
+        "note": "not on this chip yet"
+      },
+      "Neural Engine": {
+        "state": "works",
+        "note": "runs models end to end; the occasional stop at first start is fixed"
       }
     },
     "j613": {
@@ -1305,6 +1394,26 @@
       "Video decoding": {
         "state": "works",
         "note": "Confirmed by Aurora, 2026-10-21"
+      },
+      "Video encoding": {
+        "state": "partial",
+        "note": "H.264 works on lab boots; the shipped kernel keeps the encoder off until a boot loader change lands. No HEVC yet"
+      },
+      "ProRes encoding": {
+        "state": "none",
+        "note": "driver change still in review"
+      },
+      "JPEG encoding": {
+        "state": "works",
+        "note": ""
+      },
+      "Camera noise filter": {
+        "state": "none",
+        "note": "not on this chip"
+      },
+      "Neural Engine": {
+        "state": "partial",
+        "note": "runs small models; a hung job needs a reboot"
       }
     },
     "j414s": {
@@ -1655,6 +1764,26 @@
       "Video decoding": {
         "state": "works",
         "note": "Confirmed by Aurora, 2026-10-21"
+      },
+      "Video encoding": {
+        "state": "partial",
+        "note": "H.264 works on lab boots; the shipped kernel keeps the encoder off until a boot loader change lands. No HEVC yet"
+      },
+      "ProRes encoding": {
+        "state": "works",
+        "note": "all profiles"
+      },
+      "JPEG encoding": {
+        "state": "works",
+        "note": ""
+      },
+      "Camera noise filter": {
+        "state": "none",
+        "note": "not on this chip"
+      },
+      "Neural Engine": {
+        "state": "partial",
+        "note": "runs small models; a hung job needs a reboot"
       }
     },
     "j415": {

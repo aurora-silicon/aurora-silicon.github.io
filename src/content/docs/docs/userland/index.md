@@ -42,6 +42,7 @@ In the tables, On means installed and running, Installed means present but switc
 | --- | --- | --- |
 | [Graphics](/docs/userland/graphics/) | Aurora OpenGL and Borealis Vulkan drivers, and the same driver for Flatpak apps | On |
 | [Hardware video decode](/docs/userland/video-decode/) | VA-API on the Apple Video Decoder for players and Firefox | Installed, experimental |
+| [Hardware video encode](/docs/userland/video-encode/) | H.264, HEVC, ProRes and JPEG encoders through V4L2, for GStreamer and FFmpeg | On |
 | [x86 apps and Steam](/docs/userland/gaming/) | FEX for x86 programs and the native ARM64 Steam client | Available |
 | [Neural Engine](/docs/userland/neural-engine/) | Tools to run programs on the ANE | Available |
 
