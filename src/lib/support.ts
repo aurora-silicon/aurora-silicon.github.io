@@ -7,6 +7,8 @@ export interface Device {
   generation: string; discussion: string; profile: string;
   // Listed from its device tree before anyone on the team has tested one.
   experimental?: boolean;
+  // The Aurora installer has been tested on this Mac.
+  installerTested?: boolean;
 }
 export interface FeatureGroup { name: string; features: string[]; }
 export interface Record { state: Exclude<State, 'unknown' | 'reported'>; note: string; }
@@ -31,6 +33,9 @@ export function getChipTier(device: Device): number {
   return tier ? chipTiers.indexOf(tier) + 1 : 0;
 }
 export const history = historyData as { [device: string]: { [feature: string]: History[] } };
+export function installerLabel(device: Device): string {
+  return device.installerTested ? 'Installer tested' : 'Installer untested';
+}
 export const labels: { [state in State]: string } = {
   works: 'Working', partial: 'Partial', untested: 'Untested', none: 'Not working', unknown: 'Not recorded', reported: 'Reported',
 };
