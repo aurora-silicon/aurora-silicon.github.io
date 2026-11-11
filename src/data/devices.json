@@ -7,7 +7,8 @@
     "year": "",
     "generation": "A18 Pro",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/72",
-    "profile": "neo"
+    "profile": "neo",
+    "installerTested": true
   },
   {
     "model": "Mac mini",
@@ -219,7 +220,8 @@
     "year": "2024",
     "generation": "M4",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/129",
-    "profile": "mbp"
+    "profile": "mbp",
+    "installerTested": true
   },
   {
     "model": "MacBook Pro 14-inch",
@@ -239,7 +241,8 @@
     "year": "2024",
     "generation": "M4",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/129",
-    "profile": "mbp"
+    "profile": "mbp",
+    "installerTested": true
   },
   {
     "model": "MacBook Pro 16-inch",
@@ -429,7 +432,8 @@
     "year": "2022",
     "generation": "M2",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/105",
-    "profile": "laptop"
+    "profile": "laptop",
+    "installerTested": true
   },
   {
     "model": "MacBook Air 15-inch",
@@ -439,7 +443,8 @@
     "year": "2023",
     "generation": "M2",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/105",
-    "profile": "laptop"
+    "profile": "laptop",
+    "installerTested": true
   },
   {
     "model": "MacBook Pro 13-inch",
@@ -449,7 +454,8 @@
     "year": "2022",
     "generation": "M2",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/106",
-    "profile": "laptop"
+    "profile": "laptop",
+    "installerTested": true
   },
   {
     "model": "MacBook Pro 14-inch",
@@ -459,7 +465,8 @@
     "year": "2023",
     "generation": "M2",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/106",
-    "profile": "mbp"
+    "profile": "mbp",
+    "installerTested": true
   },
   {
     "model": "MacBook Pro 14-inch",
@@ -469,7 +476,8 @@
     "year": "2023",
     "generation": "M2",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/106",
-    "profile": "mbp"
+    "profile": "mbp",
+    "installerTested": true
   },
   {
     "model": "MacBook Pro 16-inch",
@@ -479,7 +487,8 @@
     "year": "2023",
     "generation": "M2",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/106",
-    "profile": "mbp"
+    "profile": "mbp",
+    "installerTested": true
   },
   {
     "model": "MacBook Pro 16-inch",
@@ -489,7 +498,8 @@
     "year": "2023",
     "generation": "M2",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/106",
-    "profile": "mbp"
+    "profile": "mbp",
+    "installerTested": true
   },
   {
     "model": "Mac mini",
@@ -499,7 +509,8 @@
     "year": "2023",
     "generation": "M2",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/107",
-    "profile": "desktop"
+    "profile": "desktop",
+    "installerTested": true
   },
   {
     "model": "Mac mini",
@@ -509,7 +520,8 @@
     "year": "2023",
     "generation": "M2",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/107",
-    "profile": "desktop"
+    "profile": "desktop",
+    "installerTested": true
   },
   {
     "model": "Mac Studio",
@@ -519,7 +531,8 @@
     "year": "2023",
     "generation": "M2",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/114",
-    "profile": "desktop"
+    "profile": "desktop",
+    "installerTested": true
   },
   {
     "model": "Mac Studio",
@@ -529,7 +542,8 @@
     "year": "2023",
     "generation": "M2",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/114",
-    "profile": "desktop"
+    "profile": "desktop",
+    "installerTested": true
   },
   {
     "model": "Mac Pro",
@@ -539,7 +553,8 @@
     "year": "2023",
     "generation": "M2",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/116",
-    "profile": "desktop"
+    "profile": "desktop",
+    "installerTested": true
   },
   {
     "model": "MacBook Air",
@@ -549,7 +564,8 @@
     "year": "2020",
     "generation": "M1",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/96",
-    "profile": "laptop"
+    "profile": "laptop",
+    "installerTested": true
   },
   {
     "model": "MacBook Pro 13-inch",
@@ -559,7 +575,8 @@
     "year": "2020",
     "generation": "M1",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/95",
-    "profile": "laptop"
+    "profile": "laptop",
+    "installerTested": true
   },
   {
     "model": "MacBook Pro 14-inch",
@@ -569,7 +586,8 @@
     "year": "2021",
     "generation": "M1",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/95",
-    "profile": "mbp"
+    "profile": "mbp",
+    "installerTested": true
   },
   {
     "model": "MacBook Pro 14-inch",
@@ -579,7 +597,8 @@
     "year": "2021",
     "generation": "M1",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/95",
-    "profile": "mbp"
+    "profile": "mbp",
+    "installerTested": true
   },
   {
     "model": "MacBook Pro 16-inch",
@@ -589,7 +608,8 @@
     "year": "2021",
     "generation": "M1",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/95",
-    "profile": "mbp"
+    "profile": "mbp",
+    "installerTested": true
   },
   {
     "model": "MacBook Pro 16-inch",
@@ -599,7 +619,8 @@
     "year": "2021",
     "generation": "M1",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/95",
-    "profile": "mbp"
+    "profile": "mbp",
+    "installerTested": true
   },
   {
     "model": "Mac mini",
@@ -609,7 +630,8 @@
     "year": "2020",
     "generation": "M1",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/94",
-    "profile": "desktop"
+    "profile": "desktop",
+    "installerTested": true
   },
   {
     "model": "iMac 24-inch, 4× USB-C",
@@ -619,7 +641,8 @@
     "year": "2021",
     "generation": "M1",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/97",
-    "profile": "imac"
+    "profile": "imac",
+    "installerTested": true
   },
   {
     "model": "iMac 24-inch, 2× USB-C",
@@ -629,7 +652,8 @@
     "year": "2021",
     "generation": "M1",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/97",
-    "profile": "imac"
+    "profile": "imac",
+    "installerTested": true
   },
   {
     "model": "Mac Studio",
@@ -639,7 +663,8 @@
     "year": "2022",
     "generation": "M1",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/103",
-    "profile": "desktop"
+    "profile": "desktop",
+    "installerTested": true
   },
   {
     "model": "Mac Studio",
@@ -649,6 +674,7 @@
     "year": "2022",
     "generation": "M1",
     "discussion": "https://github.com/aurora-silicon/linux/discussions/103",
-    "profile": "desktop"
+    "profile": "desktop",
+    "installerTested": true
   }
 ]

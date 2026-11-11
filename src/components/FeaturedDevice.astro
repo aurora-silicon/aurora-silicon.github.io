@@ -21,7 +21,7 @@ const essentials = [
     <div class="device-card-intro">
       <span class="device-kicker">Latest device</span>
       <h2 id="featured-device-title">{device.model}</h2>
-      <p>{device.chip} · {summary.working} working · {summary.partial} partial</p>
+      <p>{device.chip}{device.installerTested ? ' · Installer tested' : ''} · {summary.working} working · {summary.partial} partial</p>
       <a class="project-link" href={`/devices/?device=${device.device}`}>All features <Arrow /></a>
     </div>
     <ul class="device-essentials" aria-label="MacBook Neo features">

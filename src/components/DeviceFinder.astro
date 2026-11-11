@@ -1,7 +1,7 @@
 ---
 import devices from '../data/devices.json';
 import FeatureIcon from './FeatureIcon.astro';
-import { getGroups, getState, labels, support, deviceClasses, getDeviceClass, getSeries } from '../lib/support';
+import { getGroups, getState, labels, support, deviceClasses, getDeviceClass, getSeries, installerLabel } from '../lib/support';
 import DeviceIcon from './DeviceIcon.astro';
 const seriesList = getSeries(devices);
 const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMap(group => group.features)))];
@@ -21,7 +21,7 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   </div>
   <div class="variant-picker" data-variants role="group" aria-label="Model variant" hidden></div>
   <section class="feature-results" data-feature-results hidden aria-label="Selected device features">
-    <div class="result-heading"><div><h2 data-model-name></h2><p class="device-meta" data-device-meta></p></div><a class="project-link" data-hardware-link href="https://github.com/aurora-silicon/linux/discussions">Hardware reports ↗</a></div>
+    <div class="result-heading"><div><h2 data-model-name></h2><p class="device-meta" data-device-meta></p><p class="installer-status" data-installer-status></p></div><a class="project-link" data-hardware-link href="https://github.com/aurora-silicon/linux/discussions">Hardware reports ↗</a></div>
     <p class="support-summary" data-support-summary></p>
     <div class="feature-groups" data-feature-groups></div>
     <div id="feature-detail" class="feature-detail" data-feature-detail hidden><h3 data-feature-title></h3><div data-feature-body></div></div>
@@ -31,13 +31,13 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   <template data-feature-icons>{iconNames.map(name => <span data-icon-name={name}><FeatureIcon name={name} /></span>)}</template>
   <noscript>
     <style>.series-selection,.class-selection,.variant-picker{display:none}</style>
-    <div class="offline-devices"><p>Select a chip series, then a device.</p>{seriesList.map(series => <details><summary>{series}</summary>{deviceClasses.filter(name => devices.some(device => device.generation === series && getDeviceClass(device) === name)).map(name => <details><summary>{name}</summary>{devices.filter(device => device.generation === series && getDeviceClass(device) === name).map(device => <details><summary>{device.model} · {device.chip} · {device.device}{device.experimental ? ' · Experimental, untested' : ''}</summary>{getGroups(device).map(group => <div><h3>{group.name}</h3><ul>{group.features.map(feature => <li>{feature}: {labels[getState(device.device, feature)]}{support.results[device.device]?.[feature]?.note ? ` · ${support.results[device.device][feature].note}` : ''}</li>)}</ul></div>)}<a href={device.discussion}>Hardware reports</a></details>)}</details>)}</details>)}</div>
+    <div class="offline-devices"><p>Select a chip series, then a device.</p>{seriesList.map(series => <details><summary>{series}</summary>{deviceClasses.filter(name => devices.some(device => device.generation === series && getDeviceClass(device) === name)).map(name => <details><summary>{name}</summary>{devices.filter(device => device.generation === series && getDeviceClass(device) === name).map(device => <details><summary>{device.model} · {device.chip} · {device.device}{device.experimental ? ' · Experimental, untested' : ''} · {installerLabel(device)}</summary>{getGroups(device).map(group => <div><h3>{group.name}</h3><ul>{group.features.map(feature => <li>{feature}: {labels[getState(device.device, feature)]}{support.results[device.device]?.[feature]?.note ? ` · ${support.results[device.device][feature].note}` : ''}</li>)}</ul></div>)}<a href={device.discussion}>Hardware reports</a></details>)}</details>)}</details>)}</div>
   </noscript>
   <span class="sr-only" data-device-announcement role="status" aria-live="polite"></span>
 </section>
 <script>
   import devices from '../data/devices.json';
-  import { getGroups, getState, getSummary, getHistory, labels, support, getDeviceClass, getSeries, getChipTier } from '../lib/support';
+  import { getGroups, getState, getSummary, getHistory, labels, support, getDeviceClass, getSeries, getChipTier, installerLabel } from '../lib/support';
   import type { Device } from '../lib/support';
   const classButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-device-class]')];
   const variants = document.querySelector<HTMLElement>('[data-variants]')!;
@@ -168,6 +168,10 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
     if (!selected) { clearUrl(); return; }
     document.querySelector<HTMLElement>('[data-model-name]')!.textContent = selected.model;
     document.querySelector<HTMLElement>('[data-device-meta]')!.textContent = [selected.chip, selected.soc, selected.device, selected.year, selected.experimental ? 'Experimental, untested' : ''].filter(Boolean).join(' · ');
+    const installer = document.querySelector<HTMLElement>('[data-installer-status]')!;
+    installer.textContent = installerLabel(selected);
+    installer.classList.toggle('is-tested', Boolean(selected.installerTested));
+    installer.title = selected.installerTested ? 'The Aurora installer has been tested on this Mac.' : 'The Aurora installer has not been tested on this Mac yet.';
     document.querySelector<HTMLAnchorElement>('[data-hardware-link]')!.href = selected.discussion;
     const summary = getSummary(selected);
     document.querySelector<HTMLElement>('[data-support-summary]')!.textContent = summary.recorded
@@ -283,6 +287,10 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   .result-heading { display: flex; justify-content: space-between; align-items: start; gap: 24px; margin-bottom: 16px; }
   .result-heading h2 { font-size: 21px; }
   .device-meta { margin-top: 9px; color: var(--muted); font-size: 11px; }
+  .installer-status { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 3px 9px; border: 1px dashed var(--line); border-radius: 100px; color: var(--muted); font-size: 10px; }
+  .installer-status::before { content: '–'; content: '–' / ''; }
+  .installer-status.is-tested { border-style: solid; color: var(--status-working); border-color: var(--status-working-border); background: var(--status-working-bg); }
+  .installer-status.is-tested::before { content: '✓'; content: '✓' / ''; }
   .support-summary { color: var(--muted); font-size: 12px; margin-bottom: 32px; }
   .feature-groups :global(.feature-group + .feature-group) { margin-top: 27px; }
   .feature-groups :global(.feature-group h3) { margin: 0 0 12px; font-size: 11px; color: var(--muted); font-weight: 500; }

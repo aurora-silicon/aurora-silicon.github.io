@@ -24,6 +24,8 @@ Support is recorded **per machine and per feature**, rather than inferred from a
 
 The device page groups features by the hardware in each Mac. Its current support snapshot uses **Working**, **Partial**, **Untested**, **Not working**, and **Not recorded**. **Untested** means the hardware is described in the kernel but nobody has run it on that Mac yet. Where only an earlier development report is available, it shows **Reported**.
 
+Each Mac also shows whether the Aurora installer has been tested on it. **Installer tested** currently covers the M1 and M2 series (including Pro, Max and Ultra), the M4 Pro MacBook Pro (J614s and J616s) and the MacBook Neo (A18 Pro). On every other Mac, **Installer untested** means nobody has run the installer there yet, even where Linux itself boots.
+
 Open a feature pill for any restrictions and earlier dated reports. Historical results describe their named software revisions and may differ from the current status.
 
 :::note[Device reports]
