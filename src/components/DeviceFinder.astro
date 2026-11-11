@@ -27,7 +27,7 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   <section class="feature-results" data-feature-results hidden aria-label="Selected device features">
     <div class="result-heading"><div><h2 data-model-name></h2><p class="device-meta" data-device-meta></p></div><a class="project-link" data-hardware-link href="https://github.com/aurora-silicon/linux/discussions">Hardware reports ↗</a></div>
     <p class="support-summary" data-support-summary></p>
-    <p class="os-note" data-os-note hidden>Windows boots through <a href="https://github.com/aurora-silicon/mu">Mu</a>, our UEFI firmware. No installer or driver release yet.</p>
+    <p class="os-note" data-os-note hidden>No Windows release yet.</p>
     <div class="feature-groups" data-feature-groups></div>
     <div id="feature-detail" class="feature-detail" data-feature-detail hidden><h3 data-feature-title></h3><div data-feature-body></div></div>
     <ul class="support-legend" aria-label="Status key">{(['works', 'partial', 'none', 'unknown'] as const).map(state => <li><span class={`state-mark state-${state}`} aria-hidden="true"></span>{labels[state]}</li>)}</ul>

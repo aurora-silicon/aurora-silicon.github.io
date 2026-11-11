@@ -4913,23 +4913,23 @@
     }
   ],
   "windows": {
-    "source": "Windows bring-up records kept on the earlier site, 2026-08 (j414s) and 2026-10 (j316s)",
+    "source": "No Windows release yet; every row is Not working until one lands",
     "results": {
       "j414s": {
         "Boot": {
-          "state": "works",
-          "note": "UEFI boot through Mu and the Windows Boot Manager"
+          "state": "none",
+          "note": ""
         },
         "All CPU cores": {
-          "state": "works",
-          "note": "Working: P/E scheduling, frequency scaling and power modes."
+          "state": "none",
+          "note": ""
         },
         "Internal storage": {
-          "state": "works",
+          "state": "none",
           "note": ""
         },
         "Internal display": {
-          "state": "works",
+          "state": "none",
           "note": ""
         },
         "ProMotion": {
@@ -4937,16 +4937,16 @@
           "note": ""
         },
         "Keyboard": {
-          "state": "works",
+          "state": "none",
           "note": ""
         },
         "Keyboard backlight": {
-          "state": "works",
+          "state": "none",
           "note": ""
         },
         "Trackpad": {
-          "state": "works",
-          "note": "with gestures"
+          "state": "none",
+          "note": ""
         },
         "Touch ID": {
           "state": "none",
@@ -4969,8 +4969,8 @@
           "note": ""
         },
         "USB-C": {
-          "state": "works",
-          "note": "Working: USB 3.\nWorking: Ethernet adapters with Realtek's arm64 driver."
+          "state": "none",
+          "note": ""
         },
         "Thunderbolt / USB4": {
           "state": "none",
@@ -4985,54 +4985,54 @@
           "note": ""
         },
         "Wi-Fi": {
-          "state": "works",
+          "state": "none",
           "note": ""
         },
         "Bluetooth": {
-          "state": "works",
+          "state": "none",
           "note": ""
         },
         "Battery / charging": {
-          "state": "works",
-          "note": "battery and battery health reporting"
+          "state": "none",
+          "note": ""
         },
         "Fan control": {
-          "state": "works",
+          "state": "none",
           "note": ""
         },
         "GPU acceleration": {
-          "state": "partial",
-          "note": "Working: Vulkan and DXVK.\nNot working: desktop acceleration, no display driver yet."
+          "state": "none",
+          "note": ""
         },
         "Sleep": {
           "state": "none",
-          "note": "Not working: suspend to RAM (deep sleep)."
+          "note": ""
         }
       },
       "j316s": {
         "Boot": {
-          "state": "works",
-          "note": "UEFI boot through Mu and the Windows Boot Manager"
+          "state": "none",
+          "note": ""
         },
         "All CPU cores": {
-          "state": "works",
+          "state": "none",
           "note": ""
         },
         "Internal display": {
-          "state": "works",
+          "state": "none",
           "note": ""
         },
         "Keyboard": {
-          "state": "works",
+          "state": "none",
           "note": ""
         },
         "Trackpad": {
-          "state": "works",
+          "state": "none",
           "note": ""
         },
         "USB-C": {
-          "state": "partial",
-          "note": "no hotplug or USB 3"
+          "state": "none",
+          "note": ""
         }
       }
     }
