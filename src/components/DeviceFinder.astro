@@ -1,17 +1,21 @@
 ---
 import devices from '../data/devices.json';
 import FeatureIcon from './FeatureIcon.astro';
-import { getGroups, getState, labels, support, deviceClasses, getDeviceClass, getSeries } from '../lib/support';
+import { getGroups, getState, hasResults, labels, osLabels, osList, support, deviceClasses, getDeviceClass, getSeries } from '../lib/support';
 import DeviceIcon from './DeviceIcon.astro';
 const seriesList = getSeries(devices);
 const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMap(group => group.features)))];
 ---
 <section class="device-finder" aria-label="Device configuration">
   <!-- One row of chip series, newest first. Pro, Max and Ultra are chosen
-       with the model below, so the row stays short. -->
+       with the model below, so the row stays short. Linux and Windows results
+       are recorded for the same Macs, so the system is a switch on the side. -->
   <div class="series-selection">
     <div class="series-picker" role="group" aria-label="Chip series">
       {seriesList.map(series => <button type="button" data-series={series} aria-pressed="false">{series}</button>)}
+    </div>
+    <div class="os-picker segmented" role="group" aria-label="Operating system">
+      {osList.map(os => <button type="button" data-os={os} aria-pressed="false">{osLabels[os]}</button>)}
     </div>
   </div>
   <div class="class-selection">
@@ -23,31 +27,35 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   <section class="feature-results" data-feature-results hidden aria-label="Selected device features">
     <div class="result-heading"><div><h2 data-model-name></h2><p class="device-meta" data-device-meta></p></div><a class="project-link" data-hardware-link href="https://github.com/aurora-silicon/linux/discussions">Hardware reports ↗</a></div>
     <p class="support-summary" data-support-summary></p>
+    <p class="os-note" data-os-note hidden>Windows starts through <a href="https://github.com/aurora-silicon/mu">Mu</a>, our UEFI firmware, and then needs its own driver for each part of the Mac. There is no installer or driver release yet, so these are bring-up results on the named Mac.</p>
     <div class="feature-groups" data-feature-groups></div>
     <div id="feature-detail" class="feature-detail" data-feature-detail hidden><h3 data-feature-title></h3><div data-feature-body></div></div>
     <ul class="support-legend" aria-label="Status key">{(['works', 'partial', 'none', 'unknown'] as const).map(state => <li><span class={`state-mark state-${state}`} aria-hidden="true"></span>{labels[state]}</li>)}</ul>
-    <p class="feature-note">Open a feature for its notes. Results apply to this device only.</p>
+    <p class="feature-note">Open a feature for its notes. Results apply to this device and system only.</p>
   </section>
   <template data-feature-icons>{iconNames.map(name => <span data-icon-name={name}><FeatureIcon name={name} /></span>)}</template>
   <noscript>
     <style>.series-selection,.class-selection,.variant-picker{display:none}</style>
-    <div class="offline-devices"><p>Select a chip series, then a device.</p>{seriesList.map(series => <details><summary>{series}</summary>{deviceClasses.filter(name => devices.some(device => device.generation === series && getDeviceClass(device) === name)).map(name => <details><summary>{name}</summary>{devices.filter(device => device.generation === series && getDeviceClass(device) === name).map(device => <details><summary>{device.model} · {device.chip} · {device.device}</summary>{getGroups(device).map(group => <div><h3>{group.name}</h3><ul>{group.features.map(feature => <li>{feature}: {labels[getState(device.device, feature)]}{support.results[device.device]?.[feature]?.note ? ` · ${support.results[device.device][feature].note}` : ''}</li>)}</ul></div>)}<a href={device.discussion}>Hardware reports</a></details>)}</details>)}</details>)}</div>
+    <div class="offline-devices"><p>Select a chip series, then a device.</p>{seriesList.map(series => <details><summary>{series}</summary>{deviceClasses.filter(name => devices.some(device => device.generation === series && getDeviceClass(device) === name)).map(name => <details><summary>{name}</summary>{devices.filter(device => device.generation === series && getDeviceClass(device) === name).map(device => <details><summary>{device.model} · {device.chip} · {device.device}</summary>{osList.filter(os => os === 'linux' || hasResults(device.device, os)).map(os => <div><h3>{osLabels[os]}</h3>{getGroups(device, os).map(group => <div><h4>{group.name}</h4><ul>{group.features.map(feature => <li>{feature}: {labels[getState(device.device, feature, os)]}{support.results[device.device]?.[feature]?.note && os === 'linux' ? ` · ${support.results[device.device][feature].note}` : ''}{support.windows.results[device.device]?.[feature]?.note && os === 'windows' ? ` · ${support.windows.results[device.device][feature].note}` : ''}</li>)}</ul></div>)}</div>)}<a href={device.discussion}>Hardware reports</a></details>)}</details>)}</details>)}</div>
   </noscript>
   <span class="sr-only" data-device-announcement role="status" aria-live="polite"></span>
 </section>
 <script>
   import devices from '../data/devices.json';
-  import { getGroups, getState, getSummary, getHistory, labels, support, getDeviceClass, getSeries, getChipTier } from '../lib/support';
-  import type { Device } from '../lib/support';
+  import { getGroups, getState, getSummary, getHistory, getRecord, labels, osLabels, getDeviceClass, getSeries, getChipTier } from '../lib/support';
+  import type { Device, Os } from '../lib/support';
   const classButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-device-class]')];
+  const osButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-os]')];
   const variants = document.querySelector<HTMLElement>('[data-variants]')!;
   const results = document.querySelector<HTMLElement>('[data-feature-results]')!;
   const groups = document.querySelector<HTMLElement>('[data-feature-groups]')!;
   const panel = document.querySelector<HTMLElement>('[data-feature-detail]')!;
+  const osNote = document.querySelector<HTMLElement>('[data-os-note]')!;
   const announce = document.querySelector<HTMLElement>('[data-device-announcement]')!;
   const icons = document.querySelector<HTMLTemplateElement>('[data-feature-icons]')!.content;
   const seriesButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-series]')];
   const classRow = document.querySelector<HTMLElement>('.class-selection')!;
+  const MU_URL = 'https://github.com/aurora-silicon/mu';
   // A kind of Mac made in only one series (the MacBook Neo) is shown in that
   // series alone, rather than as a dimmed tile everywhere else.
   const onlyIn = (name: string) => {
@@ -57,9 +65,15 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   let selected: Device | undefined;
   let series = getSeries(devices)[0];
   let deviceClass = '';
+  let os: Os = 'linux';
   function resetDetails() {
     panel.hidden = true;
     for (const pill of groups.querySelectorAll<HTMLButtonElement>('[data-feature]')) pill.setAttribute('aria-expanded', 'false');
+  }
+  function chooseOs(value: Os) {
+    os = value;
+    osButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.os === value)));
+    updateFeatures();
   }
   function chooseSeries(value: string, preferredClass?: string, preferredDevice?: string) {
     series = value;
@@ -139,17 +153,17 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
     updateFeatures();
   }
   function clearUrl() {
-    const url = new URL(window.location.href); url.searchParams.delete('device'); url.searchParams.delete('feature'); url.hash = ''; history.replaceState(null, '', url);
+    const url = new URL(window.location.href); url.searchParams.delete('device'); url.searchParams.delete('feature'); url.searchParams.delete('os'); url.hash = ''; history.replaceState(null, '', url);
   }
   function renderFeatures() {
     groups.replaceChildren();
     if (!selected) return;
-    for (const group of getGroups(selected)) {
+    for (const group of getGroups(selected, os)) {
       const section = document.createElement('section'); section.className = 'feature-group';
       const heading = document.createElement('h3'); heading.textContent = group.name; section.append(heading);
       const list = document.createElement('div'); list.className = 'feature-pills';
       for (const feature of group.features) {
-        const state = getState(selected.device, feature);
+        const state = getState(selected.device, feature, os);
         const button = document.createElement('button');
         button.type = 'button'; button.className = `feature-pill status-${state}`; button.dataset.feature = feature;
         button.setAttribute('aria-expanded', 'false'); button.setAttribute('aria-controls', 'feature-detail');
@@ -168,14 +182,19 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
     if (!selected) { clearUrl(); return; }
     document.querySelector<HTMLElement>('[data-model-name]')!.textContent = selected.model;
     document.querySelector<HTMLElement>('[data-device-meta]')!.textContent = [selected.chip, selected.soc, selected.device, selected.year].filter(Boolean).join(' · ');
-    document.querySelector<HTMLAnchorElement>('[data-hardware-link]')!.href = selected.discussion;
-    const summary = getSummary(selected);
+    const link = document.querySelector<HTMLAnchorElement>('[data-hardware-link]')!;
+    link.href = os === 'windows' ? MU_URL : selected.discussion;
+    link.textContent = os === 'windows' ? 'Mu firmware ↗' : 'Hardware reports ↗';
+    osNote.hidden = os !== 'windows';
+    const summary = getSummary(selected, os);
     document.querySelector<HTMLElement>('[data-support-summary]')!.textContent = summary.recorded
       ? [`${summary.working} working`, `${summary.partial} partial`, summary.notWorking ? `${summary.notWorking} not working` : '', summary.reported ? `${summary.reported} reported` : '', `${summary.total - summary.recorded} not recorded`].filter(Boolean).join(' · ')
-      : 'No feature results recorded yet.';
+      : `No ${osLabels[os]} results recorded for this Mac yet.`;
     renderFeatures();
-    announce.textContent = `Features for ${selected.model}, ${selected.chip}. ${summary.working} working, ${summary.partial} partial.`;
-    const url = new URL(window.location.href); url.searchParams.set('device', selected.device); url.searchParams.delete('feature'); url.hash = ''; history.replaceState(null, '', url);
+    announce.textContent = `${osLabels[os]} features for ${selected.model}, ${selected.chip}. ${summary.working} working, ${summary.partial} partial.`;
+    const url = new URL(window.location.href); url.searchParams.set('device', selected.device); url.searchParams.delete('feature'); url.hash = '';
+    if (os === 'linux') url.searchParams.delete('os'); else url.searchParams.set('os', os);
+    history.replaceState(null, '', url);
   }
   groups.addEventListener('click', event => {
     const pill = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-feature]');
@@ -187,14 +206,14 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
     const url = new URL(window.location.href); url.searchParams.set('feature', feature); history.replaceState(null, '', url);
     document.querySelector<HTMLElement>('[data-feature-title]')!.textContent = feature;
     const body = document.querySelector<HTMLElement>('[data-feature-body]')!; body.replaceChildren();
-    const current = support.results[selected.device]?.[feature];
+    const current = getRecord(selected.device, feature, os);
     const text = document.createElement('p');
-    text.textContent = current ? `${labels[current.state]}${current.note ? `: ${current.note}.` : ' for this device.'}` : getState(selected.device, feature) === 'reported' ? 'A development report is recorded below.' : 'No result recorded for this device.';
+    text.textContent = current ? `${labels[current.state]}${current.note ? `: ${current.note}.` : ` on ${osLabels[os]} for this device.`}` : getState(selected.device, feature, os) === 'reported' ? 'A development report is recorded below.' : `No ${osLabels[os]} result recorded for this device.`;
     body.append(text);
     if (current) {
-      const link = document.createElement('a'); link.className = 'project-link'; link.href = selected.discussion; link.textContent = 'Hardware report ↗'; body.append(link);
+      const link = document.createElement('a'); link.className = 'project-link'; link.href = os === 'windows' ? MU_URL : selected.discussion; link.textContent = os === 'windows' ? 'Mu firmware ↗' : 'Hardware report ↗'; body.append(link);
     }
-    for (const record of getHistory(selected.device, feature)) {
+    for (const record of getHistory(selected.device, feature, os)) {
       const detail = document.createElement('p'); detail.className = 'historic-detail'; detail.textContent = record.detail;
       const source = document.createElement('a'); source.href = record.url || selected.discussion; source.textContent = `Earlier report · ${record.date}`; source.className = 'project-link'; body.append(detail, source);
     }
@@ -232,6 +251,7 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
     if (top >= 0 && top < window.innerHeight * .4) return;
     scrollToY(window.scrollY + top - (siteHeader?.offsetHeight ?? 0) - GAP);
   }
+  osButtons.forEach(button => button.addEventListener('click', () => chooseOs(button.dataset.os as Os)));
   seriesButtons.forEach(button => button.addEventListener('click', () => { chooseSeries(button.dataset.series!); showResultsIfChosen('series'); }));
   classButtons.forEach(button => button.addEventListener('click', () => { chooseClass(button.dataset.deviceClass!); showResultsIfChosen('class'); }));
   variants.addEventListener('click', event => {
@@ -246,6 +266,8 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
     showResultsIfChosen('size');
   });
   const url = new URL(window.location.href);
+  os = url.searchParams.get('os') === 'windows' ? 'windows' : 'linux';
+  osButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.os === os)));
   const initial = devices.find(device => device.device === (url.searchParams.get('device') || url.hash.slice(1)));
   chooseSeries(initial ? initial.generation : getSeries(devices)[0], initial ? getDeviceClass(initial) : undefined, initial?.device);
   const feature = url.searchParams.get('feature');
@@ -254,12 +276,14 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
 </script>
 <style>
   .device-finder { max-width: 940px; }
-  .series-picker { display: flex; gap: 4px; margin-bottom: 22px; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+  .series-selection { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 22px; border-bottom: 1px solid var(--line); }
+  .series-picker { display: flex; gap: 4px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
   .series-picker::-webkit-scrollbar { display: none; }
   .series-picker button { flex-shrink: 0; min-height: 44px; margin-bottom: -1px; padding: 0 14px; border: 0; border-bottom: 2px solid transparent; background: none; color: var(--muted); font: inherit; font-size: 14px; white-space: nowrap; cursor: pointer; }
   .series-picker button:hover { color: var(--text); }
   .series-picker button[aria-pressed='true'] { color: var(--text); border-bottom-color: var(--text); font-weight: 550; }
   .series-picker button:focus-visible { outline: 2px solid var(--text); outline-offset: -2px; border-radius: 4px; }
+  .os-picker { flex-shrink: 0; margin-bottom: 6px; }
   .class-picker { position: relative; display: flex; gap: 8px; overflow-x: auto; padding: 5px 3px 9px; margin-inline: -3px; scrollbar-width: thin; }
   .class-picker button { flex: 1; min-width: 110px; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 20px 8px 15px; background: none; color: var(--muted); border: 1px solid transparent; border-radius: 9px; font-size: 11px; white-space: nowrap; cursor: pointer; }
   .class-picker button[aria-pressed='true'] { color: var(--text); border-color: var(--line); background: color-mix(in srgb, var(--text) 3%, var(--bg)); }
@@ -271,12 +295,12 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   .class-picker::-webkit-scrollbar { height: 3px; }
   .class-picker::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
   .variant-picker { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; }
-  .variant-picker :global(.segmented) { display: inline-flex; max-width: 100%; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; scrollbar-width: none; }
-  .variant-picker :global(.segmented::-webkit-scrollbar) { display: none; }
-  .variant-picker :global(.segmented button) { flex-shrink: 0; padding: 7px 12px; border: 0; border-radius: 7px; background: none; color: var(--muted); font: inherit; font-size: 12px; white-space: nowrap; cursor: pointer; }
-  .variant-picker :global(.segmented button:hover) { color: var(--text); }
-  .variant-picker :global(.segmented button[aria-pressed='true']) { color: var(--text); background: color-mix(in srgb, var(--text) 10%, var(--bg)); }
-  .variant-picker :global(.segmented button:focus-visible) { outline: 2px solid var(--text); outline-offset: -2px; }
+  .segmented, .variant-picker :global(.segmented) { display: inline-flex; max-width: 100%; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; scrollbar-width: none; }
+  .segmented::-webkit-scrollbar, .variant-picker :global(.segmented::-webkit-scrollbar) { display: none; }
+  .segmented button, .variant-picker :global(.segmented button) { flex-shrink: 0; padding: 7px 12px; border: 0; border-radius: 7px; background: none; color: var(--muted); font: inherit; font-size: 12px; white-space: nowrap; cursor: pointer; }
+  .segmented button:hover, .variant-picker :global(.segmented button:hover) { color: var(--text); }
+  .segmented button[aria-pressed='true'], .variant-picker :global(.segmented button[aria-pressed='true']) { color: var(--text); background: color-mix(in srgb, var(--text) 10%, var(--bg)); }
+  .segmented button:focus-visible, .variant-picker :global(.segmented button:focus-visible) { outline: 2px solid var(--text); outline-offset: -2px; }
   .feature-results { margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--line); }
   /* With nothing to pick below the tabs, the results sit straight under them. */
   .is-single .feature-results { margin-top: 0; padding-top: 6px; border-top: 0; }
@@ -284,6 +308,9 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   .result-heading h2 { font-size: 21px; }
   .device-meta { margin-top: 9px; color: var(--muted); font-size: 11px; }
   .support-summary { color: var(--muted); font-size: 12px; margin-bottom: 32px; }
+  .os-note { max-width: 640px; margin: -18px 0 32px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+  .os-note a { text-decoration: underline; text-underline-offset: 3px; }
+  .os-note a:hover { color: var(--text); }
   .feature-groups :global(.feature-group + .feature-group) { margin-top: 27px; }
   .feature-groups :global(.feature-group h3) { margin: 0 0 12px; font-size: 11px; color: var(--muted); font-weight: 500; }
   .feature-groups :global(.feature-pills) { display: flex; flex-wrap: wrap; gap: 9px; }
@@ -312,9 +339,13 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   .offline-devices { font-size: 13px; line-height: 1.8; }
   .offline-devices details { border-bottom: 1px solid var(--line); padding-block: 16px; }
   .offline-devices summary { cursor: pointer; }
-  .offline-devices h3 { font-size: 12px; margin-top: 20px; }
+  .offline-devices h3 { font-size: 13px; margin-top: 22px; }
+  .offline-devices h4 { font-size: 12px; margin: 16px 0 0; color: var(--muted); font-weight: 500; }
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
   @media (max-width: 600px) {
+    .series-selection { flex-wrap: wrap; gap: 0; }
+    .series-picker { width: 100%; }
+    .os-picker { order: -1; margin: 0 0 10px; }
     .series-picker button { padding: 0 12px; font-size: 13px; }
     .class-picker button { min-width: 99px; padding-block: 17px 13px; }
     .feature-results { margin-top: 30px; }

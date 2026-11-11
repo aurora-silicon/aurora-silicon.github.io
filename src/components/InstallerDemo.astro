@@ -1,0 +1,266 @@
+---
+// A click-through of the Aurora Linux installer, drawn in HTML so it follows
+// the site theme and works with touch. The screens and their words follow the
+// macOS app: choose a distribution and desktop, choose the space, install,
+// restart. Nothing here downloads or writes anything.
+const distros = [
+  { name: 'Fedora Aurora Remix', icon: 'fedora' },
+  { name: 'Aurora ALARM', icon: 'arch' },
+  { name: 'Aurora NixOS', icon: 'nixos' },
+];
+const desktops = [
+  { name: 'KDE Plasma', icon: 'kde-icon', thumb: 'kde', blurb: 'Familiar and customizable' },
+  { name: 'GNOME', icon: 'gnome-icon', thumb: 'gnome', blurb: 'Clean and focused' },
+  { name: 'Minimal (shell)', icon: '', thumb: '', blurb: 'A lightweight shell' },
+];
+const TOTAL_GB = 512;
+const AURORA_GB = 128;
+---
+<div class="installer-demo" data-installer>
+  <div class="iw" role="group" aria-label="Aurora Linux installer, a demo">
+    <div class="iw-masthead">
+      <span class="iw-brand"><img src="/brand/aurora-silicon-mark.svg" width="28" height="28" alt="" />Aurora Linux</span>
+      <span class="iw-host"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="11" rx="1.5" /><path d="M2 19h20" /></svg><span><b>MacBook Neo</b><small>Apple A18 Pro</small></span></span>
+    </div>
+    <div class="iw-body">
+      <section class="iw-screen is-active" data-screen="choose">
+        <h3>Choose your distribution and desktop.</h3>
+        <p class="iw-label" id="iw-distro-label">Distribution</p>
+        <div class="iw-cards iw-distros" role="group" aria-labelledby="iw-distro-label">
+          {distros.map((distro, i) => <button type="button" data-distro={distro.name} aria-pressed={i === 0 ? 'true' : 'false'}>
+            <img class="iw-dark" src={`/images/installer/${distro.icon}-dark.png`} width="38" height="38" alt="" loading="lazy" decoding="async" />
+            <img class="iw-light" src={`/images/installer/${distro.icon}-light.png`} width="38" height="38" alt="" loading="lazy" decoding="async" />
+            <span>{distro.name}</span><span class="iw-check" aria-hidden="true"></span>
+          </button>)}
+        </div>
+        <p class="iw-label" id="iw-desktop-label">Desktop environment</p>
+        <div class="iw-cards iw-desktops" role="group" aria-labelledby="iw-desktop-label">
+          {desktops.map((desktop, i) => <button type="button" data-desktop={desktop.name} aria-pressed={i === 0 ? 'true' : 'false'}>
+            <span class="iw-thumb">{desktop.thumb
+              ? <img src={`/images/installer/${desktop.thumb}.webp`} width="395" height="264" alt="" loading="lazy" decoding="async" />
+              : <span class="iw-term" aria-hidden="true"><span class="iw-term-bar">aurora</span><b>Welcome to Aurora</b><small>Linux · aarch64</small><span class="iw-prompt">~ ❯ <i></i></span></span>}
+            </span>
+            <span class="iw-desktop-name">{desktop.icon && <><img class="iw-dark" src={`/images/installer/${desktop.icon}-dark.png`} width="27" height="27" alt="" loading="lazy" decoding="async" /><img class="iw-light" src={`/images/installer/${desktop.icon}-light.png`} width="27" height="27" alt="" loading="lazy" decoding="async" /></>}{!desktop.icon && <svg class="iw-term-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M7 9l3 3-3 3M12 15h5" /></svg>}<span>{desktop.name}</span></span>
+            <span class="iw-blurb">{desktop.blurb}</span>
+            <span class="iw-check" aria-hidden="true"></span>
+          </button>)}
+        </div>
+        <div class="iw-actions"><button type="button" class="iw-button" data-go="space">Continue</button></div>
+      </section>
+      <section class="iw-screen" data-screen="space" aria-hidden="true">
+        <h3>Choose your space.</h3>
+        <p class="iw-copy">Aurora Linux takes part of the disk. macOS keeps the rest and still starts.</p>
+        <div class="iw-disk" aria-hidden="true"><span class="iw-disk-macos" data-disk-macos></span><span class="iw-disk-aurora" data-disk-aurora></span></div>
+        <div class="iw-capacities"><span><i class="iw-swatch iw-swatch-macos"></i>macOS <b data-macos-gb>{TOTAL_GB - AURORA_GB} GB</b></span><span><i class="iw-swatch iw-swatch-aurora"></i>Aurora Linux <b data-aurora-gb>{AURORA_GB} GB</b></span></div>
+        <label class="iw-range"><span class="sr-only">Space for Aurora Linux in gigabytes</span><input type="range" min="40" max="400" step="8" value={AURORA_GB} data-range /></label>
+        <div class="iw-actions"><button type="button" class="iw-button iw-secondary" data-go="choose">Back</button><button type="button" class="iw-button" data-install>Install Aurora</button></div>
+      </section>
+      <section class="iw-screen" data-screen="installing" aria-hidden="true">
+        <h3 data-install-title>Preparing your installation</h3>
+        <div class="iw-progress" role="progressbar" aria-label="Installation progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-progress><span data-progress-bar></span></div>
+        <ol class="iw-log" data-log></ol>
+      </section>
+      <section class="iw-screen" data-screen="done" aria-hidden="true">
+        <h3>Installation complete</h3>
+        <p class="iw-copy" data-done-copy></p>
+        <p class="iw-copy">Restart to start Aurora.</p>
+        <div class="iw-actions"><button type="button" class="iw-button iw-secondary" data-go="choose">Start over</button><button type="button" class="iw-button" data-restart>Restart</button></div>
+      </section>
+      <section class="iw-screen iw-boot" data-screen="boot" aria-hidden="true"><img src="/brand/aurora-silicon-mark.svg" width="72" height="72" alt="" /></section>
+    </div>
+  </div>
+  <p class="iw-caption">Try the installer. Pick a distribution and a desktop, then tap Continue.</p>
+</div>
+<script>
+  const demo = document.querySelector<HTMLElement>('[data-installer]');
+  if (demo) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const screens = [...demo.querySelectorAll<HTMLElement>('[data-screen]')];
+    const TOTAL_GB = 512;
+    let auroraGb = Number(demo.querySelector<HTMLInputElement>('[data-range]')!.value);
+    let timer = 0;
+    let frame = 0;
+    const picked = (attr: string) => demo.querySelector<HTMLButtonElement>(`[data-${attr}][aria-pressed='true']`)?.dataset[attr] ?? '';
+    function show(name: string) {
+      window.clearTimeout(timer); window.cancelAnimationFrame(frame);
+      for (const screen of screens) {
+        const on = screen.dataset.screen === name;
+        screen.classList.toggle('is-active', on);
+        screen.setAttribute('aria-hidden', String(!on));
+        screen.inert = !on;
+      }
+      // Keep the focus inside the window so keyboard and screen-reader users
+      // land on the new screen's first control.
+      if (document.activeElement && demo.contains(document.activeElement)) {
+        screens.find(screen => screen.dataset.screen === name)?.querySelector<HTMLElement>('button, input')?.focus({ preventScroll: true });
+      }
+    }
+    // One choice per group, like the app's radio cards.
+    for (const attr of ['distro', 'desktop']) {
+      const buttons = [...demo.querySelectorAll<HTMLButtonElement>(`[data-${attr}]`)];
+      for (const button of buttons) button.addEventListener('click', () => {
+        buttons.forEach(other => other.setAttribute('aria-pressed', String(other === button)));
+      });
+    }
+    // The disk bar follows the slider: macOS keeps whatever Aurora does not take.
+    const range = demo.querySelector<HTMLInputElement>('[data-range]')!;
+    function updateDisk() {
+      auroraGb = Number(range.value);
+      demo.querySelector<HTMLElement>('[data-disk-aurora]')!.style.flexBasis = `${auroraGb / TOTAL_GB * 100}%`;
+      demo.querySelector<HTMLElement>('[data-aurora-gb]')!.textContent = `${auroraGb} GB`;
+      demo.querySelector<HTMLElement>('[data-macos-gb]')!.textContent = `${TOTAL_GB - auroraGb} GB`;
+    }
+    range.addEventListener('input', updateDisk);
+    updateDisk();
+    for (const button of demo.querySelectorAll<HTMLButtonElement>('[data-go]')) button.addEventListener('click', () => show(button.dataset.go!));
+    // The install runs through the app's stages in a few seconds. With reduced
+    // motion the finished log appears at once and the result follows.
+    const title = demo.querySelector<HTMLElement>('[data-install-title]')!;
+    const progress = demo.querySelector<HTMLElement>('[data-progress]')!;
+    const bar = demo.querySelector<HTMLElement>('[data-progress-bar]')!;
+    const log = demo.querySelector<HTMLElement>('[data-log]')!;
+    const DURATION = 3200;
+    function stages() {
+      return [
+        { at: 0, title: 'Preparing your installation', line: `Downloading ${picked('distro')} with ${picked('desktop')}` },
+        { at: .3, title: 'Preparing your installation', line: 'Copying firmware and speaker tuning from your macOS' },
+        { at: .5, title: 'Installing Aurora', line: `Making room: ${auroraGb} GB for Aurora Linux, ${TOTAL_GB - auroraGb} GB for macOS` },
+        { at: .65, title: 'Installing the startup software', line: 'Installing the startup software. This can take several minutes.' },
+      ];
+    }
+    function renderProgress(t: number) {
+      const done = stages().filter(stage => t >= stage.at);
+      title.textContent = done[done.length - 1].title;
+      bar.style.width = `${Math.round(t * 100)}%`;
+      progress.setAttribute('aria-valuenow', String(Math.round(t * 100)));
+      if (log.children.length !== done.length) {
+        log.replaceChildren(...done.map((stage, i) => {
+          const item = document.createElement('li');
+          item.textContent = stage.line;
+          item.classList.toggle('is-current', i === done.length - 1 && t < 1);
+          return item;
+        }));
+      }
+    }
+    function finish() {
+      demo.querySelector<HTMLElement>('[data-done-copy]')!.textContent = `Your Mac starts up from “Aurora” now, with ${picked('distro')} and ${picked('desktop')}.`;
+      show('done');
+    }
+    demo.querySelector<HTMLButtonElement>('[data-install]')!.addEventListener('click', () => {
+      show('installing');
+      if (reducedMotion.matches) { renderProgress(1); timer = window.setTimeout(finish, 600); return; }
+      const start = performance.now();
+      const tick = (now: number) => {
+        // A frame's timestamp can sit just before the click's, so clamp at 0.
+        const t = Math.min(1, Math.max(0, (now - start) / DURATION));
+        // Ease out so the bar slows into the long last stage, as installs do.
+        renderProgress(1 - (1 - t) ** 2);
+        if (t < 1) frame = window.requestAnimationFrame(tick); else timer = window.setTimeout(finish, 500);
+      };
+      frame = window.requestAnimationFrame(tick);
+    });
+    // Restart: a moment of the boot logo, then the installer is ready again.
+    demo.querySelector<HTMLButtonElement>('[data-restart]')!.addEventListener('click', () => {
+      if (reducedMotion.matches) { show('choose'); return; }
+      show('boot');
+      timer = window.setTimeout(() => show('choose'), 1100);
+    });
+  }
+</script>
+<style>
+  .installer-demo { --iw-bg: #1e1e1e; --iw-text: #fff; --iw-muted: #9a9a9f; --iw-line: #3b3b3f; --iw-line-hover: #6a6a6e; --iw-line-active: #d9d9dc; --iw-button: #98989d; --iw-button-text: #fff; --iw-term: #171a24; --iw-macos: #5e5ce6; --iw-aurora: #7bc6e8; width: min(100%, 900px); margin: 24px auto 0; }
+  :root[data-theme='light'] .installer-demo { --iw-bg: #fff; --iw-text: #000; --iw-muted: #6e6e73; --iw-line: #d9d9de; --iw-line-hover: #a8a8ad; --iw-line-active: #2c2c2e; --iw-button: #8e8e93; --iw-term: #171a24; }
+  .iw-light { display: none; }
+  :root[data-theme='light'] .iw-dark { display: none; }
+  :root[data-theme='light'] .iw-light { display: inline-block; }
+  .iw { overflow: hidden; border: 1px solid var(--iw-line); border-radius: 14px; background: var(--iw-bg); color: var(--iw-text); text-align: left; font-size: 14px; line-height: 1.4; }
+  :root[data-theme='light'] .iw { box-shadow: 0 12px 32px #00000026, 0 3px 8px #00000014; }
+  .iw-masthead { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 30px 0; }
+  .iw-brand { display: inline-flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 550; letter-spacing: -.02em; }
+  .iw-host { display: inline-flex; align-items: center; gap: 10px; text-align: right; }
+  .iw-host svg { width: 26px; height: 26px; color: var(--iw-muted); }
+  .iw-host span { display: flex; flex-direction: column; }
+  .iw-host b { font-size: 12px; font-weight: 550; }
+  .iw-host small { font-size: 11px; color: var(--iw-muted); }
+  /* Every screen sits in the same grid cell, so the window keeps the height of
+     the tallest one and nothing below it moves between screens. */
+  .iw-body { display: grid; }
+  .iw-screen { grid-area: 1 / 1; padding: 22px 30px 30px; visibility: hidden; opacity: 0; transition: opacity .25s ease; }
+  .iw-screen.is-active { visibility: visible; opacity: 1; }
+  /* The shorter screens sit in the middle of the window the first one sets. */
+  .iw-screen:not([data-screen='choose']):not(.iw-boot) { align-self: center; }
+  .iw-screen h3 { margin: 0 0 20px; font-size: 21px; font-weight: 550; letter-spacing: -.03em; line-height: 1.25; }
+  .iw-label { margin: 0 0 10px; font-size: 12px; font-weight: 550; color: var(--iw-muted); }
+  .iw-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 22px; }
+  .iw-cards button { position: relative; display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 12px 14px; border: 1px solid var(--iw-line); border-radius: 12px; background: none; color: inherit; font: inherit; font-weight: 550; text-align: left; cursor: pointer; transition: border-color .15s ease; }
+  .iw-cards button:hover { border-color: var(--iw-line-hover); }
+  .iw-cards button[aria-pressed='true'] { border-color: var(--iw-line-active); box-shadow: inset 0 0 0 1px var(--iw-line-active); }
+  .iw-cards button:focus-visible { outline: 2px solid var(--iw-text); outline-offset: 3px; }
+  .iw-distros img { width: 38px; height: 38px; }
+  .iw-check { position: absolute; top: 8px; right: 8px; width: 18px; height: 18px; border-radius: 50%; background: var(--iw-text); opacity: 0; transition: opacity .15s ease; }
+  .iw-check::after { content: ''; position: absolute; left: 6px; top: 3px; width: 4px; height: 8px; border: solid var(--iw-bg); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  .iw-cards button[aria-pressed='true'] .iw-check { opacity: 1; }
+  .iw-desktops button { flex-direction: column; align-items: stretch; gap: 10px; padding: 14px; }
+  .iw-thumb { display: block; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 7px; background: var(--iw-term); }
+  .iw-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .iw-term { display: flex; flex-direction: column; gap: 4px; height: 100%; padding: 12px 14px; color: #e8e8ec; font-size: 12px; line-height: 1.5; }
+  .iw-term-bar { align-self: flex-start; margin: -4px 0 6px -4px; font-size: 10px; color: #8d8f9a; }
+  .iw-term b { font-weight: 550; }
+  .iw-term small { font-size: 10px; color: #8d8f9a; }
+  .iw-prompt { margin-top: 6px; color: #5ec0a8; }
+  .iw-prompt i { display: inline-block; width: 6px; height: 12px; margin-left: 2px; vertical-align: -2px; background: #e8e8ec; }
+  .iw-desktop-name { display: flex; align-items: center; gap: 10px; }
+  .iw-desktop-name img, .iw-term-icon { width: 27px; height: 27px; flex-shrink: 0; }
+  .iw-term-icon { color: var(--iw-text); }
+  .iw-blurb { font-size: 12px; font-weight: 400; color: var(--iw-muted); }
+  .iw-actions { display: flex; justify-content: center; gap: 10px; margin-top: 28px; }
+  .iw-button { min-height: 40px; padding: 9px 22px; border: 0; border-radius: 100px; background: var(--iw-button); color: var(--iw-button-text); font: inherit; font-size: 14px; font-weight: 550; cursor: pointer; transition: filter .15s ease; }
+  .iw-button:hover { filter: brightness(1.1); }
+  .iw-button:focus-visible { outline: 2px solid var(--iw-text); outline-offset: 3px; }
+  .iw-secondary { background: none; border: 1px solid var(--iw-line); color: var(--iw-text); }
+  .iw-secondary:hover { border-color: var(--iw-line-hover); }
+  .iw-copy { max-width: 520px; margin: 0 0 18px; color: var(--iw-muted); font-size: 13px; line-height: 1.7; }
+  .iw-disk { display: flex; gap: 3px; height: 26px; margin-top: 6px; border-radius: 7px; overflow: hidden; }
+  .iw-disk-macos { flex: 1 1 auto; background: var(--iw-macos); border-radius: 7px 0 0 7px; }
+  .iw-disk-aurora { flex: 0 0 25%; background: var(--iw-aurora); border-radius: 0 7px 7px 0; transition: flex-basis .15s ease; }
+  .iw-capacities { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 12px; font-size: 12px; color: var(--iw-muted); }
+  .iw-capacities b { margin-left: 6px; color: var(--iw-text); font-weight: 550; }
+  .iw-swatch { display: inline-block; width: 9px; height: 9px; margin-right: 8px; border-radius: 2px; vertical-align: 0; }
+  .iw-swatch-macos { background: var(--iw-macos); }
+  .iw-swatch-aurora { background: var(--iw-aurora); }
+  .iw-range { display: block; margin-top: 18px; }
+  .iw-range input { width: 100%; accent-color: var(--iw-aurora); }
+  .iw-progress { height: 8px; margin: 6px 0 20px; border-radius: 100px; background: color-mix(in srgb, var(--iw-text) 12%, var(--iw-bg)); overflow: hidden; }
+  .iw-progress span { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--iw-aurora); }
+  .iw-log { margin: 0; padding: 0 0 0 1.2em; min-height: 6em; color: var(--iw-muted); font-size: 13px; line-height: 1.9; }
+  .iw-log :global(li.is-current) { color: var(--iw-text); }
+  .iw-boot { display: grid; place-items: center; background: #000; }
+  .iw-caption { margin-top: 14px; font-size: 12px; color: var(--muted); text-align: center; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    .iw-screen, .iw-check, .iw-cards button, .iw-disk-aurora, .iw-button { transition: none; }
+  }
+  @media (max-width: 760px) {
+    .iw-masthead { padding: 18px 20px 0; }
+    .iw-screen { padding: 18px 20px 22px; }
+    .iw-screen h3 { font-size: 18px; }
+    .iw-cards { gap: 10px; }
+  }
+  @media (max-width: 600px) {
+    .iw-distros { grid-template-columns: 1fr; }
+    .iw-distros button { min-height: 52px; padding: 8px 12px; }
+    .iw-distros img { width: 32px; height: 32px; }
+    .iw-desktops { grid-template-columns: 1fr; }
+    .iw-desktops button { display: grid; grid-template-columns: 104px 1fr; grid-template-rows: auto auto; column-gap: 12px; row-gap: 4px; align-items: center; padding: 10px 12px; }
+    .iw-desktops .iw-thumb { grid-row: 1 / 3; }
+    .iw-desktop-name { font-size: 13px; }
+    .iw-desktop-name img, .iw-term-icon { width: 22px; height: 22px; }
+    .iw-term { padding: 8px 10px; font-size: 9px; gap: 2px; }
+    .iw-term-bar { display: none; }
+    .iw-term small { font-size: 8px; }
+    .iw-prompt { margin-top: 2px; }
+    .iw-check { top: 6px; right: 6px; width: 16px; height: 16px; }
+    .iw-check::after { left: 5px; top: 2px; }
+    .iw-actions { margin-top: 20px; }
+  }
+</style>

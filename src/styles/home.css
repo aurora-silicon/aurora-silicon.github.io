@@ -129,6 +129,10 @@ h2 { font-size: 21px; letter-spacing: -.035em; line-height: 1.3; font-weight: 50
 :root[data-theme='light'] .aurora-installer-art .installer-light { display: block; filter: drop-shadow(0 6px 12px #0000000d); }
 .aurora-linux-download { margin-top: 28px; }
 .aurora-linux-section > p { max-width: 600px; margin: 22px auto 0; color: var(--muted); font-size: 14px; line-height: 1.85; }
+.download-note { max-width: 520px; margin: 14px auto 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+.aurora-linux-section > .download-note { margin-top: 14px; font-size: 12px; }
+.download-note a { text-decoration: underline; text-underline-offset: 3px; }
+.download-note a:hover { color: var(--text); }
 .project-link { display: inline-flex; gap: 8px; align-items: center; color: var(--muted); font-size: 12px; line-height: 1.6; padding-block: 8px; }
 .project-link:hover { color: var(--text); }
 .project-link .arrow { width: 14px; height: 14px; }

@@ -4802,5 +4802,130 @@
       ],
       "note": "Full boot is supported. Other feature results remain unchanged."
     }
-  ]
+  ],
+  "windows": {
+    "source": "Windows bring-up records kept on the earlier site, 2026-08 (j414s) and 2026-10 (j316s)",
+    "results": {
+      "j414s": {
+        "Boot": {
+          "state": "works",
+          "note": "UEFI boot through Mu and the Windows Boot Manager"
+        },
+        "All CPU cores": {
+          "state": "works",
+          "note": "P/E scheduling, frequency scaling and power modes. No nested virtualization yet, so no WSL or Hyper-V"
+        },
+        "Internal storage": {
+          "state": "works",
+          "note": ""
+        },
+        "Internal display": {
+          "state": "works",
+          "note": ""
+        },
+        "ProMotion": {
+          "state": "none",
+          "note": "120 Hz, VRR and HDR in progress"
+        },
+        "Keyboard": {
+          "state": "works",
+          "note": ""
+        },
+        "Keyboard backlight": {
+          "state": "works",
+          "note": ""
+        },
+        "Trackpad": {
+          "state": "works",
+          "note": "with gestures"
+        },
+        "Touch ID": {
+          "state": "none",
+          "note": "driver in development"
+        },
+        "Speakers": {
+          "state": "none",
+          "note": ""
+        },
+        "Microphone": {
+          "state": "none",
+          "note": ""
+        },
+        "Camera": {
+          "state": "none",
+          "note": ""
+        },
+        "Headset jack": {
+          "state": "none",
+          "note": ""
+        },
+        "USB-C": {
+          "state": "works",
+          "note": "USB 3; Ethernet adapters with Realtek's arm64 driver"
+        },
+        "Thunderbolt / USB4": {
+          "state": "none",
+          "note": ""
+        },
+        "HDMI": {
+          "state": "none",
+          "note": ""
+        },
+        "SDXC card slot": {
+          "state": "none",
+          "note": "in progress"
+        },
+        "Wi-Fi": {
+          "state": "works",
+          "note": ""
+        },
+        "Bluetooth": {
+          "state": "works",
+          "note": ""
+        },
+        "Battery / charging": {
+          "state": "works",
+          "note": "battery and battery health reporting"
+        },
+        "Fan control": {
+          "state": "works",
+          "note": ""
+        },
+        "Sleep / resume": {
+          "state": "none",
+          "note": "deep sleep not implemented yet"
+        },
+        "GPU acceleration": {
+          "state": "partial",
+          "note": "Vulkan and DXVK run; the WDDM display driver is in progress"
+        }
+      },
+      "j316s": {
+        "Boot": {
+          "state": "works",
+          "note": "UEFI boot through Mu and the Windows Boot Manager"
+        },
+        "All CPU cores": {
+          "state": "works",
+          "note": ""
+        },
+        "Internal display": {
+          "state": "works",
+          "note": ""
+        },
+        "Keyboard": {
+          "state": "works",
+          "note": ""
+        },
+        "Trackpad": {
+          "state": "works",
+          "note": ""
+        },
+        "USB-C": {
+          "state": "partial",
+          "note": "no hotplug or USB 3"
+        }
+      }
+    }
+  }
 }

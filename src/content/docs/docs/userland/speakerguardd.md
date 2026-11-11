@@ -22,18 +22,7 @@ Version 1.0.0-alpha.1. It is opt-in and does not fully match macOS yet. The curr
 
 ## Which Macs
 
-PipeWire configurations ship for these boards:
-
-| Board | Mac |
-| --- | --- |
-| j274, j473, j474 | Mac mini (M1, M2, M2 Pro) |
-| j293, j493 | MacBook Pro 13-inch (M1, M2) |
-| j313 | MacBook Air (M1) |
-| j413 | MacBook Air 13-inch (M2) |
-| j316 | MacBook Pro 16-inch (M1 Pro/Max) |
-| j616 | MacBook Pro 16-inch (M4 Pro/Max) |
-| j375, j475 | Mac Studio (M1, M2) |
-| j700 | MacBook Neo |
+PipeWire configurations ship for the Macs whose speakers are recorded as working in [device support](/devices/). Check your Mac there.
 
 A board also has to pass three checks before v2 takes over. Every protection model its tuning uses must be finished, the self-check must pass for that board, kernel and tuning, and the tuning must have been collected from that same Mac. You also need an Aurora kernel that exposes the v2 speaker interface. On an older kernel v2 refuses to run and the current stack keeps the speakers.
 

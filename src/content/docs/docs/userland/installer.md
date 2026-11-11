@@ -29,7 +29,7 @@ Already installed without it? The [speaker upgrade tool](/docs/userland/speakerg
 
 ## Getting it
 
-Release builds will be linked from the [Download](/docs/download/) page. Development builds for testers are on [GitHub releases](https://github.com/aurora-silicon/aurora-installer/releases). They are not signed or notarized yet.
+Builds are on [GitHub releases](https://github.com/aurora-silicon/aurora-installer/releases). The installer is alpha software, and the builds are not signed or notarized yet.
 
 ## Source
 

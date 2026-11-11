@@ -2,14 +2,36 @@
 import { Icon } from '@astrojs/starlight/components';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import '../styles/home.css';
-interface Props { title: string; description?: string; }
+interface Props { title: string; description?: string; jsonLd?: object[]; }
 // The same accounts as the docs header's social icons (astro.config.mjs).
 const social = [
   { icon: 'github', label: 'GitHub', href: 'https://github.com/aurora-silicon' },
   { icon: 'x.com', label: 'X', href: 'https://x.com/aurorasilicon' },
   { icon: 'discord', label: 'Discord', href: 'https://discord.gg/DXmsSSc5aY' },
 ] as const;
-const { title, description = 'Linux on Apple Silicon. Aurora Silicon downloads and device support.' } = Astro.props;
+const { title, description = 'Linux and Windows on Apple Silicon. Aurora Silicon downloads and device support.', jsonLd = [] } = Astro.props;
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+const imageUrl = new URL('/og-image.png', Astro.site).href;
+// Structured data for search engines: the project and the site on every page,
+// plus whatever the page adds (the installer on the home page).
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Aurora Silicon',
+    url: Astro.site!.href,
+    logo: new URL('/icon-512.png', Astro.site).href,
+    sameAs: social.map(s => s.href),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Aurora Silicon',
+    url: Astro.site!.href,
+    description,
+  },
+  ...jsonLd,
+];
 ---
 <!doctype html>
 <html lang="en" data-theme="dark">
@@ -26,27 +48,37 @@ const { title, description = 'Linux on Apple Silicon. Aurora Silicon downloads a
       })();
     </script>
     <title>{title}</title>
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
     <link rel="alternate icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Aurora Silicon" />
+    <meta property="og:locale" content="en" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).href} />
-    <meta property="og:image" content={new URL('/og-image.png', Astro.site).href} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={imageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Aurora Silicon mark" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@aurorasilicon" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header" data-hero-header={Astro.url.pathname === '/' ? '' : undefined}>
       <div class="header-inner wrap">
       <a class="brand" href="/" aria-label="Aurora Silicon home"><img src="/brand/aurora-silicon-mark.svg" width="48" height="48" alt="" /><span>Aurora Silicon</span></a>
-      <nav aria-label="Main navigation"><a class="docs-link" href="/blog/">Blog</a><a class="docs-link" href="/devices/">Support</a><a class="docs-link" href="/docs/">Docs</a><a class="docs-link" href="/docs/windows/">Windows</a><ThemeToggle /></nav>
+      <nav aria-label="Main navigation"><a class="docs-link" href="/blog/">Blog</a><a class="docs-link" href="/devices/">Support</a><a class="docs-link" href="/docs/">Docs</a><ThemeToggle /></nav>
       </div>
     </header>
     <noscript><style>.site-header[data-hero-header] .brand { visibility: visible; opacity: 1; transform: none; pointer-events: auto; }</style></noscript>
@@ -61,7 +93,7 @@ const { title, description = 'Linux on Apple Silicon. Aurora Silicon downloads a
           <p class="footer-name">© {new Date().getFullYear()} The Aurora Silicon Authors. All rights reserved.</p>
           <p class="footer-credit">Built on <a href="https://asahilinux.org">Asahi Linux</a>. Apple, Mac and MacBook are trademarks of Apple Inc. Linux® is the registered trademark of Linus Torvalds. Aurora Silicon is not affiliated with Apple.</p>
         </div>
-        <nav aria-label="Footer navigation"><a href="/blog/">Blog</a><a href="/devices/">Support</a><a href="/docs/">Docs</a><a href="/docs/userland/">Packages</a><a href="/docs/windows/">Windows</a><a href="/docs/attribution/">Attribution</a><a href="/docs/policies/">Policies &amp; guidelines</a></nav>
+        <nav aria-label="Footer navigation"><a href="/blog/">Blog</a><a href="/devices/">Support</a><a href="/docs/">Docs</a><a href="/docs/attribution/">Attribution</a><a href="/docs/policies/">Policies &amp; guidelines</a></nav>
       </div>
     </footer>
   </body>
