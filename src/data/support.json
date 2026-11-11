@@ -356,7 +356,7 @@
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "suspend to idle"
+        "note": "suspend to idle; suspend-to-RAM is in open draft #1445"
       },
       "Ambient light": {
         "state": "works",
@@ -372,7 +372,7 @@
       },
       "Ray tracing": {
         "state": "partial",
-        "note": "in progress"
+        "note": "ray queries and ray-tracing pipelines on by default (mesa#12); some tessellation-stage and deep-callable cases still fail"
       },
       "Video decoding": {
         "state": "works",
@@ -382,7 +382,7 @@
     "j813": {
       "Boot": {
         "state": "works",
-        "note": ""
+        "note": "boots its SSD install through aura by default (#997); reported by sithglan, 2026-11-06"
       },
       "All CPU cores": {
         "state": "works",
@@ -390,11 +390,11 @@
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "NVMe root (#995)"
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "2560x1600 panel (#166, #1002); the macOS 27.0 firmware needs open #1413"
       },
       "Keyboard": {
         "state": "works",
@@ -414,7 +414,7 @@
       },
       "Wi-Fi": {
         "state": "works",
-        "note": ""
+        "note": "N1 (#998, aura#79); AP switching tested"
       },
       "Bluetooth": {
         "state": "works",
@@ -426,7 +426,7 @@
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": "GLES 3.1 on the M5 backend (#1003, mesa#173), dEQP GLES2 with 0 failures; no GPU recovery yet, fixes in open #1057 and #1413"
       },
       "Battery / charging": {
         "state": "works",
@@ -434,37 +434,61 @@
       },
       "Vulkan": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": "vkcube runs on Honeykrisp with open #1413; no Vulkan CTS reported"
       },
       "Ray tracing": {
         "state": "partial",
         "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+      },
+      "Brightness control": {
+        "state": "works",
+        "note": "0-500 nits (#1002)"
+      },
+      "Speakers": {
+        "state": "partial",
+        "note": "four speakers at capped levels under speakersafetyd (#1048); aurora-wip only, the integration port is open #1423"
+      },
+      "Microphone": {
+        "state": "partial",
+        "note": "three-mic array (#1048); aurora-wip only, the integration port is open #1423"
+      },
+      "Headset jack": {
+        "state": "partial",
+        "note": "playback tested (#1048, aurora-wip only); headset microphone not tested"
+      },
+      "Camera": {
+        "state": "works",
+        "note": "NV12 up to 1920x1080 (#999, #1026)"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "H.264, HEVC and VP9 match software decoding (#1026)"
       }
     },
     "j714s": {
       "Boot": {
         "state": "works",
-        "note": ""
+        "note": "boots its SSD install through aura main (aura#144, aura#159); the installer does not admit it yet; Aurora, 2026-11-11"
       },
       "All CPU cores": {
         "state": "works",
-        "note": "18 cores"
+        "note": "18 cores with cpufreq (#481, #1399)"
       },
       "Internal storage": {
         "state": "works",
-        "note": ""
+        "note": "NVMe root (#936, aura#159)"
       },
       "Internal display": {
-        "state": "partial",
-        "note": ""
+        "state": "works",
+        "note": "3024x1964 at 120 Hz (#1012, #1435, aura#158)"
       },
       "Wi-Fi": {
         "state": "works",
-        "note": ""
+        "note": "N1, WPA2 on 5 GHz (#938, #1431)"
       },
       "Bluetooth": {
         "state": "works",
-        "note": ""
+        "note": "N1, pairing works (#938, #1431)"
       },
       "Sleep / resume": {
         "state": "works",
@@ -472,7 +496,7 @@
       },
       "External display": {
         "state": "works",
-        "note": ""
+        "note": "4K 120 Hz over USB-C and 4K 240 Hz through a Thunderbolt 5 dock (#1515, aura#158)"
       },
       "ProMotion": {
         "state": "works",
@@ -484,7 +508,7 @@
       },
       "Keyboard": {
         "state": "works",
-        "note": ""
+        "note": "#1429"
       },
       "Keyboard backlight": {
         "state": "works",
@@ -492,7 +516,7 @@
       },
       "Trackpad": {
         "state": "works",
-        "note": ""
+        "note": "#1429"
       },
       "USB-C": {
         "state": "works",
@@ -504,7 +528,7 @@
       },
       "Battery / charging": {
         "state": "works",
-        "note": ""
+        "note": "battery and AC through the SMC (#941)"
       },
       "Fan control": {
         "state": "works",
@@ -512,15 +536,31 @@
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": ""
+        "note": "desktop at 120 Hz through Zink on the GPU (#1012, #1425); Mesa still gates the M5 Pro behind ASAHI_M5_BRINGUP"
       },
       "Vulkan": {
         "state": "partial",
-        "note": ""
+        "note": "Vulkan 1.4, dEQP lists with 0 failures (#1012, mesa-aurora#32); same Mesa gate"
       },
       "Ray tracing": {
         "state": "partial",
         "note": ""
+      },
+      "Touch ID": {
+        "state": "untested",
+        "note": "Secure Enclave binds read-only (#1325, #1433); no enrolment yet"
+      },
+      "Microphone": {
+        "state": "partial",
+        "note": "three-mic array; needs open draft #1557"
+      },
+      "Camera": {
+        "state": "works",
+        "note": "1080p 30 fps (#1253, #1306, aura#144)"
+      },
+      "Thunderbolt / USB4": {
+        "state": "partial",
+        "note": "right port: Thunderbolt 5 dock at 40 Gb/s with NVMe, USB and Ethernet (#1515, #1271); physical hot-plug not tested"
       }
     },
     "j713": {
@@ -594,15 +634,27 @@
       },
       "Speakers": {
         "state": "partial",
-        "note": "kernel support merged (#820); the speakers stay locked until a J713 speaker protection profile and UCM are merged"
+        "note": "kernel, UCM and DSP graph merged (#820, alsa-ucm-conf-asahi#6, asahi-audio#10); the speakers stay locked until a J713 speaker protection profile ships (speakerguardd#10 closed unmerged)"
       },
       "Microphone": {
-        "state": "partial",
-        "note": "three internal microphones (#820); the J713 UCM and DSP profiles are not merged yet"
+        "state": "works",
+        "note": "three internal microphones (#820) through the J713 DSP source (asahi-audio#10, alsa-ucm-conf-asahi#6)"
       },
       "Headset jack": {
-        "state": "partial",
-        "note": "headphone output, headset microphone and plug detection (#820); the J713 UCM profile is not merged yet"
+        "state": "works",
+        "note": "headphone output, headset microphone and plug detection (#820) with the J713 UCM profile (alsa-ucm-conf-asahi#6)"
+      },
+      "Keyboard backlight": {
+        "state": "works",
+        "note": "brightness writes visibly change the backlight; keys and automatic control not tested (#1386)"
+      },
+      "Camera": {
+        "state": "works",
+        "note": "front camera through the ISP (#531); live preview in Chromium (#1386)"
+      },
+      "Video decoding": {
+        "state": "none",
+        "note": "the decoder is disabled in the merged tree; H.264, HEVC and AV1 decoding tested on a J713 with open #1487 and #1488"
       }
     },
     "j616s": {
@@ -671,8 +723,8 @@
         "note": "USB 3 (5 Gbps) on all three ports (#403); replug and flip (#410) tested by jgoyvaerts; DisplayPort Alt Mode (#526)"
       },
       "Thunderbolt / USB4": {
-        "state": "none",
-        "note": "not supported yet"
+        "state": "partial",
+        "note": "left back port only: USB4 host-to-host at 2 x 20 Gb/s, thunderbolt-net about 18 Gbit/s, survives suspend (#1220, aura#103); no PCIe or DisplayPort tunnels yet"
       },
       "HDMI": {
         "state": "works",
@@ -3566,7 +3618,7 @@
     "j716s": {
       "Boot": {
         "state": "works",
-        "note": ""
+        "note": "NVMe root on integration/aurora with the owner's m1n1 and a macOS 27.3 beta stub; reported by rolotrealanis98, 2026-11-07"
       },
       "External display": {
         "state": "works",
@@ -3582,19 +3634,19 @@
       },
       "Keyboard": {
         "state": "works",
-        "note": ""
+        "note": "#1167"
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": ""
+        "note": "#1167"
       },
       "Trackpad": {
         "state": "works",
-        "note": ""
+        "note": "#1083, #1167"
       },
       "USB-C": {
         "state": "works",
-        "note": ""
+        "note": "USB 3 on both ports, SuperSpeed Plus on the right port (#1167)"
       },
       "HDMI": {
         "state": "works",
@@ -3602,7 +3654,7 @@
       },
       "Battery / charging": {
         "state": "works",
-        "note": ""
+        "note": "battery through the SMC (#1167)"
       },
       "Fan control": {
         "state": "works",
@@ -3610,7 +3662,7 @@
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": ""
+        "note": "GPU starts with open #1173 on the 27.3 firmware; native GL desktop (mesa#194)"
       },
       "Vulkan": {
         "state": "partial",
@@ -3619,6 +3671,30 @@
       "Ray tracing": {
         "state": "partial",
         "note": ""
+      },
+      "All CPU cores": {
+        "state": "works",
+        "note": "18 cores, WFI idle (#1152)"
+      },
+      "Internal storage": {
+        "state": "works",
+        "note": "NVMe root (#936, #1082)"
+      },
+      "Internal display": {
+        "state": "partial",
+        "note": "boot framebuffer only; the firmware-27.3 display is open #1174"
+      },
+      "Wi-Fi": {
+        "state": "partial",
+        "note": "N1 (#938, #1182); kernel-side link training for the J716s DT is open #1183"
+      },
+      "Bluetooth": {
+        "state": "works",
+        "note": "N1 (#938, #1182)"
+      },
+      "Sleep / resume": {
+        "state": "works",
+        "note": "s2idle, 4 of 4 (#1152); lid wake fix (#1160)"
       }
     },
     "j873s": {
@@ -3703,6 +3779,10 @@
       "GPU acceleration": {
         "state": "works",
         "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "Boot": {
+        "state": "works",
+        "note": "confirmed by the Aurora team (2026-11-11)"
       }
     },
     "j514m": {
@@ -3753,6 +3833,10 @@
       "GPU acceleration": {
         "state": "works",
         "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "Boot": {
+        "state": "works",
+        "note": "confirmed by the Aurora team (2026-11-11)"
       }
     },
     "j516m": {
@@ -3803,6 +3887,10 @@
       "GPU acceleration": {
         "state": "works",
         "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "Boot": {
+        "state": "works",
+        "note": "confirmed by the Aurora team (2026-11-11)"
       }
     },
     "j433": {
@@ -3845,6 +3933,10 @@
       "GPU acceleration": {
         "state": "works",
         "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "Boot": {
+        "state": "works",
+        "note": "confirmed by the Aurora team (2026-11-11)"
       }
     },
     "j434": {
@@ -3887,6 +3979,10 @@
       "GPU acceleration": {
         "state": "works",
         "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "Boot": {
+        "state": "works",
+        "note": "confirmed by the Aurora team (2026-11-11)"
       }
     },
     "j575d": {
@@ -3917,12 +4013,16 @@
       "GPU acceleration": {
         "state": "works",
         "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "Boot": {
+        "state": "works",
+        "note": "confirmed by the Aurora team (2026-11-11)"
       }
     },
     "j715": {
       "Boot": {
-        "state": "untested",
-        "note": "full device tree added 2026-11-07 (#1129); not yet tested on hardware"
+        "state": "works",
+        "note": "confirmed by the Aurora team (2026-11-11)"
       },
       "All CPU cores": {
         "state": "untested",
@@ -3945,16 +4045,16 @@
         "note": "through the display coprocessor, which takes the panel over with the J715 timing (#1161)"
       },
       "Keyboard": {
-        "state": "untested",
-        "note": "described as on the J713 (#1129)"
+        "state": "none",
+        "note": "two J715 owners report the internal keyboard and trackpad dead on an installer build (aura#137); the J604 MTP fix (#1367) does not cover the J715 yet"
       },
       "Keyboard backlight": {
         "state": "untested",
         "note": "same PWM as on the J713 (#1129)"
       },
       "Trackpad": {
-        "state": "untested",
-        "note": "described as on the J713, with its own firmware name (#1129)"
+        "state": "none",
+        "note": "two J715 owners report the internal keyboard and trackpad dead on an installer build (aura#137); the J604 MTP fix (#1367) does not cover the J715 yet"
       },
       "Touch ID": {
         "state": "untested",
@@ -3986,11 +4086,11 @@
       },
       "Wi-Fi": {
         "state": "untested",
-        "note": "radio firmware island apple,kos from the J715 ADT (#1129)"
+        "note": "an owner reported no Wi-Fi on an installer build; aura#141 now hands the radio port over on the J715 too, not yet tested on one"
       },
       "Bluetooth": {
         "state": "untested",
-        "note": "radio firmware island apple,kos from the J715 ADT (#1129)"
+        "note": "radio port handoff now covers the J715 (aura#141), not yet tested on one"
       },
       "Battery / charging": {
         "state": "untested",
@@ -4007,48 +4107,48 @@
     },
     "j604": {
       "Boot": {
-        "state": "untested",
-        "note": "device tree added 2026-11-07 (#1142); not yet tested on hardware"
+        "state": "works",
+        "note": "confirmed by the Aurora team (2026-11-11); boots on its own tree since #1186 (aeries0x), and an installer-made install boots from the internal SSD (#1367)"
       },
       "All CPU cores": {
         "state": "untested",
         "note": "CPU frequency scaling and deep idle in the device tree (#1142)"
       },
       "Internal storage": {
-        "state": "untested",
-        "note": "NVMe (#1142)"
+        "state": "works",
+        "note": "NVMe; an installer-made install boots from the internal SSD (#1367)"
       },
       "Internal display": {
-        "state": "untested",
-        "note": "boot framebuffer only; the display coprocessor is not enabled on this Mac (#1142)"
+        "state": "works",
+        "note": "3024x1964 panel on the display coprocessor (#1179, #1389), with apple_dart.j713_dcp=1 and j713_display=1 as on the J713; DPMS off and on tested"
       },
       "External display": {
         "state": "none",
         "note": "the external display coprocessor is not enabled on this Mac yet (#1142)"
       },
       "ProMotion": {
-        "state": "none",
-        "note": "needs the display coprocessor, which is not enabled on this Mac yet (#1142)"
+        "state": "partial",
+        "note": "the panel runs its 120 Hz mode (#1178), but frames complete only at 60 fps until #1525 (open)"
       },
       "Brightness control": {
-        "state": "none",
-        "note": "needs the display coprocessor, which is not enabled on this Mac yet (#1142)"
+        "state": "untested",
+        "note": "the display coprocessor now drives the panel (#1389); brightness not tested"
       },
       "Keyboard": {
-        "state": "untested",
-        "note": "described (#1142)"
+        "state": "works",
+        "note": "MTP cold start (#1367, aura#137); on an installed system it also needs U-Boot to leave the MTP alone (u-boot#44)"
       },
       "Keyboard backlight": {
         "state": "untested",
         "note": "PWM backlight described (#1142)"
       },
       "Trackpad": {
-        "state": "untested",
-        "note": "described (#1142)"
+        "state": "works",
+        "note": "MTP cold start (#1367, aura#137); on an installed system it also needs U-Boot to leave the MTP alone (u-boot#44)"
       },
       "Touch ID": {
         "state": "none",
-        "note": "sensor wiring described (#1142), but the Secure Enclave driver has no J604 profile yet"
+        "note": "the Secure Enclave driver still has no J604 profile; enrolment and match reported on a contributor kernel with the sensor in SPI mode 1 (#1496, open)"
       },
       "Speakers": {
         "state": "none",
@@ -4060,7 +4160,7 @@
       },
       "Camera": {
         "state": "untested",
-        "note": "front camera described, with modes assumed from the J713 (#1142)"
+        "note": "front camera described (#1142); the loader handoff is open (aura#155)"
       },
       "Headset jack": {
         "state": "untested",
@@ -4068,7 +4168,7 @@
       },
       "USB-C": {
         "state": "untested",
-        "note": "all three ports at USB 2 and USB 3 (#1142)"
+        "note": "all three ports at USB 2 and USB 3 (#1142); USB 3 at 5 Gb/s on all three ports tested with open #1492 and aura#154"
       },
       "Thunderbolt / USB4": {
         "state": "none",
@@ -4083,12 +4183,12 @@
         "note": "GL9755 reader described but disabled with its PCIe port (#1142)"
       },
       "Wi-Fi": {
-        "state": "untested",
-        "note": "radio firmware island apple,guam from the J604 ADT (#1142)"
+        "state": "works",
+        "note": "BCM4388 joins the network with the radio port handoff (aura#141)"
       },
       "Bluetooth": {
-        "state": "untested",
-        "note": "radio firmware island apple,guam from the J604 ADT (#1142)"
+        "state": "partial",
+        "note": "the adapter comes up with the radio port handoff (aura#141); pairing and audio not tested"
       },
       "Battery / charging": {
         "state": "untested",
@@ -4105,40 +4205,48 @@
       "Vulkan": {
         "state": "works",
         "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "Sleep / resume": {
+        "state": "untested",
+        "note": "suspend to idle with keyboard wake seen on a contributor kernel with open #1492"
+      },
+      "Video decoding": {
+        "state": "untested",
+        "note": "VP9 and AV1 decoding in Chromium on a contributor kernel with open #1488 and #1511"
       }
     },
     "j614s": {
       "Boot": {
         "state": "works",
-        "note": "Basic boot; broader hardware support pending"
+        "note": "aura, U-Boot and Limine from the internal SSD on the Aurora ALARM testing packages (ferass04, 2026-11-09)"
       },
       "Internal display": {
-        "state": "partial",
-        "note": "Basic display output; full support pending"
+        "state": "works",
+        "note": "3024x1890 at 120 Hz through the display coprocessor (aura#44); clamshell mode turns the panel off cleanly (ferass04)"
       },
       "HDMI": {
-        "state": "partial",
-        "note": "worked with the aura display handoff (aura#44) on a combined test stack; not tested on a stock install"
+        "state": "none",
+        "note": "the shared tree describes the J616s HDMI processor, which the J614s lacks, so the loader refuses it (#1551); HDMI worked on an earlier combined test stack (aura#44)"
       },
       "Keyboard": {
-        "state": "partial",
-        "note": "#817 with the U-Boot handoff (u-boot#29); tested on a combined test stack"
+        "state": "works",
+        "note": "#817 with the U-Boot handoff (u-boot#29); on the release packages (ferass04)"
       },
       "Trackpad": {
-        "state": "partial",
-        "note": "#817 with the U-Boot handoff (u-boot#29); tested on a combined test stack"
+        "state": "works",
+        "note": "#817 with the U-Boot handoff (u-boot#29); on the release packages (ferass04)"
       },
       "Microphone": {
-        "state": "partial",
-        "note": "three-mic array through the DSP source (asahi-audio#16, alsa-ucm-conf-asahi#9); tested on a combined test stack"
+        "state": "works",
+        "note": "three-mic array through the J614 DSP source (asahi-audio#16); recorded on the release packages (ferass04)"
       },
       "USB-C": {
         "state": "partial",
-        "note": "USB devices on all three ports with the aura tuning handoff (aura#49); USB 3 not tested"
+        "note": "USB devices on all three ports (aura#49); USB 3 at 5 Gb/s and charging through a dock on one port (ferass04); after a suspend the port in use comes back at USB 2 only"
       },
       "Camera": {
-        "state": "partial",
-        "note": "ISP with the aura firmware handoff (#821, aura#48); tested on a combined test stack"
+        "state": "works",
+        "note": "ISP with the aura firmware handoff (#821, aura#48); frames captured on the release packages (ferass04)"
       },
       "SDXC card slot": {
         "state": "partial",
@@ -4155,16 +4263,68 @@
       "Vulkan": {
         "state": "works",
         "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "All CPU cores": {
+        "state": "works",
+        "note": "14 cores, cpufreq up to 4512 MHz under load; only clock-gated idle states (ferass04)"
+      },
+      "Internal storage": {
+        "state": "works",
+        "note": "NVMe root, LUKS2 and btrfs (ferass04)"
+      },
+      "Brightness control": {
+        "state": "works",
+        "note": "panel backlight 0-600 (ferass04)"
+      },
+      "External display": {
+        "state": "partial",
+        "note": "USB-C DisplayPort through a dock at 1920x1080 100 Hz with hotplug on 7.3.0.aurora1-27 (ferass04); the port in use loses DisplayPort after suspend; on aurora1-30 with aura 1.0.0b10 no external display comes up until #1551 (open)"
+      },
+      "Keyboard backlight": {
+        "state": "works",
+        "note": "0-255 (ferass04)"
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": "Secure Enclave and fprintd: enrolment, match, sudo and lock screen, survives a reboot and a suspend (ferass04)"
+      },
+      "Headset jack": {
+        "state": "untested",
+        "note": "jack card registers; nothing plugged in yet (ferass04)"
+      },
+      "Thunderbolt / USB4": {
+        "state": "none",
+        "note": "the USB4 routers are disabled in the tree; a Thunderbolt dock runs as USB-C (ferass04)"
+      },
+      "Wi-Fi": {
+        "state": "works",
+        "note": "BCM4388 at 5 GHz, 160 MHz (ferass04)"
+      },
+      "Bluetooth": {
+        "state": "works",
+        "note": "a Bluetooth mouse connects and reports its battery (ferass04)"
+      },
+      "Battery / charging": {
+        "state": "works",
+        "note": "battery readings, USB-C PD charging and an 80 % charge limit (ferass04)"
+      },
+      "Sleep / resume": {
+        "state": "partial",
+        "note": "suspend to idle by lid and dock unplug, with Touch ID unlock after resume (ferass04); the USB-C port in use loses USB 3 and DisplayPort after resume"
+      },
+      "Video decoding": {
+        "state": "partial",
+        "note": "1080p H.264 through VA-API (ferass04); other codecs not tested"
       }
     },
     "j614c": {
       "Boot": {
-        "state": "untested",
-        "note": "device tree added 2026-11-07 (#1140); there is no ADT for this Mac, so many values are guesses; not yet tested on hardware"
+        "state": "works",
+        "note": "confirmed by the Aurora team (2026-11-11); first boot from the internal SSD by joske on 2026-11-09 (#1332), which needed U-Boot u-boot#42"
       },
       "Internal display": {
-        "state": "untested",
-        "note": "described as on the J616c, with the J614s panel values guessed (#1140)"
+        "state": "works",
+        "note": "3024x1890 through the display coprocessor with the aura handoff (#1345, aura#132)"
       },
       "GPU acceleration": {
         "state": "works",
@@ -4173,6 +4333,74 @@
       "Vulkan": {
         "state": "works",
         "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
+      },
+      "All CPU cores": {
+        "state": "works",
+        "note": "16 cores with cpufreq (#1332), cpuidle (#1453), the energy model and PMP thermal control (#1452, #1459)"
+      },
+      "Internal storage": {
+        "state": "works",
+        "note": "NVMe (#1332)"
+      },
+      "External display": {
+        "state": "none",
+        "note": "the external display coprocessors stay off as merged; HDMI and USB-C DisplayPort at 2560x1440 tested with open #1472"
+      },
+      "HDMI": {
+        "state": "none",
+        "note": "the external display coprocessors stay off as merged; 2560x1440 tested with open #1472, audio with open #1473"
+      },
+      "Keyboard": {
+        "state": "works",
+        "note": "(#1332)"
+      },
+      "Keyboard backlight": {
+        "state": "works",
+        "note": "PWM backlight (#1464)"
+      },
+      "Trackpad": {
+        "state": "works",
+        "note": "(#1332)"
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": "Secure Enclave and fprintd: enrolment and match (#1461)"
+      },
+      "Speakers": {
+        "state": "none",
+        "note": "disabled in the device tree until a speaker protection profile exists (#1140)"
+      },
+      "Camera": {
+        "state": "works",
+        "note": "front camera through the ISP handoff, live picture (#1463)"
+      },
+      "Headset jack": {
+        "state": "untested",
+        "note": "jack card registers (#1332); not tested"
+      },
+      "USB-C": {
+        "state": "untested",
+        "note": "two of the three ports at USB 2; the third port (#1468) and USB 3 (#1476, aura#147) tested by joske but still open"
+      },
+      "Thunderbolt / USB4": {
+        "state": "none",
+        "note": "not described yet"
+      },
+      "SDXC card slot": {
+        "state": "works",
+        "note": "GL9755 reads an SDXC card at SDR104 (#1465)"
+      },
+      "Wi-Fi": {
+        "state": "works",
+        "note": "BCM4388 (#1332)"
+      },
+      "Bluetooth": {
+        "state": "works",
+        "note": "(#1332)"
+      },
+      "Sleep / resume": {
+        "state": "partial",
+        "note": "suspend to idle by lid for 7.6 minutes, display back on resume (#1453); no deep sleep"
       }
     },
     "j616c": {
@@ -4206,21 +4434,37 @@
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07); a 32-core GPU on 25G83 firmware still needs #1050, still open"
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07); the 32-core GPU on 25G83 firmware needs #1373, merged 2026-11-10"
       },
       "Vulkan": {
         "state": "works",
-        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07); with a 32-core GPU on 25G83 firmware it needs #1050, still open"
+        "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07); the 32-core GPU on 25G83 firmware needs #1373, merged 2026-11-10"
       },
       "Video decoding": {
         "state": "partial",
         "note": "HEVC output matches software decoding (#958); other codecs not tested on this Mac"
+      },
+      "Camera": {
+        "state": "works",
+        "note": "front camera at 1920x1080 with the ISP handoff (aura#71, #1368)"
+      },
+      "Sleep / resume": {
+        "state": "partial",
+        "note": "suspend to idle overnight at 1.83 W, wake by lid and PMU RTC (#930, #994); suspend to RAM does not work (#791)"
+      },
+      "Wi-Fi": {
+        "state": "untested",
+        "note": "joins at 5 GHz on a private 7.3 tree (AxxzyWasTaken); not tested as merged"
+      },
+      "Bluetooth": {
+        "state": "untested",
+        "note": "plays audio on a private 7.3 tree (AxxzyWasTaken); not tested as merged"
       }
     },
     "j773g": {
       "Boot": {
-        "state": "untested",
-        "note": "device tree added 2026-11-07 (#1142); not yet tested on hardware"
+        "state": "works",
+        "note": "confirmed by the Aurora team (2026-11-11); earlier contributor boots on GravityLinux trees (#918, #924)"
       },
       "All CPU cores": {
         "state": "untested",
@@ -4248,7 +4492,7 @@
       },
       "USB-C": {
         "state": "untested",
-        "note": "back ports at USB 2 and USB 3, front ports at USB 2 only (#1142)"
+        "note": "back ports at USB 2 and USB 3, front ports at USB 2 (#1142); the front USB 2 hub (#1187) enumerated a keyboard on a bring-up stack, not as merged"
       },
       "Thunderbolt / USB4": {
         "state": "none",
@@ -4281,8 +4525,8 @@
     },
     "j773s": {
       "Boot": {
-        "state": "untested",
-        "note": "device tree added 2026-11-07 (#1140); not yet tested on hardware"
+        "state": "works",
+        "note": "confirmed by the Aurora team (2026-11-11)"
       },
       "All CPU cores": {
         "state": "untested",
@@ -4343,8 +4587,8 @@
     },
     "j623": {
       "Boot": {
-        "state": "untested",
-        "note": "device tree added 2026-11-07 (#1142); there is no ADT for this Mac, so many values are guesses; not yet tested on hardware"
+        "state": "works",
+        "note": "confirmed by the Aurora team (2026-11-11)"
       },
       "All CPU cores": {
         "state": "untested",
@@ -4417,8 +4661,8 @@
     },
     "j624": {
       "Boot": {
-        "state": "untested",
-        "note": "device tree added 2026-11-07 (#1142); there is no ADT for this Mac, so many values are guesses; not yet tested on hardware"
+        "state": "works",
+        "note": "confirmed by the Aurora team (2026-11-11)"
       },
       "All CPU cores": {
         "state": "untested",
@@ -4491,24 +4735,24 @@
     },
     "j575c": {
       "Boot": {
-        "state": "untested",
-        "note": "device tree added 2026-11-07 (#1140); there is no ADT for this Mac, so many values are guesses; not yet tested on hardware"
+        "state": "works",
+        "note": "confirmed by the Aurora team (2026-11-11); first boot by 7robertodantas on 2026-11-11 (#1498); the alpha.19 payload's U-Boot panics on T6041 and needs U-Boot 250385f8"
       },
       "All CPU cores": {
-        "state": "untested",
-        "note": "described as on the J616c (#1140)"
+        "state": "works",
+        "note": "16 cores, three cpufreq policies (#1498)"
       },
       "Internal storage": {
-        "state": "untested",
-        "note": "NVMe (#1140)"
+        "state": "works",
+        "note": "NVMe, SMART readable (#1498)"
       },
       "Display output": {
-        "state": "untested",
-        "note": "boot framebuffer only (#1140)"
+        "state": "none",
+        "note": "no picture: iBoot hands over a dummy framebuffer and the display subsystem is not described (#1498); a USB-C display works with open #1546 and aura#160"
       },
       "HDMI": {
         "state": "none",
-        "note": "not described yet (#1140)"
+        "note": "no picture; the display subsystem is not described (#1498)"
       },
       "Speaker": {
         "state": "none",
@@ -4516,31 +4760,31 @@
       },
       "Headset jack": {
         "state": "untested",
-        "note": "jack with guessed wiring (#1140)"
+        "note": "jack card registers (#1498); not tested"
       },
       "USB-A": {
-        "state": "untested",
-        "note": "behind a PCIe USB controller with guessed reset and clock lines (#1140)"
+        "state": "none",
+        "note": "the hub behind the PCIe USB controller is held in reset as merged; both ports work with open #1499 (#1498)"
       },
       "USB-C": {
-        "state": "untested",
-        "note": "three of the four back ports at USB 2; the front ports sit behind the PCIe USB controller (#1140)"
+        "state": "partial",
+        "note": "two back ports at USB 2 (#1498); the fourth back port and USB 3 are in open #1546, the front ports need open #1499"
       },
       "Thunderbolt / USB4": {
         "state": "none",
         "note": "not described yet (#1140)"
       },
       "Ethernet": {
-        "state": "untested",
-        "note": "PCIe port with guessed values (#1140)"
+        "state": "partial",
+        "note": "link and transmit work, but unicast and broadcast receive is dropped outside promiscuous mode (#1501)"
       },
       "Wi-Fi": {
-        "state": "untested",
-        "note": "radio firmware island guessed as apple,aruba (#1140)"
+        "state": "partial",
+        "note": "firmware loads and scans (#1498); joining not tested"
       },
       "Bluetooth": {
-        "state": "untested",
-        "note": "radio firmware island guessed as apple,aruba (#1140)"
+        "state": "partial",
+        "note": "powers up and scans (#1498); pairing not tested"
       },
       "GPU acceleration": {
         "state": "works",
@@ -4551,8 +4795,8 @@
         "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Fan control": {
-        "state": "untested",
-        "note": "two fans through the SMC, guessed (#1140)"
+        "state": "partial",
+        "note": "fans read about 990 rpm under a 60 s load; ramp at higher temperatures not tested (#1498)"
       }
     },
     "j714c": {
@@ -4635,16 +4879,24 @@
       "Ray tracing": {
         "state": "partial",
         "note": "Expected M5 Pro parity, per Aurora"
+      },
+      "Speakers": {
+        "state": "untested",
+        "note": "six amps described (#1408, #1410); no playback report"
+      },
+      "Video decoding": {
+        "state": "untested",
+        "note": "described in open #1322; decodes on a contributor's own tree"
       }
     },
     "j716c": {
       "Boot": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": "NVMe install on the developer's kernel (erikwb); RAM boot reproduced on public aura main by cameroncooper, 2026-11-11; the installer does not admit it"
       },
       "External display": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": "two 4K displays at 240 and 120 Hz through a Thunderbolt 5 dock (#1268, #1270, #1271)"
       },
       "ProMotion": {
         "state": "works",
@@ -4668,7 +4920,7 @@
       },
       "USB-C": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": "USB on all three ports through a Thunderbolt 5 dock (#1323, #1268)"
       },
       "HDMI": {
         "state": "works",
@@ -4684,11 +4936,11 @@
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": "desktop through Zink on Honeykrisp, admitted by default (mesa#205); needs open #1276"
       },
       "Vulkan": {
         "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": "18,427-case CTS sample with only two metadata failures (#1177, mesa#205); needs open #1276"
       },
       "Ray tracing": {
         "state": "partial",
@@ -4696,19 +4948,19 @@
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": "18 cores with cpuidle (#826) and CPU scaling"
       },
       "Internal storage": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": "NVMe root (#936)"
       },
       "Internal display": {
         "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": "3456x2234 at 120 Hz; needs open #1276"
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": "N1 (#938); recovers after a forced reset (#841)"
       },
       "Bluetooth": {
         "state": "works",
@@ -4716,7 +4968,15 @@
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": "s2idle, ten suspends on one boot (#1199, #826)"
+      },
+      "Camera": {
+        "state": "partial",
+        "note": "1080p 30 fps on the developer's kernel (#1253, #1254); the merged port is not retested"
+      },
+      "Thunderbolt / USB4": {
+        "state": "works",
+        "note": "Thunderbolt 5 dock at 40 Gb/s with USB, 2.5 GbE and displays (#1323, #1271)"
       }
     },
     "j775c": {
@@ -4773,11 +5033,48 @@
         "note": "Expected M5 Pro parity, per Aurora"
       }
     },
-    "j775d": {},
+    "j775d": {
+      "Boot": {
+        "state": "partial",
+        "note": "boots its SSD unattended through the developer's private aura branch (closed aura#60); no public loader path yet; reported by funkzy, 2026-11-02"
+      },
+      "All CPU cores": {
+        "state": "works",
+        "note": "30 cores (closed aura#60)"
+      },
+      "Internal storage": {
+        "state": "works",
+        "note": "NVMe root (#936; closed #891)"
+      },
+      "Display output": {
+        "state": "partial",
+        "note": "DisplayPort at 3840x2160 (#1012); a USB-C display plugged in after boot gets no picture"
+      },
+      "HDMI": {
+        "state": "partial",
+        "note": "1920x1080 (#1012); no HDMI audio"
+      },
+      "USB-A": {
+        "state": "works",
+        "note": "rear USB-A ports (#937; closed #890)"
+      },
+      "Ethernet": {
+        "state": "works",
+        "note": "10 GbE (#937; closed #890)"
+      },
+      "GPU acceleration": {
+        "state": "partial",
+        "note": "desktop on the GPU (#1012) with the developer's own Mesa; public Mesa refuses the two-die M5 Ultra (mesa#205)"
+      },
+      "Vulkan": {
+        "state": "partial",
+        "note": "Vulkan tests and a render CTS subset pass with the developer's own Mesa (#1012); public Mesa refuses the M5 Ultra"
+      }
+    },
     "j815": {
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "10 cores with frequency scaling; topology and capacities in open #1537"
       },
       "Battery / charging": {
         "state": "works",
@@ -4785,73 +5082,113 @@
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "LE pairing and HID, back after s2idle; needs open #1529"
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "boots its SSD install to Plasma through aura; needs open #1532 and #1413; reported by m0d16l14n1, 2026-11-11"
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "2880x1864 on the macOS 27.0 firmware; needs open #1528 and #1413"
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "NVMe root"
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "#1361"
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "Force Touch with open #1535"
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "WPA2 on 5 GHz, back after rfkill and s2idle; needs open #1530 and #1532"
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": "KWin on GLES 3.2; desktop GL misrenders; needs open #1413"
       },
       "Vulkan": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": "Vulkan 1.4 on Honeykrisp, vkcube runs; no conformance run; needs open #1413"
       },
       "Ray tracing": {
         "state": "partial",
         "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+      },
+      "Brightness control": {
+        "state": "partial",
+        "note": "follows the ambient light sensor; needs open #1532"
+      },
+      "Keyboard backlight": {
+        "state": "partial",
+        "note": "needs open #1532"
+      },
+      "Touch ID": {
+        "state": "partial",
+        "note": "enrolment and matching, kept across reboots; needs open #1531, #1536 and alarm-aurora#253"
+      },
+      "Speakers": {
+        "state": "partial",
+        "note": "six speakers under speakersafetyd at capped levels; needs open #1533, #1534 and speakersafetyd#2"
+      },
+      "Microphone": {
+        "state": "partial",
+        "note": "three-mic array; needs open #1533"
+      },
+      "Headset jack": {
+        "state": "untested",
+        "note": "jack controls appear with open #1533; no listening test"
+      },
+      "Camera": {
+        "state": "partial",
+        "note": "NV12 streams; needs open #1532"
+      },
+      "USB-C": {
+        "state": "partial",
+        "note": "USB 3 devices on both ports; needs open #1532"
+      },
+      "Sleep / resume": {
+        "state": "partial",
+        "note": "s2idle on lid close, with display, Wi-Fi and Bluetooth back; needs open #1527"
+      },
+      "Video decoding": {
+        "state": "partial",
+        "note": "H.264 and HEVC through VA-API; needs open #1532"
       }
     },
     "j704": {
       "Boot": {
         "state": "works",
-        "note": "Reported by owner dmitzsaz on his J704 (macOS 27.0 stub, aurora-wip with his open PRs)"
+        "note": "boots from NVMe with the owner's aura and U-Boot changes (#1231); reported by dmitzsaz, 2026-11-08"
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Reported by owner dmitzsaz on his J704, all 10 cores with cpufreq (4 P, 6 E)"
+        "note": "10 cores with cpufreq (#1231)"
       },
       "Internal storage": {
         "state": "works",
-        "note": "Reported by owner dmitzsaz on his J704, NVMe with linux#1060"
+        "note": "NVMe root (#1060, #1231)"
       },
       "Internal display": {
         "state": "none",
-        "note": "Does not work yet, the display coprocessor stays on the boot framebuffer (reported by dmitzsaz, and quank123wip saw it fail with -110)"
+        "note": "stays on the boot framebuffer on the macOS 27.0 firmware (#1231)"
       },
       "Keyboard": {
         "state": "works",
-        "note": "Reported by owner dmitzsaz on his J704, needs his open PRs linux#1122 and linux#1123 (live MTP handoff), without them the keyboard is dead"
+        "note": "needs a boot loader that hands the MTP over live (#1122, #1123)"
       },
       "Trackpad": {
         "state": "works",
-        "note": "Reported by owner dmitzsaz on his J704, needs his open PRs linux#1122 and linux#1123 (live MTP handoff), without them the keyboard is dead"
+        "note": "live MTP handoff (#1122, #1123); works across s2idle"
       },
       "USB-C": {
         "state": "works",
-        "note": "Reported by owner dmitzsaz on his J704, USB on all three USB-C ports"
+        "note": "all three USB-C ports (#1231)"
       },
       "Thunderbolt / USB4": {
         "state": "works",
@@ -4859,27 +5196,35 @@
       },
       "SDXC card slot": {
         "state": "works",
-        "note": "Reported by owner dmitzsaz on his J704, needs his open PR linux#1124"
+        "note": "SDR104 with hot-plug, also after s2idle (#1124, #1231)"
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Reported by owner dmitzsaz on his J704, needs his open PR linux#1124"
+        "note": "BCM4388 (#1124, #1231)"
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Reported by owner dmitzsaz on his J704, needs his open PR linux#1124"
+        "note": "BCM4388 (#1124, #1231)"
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Reported by owner dmitzsaz on his J704, battery and AC through the SMC"
+        "note": "battery and AC through the SMC (#1231)"
       },
       "Fan control": {
         "state": "partial",
-        "note": "Reported by owner dmitzsaz on his J704, the fan reads through the SMC, control not reported"
+        "note": "fan speed reads through the SMC (#1231); control not tested"
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Reported by owner dmitzsaz on his J704, s2idle, with Wi-Fi, Bluetooth and the SD reader working after resume, needs his open PR linux#1124"
+        "note": "s2idle with Wi-Fi, Bluetooth, NVMe and input back (#1231)"
+      },
+      "Keyboard backlight": {
+        "state": "untested",
+        "note": "enabled in the merged DT (#1231); not in its test report"
+      },
+      "Video decoding": {
+        "state": "untested",
+        "note": "AVD enabled in the merged DT (#1231); not in its test report"
       }
     },
     "j804": {},
@@ -5082,6 +5427,30 @@
         "Vulkan"
       ],
       "note": "M3 and M4 have full GPU support. Entries that already said works keep their notes; the GPU results from the 2026-11-07 device tree reviews are superseded. Other results are unchanged."
+    },
+    {
+      "source": "Project owner confirmation, 2026-11-11",
+      "scope": "M3, M4, M5 and M6, plus installer coverage",
+      "working": [
+        "Boot"
+      ],
+      "devices": [
+        "j715",
+        "j604",
+        "j614c",
+        "j773g",
+        "j773s",
+        "j623",
+        "j624",
+        "j575c",
+        "j504",
+        "j514m",
+        "j516m",
+        "j433",
+        "j434",
+        "j575d"
+      ],
+      "note": "These Macs boot. M3/M4 GPU acceleration and Vulkan stay working. M5 and M6 records are not lowered. A result that needs an unmerged pull request is partial until it merges. The installer is tested on the M1 and M2 series, J614s, J616s and J700 only."
     }
   ]
 }
