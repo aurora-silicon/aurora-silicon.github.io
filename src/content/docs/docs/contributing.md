@@ -22,4 +22,4 @@ Explain the problem, the change or observation, and how you verified it. Make li
 
 If generative AI contributed to a submission, disclose that involvement clearly in the associated commit, as required by the project policies. You remain responsible for the submitted content.
 
-Do not send project-derived findings, patches or discussion to Asahi Linux or NT-for-ASi. Other upstream projects are fine, under their own rules. The [policies](/docs/policies/) say why.
+Do not send project-derived findings, patches or discussion to Asahi Linux, NT-for-ASi, Mesa, FEX or any project that does not accept AI-assisted work. The upstream Linux kernel is fine, under its own rules. The [policies](/docs/policies/) say why.

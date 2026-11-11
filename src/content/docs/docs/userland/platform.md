@@ -11,7 +11,7 @@ On Fedora, `aurora-platform` pulls in the whole Aurora stack, kernel and boot ch
 
 ## Smaller fixes
 
-Aurora carries these until the fixes land upstream:
+Aurora carries these fixes:
 
 | Package | Fix |
 | --- | --- |

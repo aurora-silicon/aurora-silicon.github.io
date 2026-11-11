@@ -8,7 +8,7 @@ sidebar:
 `aurora-sep-luks` adds a LUKS2 keyslot whose secret is sealed by the Secure Enclave. The volume then unlocks on its own on this Mac and this install, the way TPM2 enrolment works on a PC. Your passphrase keyslot always stays.
 
 :::note[Data volumes only]
-Unlocking the root volume this way needs kernel support that is not merged yet. Use it for a second partition or an external disk.
+Unlocking the root volume this way is not possible yet. Use it for a second partition or an external disk.
 :::
 
 ## Install

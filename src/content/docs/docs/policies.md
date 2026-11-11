@@ -75,23 +75,23 @@ where appropriate, further action being taken by the project administrators.
 If an AI generated it under your direction, treat it as your contribution and
 your responsibility, and disclose it.
 
-## Asahi Linux and NT-for-ASi
+## Projects we do not send work to
 
 Do not report bugs, open issues or pull requests, make suggestions, or send
-project-derived findings to Asahi Linux or NT-for-ASi, or to their maintainers.
+project-derived findings to Asahi Linux, NT-for-ASi, Mesa, FEX, or any project
+that does not accept AI-assisted work, or to their maintainers.
 
-Our approach to LLM usage and decompilation differs from theirs. They treat
+Our approach to LLM usage and decompilation differs from theirs, and they treat
 anything produced by Aurora Silicon, or as a result of work done within this
-project, as unusable, so keep our development, findings, patches,
+project, as unusable. Keep our development, findings, patches,
 reverse-engineering work and related technical discussion out of their spaces.
 
-:::caution[Those two projects only]
-This rule covers Asahi Linux and NT-for-ASi. Contributing to upstream Linux,
-Mesa, U-Boot or any other project is fine, under that project's own rules and
-the rest of this page.
+:::caution[The upstream Linux kernel is fine]
+Contributing to the upstream Linux kernel is fine, under its own rules and the
+rest of this page.
 :::
 
-This is not about credit or secrecy. We depend heavily on both projects, and
+This is not about credit or secrecy. We depend heavily on those projects, and
 the rule protects their work from contamination by ours. It is not there to
 keep our work to ourselves.
 

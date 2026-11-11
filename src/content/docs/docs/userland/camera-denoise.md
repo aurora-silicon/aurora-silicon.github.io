@@ -34,7 +34,7 @@ systemctl --user reload aurora-camera-denoise
 | `low-light-frame-rate` | `on` (default), `off` |
 | `temporal-backend` | `auto` (default), `ave`, `cpu`, `gpu` |
 
-With `auto`, the temporal filter moves onto the video encoder's own noise filter when the kernel offers it. Its output matches macOS and it takes about a third of the CPU time of the software filter. Today that is the MacBook Neo, from the next kernel and package update; other Macs use the CPU. [Device support](/devices/) lists it under Camera noise filter.
+With `auto`, the temporal filter moves onto the video encoder's own noise filter when the kernel offers it. Its output matches macOS and it takes about a third of the CPU time of the software filter. Only the MacBook Neo has it, and it is not on by default yet; other Macs use the CPU.
 
 On NixOS use `aurora.cameraDenoise.settings`.
 

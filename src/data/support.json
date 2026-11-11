@@ -71,7 +71,6 @@
           "Video encoding",
           "ProRes encoding",
           "JPEG encoding",
-          "Camera noise filter",
           "Neural Engine"
         ]
       }
@@ -137,7 +136,6 @@
           "Video encoding",
           "ProRes encoding",
           "JPEG encoding",
-          "Camera noise filter",
           "Neural Engine"
         ]
       }
@@ -207,7 +205,6 @@
           "Video encoding",
           "ProRes encoding",
           "JPEG encoding",
-          "Camera noise filter",
           "Neural Engine"
         ]
       }
@@ -327,7 +324,6 @@
           "Video encoding",
           "ProRes encoding",
           "JPEG encoding",
-          "Camera noise filter",
           "Neural Engine"
         ]
       }
@@ -420,8 +416,8 @@
         "note": "1.4"
       },
       "Ray tracing": {
-        "state": "partial",
-        "note": "in progress"
+        "state": "works",
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
@@ -439,10 +435,6 @@
         "state": "works",
         "note": ""
       },
-      "Camera noise filter": {
-        "state": "partial",
-        "note": "in the kernel and matching macOS output; reaches users with the next kernel and camera denoise update"
-      },
       "Neural Engine": {
         "state": "partial",
         "note": "runs models end to end; can fail to come back after sleep and then needs a reboot"
@@ -459,11 +451,11 @@
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
@@ -495,19 +487,19 @@
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": ""
       },
       "Ray tracing": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": ""
       }
     },
     "j714s": {
@@ -599,79 +591,79 @@
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "External display": {
         "state": "works",
-        "note": "up to two 3840x2160 60 Hz displays through a USB4 or Thunderbolt dock (#960); the M4 has no DisplayPort alt mode"
+        "note": "up to two 3840x2160 60 Hz displays through a USB4 or Thunderbolt dock; no DisplayPort alt mode on the M4"
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "partial",
-        "note": "USB 3 on the back port and USB 2 on the front (#528, #846); USB devices wake the Mac from sleep (#832)"
+        "note": "USB 3 on the back port, USB 2 on the front; USB devices wake the Mac from sleep"
       },
       "Thunderbolt / USB4": {
         "state": "partial",
-        "note": "USB4 docks with PCIe Ethernet, USB and DisplayPort tunnels (#844, #846, #960); tested with one dock"
+        "note": "USB4 docks with Ethernet, USB and DisplayPort; tested with one dock"
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "suspend to idle by lid and menu (#830, #831), wake by USB on both ports (#832)"
+        "note": "suspend to idle; wake by USB on both ports"
       },
       "Touch ID": {
         "state": "partial",
-        "note": "Secure Enclave and fprintd (#457); the installer does not collect the J713 sensor files yet"
+        "note": "fingerprint unlock; the installer does not collect this model's sensor files yet"
       },
       "Speakers": {
         "state": "partial",
-        "note": "kernel support merged (#820); the speakers stay locked until a J713 speaker protection profile and UCM are merged"
+        "note": "speakers stay locked for now"
       },
       "Microphone": {
         "state": "partial",
-        "note": "three internal microphones (#820); the J713 UCM and DSP profiles are not merged yet"
+        "note": "three internal microphones; no sound profile for this model yet"
       },
       "Headset jack": {
         "state": "partial",
-        "note": "headphone output, headset microphone and plug detection (#820); the J713 UCM profile is not merged yet"
+        "note": "headphone output, headset microphone and plug detection; no sound profile for this model yet"
       }
     },
     "j616s": {
@@ -681,31 +673,31 @@
       },
       "All CPU cores": {
         "state": "works",
-        "note": "14 cores, cpufreq with the PMP (#402)"
+        "note": "14 cores with frequency scaling"
       },
       "Internal storage": {
         "state": "works",
-        "note": "NVMe (#387)"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "3456x2160 at 120 Hz through the display coprocessor (#446, #452), 3456x2234 with appledrm show_notch=1; HDR to the 1600 nit peak (#553, #789)"
+        "note": "3456x2160 at 120 Hz, 3456x2234 with the notch area, HDR to the 1600 nit peak"
       },
       "External display": {
         "state": "works",
-        "note": "USB-C DisplayPort and docks (#451, #526), HDR (#553, #764); no audio yet (#729)"
+        "note": "USB-C DisplayPort and docks, HDR; no audio over the display yet"
       },
       "ProMotion": {
         "state": "works",
-        "note": "120 Hz, with variable refresh from 24 Hz (#451, #763)"
+        "note": "120 Hz, variable refresh from 24 Hz"
       },
       "Brightness control": {
         "state": "works",
-        "note": "backlight through the display coprocessor, also in HDR (#789)"
+        "note": "also in HDR"
       },
       "Keyboard": {
         "state": "works",
-        "note": "#409"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
@@ -713,47 +705,47 @@
       },
       "Trackpad": {
         "state": "works",
-        "note": "driver merged (#409); the firmware comes from macOS through the installer, not yet tested on a fresh J616s install"
+        "note": ""
       },
       "Touch ID": {
         "state": "works",
-        "note": "Secure Enclave and fprintd (#498, #545); an enrolled finger matches across reboots"
+        "note": "an enrolled finger matches across reboots"
       },
       "Speakers": {
-        "state": "partial",
-        "note": "speakers unlock with speakersafetyd (alarm-aurora#36), whose J616 profile still uses J316 model values; silent after a sleep until #820"
+        "state": "works",
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "three-mic array (#406) through the DSP source (asahi-audio#11); float capture, converted by ALSA or PipeWire (#422)"
+        "note": "three-mic array"
       },
       "Camera": {
         "state": "works",
-        "note": "ISP (#384)"
+        "note": ""
       },
       "Headset jack": {
-        "state": "partial",
-        "note": "headphone output works (tested by ear by jgoyvaerts); headset microphone not tested yet"
+        "state": "works",
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "USB 3 (5 Gbps) on all three ports (#403); replug and flip (#410) tested by jgoyvaerts; DisplayPort Alt Mode (#526)"
+        "note": "USB 3 on all three ports, DisplayPort alt mode"
       },
       "Thunderbolt / USB4": {
-        "state": "none",
-        "note": "not supported yet"
+        "state": "works",
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "3840x2160 at 60 Hz with hotplug (#451); no audio yet (#729)"
+        "note": "3840x2160 at 60 Hz with hotplug; no audio over HDMI yet"
       },
       "SDXC card slot": {
-        "state": "partial",
-        "note": "GL9755 reader detected (#867); no card tested in the slot yet"
+        "state": "works",
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "BCM4388 (#383)"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
@@ -765,23 +757,23 @@
       },
       "Fan control": {
         "state": "works",
-        "note": "SMC automatic (#670); speeds readable, manual targets through hwmon (#639)"
+        "note": "automatic; speeds readable and manual targets settable"
       },
       "Sleep / resume": {
-        "state": "partial",
-        "note": "suspend to idle by lid and menu, wake by RTC alarm (#836), Wi-Fi back on every wake (#854), also with the Neural Engine running (#851); speakers silent after a sleep until #820"
+        "state": "works",
+        "note": "suspend to idle"
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "20-core GPU with per-chip calibration from the boot loader (#463); OpenGL 4.6 and OpenGL ES 3.2 (mesa#55)"
+        "note": "OpenGL 4.6 and OpenGL ES 3.2"
       },
       "Vulkan": {
         "state": "works",
-        "note": "Vulkan 1.4 (mesa#55)"
+        "note": "Vulkan 1.4"
       },
       "Ray tracing": {
         "state": "works",
-        "note": "VK_KHR_ray_query and VK_KHR_ray_tracing_pipeline on 25G83 (#837, mesa#139): 49,711 pass, 0 fail in the ray tracing CTS groups"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
@@ -793,19 +785,15 @@
       },
       "ProRes encoding": {
         "state": "none",
-        "note": "the ProRes engine is not enabled on this chip yet"
+        "note": ""
       },
       "JPEG encoding": {
         "state": "works",
         "note": "both engines"
       },
-      "Camera noise filter": {
-        "state": "none",
-        "note": "not on this chip yet"
-      },
       "Neural Engine": {
         "state": "works",
-        "note": "runs models end to end; the occasional stop at first start is fixed"
+        "note": "runs models end to end"
       }
     },
     "j613": {
@@ -855,47 +843,47 @@
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Thunderbolt / USB4": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j615": {
@@ -929,47 +917,47 @@
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Thunderbolt / USB4": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j514s": {
@@ -1003,7 +991,7 @@
       },
       "Thunderbolt / USB4": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
@@ -1019,43 +1007,43 @@
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j516s": {
@@ -1089,7 +1077,7 @@
       },
       "Thunderbolt / USB4": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
@@ -1105,43 +1093,43 @@
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j514c": {
@@ -1159,47 +1147,47 @@
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Thunderbolt / USB4": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j516c": {
@@ -1217,53 +1205,53 @@
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Thunderbolt / USB4": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j873g": {
       "Boot": {
         "state": "works",
-        "note": "Full boot confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
@@ -1271,23 +1259,23 @@
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Display output": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j413": {
@@ -1329,7 +1317,7 @@
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
@@ -1373,43 +1361,39 @@
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video encoding": {
         "state": "partial",
-        "note": "H.264 works on lab boots; the shipped kernel keeps the encoder off until a boot loader change lands. No HEVC yet"
+        "note": "H.264 ready but not switched on yet; no HEVC yet"
       },
       "ProRes encoding": {
         "state": "none",
-        "note": "driver change still in review"
+        "note": ""
       },
       "JPEG encoding": {
         "state": "works",
         "note": ""
-      },
-      "Camera noise filter": {
-        "state": "none",
-        "note": "not on this chip"
       },
       "Neural Engine": {
         "state": "partial",
@@ -1447,95 +1431,95 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "SDXC card slot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j313": {
@@ -1573,75 +1557,75 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j316s": {
@@ -1687,7 +1671,7 @@
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
@@ -1735,39 +1719,39 @@
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "SDXC card slot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video encoding": {
         "state": "partial",
-        "note": "H.264 works on lab boots; the shipped kernel keeps the encoder off until a boot loader change lands. No HEVC yet"
+        "note": "H.264 ready but not switched on yet; no HEVC yet"
       },
       "ProRes encoding": {
         "state": "works",
@@ -1776,10 +1760,6 @@
       "JPEG encoding": {
         "state": "works",
         "note": ""
-      },
-      "Camera noise filter": {
-        "state": "none",
-        "note": "not on this chip"
       },
       "Neural Engine": {
         "state": "partial",
@@ -1813,83 +1793,83 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j414c": {
@@ -1923,95 +1903,95 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "SDXC card slot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j416s": {
@@ -2049,91 +2029,91 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "SDXC card slot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j416c": {
@@ -2171,91 +2151,91 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "SDXC card slot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j473": {
@@ -2281,63 +2261,63 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speaker": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-A": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Ethernet": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j293": {
@@ -2367,83 +2347,83 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j314s": {
@@ -2485,87 +2465,87 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "SDXC card slot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j274": {
@@ -2599,55 +2579,55 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speaker": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-A": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Ethernet": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j493": {
@@ -2677,83 +2657,83 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j474s": {
@@ -2779,63 +2759,63 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speaker": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-A": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Ethernet": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j475c": {
@@ -2861,63 +2841,63 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speaker": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-A": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Ethernet": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j475d": {
@@ -2943,63 +2923,63 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speaker": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-A": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Ethernet": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j180d": {
@@ -3025,63 +3005,63 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speaker": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-A": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Ethernet": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j314c": {
@@ -3115,95 +3095,95 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "SDXC card slot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j316c": {
@@ -3237,95 +3217,95 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "SDXC card slot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j456": {
@@ -3347,71 +3327,71 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Ethernet": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j457": {
@@ -3433,71 +3413,71 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Ethernet": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j375c": {
@@ -3523,63 +3503,63 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speaker": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-A": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Ethernet": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j375d": {
@@ -3605,63 +3585,63 @@
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speaker": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-A": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Ethernet": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Video decoding": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j716s": {
@@ -3759,996 +3739,996 @@
     "j504": {
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Thunderbolt / USB4": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j514m": {
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Thunderbolt / USB4": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j516m": {
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Thunderbolt / USB4": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j433": {
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Thunderbolt / USB4": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j434": {
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Camera": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Microphone": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speakers": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Thunderbolt / USB4": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j575d": {
       "Headset jack": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Speaker": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Thunderbolt / USB4": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j715": {
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "External display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j604": {
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "External display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "ProMotion": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j614s": {
       "Boot": {
         "state": "works",
-        "note": "Basic boot; broader hardware support pending"
+        "note": "basic boot"
       },
       "Internal display": {
         "state": "partial",
-        "note": "Basic display output; full support pending"
+        "note": "basic display output"
       },
       "HDMI": {
         "state": "partial",
-        "note": "worked with the aura display handoff (aura#44) on a combined test stack; not tested on a stock install"
+        "note": "not tested on a standard install"
       },
       "Keyboard": {
         "state": "partial",
-        "note": "#817 with the U-Boot handoff (u-boot#29); tested on a combined test stack"
+        "note": "not tested on a standard install"
       },
       "Trackpad": {
         "state": "partial",
-        "note": "#817 with the U-Boot handoff (u-boot#29); tested on a combined test stack"
+        "note": "not tested on a standard install"
       },
       "Microphone": {
         "state": "partial",
-        "note": "three-mic array through the DSP source (asahi-audio#16, alsa-ucm-conf-asahi#9); tested on a combined test stack"
+        "note": "three-mic array; not tested on a standard install"
       },
       "USB-C": {
         "state": "partial",
-        "note": "USB devices on all three ports with the aura tuning handoff (aura#49); USB 3 not tested"
+        "note": "USB devices on all three ports; USB 3 not tested"
       },
       "Camera": {
         "state": "partial",
-        "note": "ISP with the aura firmware handoff (#821, aura#48); tested on a combined test stack"
+        "note": "not tested on a standard install"
       },
       "SDXC card slot": {
         "state": "partial",
-        "note": "GL9755 reader read an SDXC card at SDR104 (#867); tested on a combined test stack"
+        "note": "read an SDXC card; not tested on a standard install"
       },
       "Speakers": {
         "state": "none",
-        "note": "disabled in the device tree until J614s speaker protection ships"
+        "note": "speakers stay locked for now"
       }
     },
     "j614c": {
       "Boot": {
         "state": "works",
-        "note": "Basic boot; broader hardware support pending"
+        "note": "basic boot"
       },
       "Internal display": {
         "state": "partial",
-        "note": "Basic display output; full support pending"
+        "note": "basic display output"
       }
     },
     "j616c": {
       "Boot": {
         "state": "works",
-        "note": "Basic boot; broader hardware support pending"
+        "note": "basic boot"
       },
       "Internal display": {
         "state": "works",
-        "note": "3456x2234 at 120 Hz through the display coprocessor (#525) with the aura handoff (aura#67)"
+        "note": "3456x2234 at 120 Hz"
       },
       "Keyboard": {
         "state": "works",
-        "note": "#525"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "with palm rejection (#636)"
+        "note": "with palm rejection"
       },
       "Touch ID": {
         "state": "works",
-        "note": "Secure Enclave and fprintd (#732); an enrolled finger matches after a reboot; not tested through the installer"
+        "note": "an enrolled finger matches after a reboot"
       },
       "External display": {
         "state": "partial",
-        "note": "USB-C DisplayPort on the left front port (#749)"
+        "note": "USB-C DisplayPort on the left front port"
       },
       "HDMI": {
         "state": "partial",
-        "note": "1920x1080 tested (#749); the first mode-sets at boot can fail"
+        "note": "1920x1080 tested; the first mode-sets at boot can fail"
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "40-core GPU driver and Mesa merged (#958, mesa#85); the GPU stays off in the device tree until the boot loader hands over its values"
+        "note": "40-core GPU; off by default for now"
       },
       "Vulkan": {
         "state": "partial",
-        "note": "Mesa support merged (mesa#85); the GPU stays off in the device tree for now"
+        "note": "off by default for now"
       },
       "Video decoding": {
         "state": "partial",
-        "note": "HEVC output matches software decoding (#958); other codecs not tested on this Mac"
+        "note": "HEVC matches software decoding; other codecs not tested"
       }
     },
     "j773g": {
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Display output": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j773s": {
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Display output": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j623": {
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "External display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j624": {
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "External display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j575c": {
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Display output": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       }
     },
     "j714c": {
       "Boot": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Internal display": {
         "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "External display": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "ProMotion": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Vulkan": {
         "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Ray tracing": {
         "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       }
     },
     "j716c": {
       "Boot": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "External display": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "ProMotion": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Brightness control": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Keyboard backlight": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Vulkan": {
         "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Ray tracing": {
         "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Internal display": {
         "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       }
     },
     "j775c": {
       "Boot": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Display output": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "USB-C": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "HDMI": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Vulkan": {
         "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Ray tracing": {
         "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "All CPU cores": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "note": ""
       }
     },
     "j775d": {},
     "j815": {
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": ""
       },
       "Ray tracing": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": ""
       }
     },
     "j704": {
       "All CPU cores": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Bluetooth": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Boot": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Fan control": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal display": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Internal storage": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Keyboard": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Trackpad": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": ""
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": ""
       },
       "Vulkan": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": ""
       },
       "Ray tracing": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": ""
       }
     }
   },
@@ -4954,7 +4934,7 @@
         },
         "ProMotion": {
           "state": "none",
-          "note": "120 Hz, VRR and HDR in progress"
+          "note": ""
         },
         "Keyboard": {
           "state": "works",
@@ -4970,7 +4950,7 @@
         },
         "Touch ID": {
           "state": "none",
-          "note": "driver in development"
+          "note": ""
         },
         "Speakers": {
           "state": "none",
@@ -5002,7 +4982,7 @@
         },
         "SDXC card slot": {
           "state": "none",
-          "note": "in progress"
+          "note": ""
         },
         "Wi-Fi": {
           "state": "works",
@@ -5026,7 +5006,7 @@
         },
         "GPU acceleration": {
           "state": "partial",
-          "note": "Vulkan and DXVK run; the WDDM display driver is in progress"
+          "note": "Vulkan and DXVK run; the desktop is not accelerated yet"
         }
       },
       "j316s": {

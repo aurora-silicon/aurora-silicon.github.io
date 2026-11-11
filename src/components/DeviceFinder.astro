@@ -42,7 +42,7 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
 </section>
 <script>
   import devices from '../data/devices.json';
-  import { getGroups, getState, getSummary, getHistory, getRecord, labels, osLabels, getDeviceClass, getSeries, getChipTier } from '../lib/support';
+  import { getGroups, getState, getSummary, getRecord, labels, osLabels, getDeviceClass, getSeries, getChipTier } from '../lib/support';
   import type { Device, Os } from '../lib/support';
   const classButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-device-class]')];
   const osButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-os]')];
@@ -188,7 +188,7 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
     osNote.hidden = os !== 'windows';
     const summary = getSummary(selected, os);
     document.querySelector<HTMLElement>('[data-support-summary]')!.textContent = summary.recorded
-      ? [`${summary.working} working`, `${summary.partial} partial`, summary.notWorking ? `${summary.notWorking} not working` : '', summary.reported ? `${summary.reported} reported` : '', `${summary.total - summary.recorded} not recorded`].filter(Boolean).join(' · ')
+      ? [`${summary.working} working`, `${summary.partial} partial`, summary.notWorking ? `${summary.notWorking} not working` : '', `${summary.total - summary.recorded} not recorded`].filter(Boolean).join(' · ')
       : `No ${osLabels[os]} results recorded for this Mac yet.`;
     renderFeatures();
     announce.textContent = `${osLabels[os]} features for ${selected.model}, ${selected.chip}. ${summary.working} working, ${summary.partial} partial.`;
@@ -208,14 +208,10 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
     const body = document.querySelector<HTMLElement>('[data-feature-body]')!; body.replaceChildren();
     const current = getRecord(selected.device, feature, os);
     const text = document.createElement('p');
-    text.textContent = current ? `${labels[current.state]}${current.note ? `: ${current.note}.` : ` on ${osLabels[os]} for this device.`}` : getState(selected.device, feature, os) === 'reported' ? 'A development report is recorded below.' : `No ${osLabels[os]} result recorded for this device.`;
+    text.textContent = current ? `${labels[current.state]}${current.note ? `: ${current.note}.` : ` on ${osLabels[os]} for this device.`}` : `No ${osLabels[os]} result recorded for this device.`;
     body.append(text);
     if (current) {
       const link = document.createElement('a'); link.className = 'project-link'; link.href = os === 'windows' ? MU_URL : selected.discussion; link.textContent = os === 'windows' ? 'Mu firmware ↗' : 'Hardware report ↗'; body.append(link);
-    }
-    for (const record of getHistory(selected.device, feature, os)) {
-      const detail = document.createElement('p'); detail.className = 'historic-detail'; detail.textContent = record.detail;
-      const source = document.createElement('a'); source.href = record.url || selected.discussion; source.textContent = `Earlier report · ${record.date}`; source.className = 'project-link'; body.append(detail, source);
     }
     revealPanel();
   });
@@ -327,14 +323,12 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   .feature-groups :global(.state-partial), .state-partial { color: var(--status-partial); background: linear-gradient(90deg, currentColor 50%, transparent 50%); }
   .feature-groups :global(.state-none), .state-none { border-radius: 0; transform: rotate(45deg); }
   .feature-groups :global(.state-unknown), .state-unknown { opacity: .4; }
-  .feature-groups :global(.state-reported) { background: var(--muted); }
   .support-legend { display: flex; flex-wrap: wrap; gap: 12px 22px; list-style: none; margin: 32px 0 0; padding: 0; }
   .support-legend li { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 10px; }
   .feature-note { font-size: 11px; color: var(--muted); line-height: 1.8; margin-top: 15px; }
   .feature-detail { padding: 20px 22px; margin-top: 26px; border: 1px solid var(--line); border-radius: 7px; background: var(--panel); }
   .feature-detail h3 { margin: 0 0 10px; font-size: 14px; font-weight: 500; }
   .feature-detail :global(p) { color: var(--muted); font-size: 12px; line-height: 1.9; }
-  .feature-detail :global(.historic-detail) { margin-top: 20px; }
   .feature-detail :global(.project-link) { font-size: 11px; padding-top: 12px; }
   .offline-devices { font-size: 13px; line-height: 1.8; }
   .offline-devices details { border-bottom: 1px solid var(--line); padding-block: 16px; }

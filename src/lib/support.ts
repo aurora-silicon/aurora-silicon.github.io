@@ -1,15 +1,13 @@
 import supportData from '../data/support.json';
-import historyData from '../data/feature-reports.json';
 
-export type State = 'works' | 'partial' | 'none' | 'unknown' | 'reported';
+export type State = 'works' | 'partial' | 'none' | 'unknown';
 export type Os = 'linux' | 'windows';
 export interface Device {
   model: string; device: string; chip: string; soc: string; year: string;
   generation: string; discussion: string; profile: string;
 }
 export interface FeatureGroup { name: string; features: string[]; }
-export interface Record { state: Exclude<State, 'unknown' | 'reported'>; note: string; }
-export interface History { date: string; title: string; detail: string; url: string; }
+export interface Record { state: Exclude<State, 'unknown'>; note: string; }
 type Results = { [device: string]: { [feature: string]: Record } };
 export const deviceClasses = ['MacBook Air', 'MacBook Neo', 'MacBook Pro', 'Mac mini', 'Mac Studio', 'Mac Pro', 'iMac'];
 export function getDeviceClass(device: Device): string {
@@ -44,25 +42,13 @@ export function getChipTier(device: Device): number {
   const tier = device.chip.match(/\b(Pro|Max|Ultra)\b/)?.[1];
   return tier ? chipTiers.indexOf(tier) + 1 : 0;
 }
-export const history = historyData as { [device: string]: { [feature: string]: History[] } };
 export const labels: { [state in State]: string } = {
-  works: 'Working', partial: 'Partial', none: 'Not working', unknown: 'Not recorded', reported: 'Reported',
+  works: 'Working', partial: 'Partial', none: 'Not working', unknown: 'Not recorded',
 };
-const historyKeys: { [feature: string]: string } = {
-  Boot: 'boot', 'GPU acceleration': 'graphics', 'Internal display': 'display',
-  'Internal storage': 'storage', Keyboard: 'keyboard', Trackpad: 'trackpad',
-  'Wi-Fi': 'wifi', Bluetooth: 'bluetooth', Speakers: 'audio', Camera: 'camera',
-  'USB-C': 'usb', 'Thunderbolt / USB4': 'thunderbolt', 'Touch ID': 'touch-id',
-  'Sleep / resume': 'suspend', 'Neural Engine': 'neural-engine',
-};
-// Earlier dated reports exist for Linux only.
-export function getHistory(device: string, feature: string, os: Os = 'linux'): History[] {
-  return os === 'linux' ? history[device]?.[historyKeys[feature]] ?? [] : [];
-}
 export function getState(device: string, feature: string, os: Os = 'linux'): State {
-  return getRecord(device, feature, os)?.state ?? (getHistory(device, feature, os).length ? 'reported' : 'unknown');
+  return getRecord(device, feature, os)?.state ?? 'unknown';
 }
-export function getGroups(device: Device, os: Os = 'linux'): FeatureGroup[] {
+export function getGroups(device: Device, _os: Os = 'linux'): FeatureGroup[] {
   let groups = support.profiles[device.profile] ?? support.profiles.laptop;
   if (device.generation === 'M1' || device.generation === 'M2') {
     groups = groups.map(group => {
@@ -79,10 +65,7 @@ export function getGroups(device: Device, os: Os = 'linux'): FeatureGroup[] {
       (['M5 Pro', 'M5 Max'].includes(device.chip) && device.profile === 'desktop')) {
     groups = groups.map(group => group.name === 'Power' ? { ...group, features: [...new Set([...group.features, 'Fan control'])] } : group);
   }
-  // Earlier research reports on the Neural Engine show under its feature pill.
-  return getHistory(device.device, 'Neural Engine', os).length && !groups.some(group => group.features.includes('Neural Engine'))
-    ? [...groups, { name: 'Research', features: ['Neural Engine'] }]
-    : groups;
+  return groups;
 }
 export function getSummary(device: Device, os: Os = 'linux') {
   const features = getGroups(device, os).flatMap(group => group.features);
@@ -92,7 +75,6 @@ export function getSummary(device: Device, os: Os = 'linux') {
     working: features.filter(feature => state(feature) === 'works').length,
     partial: features.filter(feature => state(feature) === 'partial').length,
     notWorking: features.filter(feature => state(feature) === 'none').length,
-    reported: features.filter(feature => state(feature) === 'reported').length,
     recorded: features.filter(feature => state(feature) !== 'unknown').length,
   };
 }
