@@ -71,7 +71,8 @@ export function getGroups(device: Device): FeatureGroup[] {
       (['M5 Pro', 'M5 Max'].includes(device.chip) && device.profile === 'desktop')) {
     groups = groups.map(group => group.name === 'Power' ? { ...group, features: [...new Set([...group.features, 'Fan control'])] } : group);
   }
-  return getHistory(device.device, 'Neural Engine').length
+  // Earlier research reports on the Neural Engine show under its feature pill.
+  return getHistory(device.device, 'Neural Engine').length && !groups.some(group => group.features.includes('Neural Engine'))
     ? [...groups, { name: 'Research', features: ['Neural Engine'] }]
     : groups;
 }

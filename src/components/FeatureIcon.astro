@@ -41,7 +41,17 @@ const names: Record<string, string> = {
   "USB-C display": "monitor-up",
   "Variable refresh rate": "monitor-play",
   "Secure Enclave": "fingerprint",
-  "Neural Engine": "cpu"
+  "Neural Engine": "cpu",
+  "Video encoding": "film",
+  "ProRes encoding": "film",
+  "JPEG encoding": "camera",
+  "Camera noise filter": "camera",
+  "Wake-on-WLAN": "wifi",
+  "Low Power Mode": "battery-charging",
+  "AWDL": "wifi",
+  "Passkeys": "fingerprint",
+  "Encrypted disk unlock": "hard-drive",
+  "Secure boot": "power"
 };
 ---
 <LucideIcon name={names[name] ?? 'cpu'} class="feature-icon" />
