@@ -4111,8 +4111,8 @@
         "note": "confirmed by the Aurora team (2026-11-11); boots on its own tree since #1186 (aeries0x), and an installer-made install boots from the internal SSD (#1367)"
       },
       "All CPU cores": {
-        "state": "untested",
-        "note": "CPU frequency scaling and deep idle in the device tree (#1142)"
+        "state": "works",
+        "note": "all ten cores with frequency scaling (apple-cpufreq, #1142); the idle states are WFI only"
       },
       "Internal storage": {
         "state": "works",
@@ -4127,8 +4127,8 @@
         "note": "the external display coprocessor is not enabled on this Mac yet (#1142)"
       },
       "ProMotion": {
-        "state": "partial",
-        "note": "the panel runs its 120 Hz mode (#1178), but frames complete only at 60 fps until #1525 (open)"
+        "state": "works",
+        "note": "the panel runs its 120 Hz mode (#1178) and frames complete at 120 fps with #1525"
       },
       "Brightness control": {
         "state": "untested",
@@ -4139,8 +4139,8 @@
         "note": "MTP cold start (#1367, aura#137); on an installed system it also needs U-Boot to leave the MTP alone (u-boot#44)"
       },
       "Keyboard backlight": {
-        "state": "untested",
-        "note": "PWM backlight described (#1142)"
+        "state": "works",
+        "note": "PWM backlight, full range (#1142)"
       },
       "Trackpad": {
         "state": "works",
@@ -4159,16 +4159,16 @@
         "note": "microphone stream described (#1142)"
       },
       "Camera": {
-        "state": "untested",
-        "note": "front camera described (#1142); the loader handoff is open (aura#155)"
+        "state": "works",
+        "note": "front camera at 1080p30 with the loader handoff (aura#155) and the ISP setfiles from the installer's firmware"
       },
       "Headset jack": {
         "state": "untested",
         "note": "CS42L84 jack (#1142)"
       },
       "USB-C": {
-        "state": "untested",
-        "note": "all three ports at USB 2 and USB 3 (#1142); USB 3 at 5 Gb/s on all three ports tested with open #1492 and aura#154"
+        "state": "works",
+        "note": "all three ports as host at USB 2 and at USB 3 5 Gb/s, both orientations (#1492, aura#154); device mode (the Mac as a USB device) does not work yet"
       },
       "Thunderbolt / USB4": {
         "state": "none",
@@ -4191,12 +4191,12 @@
         "note": "the adapter comes up with the radio port handoff (aura#141); pairing and audio not tested"
       },
       "Battery / charging": {
-        "state": "untested",
-        "note": "through the SMC (#1142)"
+        "state": "works",
+        "note": "battery and AC status and the charge limit through the SMC (#1142)"
       },
       "Fan control": {
-        "state": "untested",
-        "note": "two fans through the SMC (#1142)"
+        "state": "works",
+        "note": "one fan under SMC control, its speed reported (#1142); it spins up under load"
       },
       "GPU acceleration": {
         "state": "works",
