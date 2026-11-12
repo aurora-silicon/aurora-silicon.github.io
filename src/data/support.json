@@ -45,7 +45,8 @@
         "features": [
           "USB-C",
           "Wi-Fi",
-          "Bluetooth"
+          "Bluetooth",
+          "AWDL"
         ]
       },
       {
@@ -53,6 +54,8 @@
         "features": [
           "Battery / charging",
           "Sleep / resume",
+          "Wake-on-WLAN",
+          "Low Power Mode",
           "Ambient light"
         ]
       },
@@ -63,6 +66,24 @@
           "Vulkan",
           "Ray tracing",
           "Video decoding"
+        ]
+      },
+      {
+        "name": "Encoders and Neural Engine",
+        "features": [
+          "Video encoding",
+          "ProRes encoding",
+          "JPEG encoding",
+          "Camera noise filter",
+          "Neural Engine"
+        ]
+      },
+      {
+        "name": "Security",
+        "features": [
+          "Passkeys",
+          "Encrypted disk unlock",
+          "Secure boot"
         ]
       }
     ],
@@ -109,7 +130,9 @@
         "name": "Power",
         "features": [
           "Battery / charging",
-          "Sleep / resume"
+          "Sleep / resume",
+          "Wake-on-WLAN",
+          "Low Power Mode"
         ]
       },
       {
@@ -119,6 +142,24 @@
           "Vulkan",
           "Ray tracing",
           "Video decoding"
+        ]
+      },
+      {
+        "name": "Encoders and Neural Engine",
+        "features": [
+          "Video encoding",
+          "ProRes encoding",
+          "JPEG encoding",
+          "Camera noise filter",
+          "Neural Engine"
+        ]
+      },
+      {
+        "name": "Security",
+        "features": [
+          "Passkeys",
+          "Encrypted disk unlock",
+          "Secure boot"
         ]
       }
     ],
@@ -169,7 +210,9 @@
         "features": [
           "Battery / charging",
           "Fan control",
-          "Sleep / resume"
+          "Sleep / resume",
+          "Wake-on-WLAN",
+          "Low Power Mode"
         ]
       },
       {
@@ -179,6 +222,24 @@
           "Vulkan",
           "Ray tracing",
           "Video decoding"
+        ]
+      },
+      {
+        "name": "Encoders and Neural Engine",
+        "features": [
+          "Video encoding",
+          "ProRes encoding",
+          "JPEG encoding",
+          "Camera noise filter",
+          "Neural Engine"
+        ]
+      },
+      {
+        "name": "Security",
+        "features": [
+          "Passkeys",
+          "Encrypted disk unlock",
+          "Secure boot"
         ]
       }
     ],
@@ -219,7 +280,9 @@
       {
         "name": "Power",
         "features": [
-          "Sleep / resume"
+          "Sleep / resume",
+          "Wake-on-WLAN",
+          "Low Power Mode"
         ]
       },
       {
@@ -229,6 +292,23 @@
           "Vulkan",
           "Ray tracing",
           "Video decoding"
+        ]
+      },
+      {
+        "name": "Encoders and Neural Engine",
+        "features": [
+          "Video encoding",
+          "ProRes encoding",
+          "JPEG encoding",
+          "Neural Engine"
+        ]
+      },
+      {
+        "name": "Security",
+        "features": [
+          "Passkeys",
+          "Encrypted disk unlock",
+          "Secure boot"
         ]
       }
     ],
@@ -270,7 +350,9 @@
       {
         "name": "Power",
         "features": [
-          "Sleep / resume"
+          "Sleep / resume",
+          "Wake-on-WLAN",
+          "Low Power Mode"
         ]
       },
       {
@@ -280,6 +362,24 @@
           "Vulkan",
           "Ray tracing",
           "Video decoding"
+        ]
+      },
+      {
+        "name": "Encoders and Neural Engine",
+        "features": [
+          "Video encoding",
+          "ProRes encoding",
+          "JPEG encoding",
+          "Camera noise filter",
+          "Neural Engine"
+        ]
+      },
+      {
+        "name": "Security",
+        "features": [
+          "Passkeys",
+          "Encrypted disk unlock",
+          "Secure boot"
         ]
       }
     ]
@@ -304,7 +404,7 @@
       },
       "External display": {
         "state": "works",
-        "note": "up to 4K 60 Hz"
+        "note": "up to 4K 60 Hz, with audio over DisplayPort (#1280, aura#122)"
       },
       "Brightness control": {
         "state": "works",
@@ -356,7 +456,7 @@
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "suspend to idle; suspend-to-RAM is in open draft #1445"
+        "note": "suspend to idle, and suspend to RAM with the memory kept powered (#1445, #1658, #1663); suspend to RAM needs kernel 7.3.0-36 and aura 1.0.0b12, not in the testing release yet"
       },
       "Ambient light": {
         "state": "works",
@@ -377,6 +477,50 @@
       "Video decoding": {
         "state": "works",
         "note": ""
+      },
+      "AWDL": {
+        "state": "partial",
+        "note": "experimental and off by default; the AWDL interface runs next to Wi-Fi (#1346, #1469), and AirDrop needs a sync policy that isn't done yet"
+      },
+      "Wake-on-WLAN": {
+        "state": "works",
+        "note": "a magic packet wakes it from suspend to RAM (#1445), armed on AC power by default; not from suspend to idle yet"
+      },
+      "Low Power Mode": {
+        "state": "partial",
+        "note": "Power Saver caps CPU power the way macOS Low Power Mode does (aurora-platform#13); no GPU or display limits yet"
+      },
+      "Video encoding": {
+        "state": "works",
+        "note": "H.264 and HEVC up to 4K, Main 10 included (#615, #739, #834), with constant quality and a speed mode (#1228)"
+      },
+      "ProRes encoding": {
+        "state": "works",
+        "note": "all profiles (#835)"
+      },
+      "JPEG encoding": {
+        "state": "works",
+        "note": "both engines (#839, #1291)"
+      },
+      "Camera noise filter": {
+        "state": "works",
+        "note": "camera denoise runs its temporal filter on the encoder's filter block, with output that matches macOS (#1513)"
+      },
+      "Neural Engine": {
+        "state": "works",
+        "note": "starts at boot and runs models (#801, #827)"
+      },
+      "Passkeys": {
+        "state": "works",
+        "note": "opt in; Touch ID as a FIDO2 security key and per-user passkeys (aurora-sep-userspace#14, aurora-sep-userspace#25)"
+      },
+      "Encrypted disk unlock": {
+        "state": "works",
+        "note": "opt in; the LUKS key is sealed in the Secure Enclave and unlocked with your password from the initrd (#1339, #1544, aurora-sep-userspace#21, aurora-sep-userspace#23)"
+      },
+      "Secure boot": {
+        "state": "none",
+        "note": "not enforced yet; aura can sign and measure each boot stage (aura#133), but no release turns the check on, so unsigned payloads still boot"
       }
     },
     "j813": {
@@ -394,7 +538,7 @@
       },
       "Internal display": {
         "state": "works",
-        "note": "2560x1600 panel (#166, #1002); the macOS 27.0 firmware needs open #1413"
+        "note": "2560x1600 panel (#166, #1002), also on the macOS 27.0 firmware (#1413)"
       },
       "Keyboard": {
         "state": "works",
@@ -426,7 +570,7 @@
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "GLES 3.1 on the M5 backend (#1003, mesa#173), dEQP GLES2 with 0 failures; no GPU recovery yet, fixes in open #1057 and #1413"
+        "note": "GLES 3.1 on the M5 backend (#1003, mesa#173), dEQP GLES2 with 0 failures; GPU recovery fixes (#1057, #1413)"
       },
       "Battery / charging": {
         "state": "works",
@@ -434,7 +578,7 @@
       },
       "Vulkan": {
         "state": "partial",
-        "note": "vkcube runs on Honeykrisp with open #1413; no Vulkan CTS reported"
+        "note": "vkcube runs on Honeykrisp (#1413); no Vulkan CTS reported"
       },
       "Ray tracing": {
         "state": "partial",
@@ -446,15 +590,15 @@
       },
       "Speakers": {
         "state": "partial",
-        "note": "four speakers at capped levels under speakersafetyd (#1048); aurora-wip only, the integration port is open #1423"
+        "note": "four speakers at capped levels under speakersafetyd (#1048, #1423)"
       },
       "Microphone": {
-        "state": "partial",
-        "note": "three-mic array (#1048); aurora-wip only, the integration port is open #1423"
+        "state": "works",
+        "note": "three-mic array (#1048, #1423)"
       },
       "Headset jack": {
         "state": "partial",
-        "note": "playback tested (#1048, aurora-wip only); headset microphone not tested"
+        "note": "playback tested (#1048, #1423); headset microphone not tested"
       },
       "Camera": {
         "state": "works",
@@ -536,11 +680,11 @@
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "desktop at 120 Hz through Zink on the GPU (#1012, #1425); Mesa still gates the M5 Pro behind ASAHI_M5_BRINGUP"
+        "note": "desktop at 120 Hz through Zink on the GPU (#1012, #1425); Mesa runs the M5 Pro without a bring-up flag and has native GL for it (mesa#194)"
       },
       "Vulkan": {
         "state": "partial",
-        "note": "Vulkan 1.4, dEQP lists with 0 failures (#1012, mesa-aurora#32); same Mesa gate"
+        "note": "Vulkan 1.4, dEQP lists with 0 failures (#1012)"
       },
       "Ray tracing": {
         "state": "partial",
@@ -548,11 +692,11 @@
       },
       "Touch ID": {
         "state": "untested",
-        "note": "Secure Enclave binds read-only (#1325, #1433); no enrolment yet"
+        "note": "Secure Enclave binds (#1325, #1433) and the sensor is described (#1587); no enrolment reported yet"
       },
       "Microphone": {
-        "state": "partial",
-        "note": "three-mic array; needs open draft #1557"
+        "state": "works",
+        "note": "three-mic array (#1557)"
       },
       "Camera": {
         "state": "works",
@@ -561,6 +705,22 @@
       "Thunderbolt / USB4": {
         "state": "partial",
         "note": "right port: Thunderbolt 5 dock at 40 Gb/s with NVMe, USB and Ethernet (#1515, #1271); physical hot-plug not tested"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "hardware decoder tested on a J714s (#1577)"
+      },
+      "Video encoding": {
+        "state": "partial",
+        "note": "H.264 tested on a J714s (#1597); HEVC not yet"
+      },
+      "Neural Engine": {
+        "state": "works",
+        "note": "runs programs with exact output (#1595)"
+      },
+      "SDXC card slot": {
+        "state": "partial",
+        "note": "the GL9755 reader comes up at 5 GT/s (#1570); card reads and writes not tested"
       }
     },
     "j713": {
@@ -653,8 +813,8 @@
         "note": "front camera through the ISP (#531); live preview in Chromium (#1386)"
       },
       "Video decoding": {
-        "state": "none",
-        "note": "the decoder is disabled in the merged tree; H.264, HEVC and AV1 decoding tested on a J713 with open #1487 and #1488"
+        "state": "works",
+        "note": "H.264, HEVC and AV1 decoding tested on a J713 (#1487, #1488)"
       }
     },
     "j616s": {
@@ -676,7 +836,7 @@
       },
       "External display": {
         "state": "works",
-        "note": "USB-C DisplayPort and docks (#451, #526), HDR (#553, #764); no audio yet (#729)"
+        "note": "USB-C DisplayPort and docks (#451, #526), HDR (#553, #764), audio (#1256, #1267)"
       },
       "ProMotion": {
         "state": "works",
@@ -704,11 +864,11 @@
       },
       "Speakers": {
         "state": "partial",
-        "note": "speakers unlock with speakersafetyd (alarm-aurora#36), whose J616 profile still uses J316 model values; silent after a sleep until #820"
+        "note": "speakers unlock with speakersafetyd (alarm-aurora#36), whose J616 profile still uses J316 model values; they stay on after a sleep (#820)"
       },
       "Microphone": {
         "state": "works",
-        "note": "three-mic array (#406) through the DSP source (asahi-audio#11); float capture, converted by ALSA or PipeWire (#422)"
+        "note": "three-mic array (#406) through the DSP source (asahi-audio#11); float capture, converted by ALSA or PipeWire (#422); the low-power microphone records too (#1505)"
       },
       "Camera": {
         "state": "works",
@@ -724,11 +884,11 @@
       },
       "Thunderbolt / USB4": {
         "state": "partial",
-        "note": "left back port only: USB4 host-to-host at 2 x 20 Gb/s, thunderbolt-net about 18 Gbit/s, survives suspend (#1220, aura#103); no PCIe or DisplayPort tunnels yet"
+        "note": "all three ports, USB4 host-to-host at 2 x 20 Gb/s, thunderbolt-net about 19 Gbit/s in both cable orientations, survives suspend (#1220, #1263, aura#103); no PCIe or DisplayPort tunnels yet"
       },
       "HDMI": {
         "state": "works",
-        "note": "3840x2160 at 60 Hz with hotplug (#451); no audio yet (#729)"
+        "note": "3840x2160 at 60 Hz with hotplug (#451), with audio (#1256, #1267)"
       },
       "SDXC card slot": {
         "state": "partial",
@@ -752,7 +912,7 @@
       },
       "Sleep / resume": {
         "state": "partial",
-        "note": "suspend to idle by lid and menu, wake by RTC alarm (#836), Wi-Fi back on every wake (#854), also with the Neural Engine running (#851); speakers silent after a sleep until #820"
+        "note": "suspend to idle by lid and menu, wake by RTC alarm (#836), Wi-Fi back on every wake (#854), also with the Neural Engine running (#851); no suspend to RAM yet"
       },
       "GPU acceleration": {
         "state": "works",
@@ -769,6 +929,38 @@
       "Video decoding": {
         "state": "works",
         "note": "H.264, VP9 and AV1 hardware decoding"
+      },
+      "Wake-on-WLAN": {
+        "state": "works",
+        "note": "one magic packet wakes it from suspend to idle, with the Wi-Fi association kept (#1653, #1672, #1679); merged after the 7.3.0-36 kernel, so not in a testing release yet"
+      },
+      "Low Power Mode": {
+        "state": "partial",
+        "note": "Power Saver caps CPU power the way macOS Low Power Mode does (aurora-platform#13); no GPU or display limits yet"
+      },
+      "Video encoding": {
+        "state": "works",
+        "note": "H.264 and HEVC (#748), with constant quality and a speed mode (#1228)"
+      },
+      "ProRes encoding": {
+        "state": "none",
+        "note": "the driver takes this Mac's start-up tables from a file (#1260), but the J616s node stays off until the installer provides it"
+      },
+      "JPEG encoding": {
+        "state": "works",
+        "note": "both engines"
+      },
+      "Camera noise filter": {
+        "state": "works",
+        "note": "camera denoise runs its temporal filter on the CPU, close to macOS on this Mac"
+      },
+      "Neural Engine": {
+        "state": "works",
+        "note": "runs models end to end"
+      },
+      "Secure boot": {
+        "state": "none",
+        "note": "not enforced yet; aura can sign and measure each boot stage (aura#133), but no release turns the check on, so unsigned payloads still boot"
       }
     },
     "j613": {
@@ -1312,7 +1504,7 @@
       },
       "Microphone": {
         "state": "works",
-        "note": ""
+        "note": "built-in array; the low-power microphone records too (#1493)"
       },
       "Camera": {
         "state": "works",
@@ -1385,6 +1577,38 @@
       "Video decoding": {
         "state": "works",
         "note": "Confirmed by Aurora, 2026-10-21"
+      },
+      "Video encoding": {
+        "state": "partial",
+        "note": "H.264 (#1440, #1550, aura#161); HEVC not yet"
+      },
+      "Wake-on-WLAN": {
+        "state": "works",
+        "note": "one magic packet wakes it from suspend to idle, with the Wi-Fi association kept (#1653, #1672, #1679); merged after the 7.3.0-36 kernel, so not in a testing release yet"
+      },
+      "Low Power Mode": {
+        "state": "partial",
+        "note": "Power Saver caps CPU power the way macOS Low Power Mode does (aurora-platform#13); no GPU or display limits yet"
+      },
+      "Camera noise filter": {
+        "state": "works",
+        "note": "camera denoise runs its temporal filter on the CPU"
+      },
+      "Neural Engine": {
+        "state": "partial",
+        "note": "runs small models; recovery after a hung job needs a reboot"
+      },
+      "Secure boot": {
+        "state": "none",
+        "note": "not enforced yet; aura can sign and measure each boot stage (aura#133), but no release turns the check on, so unsigned payloads still boot"
+      },
+      "ProRes encoding": {
+        "state": "none",
+        "note": "no driver for the M2's ProRes block yet"
+      },
+      "JPEG encoding": {
+        "state": "works",
+        "note": "both engines (#1226)"
       }
     },
     "j414s": {
@@ -1650,7 +1874,7 @@
       },
       "Microphone": {
         "state": "works",
-        "note": ""
+        "note": "built-in array; the low-power microphone records too (#1493)"
       },
       "Camera": {
         "state": "works",
@@ -1735,6 +1959,38 @@
       "Video decoding": {
         "state": "works",
         "note": "Confirmed by Aurora, 2026-10-21"
+      },
+      "Video encoding": {
+        "state": "partial",
+        "note": "H.264 (#1440, #1550, aura#161); HEVC not yet"
+      },
+      "Wake-on-WLAN": {
+        "state": "works",
+        "note": "one magic packet wakes it from suspend to idle, with the Wi-Fi association kept (#1653, #1672, #1679); merged after the 7.3.0-36 kernel, so not in a testing release yet"
+      },
+      "Low Power Mode": {
+        "state": "partial",
+        "note": "Power Saver caps CPU power the way macOS Low Power Mode does (aurora-platform#13); no GPU or display limits yet"
+      },
+      "Camera noise filter": {
+        "state": "works",
+        "note": "camera denoise runs its temporal filter on the CPU"
+      },
+      "Neural Engine": {
+        "state": "partial",
+        "note": "runs small models; recovery after a hung job needs a reboot"
+      },
+      "Secure boot": {
+        "state": "none",
+        "note": "not enforced yet; aura can sign and measure each boot stage (aura#133), but no release turns the check on, so unsigned payloads still boot"
+      },
+      "ProRes encoding": {
+        "state": "works",
+        "note": "all profiles, rate control matches macOS (#1164, #1248)"
+      },
+      "JPEG encoding": {
+        "state": "works",
+        "note": "both engines (#1237)"
       }
     },
     "j415": {
@@ -3682,11 +3938,11 @@
       },
       "Internal display": {
         "state": "partial",
-        "note": "boot framebuffer only; the firmware-27.3 display is open #1174"
+        "note": "boot framebuffer; firmware 27.3 display methods merged (#1174), full display not reported yet"
       },
       "Wi-Fi": {
-        "state": "partial",
-        "note": "N1 (#938, #1182); kernel-side link training for the J716s DT is open #1183"
+        "state": "works",
+        "note": "N1 (#938, #1182), with kernel-side link training for the J716s (#1183)"
       },
       "Bluetooth": {
         "state": "works",
@@ -4208,11 +4464,11 @@
       },
       "Sleep / resume": {
         "state": "untested",
-        "note": "suspend to idle with keyboard wake seen on a contributor kernel with open #1492"
+        "note": "suspend to idle with keyboard wake seen on a contributor kernel with #1492; not tested on merged code alone"
       },
       "Video decoding": {
-        "state": "untested",
-        "note": "VP9 and AV1 decoding in Chromium on a contributor kernel with open #1488 and #1511"
+        "state": "works",
+        "note": "VP9 and AV1 decoding in Chromium (#1488, #1511)"
       }
     },
     "j614s": {
@@ -4225,8 +4481,8 @@
         "note": "3024x1890 at 120 Hz through the display coprocessor (aura#44); clamshell mode turns the panel off cleanly (ferass04)"
       },
       "HDMI": {
-        "state": "none",
-        "note": "the shared tree describes the J616s HDMI processor, which the J614s lacks, so the loader refuses it (#1551); HDMI worked on an earlier combined test stack (aura#44)"
+        "state": "partial",
+        "note": "through the J614s's own external display processor (#1585, #1551); also needs the boot loader change in open aura#166"
       },
       "Keyboard": {
         "state": "works",
@@ -4278,7 +4534,7 @@
       },
       "External display": {
         "state": "partial",
-        "note": "USB-C DisplayPort through a dock at 1920x1080 100 Hz with hotplug on 7.3.0.aurora1-27 (ferass04); the port in use loses DisplayPort after suspend; on aurora1-30 with aura 1.0.0b10 no external display comes up until #1551 (open)"
+        "note": "USB-C DisplayPort through a dock at 1920x1080 100 Hz with hotplug (ferass04); the port in use loses DisplayPort after suspend; #1551 brings external displays back on aura 1.0.0b10 and later"
       },
       "Keyboard backlight": {
         "state": "works",
@@ -4293,8 +4549,8 @@
         "note": "jack card registers; nothing plugged in yet (ferass04)"
       },
       "Thunderbolt / USB4": {
-        "state": "none",
-        "note": "the USB4 routers are disabled in the tree; a Thunderbolt dock runs as USB-C (ferass04)"
+        "state": "partial",
+        "note": "a Thunderbolt 3 display enumerates at 2 x 20 Gb/s on the left port (#1588); no picture over the tunnel yet, other ports not tested"
       },
       "Wi-Fi": {
         "state": "works",
@@ -4343,12 +4599,12 @@
         "note": "NVMe (#1332)"
       },
       "External display": {
-        "state": "none",
-        "note": "the external display coprocessors stay off as merged; HDMI and USB-C DisplayPort at 2560x1440 tested with open #1472"
+        "state": "works",
+        "note": "HDMI and USB-C DisplayPort at 2560x1440 (#1472)"
       },
       "HDMI": {
-        "state": "none",
-        "note": "the external display coprocessors stay off as merged; 2560x1440 tested with open #1472, audio with open #1473"
+        "state": "works",
+        "note": "2560x1440 (#1472), with audio (#1473)"
       },
       "Keyboard": {
         "state": "works",
@@ -4379,8 +4635,8 @@
         "note": "jack card registers (#1332); not tested"
       },
       "USB-C": {
-        "state": "untested",
-        "note": "two of the three ports at USB 2; the third port (#1468) and USB 3 (#1476, aura#147) tested by joske but still open"
+        "state": "works",
+        "note": "all three ports, USB 3 (#1468, #1476, aura#147); tested by joske"
       },
       "Thunderbolt / USB4": {
         "state": "none",
@@ -4747,8 +5003,8 @@
         "note": "NVMe, SMART readable (#1498)"
       },
       "Display output": {
-        "state": "none",
-        "note": "no picture: iBoot hands over a dummy framebuffer and the display subsystem is not described (#1498); a USB-C display works with open #1546 and aura#160"
+        "state": "partial",
+        "note": "a USB-C display works (#1546, aura#160); iBoot hands over a dummy framebuffer and HDMI has no picture (#1498)"
       },
       "HDMI": {
         "state": "none",
@@ -4768,7 +5024,7 @@
       },
       "USB-C": {
         "state": "partial",
-        "note": "two back ports at USB 2 (#1498); the fourth back port and USB 3 are in open #1546, the front ports need open #1499"
+        "note": "all four back ports, with USB 3 (#1546); the front ports need open #1499"
       },
       "Thunderbolt / USB4": {
         "state": "none",
@@ -4936,11 +5192,11 @@
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "desktop through Zink on Honeykrisp, admitted by default (mesa#205); needs open #1276"
+        "note": "desktop through Zink on Honeykrisp, admitted by default (mesa#205), with #1276"
       },
       "Vulkan": {
         "state": "partial",
-        "note": "18,427-case CTS sample with only two metadata failures (#1177, mesa#205); needs open #1276"
+        "note": "18,427-case CTS sample with only two metadata failures (#1177, mesa#205, #1276)"
       },
       "Ray tracing": {
         "state": "partial",
@@ -4955,8 +5211,8 @@
         "note": "NVMe root (#936)"
       },
       "Internal display": {
-        "state": "partial",
-        "note": "3456x2234 at 120 Hz; needs open #1276"
+        "state": "works",
+        "note": "3456x2234 at 120 Hz (#1276)"
       },
       "Wi-Fi": {
         "state": "works",
@@ -5074,7 +5330,7 @@
     "j815": {
       "All CPU cores": {
         "state": "works",
-        "note": "10 cores with frequency scaling; topology and capacities in open #1537"
+        "note": "10 cores with frequency scaling, topology and capacities (#1537)"
       },
       "Battery / charging": {
         "state": "works",
@@ -5082,15 +5338,15 @@
       },
       "Bluetooth": {
         "state": "works",
-        "note": "LE pairing and HID, back after s2idle; needs open #1529"
+        "note": "LE pairing and HID, back after s2idle (#1529)"
       },
       "Boot": {
         "state": "works",
-        "note": "boots its SSD install to Plasma through aura; needs open #1532 and #1413; reported by m0d16l14n1, 2026-11-11"
+        "note": "boots its SSD install to Plasma through aura (#1413); its device tree is open #1532; reported by m0d16l14n1, 2026-11-11"
       },
       "Internal display": {
         "state": "works",
-        "note": "2880x1864 on the macOS 27.0 firmware; needs open #1528 and #1413"
+        "note": "2880x1864 on the macOS 27.0 firmware (#1528, #1413)"
       },
       "Internal storage": {
         "state": "works",
@@ -5102,7 +5358,7 @@
       },
       "Trackpad": {
         "state": "works",
-        "note": "Force Touch with open #1535"
+        "note": "Force Touch (#1535)"
       },
       "Wi-Fi": {
         "state": "works",
@@ -5110,11 +5366,11 @@
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "KWin on GLES 3.2; desktop GL misrenders; needs open #1413"
+        "note": "KWin on GLES 3.2 (#1413); desktop GL misrenders"
       },
       "Vulkan": {
         "state": "partial",
-        "note": "Vulkan 1.4 on Honeykrisp, vkcube runs; no conformance run; needs open #1413"
+        "note": "Vulkan 1.4 on Honeykrisp, vkcube runs (#1413); no conformance run"
       },
       "Ray tracing": {
         "state": "partial",
@@ -5130,19 +5386,19 @@
       },
       "Touch ID": {
         "state": "partial",
-        "note": "enrolment and matching, kept across reboots; needs open #1531, #1536 and alarm-aurora#253"
+        "note": "enrolment and matching, kept across reboots (#1531, #1536); its device tree is open #1532"
       },
       "Speakers": {
         "state": "partial",
-        "note": "six speakers under speakersafetyd at capped levels; needs open #1533, #1534 and speakersafetyd#2"
+        "note": "six speakers under speakersafetyd at capped levels (#1533); needs open #1534 and speakersafetyd#2"
       },
       "Microphone": {
-        "state": "partial",
-        "note": "three-mic array; needs open #1533"
+        "state": "works",
+        "note": "three-mic array (#1533)"
       },
       "Headset jack": {
         "state": "untested",
-        "note": "jack controls appear with open #1533; no listening test"
+        "note": "jack controls appear (#1533); no listening test"
       },
       "Camera": {
         "state": "partial",
@@ -5192,7 +5448,7 @@
       },
       "Thunderbolt / USB4": {
         "state": "works",
-        "note": "Reported by owner dmitzsaz on his J704, needs his open PR linux#1150"
+        "note": "reported by owner dmitzsaz on his J704 (#1150)"
       },
       "SDXC card slot": {
         "state": "works",
