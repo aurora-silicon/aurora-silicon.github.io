@@ -191,11 +191,19 @@ It was a pain. It's a really complicated feature but it passes most of the CTS f
 
 But worry not! We're developing [Aura](https://github.com/aurora-silicon/aura), a new boot loader based on m1n1 that can run in normal boot mode. Due to CTXR limitations that iBoot enforces, the kernel needed some adjustments to fit its executable pages only within the iBoot enforced CTXR. KVM support for Linux guest is still available, and since virtual FIQ timer register is unlocked, VMs work fine. And HACR bits can also be reconfigured that allow Windows VMs to work that are otherwise broken. Yep, it unlocks ACTLR_EL1 too, which turns on the CPU features Rosetta uses for fast x86 emulation (TSO, APFLG, AFP and PRSV, more on these below) :D
 
-Aura actually started on my M5 Pro, where raw boot mode wouldn't let the secondary CPUs run any code at all (Apple has since fixed that in the macOS 27.3 beta, more on that below). A normal boot object could start them just fine. This actually solves a lot of problems. Raw boot mode, which Asahi Linux has used for most of its life, has been constantly broken by Apple since M4. Restricted sysreg access, which not only takes away features but causes bugs such as broken virtual timers / PMU causing issues in VMs, and particularly Windows VMs being entirely broken.
+Aura actually started on my M5 Pro, where raw boot mode wouldn't let the secondary CPUs run any code at all (Apple has since fixed that in the macOS 27.3 beta, more on that shortly). A normal boot object could start them just fine. This actually solves a lot of problems. Raw boot mode, which Asahi Linux has used for most of its life, has been constantly broken by Apple since M4. Restricted sysreg access, which not only takes away features but causes bugs such as broken virtual timers / PMU causing issues in VMs, and particularly Windows VMs being entirely broken.
 
 Jeff Queisser[^jq], our hero, came to our Discord having got the secondary CPUs running on his M5 Ultra Mac Studio, and I was really interested in that. Hmm... that must use the normal boot mode then, but that's a lot of effort to bring up DART/SART under that mode especially due to SPTM. But he had figured out something new: normal boot object with a special `kcbz` property set to 0 - this made iBoot jump to our boot object just like a raw object, but with the sysregs unlocked. Not only did this fix SMP on M5 Pro/Max/Ultra before Apple did, it also comes with all the goodies we talked about earlier. This lets us not have to deal with SPTM and just have a raw boot object-like environment. And no, this isn't a bug. It's how XNU booted before SPTM: the Mach-O is laid out that way, and it's perfectly valid. Asahi Linux booted m1n1 as a Mach-O in its very early days too, until macOS 12.1 added raw boot objects.
 
 So every Mac on the latest Aura has TSO now, and x86 emulation is much faster. Aura also unlocks the sysreg we need for deep sleep, which ships on Neo in this release (more on that below).
+
+**Update:** Apple actually fixed the SMP issue on M5 Pro / Max / Ultra for raw boot object!
+
+Quote from [macOS 27.3 beta](https://developer.apple.com/documentation/macos-release-notes/macos-27_3-release-notes#mBoot):
+
+> Fixed: Only a single core is available when you boot Linux or other third-party operating systems from a custom raw boot object on Mac computers with M5 Pro, M5 Max, and M5 Ultra chips. (182898702) (FB23916610)
+
+It references the feedback I posted 3 months ago :D So amazing to see Apple recognizing Linux on Apple Silicon. For now raw boot object is still quite limited and has other bugs, but we will try to submit more such reports to Apple and see if we can bring it on par with normal boot.
 
 ## Rosetta has more tricks than TSO
 
@@ -238,14 +246,6 @@ All in all, we believe TSO and APFLG support and native 4 KiB userspace processe
 
 There's a lot we've glossed over here. Touch ID bring-up, Aura and its normal boot mode, and the M5 and M6 bring-up sagas all really deserve write-ups of their own.
 
-**Update:** Apple actually fixed the SMP issue on M5 Pro / Max / Ultra for raw boot object!
-
-Quote from [macOS 27.3 beta](https://developer.apple.com/documentation/macos-release-notes/macos-27_3-release-notes#mBoot):
-
-> Fixed: Only a single core is available when you boot Linux or other third-party operating systems from a custom raw boot object on Mac computers with M5 Pro, M5 Max, and M5 Ultra chips. (182898702) (FB23916610)
-
-It references the feedback I posted 3 months ago :D So amazing to see Apple recognizing Linux on Apple Silicon. For now raw boot object is still quite limited and has other bugs, but we will try to submit more such reports to Apple and see if we can bring it on par with normal boot.
-
 ## We can fix anything
 
 This is real. In a few days, Neo's Vulkan driver was ported to M5 Pro (thanks to Sol 6.1 ultrafast!) and it can run some AAA games.
@@ -266,7 +266,7 @@ Moreover, our Vulkan driver works amazingly on base M5, M5 Max and M5 Ultra too,
 
 It's not perfect yet, but we've polished it as much as we could in such a short time, and we'll keep at it.
 
-Give us a little more time. We will not disappoint. We are embracing AI like the large majority of the industry is, and not looking behind.
+Give us a little more time. We will not disappoint. We use AI heavily and we're open about it: agents do a lot of the legwork, and we steer, review and test.
 
 The community is welcome to experiment with everything we've made so far at a larger scale, make improvements, send PRs, and push the performance and experience of Linux on Apple Silicon further.
 
@@ -290,7 +290,7 @@ A long-standing problem in the Apple Silicon Linux ecosystem has been power mana
 
 How do we start? Let's look at what we got here. Asahi supports at least `s2idle`: the cores can sleep using `wfi`, and a lot of hardware is stopped or put to sleep, like the display, Wi-Fi and Bluetooth. On MacBook Neo, that still leaves you at around 1.4 W, and no matter how many more knobs you turn, there is a limit to this. The furthest that got us was turning off DCP's power domain itself, literally shutting the coprocessor and related power domains down, which brings power usage down to around 0.7 W during sleep.
 
-If you `/goal` and ask an agent to do this, it will try cutting corners like this. But the real deal is deep sleep that macOS does. We _have_ to learn how it does that and just implement it in Linux!
+If you ask an agent to do this, it will try cutting corners like this. But the real deal is deep sleep that macOS does. We _have_ to learn how it does that and just implement it in Linux!
 
 My initial goal was to get macOS running under the hypervisor. We already had that using an SPTM emulator - but I wanted to redo it for the sake of a cleaner approach. In normal boot mode, GXF is unlocked and hardware SPRR is available. We can set up GXF and have real GL2 going in Aura. It took about 2 days to get this thing going, and here is the new approach in a nutshell:
 
@@ -318,7 +318,7 @@ After fixing those, macOS gets into sleep. But it doesn't wake up, great. Fortun
 
 There's more going on behind the scenes. On wake, a reconfig engine restores SoC state, and iBoot jumps back to its reset vector and enters Aura stage 1 at RVBAR. One special case needs handling here: Linux needs a way to resume, but RVBAR is locked and set in stage 1, so Aura implements an S2R mailbox which lets Linux resume. Like the sleep program, the reconfig engine's program is readable from NUB SRAM, where iBoot builds it.
 
-Now being able to trace what macOS does to commit sleep and to wake, we should be able to `/goal` deep sleep in Linux. That was pretty much it, but damn, these agents are stupid (often smart though). I'm glad I hand held them and sped up the process otherwise it was going to take way longer. There are many little gotchas. Linux doesn't talk to everything macOS does, and skips many messages it doesn't need. After wiring up all of those fixes in each driver to implement a suspend / wake sequence for all coprocessors, and all the MMIO to properly restore state, everything just works. The system goes to real deep sleep, and it wakes up perfectly.
+Now being able to trace what macOS does to commit sleep and to wake, we should be able to implement deep sleep in Linux. That was pretty much it, but agents still miss a lot of the little things. I'm glad I hand held them, otherwise it would have taken way longer. There are many little gotchas. Linux doesn't talk to everything macOS does, and skips many messages it doesn't need. After wiring up all of those fixes in each driver to implement a suspend / wake sequence for all coprocessors, and all the MMIO to properly restore state, everything just works. The system goes to real deep sleep, and it wakes up perfectly.
 
 How did I automate most of this? `sudo pmset relative wake 10 && pmset sleepnow`! This lets you schedule a wakeup in X seconds (X = 10) and make the system sleep, on macOS. Under the hood, it writes to the PMU, so by tracing the PMU, I figured out how to replicate it on Linux as well. There are some other useful pmset options, like disabling Wi-Fi wake, to get clean, interruption-free measurements.
 
@@ -326,7 +326,7 @@ There were some painful things when doing bring-up on the Linux side. At first t
 
 Neo now averages 0.05 W in sleep, down from 1.4 W, roughly 28× less. Yeah, that's a pretty damn big difference and a huge deciding factor whether you would ever put Linux on your MacBook or not.
 
-Deep sleep ships on day one, in this release. It runs on Aura, since raw boot keeps the sysreg it needs locked. Thanks to Bartosz[^niteria] and Axxzy[^axxzy], it has been ported to the M4 series and verified to work on M4, M4 Pro and M4 Max. I've also managed to make it work across M5 Macs.
+Deep sleep ships on day one, in this release. It runs on Aura, since raw boot keeps the sysreg it needs locked (on M1–M3 it doesn't, so nothing ever stood in the way there). Thanks to Bartosz[^niteria] and Axxzy[^axxzy], it has been ported to the M4 series and verified to work on M4, M4 Pro and M4 Max. I've also managed to make it work across M5 Macs.
 
 ## Support us
 
