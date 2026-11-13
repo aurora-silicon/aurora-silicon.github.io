@@ -14,8 +14,12 @@ We're proud to finally present to you an alpha release of Linux support for MacB
 - Touch ID (on models that have it), and yes, it works alongside macOS.
 - Support for both USB3 and USB2 ports, with graceful hotplug support and platform quirk handling.
 - Hardware Video Decoding (via AVD).
-- Real deep sleep at about 0.1 W, through our new Aura boot loader.
-- Of course, the keyboard and trackpad (somehow, Apple managed to change up the trackpad a little).
+- Deep sleep at about 0.05 W, roughly 28× less power draw than before.
+
+Beyond Neo, for every Mac we support:
+
+- Native 4 KiB userspace processes on a 16 KiB kernel, no `muvm` needed, M1 and M2 series included.
+- Hardware TSO and Apple's x86 flag extensions (APFLG) for faster x86 emulation in FEX (through Aura on M4 and later).
 
 And it goes without saying, much thanks to the Asahi team & its contributors for all the incredible work they've done. This project does rest strongly on the shoulders of giants. We provide clear attribution throughout all our work, and respect where it is due.
 
@@ -39,7 +43,7 @@ We expect(ed) it would be smooth sailing from there. Since agents can just itera
 
 There were however some quirks with SMP (err, AMP, as Ryan corrected, but we can just use it ~interchangeably) handling, and especially WFI since the secondary cores lose their state after wake. Yureka has since written up the [same quirk on M4](https://yuka.dev/blog-2026-10-02-linux-m4.html).
 
-After a couple of iterations (and days), Ryan got both SMP and NVMe stable in Linux.
+After a couple of iterations (and days), Ryan got both SMP and NVMe stable in Linux. NVMe had a few new quirks and resetting it became more complex, which is essential for handing it off in a clean state across different boot stages.
 
 ![Linux Neo](/blog/macbook-neo/image.png)
 
@@ -71,17 +75,17 @@ Yeah it's just an offscreen render while DCP was still being brought up. There w
 
 At a high level, GPUs run two kinds of jobs: rendering and compute. Both can be submitted asynchronously, and on Apple GPUs they go to different kinds of firmware queues. We never talk to the GPU directly, only through its firmware.
 
-At this point I knew the kernel driver would look significantly different. Getting basic stuff to render is one thing, but now we have a whole new architecture to implement for render work submission and whole concurrency/asynchronous submission needs to be modeled around it. And yes, the new scheduler changed some power semantics. To make it more weird, compute work is still the classic queue style from M1 / M2 era, but now we need to support both asynchronously!
+At this point I knew the kernel driver would look significantly different. Getting basic stuff to render is one thing, but now we have a whole new architecture to implement for render work submission and whole concurrency/asynchronous submission needs to be modeled around it. To make it more weird, compute work is still the classic queue style from M1 / M2 era, but now we need to support both asynchronously!
 
-Compute on Neo was the simpler half, because architecture-wise it looked like what the Asahi GPU driver already does. The structures and ABI had still changed, since we're on a newer macOS firmware (26.6.2).
+Compute on Neo was the simpler half, because architecture-wise it looked like what the Asahi GPU driver already does. The structures and ABI had still changed, since we're on a much newer macOS firmware (26.6.2) than M1 (13.5). It's still the same AGX GPU, just a newer generation, so at a higher level a lot of the Asahi GPU driver still applies, such as memory management. But the interface around the actual work submission, and what even runs on the GPU, has changed significantly.
 
 Things get simpler with M5 and M6 GPUs, which are entirely on the new architecture for both compute and rendering work (the "SKSM queues", as Apple calls them).
 
-The firmware itself moved too. Previously there was a single mailbox, but on A18 Pro it is split in two, `gfx` and `gfx1`. The primary takes all of our submissions and control messages. We set up the secondary at boot, and from then on we only read events and traces back from it. Whatever else it does inside the firmware hasn't mattered to us yet.
+The firmware itself changed a lot too, of course. Previously there was a single mailbox, but on A18 Pro it is split in two, `gfx` and `gfx1`. The primary takes all of our submissions and control messages. We set up the secondary at boot, and from then on we only read events and traces back from it. Whatever else it does inside the firmware hasn't mattered to us yet.
 
 M1 / M2 were AGX2, and M3-M6 are all AGX3 so far, with a new variant each generation since M5. We can call it a superset, but there are pretty significant changes. M3, M4, and A18 Pro are all AGX3b, M5 is AGX3c and M6 is AGX3d.
 
-AGX3 ISA is very different. The instruction packing has changed significantly. I had to make a whole new compiler backend in Mesa. Command streams look very different as well, launch programs are different... the userspace GPU drivers, simply put, were a huge undertaking. I do not wish this upon humans to hand-write this, but if you really must, go ahead. My best wishes will be with you. And yes, that means optimizations also look very different.
+AGX3 ISA is very different. The instruction packing has changed significantly. I had to make a whole new compiler backend in Mesa. Command streams look very different as well, launch programs are different... the userspace GPU drivers, simply put, were a huge undertaking. I do not wish this upon humans to hand-write this, but if you really must, go ahead. My best wishes will be with you.
 
 The encoding is much bigger. AGX2 has 136 instruction forms, 2-10 bytes long. AGX3b on the other hand has 333 forms, 2-20 bytes. AGX3c has 404 such forms (!), up to 22 bytes.
 
@@ -97,7 +101,7 @@ Honestly, it was more of an engineering problem than reverse engineering because
 
 If you have worked on similar systems at a low-level before and tried to squeeze out every bit of performance, you already think like a computer. Agents, trust me, are really good at this - but in bigger projects with lots of surface area they seem to get distracted easily and focus on the wrong thing.
 
-Your workflow matters the most here. If you or the agent can define problems into smaller sets of get X working with set of `{constraints}` - it will _eventually_ get there. Now obviously you don't want that eventually to be 2 months and burning a billion tokens every day. You have to monitor it. If you have too many tokens you can make an agent monitor it too. But in my experience, they're too easily convinced of anything. So I manually monitored and hand held a lot throughout the GPU driver development. I would describe most of it as decision making and catching where the agent goes off the road. It's done stuff like letting GPU power on/off between each submission, because it misunderstood macOS's power management commands submitted to GPU firmware, so I don't think it can be trusted to `/goal Make Neo GPU drivers, make no mistake`.
+If you can define problems into smaller sets of get X working with set of `{constraints}` - it will _eventually_ get there. Now obviously you don't want that eventually to be 2 months and burning a billion tokens every day. You have to monitor it. If you have too many tokens you can make an agent monitor it too. But in my experience, they're too easily convinced of anything. So I manually monitored and hand held a lot throughout the GPU driver development. I would describe most of it as decision making and catching where the agent goes off the road. It's done stuff like letting GPU power on/off between each submission, because it misunderstood macOS's power management commands submitted to GPU firmware, so I don't think it can be trusted to `/goal Make Neo GPU drivers, make no mistake`.
 
 While I bet on doing Vulkan 1.4 first since GL support comes easy with Zink (with its own set of bugs that we had to patch...), Miguel did a lot of the base OpenGL work, getting us to 3.3.
 
@@ -147,7 +151,7 @@ Back over to Dj for the fun stuff!
 
 OK, Neo has amazing Vulkan drivers (you're welcome), but can it run games!?
 
-Yes, it can. In fact, we went far and beyond to make it happen. Neo's GPU is quite underpowered. It's barely on par with M1 even raw performance wise. But we still squeezed out performance as much as we could in this time frame and it works pretty darn well - smoother than macOS! Which I would honestly call a sloppy experience on Neo. It feels significantly worse than my other Macs. Probably macOS does not like being thermally throttled as much while Linux manages fine.
+Yes, it can. In fact, we went above and beyond to make it happen. Neo's GPU is quite underpowered. It's barely on par with M1 even raw performance wise. But we still squeezed out performance as much as we could in this time frame and it works pretty darn well - smoother than macOS! Which I would honestly call a sloppy experience on Neo. It feels significantly worse than my other Macs. Probably macOS does not like being thermally throttled as much while Linux manages fine.
 
 Native games using Vulkan/OpenGL run amazing.
 
@@ -165,7 +169,9 @@ They all ran quite well out of the box given the nature of a mobile processor!
 
 ![Portal 2](/blog/macbook-neo/image-5.webp)
 
-And yes, this is shipping in all devices we will support, not just Neo. This has serious unlocks for gaming on Linux. It eliminates the need for `muvm` on Apple Silicon!
+And yes, this is shipping in all devices we will support, not just Neo, including the M1 and M2 series. This has serious unlocks for gaming on Linux. It eliminates the need for `muvm` on Apple Silicon!
+
+There are more applications of this. Not only does legacy or ARM software from other platforms run more seamlessly, with less fragmentation, it also lets ports from, say, other ARM-based handhelds run natively, as has been seen on macOS recently.
 
 Note: It came to my attention _after_ I had developed this feature that Google engineers over at Android had come out with [something similar](https://lpc.events/event/20/contributions/2630/) for per-process page size, coincidentally literally 1-2 days later! But I'm confident what we have here is solid and upstreamable, so eventually an RFC will be posted after more review and testing. Our branch is [up here](https://github.com/aurora-silicon/linux/tree/mm-mixed-userspace-abi).
 
@@ -214,7 +220,17 @@ On an M2 Pro, with the same FEX build and APFLG turned on:
 | Octane Crypto | 9% |
 | gzip -6 | 5.7% |
 
-Hardware TSO does even more. On the same Mac, compared with FEX's software TSO: Python 85% faster, Octane 48-58%, multithreaded 7-Zip 50%, zstd 45-48%, SQLite 41.5%. With both, FEX runs compression workloads at 85-92% of native arm64 speed, and Python, SQLite and Lua at 70-75%.
+Hardware TSO does even more. On the same Mac, compared with FEX's software TSO:
+
+| Workload | Faster by |
+| --- | --- |
+| Python | 85% |
+| 7-Zip (multithreaded) | 50% |
+| Octane | 48-58% |
+| zstd | 45-48% |
+| SQLite | 41.5% |
+
+With both, FEX runs compression workloads at 85-92% of native arm64 speed, and Python, SQLite and Lua at 70-75%.
 
 M3 and later, including Neo's A18 Pro, have Arm's own FEAT_AFP, which covers the floating-point part. On Neo that leaves TSO and APFLG. Like TSO, these are all ACTLR_EL1 bits, so they're locked on Neo under raw boot, and Aura unlocks them.
 
@@ -234,7 +250,7 @@ It references the feedback I posted 3 months ago :D So amazing to see Apple reco
 
 This is real. In a few days, Neo's Vulkan driver was ported to M5 Pro (thanks to Sol 6.1 ultrafast!) and it can run some AAA games.
 
-Here is The Elder Scrolls V: Skyrim Special Edition. Running on M5 Pro, under FEX and Wine, utilizing native 4 KiB pages. It delivers a smooth 45-60 FPS, usually leaning on the upper end.
+Here is The Elder Scrolls V: Skyrim Special Edition. Running on M5 Pro, under FEX and Wine, utilizing native 4 KiB pages. It delivers a smooth 50-60 FPS, usually leaning on the upper end.
 
 <video src="/blog/macbook-neo/skyrim_m5pro.mp4" poster="/blog/macbook-neo/skyrim_m5pro_poster.webp" aria-label="Skyrim on M5 Pro" controls playsinline preload="metadata" width="960" height="540"></video>
 
@@ -246,11 +262,13 @@ Many other games work already. Counter-Strike 2 runs at 70 FPS (for now) on High
 
 <video src="/blog/macbook-neo/cs2_m5pro.mp4" poster="/blog/macbook-neo/cs2_m5pro_poster.webp" aria-label="CS2 on M5 Pro" controls playsinline preload="metadata" width="960" height="540"></video>
 
-Moreover, our Vulkan driver works amazingly on M5 Max and M5 Ultra too, thanks to Erik[^erik] and Jeff[^jq]. I gave the Splash inference engine a new Vulkan backend with optimized SPIR-V kernels, and on our driver it runs Qwen 3.8 27B (6-bit quant) at about 50 tokens/sec on an M5 Pro with 64 GB. Erik adapted that and took it further on M5 Max, which has double the bandwidth and it reaches just short of 100 tokens/sec!
+Moreover, our Vulkan driver works amazingly on base M5, M5 Max and M5 Ultra too, thanks to Thomas[^sithglan] Erik[^erik] and Jeff[^jq]. I gave the Splash inference engine a new Vulkan backend with optimized SPIR-V kernels, and on our driver it runs Qwen 3.8 27B (6-bit quant) at about 50 tokens/sec on an M5 Pro with 64 GB. Erik adapted that and took it further on M5 Max, which has double the bandwidth and it reaches just short of 100 tokens/sec!
 
-Nothing is perfect yet, but we've polished it as much as we could in such a short time, and we'll keep at it.
+It's not perfect yet, but we've polished it as much as we could in such a short time, and we'll keep at it.
 
 Give us a little more time. We will not disappoint. We are embracing AI like the large majority of the industry is, and not looking behind.
+
+The community is welcome to experiment with everything we've made so far at a larger scale, make improvements, send PRs, and push the performance and experience of Linux on Apple Silicon further.
 
 ## What's in flight
 
@@ -262,7 +280,7 @@ Ryan brought the Neural Engine up on our machines, building on Joshua Warren's[^
 
 All of the M5 work builds on Dj's[^dj] groundwork on M5 Pro. Thomas Glanzmann (sithglan)[^sithglan] has the MacBook Air M5, Erik[^erik] the M5 Max MacBook Pro, and Jeff[^jq] with Erik the M5 Ultra Mac Studio. Miguel (Ace)[^ace] wrote the first Mac mini M6 GPU backend.
 
-The M4 Pro MacBook Pro runs our kernel daily. Jonathan Goyvaerts[^jonathan] started it, and he and Ryan are taking it much further, for example refining, polishing and adding features such as working HDR and VRR on internal and external panels. He also has D3D12 fixes for vkd3d-proton and compile fixes from games like Astro Bot and Diablo IV. AxxzyWasTaken[^axxzy] has been testing and improving gaming on M4 Max and Erik working on M3 Pro MacBook Pro and M4 MacBook Air, while Justin Pfister[^jjrpf] and Satya[^satchlj] are working on M2 and M3.
+The M4 Pro MacBook Pro runs our kernel daily. Jonathan Goyvaerts[^jonathan] started it, and he and Ryan are taking it much further, for example refining, polishing and adding features such as working HDR and VRR on internal and external panels. He also has D3D12 fixes for vkd3d-proton and compile fixes from games like Astro Bot and Diablo IV. AxxzyWasTaken[^axxzy] has been testing and improving gaming on M4 Max and Erik is working on M3 Pro MacBook Pro and M4 MacBook Air, while Justin Pfister[^jjrpf] and Satya[^satchlj] are working on M2 and M3.
 
 On Neo, hardware video encoding is in and the thermal framework now follows macOS's policy. Deep sleep made it in just in time, more on that next. Ryan is working on a big Touch ID rework, starting with multi-user support. Fedora, Arch Linux ARM and NixOS are moving to one unified kernel, Fedora 45 packages are live, and Michal[^michal] is getting NixOS 26.11 ready.
 
@@ -270,11 +288,11 @@ On Neo, hardware video encoding is in and the thermal framework now follows macO
 
 A long-standing problem in the Apple Silicon Linux ecosystem has been power management. Sleep on Linux has never been real sleep, which makes the standby time ridiculous, and you can never leave it asleep overnight. I cannot wrap my head around how this was acceptable for this many years. It cannot be that hard to poke the right things and make the system _actually_ sleep. This is 100% one of the most essential features of MacBooks. Unless you shut it down, but let's be real, no one is doing that each time.
 
-How do we start? Let's look at what we got here. Asahi supports at least `s2idle`: the cores can sleep using `wfi`, and a lot of hardware is stopped or put to sleep, like the display, Wi-Fi and Bluetooth. On MacBook Neo, that still leaves you at around 1.4 W, and no matter how many more knobs you turn, there is a limit to this. The furthest that got us was turning off DCP's power domain itself, literally shutting the coprocessor down, which brings power usage down to around 0.7 W during sleep.
+How do we start? Let's look at what we got here. Asahi supports at least `s2idle`: the cores can sleep using `wfi`, and a lot of hardware is stopped or put to sleep, like the display, Wi-Fi and Bluetooth. On MacBook Neo, that still leaves you at around 1.4 W, and no matter how many more knobs you turn, there is a limit to this. The furthest that got us was turning off DCP's power domain itself, literally shutting the coprocessor and related power domains down, which brings power usage down to around 0.7 W during sleep.
 
 If you `/goal` and ask an agent to do this, it will try cutting corners like this. But the real deal is deep sleep that macOS does. We _have_ to learn how it does that and just implement it in Linux!
 
-My initial goal was to get macOS running under the hypervisor, we already had that using an SPTM emulator - but I wanted to redo it for the sake of a cleaner approach. In normal boot mode, GXF is unlocked and hardware SPRR is available. We can set up GXF and have real GL2 going in Aura. It took about 2 days to get this thing going, and here is the new approach in a nutshell:
+My initial goal was to get macOS running under the hypervisor. We already had that using an SPTM emulator - but I wanted to redo it for the sake of a cleaner approach. In normal boot mode, GXF is unlocked and hardware SPRR is available. We can set up GXF and have real GL2 going in Aura. It took about 2 days to get this thing going, and here is the new approach in a nutshell:
 
 - Instead of emulating SPTM, we run the real SPTM binary, virtualized at GL1 (as we run XNU at EL1 under hypervisor)
 - Using nested virtualization, we can make XNU think it's running in EL2 normally, and SPTM think it's in GL2 but both are physically in EL1 and GL1 respectively
@@ -294,21 +312,21 @@ I was stuck there for some time until I realized one thing: when committing slee
 
 Essentially, most of the things which can be powered off, go off. What needs to stay awake are explicitly AON domains so we don't touch them. A lot of coprocessors like MTP (which can wake the AP), AOP, etc. are always on, and some USB domains with an `_AON` suffix stay on for purposes like wake from USB.
 
-Now clearly, macOS knows how to program its sleep. The only difference is the hypervisor here. It had something to do with Aura not power gating the boot core, and keeping the debug USB link on, which makes AON panic and think the system is in an inconsistent state. And trapping too much to trace could make the 5 s timeout hit because the sleep commit was too slow.
+Now clearly, macOS knows how to program its sleep. The only difference is the hypervisor here. It had something to do with Aura not power gating the boot core, and keeping the DebugUSB link on, which makes AON panic and think the system is in an inconsistent state. The sleep engine program which you can read from NUB SRAM is tiny and predictable. It has a couple of endless waits, and if the program doesn't end, that's what makes AON panic. That's the 5 second reset. Trapping too much to trace could make the 5 s timeout hit on macOS because the sleep commit was too slow, but it's possible to just not arm that watchdog entirely.
 
 After fixing those, macOS gets into sleep. But it doesn't wake up, great. Fortunately, it puts together some nice panic reports for us telling us what exactly broke! The very first one was a Secure Kernel state corruption, which turned out to be, again, the hypervisor just not saving the state of the register banks it maintains for each world, XNU / SPTM / TXM, so it caused some state loss. A couple more fixes like that later, and wow, macOS can sleep under the hypervisor! And when it wakes, Aura's debug link comes right back on letting us trace the wake sequence as well.
 
-There's more going on behind the scenes. On wake, a reconfig engine restores SoC state, and iBoot jumps back to its reset vector and enters Aura stage 1 at RVBAR. The rest runs normally from there, so we don't need to handle anything special. The reconfig engine's program is readable from NUB SRAM, where iBoot builds it.
+There's more going on behind the scenes. On wake, a reconfig engine restores SoC state, and iBoot jumps back to its reset vector and enters Aura stage 1 at RVBAR. One special case needs handling here: Linux needs a way to resume, but RVBAR is locked and set in stage 1, so Aura implements an S2R mailbox which lets Linux resume. Like the sleep program, the reconfig engine's program is readable from NUB SRAM, where iBoot builds it.
 
-Now being able to trace what macOS does to commit sleep and to wake, we should be able to `/goal` deep sleep in Linux. That was pretty much it but damn these agents are stupid. I'm glad I hand held them and sped up the process otherwise it was going to take way longer. There are many little gotchas. Linux doesn't talk to everything macOS does, and skips many messages it doesn't need. After wiring up all of those fixes in each driver to implement a suspend / wake sequence for all coprocessors, and all the MMIO to properly restore state, everything just works. The system goes to real deep sleep, and it wakes up perfectly.
+Now being able to trace what macOS does to commit sleep and to wake, we should be able to `/goal` deep sleep in Linux. That was pretty much it, but damn, these agents are stupid (often smart though). I'm glad I hand held them and sped up the process otherwise it was going to take way longer. There are many little gotchas. Linux doesn't talk to everything macOS does, and skips many messages it doesn't need. After wiring up all of those fixes in each driver to implement a suspend / wake sequence for all coprocessors, and all the MMIO to properly restore state, everything just works. The system goes to real deep sleep, and it wakes up perfectly.
 
 How did I automate most of this? `sudo pmset relative wake 10 && pmset sleepnow`! This lets you schedule a wakeup in X seconds (X = 10) and make the system sleep, on macOS. Under the hood, it writes to the PMU, so by tracing the PMU, I figured out how to replicate it on Linux as well. There are some other useful pmset options, like disabling Wi-Fi wake, to get clean, interruption-free measurements.
 
 There were some painful things when doing bring-up on the Linux side. At first the ANS (NVMe controller) firmware would not talk, but that was because of missing GPIO state save/restore across suspend. Then it wouldn't train PCIe links due to, again, state not being restored. Debugging the vague silent errors or errors that make no sense in firmware was tricky. Another interesting bit here is that sleeping PMP or `gfx`/`gfx1` is a one-shot thing and they never come back until a full SoC power reset that PMU does on deep suspend. But I think this might be a way to improve GPU iteration times too, if GFX firmware crashes, could we just sleep and wake to fresh GFX? Not sure, maybe.
 
-Neo measures 0.109 W in sleep now, down from 1.4 W, roughly 13× less. Yeah, that's a pretty damn big difference and a huge deciding factor whether you would ever put Linux on your MacBook or not.
+Neo now averages 0.05 W in sleep, down from 1.4 W, roughly 28× less. Yeah, that's a pretty damn big difference and a huge deciding factor whether you would ever put Linux on your MacBook or not.
 
-Deep sleep ships on day one, in this release. It runs on Aura, since raw boot keeps the sysreg it needs locked.
+Deep sleep ships on day one, in this release. It runs on Aura, since raw boot keeps the sysreg it needs locked. Thanks to Bartosz[^niteria] and Axxzy[^axxzy], it has been ported to the M4 series and verified to work on M4, M4 Pro and M4 Max. I've also managed to make it work across M5 Macs.
 
 ## Support us
 
@@ -316,6 +334,8 @@ Everything we do lives on [GitHub](https://github.com/aurora-silicon). If you'd 
 
 - @djdev - [here](https://github.com/sponsors/djdeveloperr)
 - @rttdev - [here](https://github.com/sponsors/RyanTheTide) or [here](https://www.paypal.com/donate/?hosted_button_id=A6XCX8AUBZZDG)
+
+Aurora's Open Collective is [here](https://opencollective.com/aurora-silicon).
 
 Anyone else on the team can be reached through our [Discord](https://discord.gg/DXmsSSc5aY), whether you'd like to chat or grab a donation link for them. Except Miguel, who "does it for the love of the game".
 
@@ -338,7 +358,6 @@ More to come!
 [^erik]: Erik, [erikwb](https://github.com/erikwb) on GitHub.
 [^joshua]: Joshua Warren, [joshuaswarren](https://github.com/joshuaswarren) on GitHub.
 [^sithglan]: Thomas Glanzmann, [sithglan](https://github.com/sithglan) on GitHub.
-[^fbalazsy]: František Balázsy, [fbalazsy](https://github.com/fbalazsy) on GitHub.
 [^axxzy]: [AxxzyWasTaken](https://github.com/AxxzyWasTaken) on GitHub.
 [^jjrpf]: Justin Pfister, [JJRPF](https://github.com/JJRPF) on GitHub.
 [^jonathan]: Jonathan Goyvaerts, [jgoyvaerts](https://github.com/jgoyvaerts) on GitHub.
