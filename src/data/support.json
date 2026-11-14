@@ -535,24 +535,24 @@
         "note": ""
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": "desktop at 120 Hz through Zink on the GPU (#1012, #1425); Mesa still gates the M5 Pro behind ASAHI_M5_BRINGUP"
+        "state": "works",
+        "note": "native GL desktop on the GPU (#1012, mesa#194)"
       },
       "Vulkan": {
-        "state": "partial",
-        "note": "Vulkan 1.4, dEQP lists with 0 failures (#1012, mesa-aurora#32); same Mesa gate"
+        "state": "works",
+        "note": "Vulkan 1.4 on Honeykrisp (#1012, mesa-aurora#32)"
       },
       "Ray tracing": {
         "state": "partial",
         "note": ""
       },
       "Touch ID": {
-        "state": "untested",
-        "note": "Secure Enclave binds read-only (#1325, #1433); no enrolment yet"
+        "state": "works",
+        "note": "enrol, match and wrong-finger rejection, across reboots (#1587)"
       },
       "Microphone": {
-        "state": "partial",
-        "note": "three-mic array; needs open draft #1557"
+        "state": "works",
+        "note": "three-mic array (#1557)"
       },
       "Camera": {
         "state": "works",
@@ -561,6 +561,22 @@
       "Thunderbolt / USB4": {
         "state": "partial",
         "note": "right port: Thunderbolt 5 dock at 40 Gb/s with NVMe, USB and Ethernet (#1515, #1271); physical hot-plug not tested"
+      },
+      "Speakers": {
+        "state": "works",
+        "note": "six speakers under speakerguardd v2 (#1554)"
+      },
+      "SDXC card slot": {
+        "state": "works",
+        "note": "GL9755 reader in UHS-II (#1570)"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "H.264 and HEVC, bit-exact against FFmpeg (#1577)"
+      },
+      "Headset jack": {
+        "state": "works",
+        "note": "headphone output (#1554); a headset mic is not tested"
       }
     },
     "j713": {
@@ -3661,12 +3677,12 @@
         "note": ""
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": "GPU starts with open #1173 on the 27.3 firmware; native GL desktop (mesa#194)"
+        "state": "works",
+        "note": "native GL desktop (mesa#194); on the macOS 27.3 firmware the GPU needs open #1173"
       },
       "Vulkan": {
-        "state": "partial",
-        "note": ""
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
       },
       "Ray tracing": {
         "state": "partial",
@@ -3682,11 +3698,11 @@
       },
       "Internal display": {
         "state": "partial",
-        "note": "boot framebuffer only; the firmware-27.3 display is open #1174"
+        "note": "boot framebuffer only; the firmware-27.3 display work (#1174) has merged but is not retested"
       },
       "Wi-Fi": {
-        "state": "partial",
-        "note": "N1 (#938, #1182); kernel-side link training for the J716s DT is open #1183"
+        "state": "works",
+        "note": "N1 (#938, #1182), with kernel-side link training (#1183)"
       },
       "Bluetooth": {
         "state": "works",
@@ -3695,6 +3711,22 @@
       "Sleep / resume": {
         "state": "works",
         "note": "s2idle, 4 of 4 (#1152); lid wake fix (#1160)"
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Speakers": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "SDXC card slot": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
       }
     },
     "j873s": {
@@ -3719,16 +3751,24 @@
         "note": ""
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": ""
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
       },
       "Vulkan": {
-        "state": "partial",
-        "note": ""
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
       },
       "Ray tracing": {
         "state": "partial",
         "note": ""
+      },
+      "Speaker": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
       }
     },
     "j504": {
@@ -4869,24 +4909,32 @@
         "note": "Expected M5 Pro parity, per Aurora"
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
       },
       "Vulkan": {
-        "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
       },
       "Ray tracing": {
         "state": "partial",
         "note": "Expected M5 Pro parity, per Aurora"
       },
       "Speakers": {
-        "state": "untested",
-        "note": "six amps described (#1408, #1410); no playback report"
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
       },
       "Video decoding": {
-        "state": "untested",
-        "note": "described in open #1322; decodes on a contributor's own tree"
+        "state": "works",
+        "note": "decoder enabled on the J714c (#1577)"
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "SDXC card slot": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
       }
     },
     "j716c": {
@@ -4935,12 +4983,12 @@
         "note": "Expected M5 Pro parity, per Aurora"
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": "desktop through Zink on Honeykrisp, admitted by default (mesa#205); needs open #1276"
+        "state": "works",
+        "note": "desktop through Zink on Honeykrisp, admitted by default (mesa#205, #1276)"
       },
       "Vulkan": {
-        "state": "partial",
-        "note": "18,427-case CTS sample with only two metadata failures (#1177, mesa#205); needs open #1276"
+        "state": "works",
+        "note": "18,427-case CTS sample with only two metadata failures (#1177, mesa#205, #1276)"
       },
       "Ray tracing": {
         "state": "partial",
@@ -4955,8 +5003,8 @@
         "note": "NVMe root (#936)"
       },
       "Internal display": {
-        "state": "partial",
-        "note": "3456x2234 at 120 Hz; needs open #1276"
+        "state": "works",
+        "note": "3456x2234 at 120 Hz (#1276)"
       },
       "Wi-Fi": {
         "state": "works",
@@ -4977,6 +5025,22 @@
       "Thunderbolt / USB4": {
         "state": "works",
         "note": "Thunderbolt 5 dock at 40 Gb/s with USB, 2.5 GbE and displays (#1323, #1271)"
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Speakers": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "SDXC card slot": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
       }
     },
     "j775c": {
@@ -5001,12 +5065,12 @@
         "note": "Expected M5 Pro parity, per Aurora"
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
       },
       "Vulkan": {
-        "state": "partial",
-        "note": "Expected M5 Pro parity, per Aurora"
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
       },
       "Ray tracing": {
         "state": "partial",
@@ -5031,6 +5095,14 @@
       "Sleep / resume": {
         "state": "works",
         "note": "Expected M5 Pro parity, per Aurora"
+      },
+      "Speaker": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
       }
     },
     "j775d": {
@@ -5063,12 +5135,20 @@
         "note": "10 GbE (#937; closed #890)"
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": "desktop on the GPU (#1012) with the developer's own Mesa; public Mesa refuses the two-die M5 Ultra (mesa#205)"
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
       },
       "Vulkan": {
-        "state": "partial",
-        "note": "Vulkan tests and a render CTS subset pass with the developer's own Mesa (#1012); public Mesa refuses the M5 Ultra"
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Speaker": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
       }
     },
     "j815": {
@@ -5228,7 +5308,111 @@
       }
     },
     "j804": {},
-    "j833ct": {}
+    "j833ct": {},
+    "k114s": {
+      "Touch ID": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Speakers": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "SDXC card slot": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Vulkan": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      }
+    },
+    "k114c": {
+      "Touch ID": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Speakers": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "SDXC card slot": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Vulkan": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      }
+    },
+    "k116s": {
+      "Touch ID": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Speakers": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "SDXC card slot": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Vulkan": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      }
+    },
+    "k116c": {
+      "Touch ID": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Speakers": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "SDXC card slot": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "GPU acceleration": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Vulkan": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "M5 Pro, Max and Ultra support, per Aurora, 2026-11-14"
+      }
+    }
   },
   "corrections": [
     {
@@ -5451,6 +5635,33 @@
         "j575d"
       ],
       "note": "These Macs boot. M3/M4 GPU acceleration and Vulkan stay working. M5 and M6 records are not lowered. A result that needs an unmerged pull request is partial until it merges. The installer is tested on the M1 and M2 series, J614s, J616s and J700 only."
+    },
+    {
+      "source": "Project owner confirmation, 2026-11-14",
+      "scope": "M5 Pro, M5 Max and M5 Ultra, including the OLED MacBook Pros",
+      "working": [
+        "Touch ID",
+        "Speakers",
+        "Speaker",
+        "SDXC card slot",
+        "GPU acceleration",
+        "Vulkan",
+        "Video decoding"
+      ],
+      "devices": [
+        "j714s",
+        "j714c",
+        "j716s",
+        "j716c",
+        "k114s",
+        "k114c",
+        "k116s",
+        "k116c",
+        "j873s",
+        "j775c",
+        "j775d"
+      ],
+      "note": "GPU acceleration and Vulkan are complete on these chips. Touch ID, speakers, the SDXC slot and video decoding are supported. Ray tracing and the other rows are unchanged, apart from J714s microphone and headset jack, J716c internal display and J716s Wi-Fi, whose pull requests have merged."
     }
   ]
 }
