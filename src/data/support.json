@@ -4740,47 +4740,47 @@
       },
       "All CPU cores": {
         "state": "works",
-        "note": "16 cores, three cpufreq policies (#1498)"
+        "note": "16 cores, three cpufreq policies (#1498); idle states (#1575); all-core load holds 4.1 GHz with the PMP and per-core thermal zones (#1599)"
       },
       "Internal storage": {
         "state": "works",
         "note": "NVMe, SMART readable (#1498)"
       },
       "Display output": {
-        "state": "none",
-        "note": "no picture: iBoot hands over a dummy framebuffer and the display subsystem is not described (#1498); a USB-C display works with open #1546 and aura#160"
+        "state": "works",
+        "note": "USB-C displays on all four back ports (#1546, #1871, aura#160); one DP adapter fails link training on the second port from the right, also under macOS"
       },
       "HDMI": {
-        "state": "none",
-        "note": "no picture; the display subsystem is not described (#1498)"
+        "state": "works",
+        "note": "2560x1440 through the HDMI converter (#1565); once it stayed dark after a resume until replugged"
       },
       "Speaker": {
-        "state": "none",
-        "note": "amp described but disabled; no speaker protection profile yet (#1140)"
+        "state": "works",
+        "note": "internal speaker with speakersafetyd protection (#1573, alsa-ucm-conf-asahi#15, alarm-aurora#267)"
       },
       "Headset jack": {
-        "state": "untested",
-        "note": "jack card registers (#1498); not tested"
+        "state": "works",
+        "note": "headphone playback through the CS42L84 with the J575 jack profile (alsa-ucm-conf-asahi#15)"
       },
       "USB-A": {
-        "state": "none",
-        "note": "the hub behind the PCIe USB controller is held in reset as merged; both ports work with open #1499 (#1498)"
+        "state": "works",
+        "note": "both back ports through the hub behind the PCIe USB controller (#1499), also from a cold boot (alarm-aurora#266)"
       },
       "USB-C": {
-        "state": "partial",
-        "note": "two back ports at USB 2 (#1498); the fourth back port and USB 3 are in open #1546, the front ports need open #1499"
+        "state": "works",
+        "note": "all four back ports at USB 3 10 Gb/s, both orientations, also with a device attached at boot (#1546, #1671); the two front ports work at USB 2 (#1499), USB 3 there not tested"
       },
       "Thunderbolt / USB4": {
         "state": "none",
         "note": "not described yet (#1140)"
       },
       "Ethernet": {
-        "state": "partial",
-        "note": "link and transmit work, but unicast and broadcast receive is dropped outside promiscuous mode (#1501)"
+        "state": "works",
+        "note": "10 GbE (AQC113) receives without promiscuous mode since #1593 (#1501)"
       },
       "Wi-Fi": {
-        "state": "partial",
-        "note": "firmware loads and scans (#1498); joining not tested"
+        "state": "works",
+        "note": "joins a WPA network on 5 GHz (80 MHz, 2x2), DHCP, DNS and HTTPS over IPv4 and IPv6 with Ethernet unplugged; throughput not measured"
       },
       "Bluetooth": {
         "state": "partial",
@@ -4795,8 +4795,20 @@
         "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07)"
       },
       "Fan control": {
+        "state": "works",
+        "note": "both fans under SMC control (#1599): 1000 rpm minimum, the SMC raises them from about 90 C (1327 rpm after a 10 min CPU and GPU load); Linux cannot set a speed"
+      },
+      "Sleep / resume": {
+        "state": "works",
+        "note": "suspend to idle, wake by keyboard and PMU RTC alarm, displays, USB, audio and Ethernet back (#1575); no deep sleep"
+      },
+      "Ray tracing": {
         "state": "partial",
-        "note": "fans read about 990 rpm under a 60 s load; ramp at higher temperatures not tested (#1498)"
+        "note": "VK_KHR_ray_query and VK_KHR_ray_tracing_pipeline on 25G83: ray queries from compute and ray-tracing pipelines render correctly; a ray query in a fragment shader loses the device (its render does not fit the GPU's lower VA window)"
+      },
+      "Video decoding": {
+        "state": "works",
+        "note": "H.264, HEVC, VP9 (8- and 10-bit) and AV1 (8- and 10-bit) bit-exact through VA-API; H.264 and HEVC encoding and JPEG with #1677"
       }
     },
     "j714c": {
