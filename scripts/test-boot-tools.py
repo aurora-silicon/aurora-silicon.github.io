@@ -66,6 +66,25 @@ class Arguments(unittest.TestCase):
         text = 'linux /vmlinuz\ninitrd /initramfs\n'
         self.assertEqual(grub.changed(text, 'verbose', 'on', {}), (text, 0))
 
+    def test_diagnostic_all_options_and_existing_efi_flags(self):
+        text = CFG.replace('loglevel=3', 'loglevel=3 console=ttyAMA0 efi=novamap,debug initcall_debug=0')
+        text, count = grub.changed(text, 'diagnostic', None, {})
+        self.assertEqual(count, 1)
+        for flag in ['console=tty0', 'loglevel=7', 'ignore_loglevel', 'initcall_debug',
+                     'systemd.show_status=1', 'plymouth.enable=0', 'efi=novamap,debug']:
+            self.assertIn(flag, text)
+        for flag in ['quiet', 'splash', 'console=ttyAMA0', 'initcall_debug=0']:
+            self.assertNotIn(flag, text)
+        self.assertEqual(grub.changed(text, 'diagnostic', None, {})[0], text)
+
+    def test_diagnostic_bls_preserves_root_and_kernel(self):
+        text, count = grub.changed('title Fedora\nlinux /vmlinuz-36\noptions $kernelopts\n',
+                                   'diagnostic', None, {'kernelopts': 'root=UUID=abc rootflags=subvol=root quiet rhgb'})
+        self.assertEqual(count, 1)
+        self.assertIn('linux /vmlinuz-36\n', text)
+        self.assertIn('root=UUID=abc rootflags=subvol=root', text)
+        self.assertIn('efi=debug', text)
+
     def test_nvram_quotes_and_other_arguments(self):
         value = 'foo="keep -v inside quotes"  debug=0x100 -v keepsyms=1 -v'
         off = verbose.toggle(value, False)

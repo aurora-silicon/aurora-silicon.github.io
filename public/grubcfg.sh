@@ -126,12 +126,18 @@ def changed(text, action, value, env):
         if any(c in args for c in "'\"\\;#") or args.rstrip().endswith('}'):
             raise ValueError('Complex kernel argument line; use edit instead of a preset.')
         words = args.split()
-        if action == 'verbose':
+        if action in ('verbose', 'diagnostic'):
             remove = {'quiet', 'rhgb', 'splash', 'loglevel', 'ignore_loglevel',
                       'systemd.show_status', 'plymouth.enable'}
             words = [w for w in words if w.split('=', 1)[0] not in remove]
             words += (['loglevel=7', 'ignore_loglevel', 'systemd.show_status=1',
-                       'plymouth.enable=0'] if value == 'on' else ['quiet'])
+                       'plymouth.enable=0'] if value == 'on' or action == 'diagnostic' else ['quiet'])
+            if action == 'diagnostic':
+                efi = [flag for word in words if word.startswith('efi=')
+                       for flag in word[4:].split(',') if flag and flag != 'debug']
+                words = [w for w in words if w.split('=', 1)[0] not in
+                         ('console', 'initcall_debug', 'efi')]
+                words += ['console=tty0', 'initcall_debug', 'efi=' + ','.join(efi + ['debug'])]
         else:
             key = value.split('=', 1)[0] if action in ('add', 'remove') else 'nomodeset'
             if not re.fullmatch(r'[A-Za-z0-9_.-]+', key):
@@ -186,7 +192,7 @@ def main():
     target.add_argument('--file', help='An already accessible grub.cfg or BLS .conf file')
     parser.add_argument('--apply', action='store_true')
     parser.add_argument('--backup-dir', default='grubcfg-backup-' + datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))
-    parser.add_argument('action', choices=['show', 'edit', 'verbose', 'nomodeset', 'add', 'remove', 'restore'])
+    parser.add_argument('action', choices=['show', 'edit', 'verbose', 'diagnostic', 'nomodeset', 'add', 'remove', 'restore'])
     parser.add_argument('value', nargs='?')
     args = parser.parse_args()
     if args.action in ('verbose', 'nomodeset') and args.value not in ('on', 'off'):

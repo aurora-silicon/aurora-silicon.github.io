@@ -55,6 +55,22 @@ sudo sh grubcfg.sh --device disk0s5 verbose on
 sudo sh grubcfg.sh --device disk0s5 --apply verbose on
 ```
 
+For a boot stuck before Linux shows any progress, apply the full diagnostic
+preset instead:
+
+```sh
+# Preview, then apply to the same explicitly selected Linux boot partition.
+sudo sh grubcfg.sh --device disk0s5 diagnostic
+sudo sh grubcfg.sh --device disk0s5 --apply diagnostic
+```
+
+This removes `quiet`, `rhgb` and `splash`, and sets `console=tty0`, `loglevel=7`,
+`ignore_loglevel`, `initcall_debug`, `systemd.show_status=1`, `plymouth.enable=0`
+and `efi=debug`. Existing non-debug `efi=` flags are preserved; existing
+`console=` selections are replaced to request the screen console. It changes
+logging, not the installed kernel or device tree. Restore the printed backup
+when diagnosis is complete.
+
 Supported actions:
 
 | Action | Effect |
@@ -63,6 +79,7 @@ Supported actions:
 | `edit` | Open a temporary copy in `$EDITOR` (default `vi`), then show the diff. |
 | `verbose on` | Remove `quiet`, `rhgb` and `splash`; set `loglevel=7`, `ignore_loglevel`, `systemd.show_status=1`, `plymouth.enable=0`. |
 | `verbose off` | Remove those logging/splash overrides and enable `quiet`. |
+| `diagnostic` | Apply the full Linux/EFI boot diagnostic preset described above. |
 | `nomodeset on` / `nomodeset off` | Add or remove `nomodeset` for display troubleshooting. |
 | `add PARAM=VALUE` | Replace that argument's existing value, or add it. |
 | `remove PARAM` | Remove the argument by name. |
