@@ -7,6 +7,7 @@ import pathlib
 import plistlib
 import shutil
 import subprocess
+import sys
 import tempfile
 import types
 import unittest
@@ -202,6 +203,17 @@ class Detection(unittest.TestCase):
     def candidate(self, device):
         return {'device': device, 'label': 'AURORA_BOOT', 'uuid': 'example',
                 'config': '/grub2/grub.cfg', 'bytes': 1024**3}
+
+    @unittest.skipUnless(sys.platform == 'darwin', 'macOS diskutil integration')
+    def test_real_diskutil_enumeration_schema_read_only(self):
+        # Only list metadata on the CI Mac; never open a partition or write.
+        data = subprocess.check_output(['/usr/sbin/diskutil', 'list', '-plist', 'physical'])
+        disks = plistlib.loads(data)['AllDisksAndPartitions']
+        self.assertIsInstance(disks, list)
+        for disk in disks:
+            for part in disk.get('Partitions', []):
+                self.assertIsInstance(part['DeviceIdentifier'], str)
+                self.assertIsInstance(part['Content'], str)
 
     def test_probe_filters_system_root_mounted_and_other_linux(self):
         listing = {'AllDisksAndPartitions': [{'Partitions': [
