@@ -39,29 +39,32 @@ mount ext4; this helper uses `debugfs` on the unmounted boot partition instead.
 It refuses mounted partitions and filesystems that fail a read-only check.
 It never repairs a filesystem or changes the partition table.
 
-Find the partition with `diskutil list`, then inspect it. Replace `disk0s5` below
-with **your installation's Linux boot partition**, not the EFI, macOS or Linux
-root partition. Partition numbers differ between machines. If the filesystem
-needs journal recovery or repair, boot Linux to handle that first.
+The helper automatically detects the boot partition: it checks unmounted Linux
+partitions for GRUB files and Aurora identifiers (the `AURORA_BOOT` label, an
+Aurora configuration, or the Fedora Aurora boot marker). It does not choose by
+size or partition number, and never probes APFS or EFI partitions. With one
+match, it prints the detected target and uses it. With multiple installations,
+it offers a numbered selection; noninteractive use requires `--device` in that
+case. It never unmounts anything automatically. If the filesystem needs journal
+recovery or repair, boot Linux to handle that first.
 
 ```sh
-diskutil list
-sudo sh grubcfg.sh --device disk0s5 show
+sudo sh grubcfg.sh show
 
 # Preview verbose Linux logs (no writes).
-sudo sh grubcfg.sh --device disk0s5 verbose on
+sudo sh grubcfg.sh verbose on
 
 # Apply after reviewing the diff. The backup location is printed.
-sudo sh grubcfg.sh --device disk0s5 --apply verbose on
+sudo sh grubcfg.sh --apply verbose on
 ```
 
 For a boot stuck before Linux shows any progress, apply the full diagnostic
 preset instead:
 
 ```sh
-# Preview, then apply to the same explicitly selected Linux boot partition.
-sudo sh grubcfg.sh --device disk0s5 diagnostic
-sudo sh grubcfg.sh --device disk0s5 --apply diagnostic
+# Preview, then apply. The Linux boot partition is detected automatically.
+sudo sh grubcfg.sh diagnostic
+sudo sh grubcfg.sh --apply diagnostic
 ```
 
 This removes `quiet`, `rhgb` and `splash`, and sets `console=tty0`, `loglevel=7`,
@@ -102,10 +105,13 @@ Writes create a private backup directory in the current directory (override with
 Keep the printed backup path. For example:
 
 ```sh
-sudo sh grubcfg.sh --device disk0s5 --apply restore ./grubcfg-backup-20261115-120000
+sudo sh grubcfg.sh --apply restore ./grubcfg-backup-20261115-120000
 ```
 
 `verbose off` selects a quiet preset; `restore` returns to the exact prior contents.
+For a manual target, `--device disk0s5` overrides detection (replace it with your
+own Linux boot partition). Mounted partitions are still refused, and the
+filesystem UUID is checked again immediately before a write.
 If `/boot` is already accessible through a filesystem driver, `--file
 /Volumes/LinuxBoot/grub/grub.cfg` edits that one file instead. An EFI forwarding
 file has no kernel lines and cannot use the presets.

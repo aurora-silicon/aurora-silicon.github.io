@@ -32,16 +32,22 @@ def quoted(value):
 
 
 class Ext4:
-    def __init__(self, device):
+    def __init__(self, device, check=True):
         self.device = device
         self.metadata = {}
         self.debugfs, self.fsck = tool('debugfs'), tool('e2fsck')
-        self.check()
+        if check:
+            self.check()
         info = self.command('stats').decode()
-        if (re.search(r'Filesystem state:\s+clean\s*$', info, re.M) is None
+        if check and (re.search(r'Filesystem state:\s+clean\s*$', info, re.M) is None
                 or 'needs_recovery' in info):
             raise ValueError('Filesystem is not clean; boot Linux for filesystem repair first.')
-        self.identity = re.search(r'Filesystem UUID:\s+(\S+)', info).group(1)
+        uuid = re.search(r'Filesystem UUID:\s+([0-9a-fA-F-]{36})\b', info)
+        if not uuid:
+            raise ValueError('Not an ext filesystem with a UUID.')
+        self.identity = uuid[1]
+        label = re.search(r'Filesystem volume name:\s+([^\n]+)', info)
+        self.label = label[1].strip() if label else ''
 
     def command(self, command, write=False):
         return run([self.debugfs] + (['-w'] if write else []) + ['-R', command, self.device])
@@ -109,6 +115,82 @@ class Local:
 
     def check(self):
         pass
+
+
+def boot_config(store):
+    paths = []
+    for path in ('/grub/grub.cfg', '/grub2/grub.cfg'):
+        try:
+            text = store.read(path).decode('utf-8')
+            paths.append((path, text))
+        except (ValueError, FileNotFoundError):
+            pass
+    if len(paths) != 1:
+        raise ValueError('Expected one /grub[2]/grub.cfg on the Linux boot partition.')
+    return paths[0]
+
+
+def unmounted(device):
+    info = plistlib.loads(run(['/usr/sbin/diskutil', 'info', '-plist', device]))
+    if info.get('WholeDisk') or info.get('Mounted') or info.get('MountPoint'):
+        raise ValueError('The selected partition must be unmounted.')
+    return info
+
+
+def detect():
+    # Enumerate physical GPT partitions, never APFS volumes or whole disks.
+    tool('debugfs')
+    tool('e2fsck')
+    listing = plistlib.loads(run(['/usr/sbin/diskutil', 'list', '-plist', 'physical']))
+    candidates, seen = [], set()
+    linux_guid = '0FC63DAF-8483-4772-8E79-3D69D8477DE4'
+    for disk in listing.get('AllDisksAndPartitions', []):
+        for part in disk.get('Partitions', []):
+            device = part.get('DeviceIdentifier', '')
+            content = part.get('Content', '')
+            if (not re.fullmatch(r'disk\d+s\d+', device) or device in seen
+                    or (not content.lower().startswith('linux') and content.upper() != linux_guid)):
+                continue
+            seen.add(device)
+            try:
+                info = unmounted(device)
+                # Probe only. A full clean-filesystem check follows selection.
+                store = Ext4('/dev/' + device, check=False)
+                path, text = boot_config(store)
+                if store.label != 'AURORA_BOOT' and 'aurora' not in text.lower():
+                    # Fedora also identifies its boot filesystem with this marker.
+                    store.read('/grub2/aurora-boot-' + store.identity)
+                candidates.append({'device': device, 'label': store.label,
+                                   'uuid': store.identity, 'config': path,
+                                   'bytes': info.get('TotalSize', part.get('Size', 0))})
+            except (ValueError, OSError, subprocess.CalledProcessError):
+                continue
+    return candidates
+
+
+def choose(candidates):
+    def describe(item):
+        return (item['device'] + ' — ' + item['label'] + ' — '
+                + str(round(item['bytes'] / 1024**3, 2)) + ' GiB — ' + item['config'])
+    if not candidates:
+        raise ValueError('No unmounted Aurora boot partition found. Check that the installation disk is connected '
+                         'and its Linux boot partition is unmounted. --device remains available for a manual target.')
+    if len(candidates) == 1:
+        print('Detected ' + describe(candidates[0]), flush=True)
+        return candidates[0]['device']
+    print('Multiple Aurora boot partitions found:', flush=True)
+    for number, item in enumerate(candidates, 1):
+        print(str(number) + ') ' + describe(item), flush=True)
+    try:
+        with open('/dev/tty', 'r+') as tty:
+            tty.write('Choose installation number (empty cancels): ')
+            tty.flush()
+            answer = tty.readline().strip()
+    except OSError:
+        raise ValueError('Multiple installations need an interactive terminal or an explicit --device.') from None
+    if not answer.isdigit() or not 1 <= int(answer) <= len(candidates):
+        raise ValueError('No installation selected; nothing changed.')
+    return candidates[int(answer)-1]['device']
 
 
 def changed(text, action, value, env):
@@ -187,8 +269,8 @@ def apply(store, before, after, directory):
 
 def main():
     parser = argparse.ArgumentParser(prog='grubcfg.sh', description='Edit Aurora GRUB from macOS. Preview by default; --apply writes with backup.')
-    target = parser.add_mutually_exclusive_group(required=True)
-    target.add_argument('--device', help='Explicit unmounted boot partition, e.g. disk0s5 (NOT the EFI partition)')
+    target = parser.add_mutually_exclusive_group()
+    target.add_argument('--device', help='Override automatic detection with an unmounted boot partition, e.g. disk0s5')
     target.add_argument('--file', help='An already accessible grub.cfg or BLS .conf file')
     parser.add_argument('--apply', action='store_true')
     parser.add_argument('--backup-dir', default='grubcfg-backup-' + datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))
@@ -200,26 +282,16 @@ def main():
     if args.action in ('add', 'remove', 'restore') and not args.value:
         parser.error(args.action + ' needs a value')
     env = {}
-    if args.device:
+    if not args.file:
         if sys.platform != 'darwin' or os.geteuid() != 0:
-            raise ValueError('--device requires macOS and sudo. Use diskutil list to identify the Linux boot partition.')
-        device = args.device.removeprefix('/dev/')
+            raise ValueError('Automatic detection and --device require macOS and sudo.')
+        device = args.device.removeprefix('/dev/') if args.device else choose(detect())
         if not re.fullmatch(r'disk\d+s\d+', device):
             raise ValueError('Select a partition such as disk0s5, never a whole disk.')
-        info = plistlib.loads(run(['/usr/sbin/diskutil', 'info', '-plist', device]))
-        if info.get('WholeDisk') or info.get('Mounted') or info.get('MountPoint'):
-            raise ValueError('The selected partition must be unmounted.')
+        unmounted(device)
         store = Ext4('/dev/' + device)
-        paths = []
-        for path in ('/grub/grub.cfg', '/grub2/grub.cfg'):
-            try:
-                store.read(path)
-                paths.append(path)
-            except (ValueError, FileNotFoundError):
-                pass
-        if len(paths) != 1:
-            raise ValueError('Expected one /grub[2]/grub.cfg. Select the Linux /boot partition, not root or EFI.')
-        cfg = store.read(paths[0]).decode()
+        config, cfg = boot_config(store)
+        paths = [config]
         if re.search(r'^\s*blscfg\b', cfg, re.M):
             paths = store.entries()
             if not paths:
@@ -279,11 +351,12 @@ def main():
     elif not args.apply:
         print('Preview only. Repeat with --apply to save these changes.')
     else:
-        if args.device:
-            info = plistlib.loads(run(['/usr/sbin/diskutil', 'info', '-plist', device]))
-            if info.get('Mounted') or info.get('MountPoint'):
-                raise ValueError('Partition was mounted during editing; no changes written.')
-            store.check()
+        if not args.file:
+            unmounted(device)
+            # Do not write to another filesystem if disks were detached/reused.
+            current = Ext4('/dev/' + device)
+            if current.identity != store.identity:
+                raise ValueError('Selected filesystem changed during editing; nothing written.')
         apply(store, {p: before[p] for p in after}, after, args.backup_dir)
         print('Saved and verified. No reboot performed. Kernel updates may regenerate these files.')
 
