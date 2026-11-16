@@ -10,7 +10,7 @@ import subprocess
 import tempfile
 import types
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, mock_open
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
@@ -196,6 +196,97 @@ class Files(unittest.TestCase):
             fs.write(path, before)
             fs.check()
             self.assertEqual(fs.read(path), before)
+
+
+class Detection(unittest.TestCase):
+    def candidate(self, device):
+        return {'device': device, 'label': 'AURORA_BOOT', 'uuid': 'example',
+                'config': '/grub2/grub.cfg', 'bytes': 1024**3}
+
+    def test_probe_filters_system_root_mounted_and_other_linux(self):
+        listing = {'AllDisksAndPartitions': [{'Partitions': [
+            {'DeviceIdentifier': 'disk0s1', 'Content': 'Apple_APFS'},
+            {'DeviceIdentifier': 'disk0s2', 'Content': 'EFI'},
+            {'DeviceIdentifier': 'disk0s3', 'Content': 'Linux Filesystem'},
+            {'DeviceIdentifier': 'disk0s4', 'Content': 'Linux Filesystem'},
+            {'DeviceIdentifier': 'disk0s5', 'Content': 'Linux Filesystem'},
+            {'DeviceIdentifier': 'disk0s6', 'Content': 'Linux Filesystem'},
+            {'DeviceIdentifier': 'disk0s7', 'Content': 'Linux Filesystem'},
+        ]}]}
+        probed = []
+
+        class Probe:
+            identity = '12345678-1234-1234-1234-123456789abc'
+
+            def __init__(self, device, check=True):
+                self.device = device
+                self.label = 'AURORA_BOOT' if device.endswith('s5') else 'other'
+                self.test_check = check
+                probed.append(self)
+
+            def read(self, path):
+                if path == '/grub2/grub.cfg' and not self.device.endswith(('s3', 's7')):
+                    return b'blscfg\n'
+                if self.device.endswith('s6') and path.endswith(self.identity):
+                    return b''  # Fedora marker also works without a volume label.
+                raise ValueError('missing')
+
+            def write(self, *args):
+                raise AssertionError('Discovery must never write')
+
+        def diskutil(command):
+            if command[1] == 'list':
+                return plistlib.dumps(listing)
+            return plistlib.dumps({'WholeDisk': False, 'Mounted': command[-1] == 'disk0s4',
+                                   'TotalSize': 1024**3})
+
+        with patch.object(grub, 'run', side_effect=diskutil), patch.object(grub, 'Ext4', Probe):
+            found = grub.detect()
+        self.assertEqual([x['device'] for x in found], ['disk0s5', 'disk0s6'])
+        self.assertEqual([p.device for p in probed], ['/dev/disk0s3', '/dev/disk0s5',
+                                                      '/dev/disk0s6', '/dev/disk0s7'])
+        self.assertTrue(all(not p.test_check for p in probed))
+
+    def test_unique_selects_without_prompt(self):
+        with patch('builtins.open', side_effect=AssertionError('unexpected prompt')), \
+             contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(grub.choose([self.candidate('disk0s5')]), 'disk0s5')
+
+    def test_multiple_requires_choice(self):
+        candidates = [self.candidate('disk0s5'), self.candidate('disk2s5')]
+        with patch('builtins.open', mock_open(read_data='2\n')), contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(grub.choose(candidates), 'disk2s5')
+        for answer in ['', '0', '3', 'not a number']:
+            with patch('builtins.open', mock_open(read_data=answer)), contextlib.redirect_stdout(io.StringIO()):
+                with self.assertRaises(ValueError):
+                    grub.choose(candidates)
+        with patch('builtins.open', side_effect=OSError('no tty')), contextlib.redirect_stdout(io.StringIO()):
+            with self.assertRaisesRegex(ValueError, 'interactive terminal'):
+                grub.choose(candidates)
+
+    def test_no_match(self):
+        with self.assertRaisesRegex(ValueError, 'No unmounted Aurora boot'):
+            grub.choose([])
+
+    def test_autodetected_device_revalidated_before_write(self):
+        def contents(path):
+            if path == '/grub2/grub.cfg':
+                return CFG.encode()
+            raise ValueError('missing')
+
+        original = types.SimpleNamespace(identity='original', read=contents,
+                                         check=lambda: None)
+        replacement = types.SimpleNamespace(identity='different')
+        with patch.object(grub.sys, 'platform', 'darwin'), \
+             patch.object(grub.os, 'geteuid', return_value=0), \
+             patch.object(grub.sys, 'argv', ['grubcfg.sh', '--apply', 'diagnostic']), \
+             patch.object(grub, 'detect', return_value=[self.candidate('disk0s5')]), \
+             patch.object(grub, 'unmounted'), \
+             patch.object(grub, 'Ext4', side_effect=[original, replacement]), \
+             patch.object(grub, 'apply') as writer, contextlib.redirect_stdout(io.StringIO()):
+            with self.assertRaisesRegex(ValueError, 'filesystem changed'):
+                grub.main()
+            writer.assert_not_called()
 
 
 if __name__ == '__main__':
