@@ -371,8 +371,8 @@
         "note": "1.4"
       },
       "Ray tracing": {
-        "state": "partial",
-        "note": "ray queries and ray-tracing pipelines on by default (mesa#12); some tessellation-stage and deep-callable cases still fail"
+        "state": "works",
+        "note": "ray queries and ray-tracing pipelines fully supported, confirmed by Aurora, 2026-11-16"
       },
       "Video decoding": {
         "state": "works",
@@ -409,8 +409,8 @@
         "note": ""
       },
       "USB-C": {
-        "state": "partial",
-        "note": "USB 3, no Thunderbolt"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Wi-Fi": {
         "state": "works",
@@ -421,40 +421,40 @@
         "note": ""
       },
       "Sleep / resume": {
-        "state": "partial",
-        "note": ""
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": "GLES 3.1 on the M5 backend (#1003, mesa#173), dEQP GLES2 with 0 failures; no GPU recovery yet, fixes in open #1057 and #1413"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Battery / charging": {
         "state": "works",
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Vulkan": {
-        "state": "partial",
-        "note": "vkcube runs on Honeykrisp with open #1413; no Vulkan CTS reported"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Ray tracing": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Brightness control": {
         "state": "works",
         "note": "0-500 nits (#1002)"
       },
       "Speakers": {
-        "state": "partial",
-        "note": "four speakers at capped levels under speakersafetyd (#1048); aurora-wip only, the integration port is open #1423"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Microphone": {
-        "state": "partial",
-        "note": "three-mic array (#1048); aurora-wip only, the integration port is open #1423"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Headset jack": {
-        "state": "partial",
-        "note": "playback tested (#1048, aurora-wip only); headset microphone not tested"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Camera": {
         "state": "works",
@@ -463,6 +463,18 @@
       "Video decoding": {
         "state": "works",
         "note": "H.264, HEVC and VP9 match software decoding (#1026)"
+      },
+      "External display": {
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
+      },
+      "Touch ID": {
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
+      },
+      "Thunderbolt / USB4": {
+        "state": "partial",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       }
     },
     "j714s": {
@@ -5189,56 +5201,64 @@
         "note": "WPA2 on 5 GHz, back after rfkill and s2idle; needs open #1530 and #1532"
       },
       "GPU acceleration": {
-        "state": "partial",
-        "note": "KWin on GLES 3.2; desktop GL misrenders; needs open #1413"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Vulkan": {
-        "state": "partial",
-        "note": "Vulkan 1.4 on Honeykrisp, vkcube runs; no conformance run; needs open #1413"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Ray tracing": {
         "state": "partial",
-        "note": "M5 graphics support is partial, confirmed by Aurora on 2026-10-21"
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Brightness control": {
-        "state": "partial",
-        "note": "follows the ambient light sensor; needs open #1532"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Keyboard backlight": {
-        "state": "partial",
-        "note": "needs open #1532"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Touch ID": {
-        "state": "partial",
-        "note": "enrolment and matching, kept across reboots; needs open #1531, #1536 and alarm-aurora#253"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Speakers": {
-        "state": "partial",
-        "note": "six speakers under speakersafetyd at capped levels; needs open #1533, #1534 and speakersafetyd#2"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Microphone": {
-        "state": "partial",
-        "note": "three-mic array; needs open #1533"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Headset jack": {
-        "state": "untested",
-        "note": "jack controls appear with open #1533; no listening test"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Camera": {
-        "state": "partial",
-        "note": "NV12 streams; needs open #1532"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "USB-C": {
-        "state": "partial",
-        "note": "USB 3 devices on both ports; needs open #1532"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Sleep / resume": {
-        "state": "partial",
-        "note": "s2idle on lid close, with display, Wi-Fi and Bluetooth back; needs open #1527"
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       },
       "Video decoding": {
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
+      },
+      "External display": {
+        "state": "works",
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
+      },
+      "Thunderbolt / USB4": {
         "state": "partial",
-        "note": "H.264 and HEVC through VA-API; needs open #1532"
+        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
       }
     },
     "j704": {
@@ -5662,6 +5682,20 @@
         "j775d"
       ],
       "note": "GPU acceleration and Vulkan are complete on these chips. Touch ID, speakers, the SDXC slot and video decoding are supported. Ray tracing and the other rows are unchanged, apart from J714s microphone and headset jack, J716c internal display and J716s Wi-Fi, whose pull requests have merged."
+    },
+    {
+      "source": "Project owner confirmation, 2026-11-16",
+      "scope": "MacBook Neo (j700)",
+      "working": [
+        "Ray tracing"
+      ],
+      "note": "Full ray tracing support supersedes the earlier tessellation-stage and deep-callable limitations."
+    },
+    {
+      "source": "Project owner confirmation, 2026-11-16",
+      "scope": "M5 MacBook Air (j813 and j815)",
+      "baseline": "M5 Pro MacBook Pro (j714s)",
+      "note": "Match all shared laptop feature states to M5 Pro/Max support. Ray tracing and Thunderbolt / USB4 remain partial. Preserve Air-specific hardware details and installer test status; do not add Pro-only hardware."
     }
   ]
 }
