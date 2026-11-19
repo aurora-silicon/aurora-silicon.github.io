@@ -9,7 +9,7 @@ Aurora Silicon develops Linux support for Apple Silicon Macs: the kernel, graphi
 
 - [Linux kernel](https://github.com/aurora-silicon/linux)
 - [Mesa graphics](https://github.com/aurora-silicon/mesa)
-- [Omarchy Mac](https://github.com/aurora-silicon/omarchy-mac)
+- [Aurora installer](https://github.com/aurora-silicon/aurora-installer)
 
 ## Hardware
 

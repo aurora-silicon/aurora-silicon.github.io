@@ -30,7 +30,7 @@ On Linux ARM64 with a page size above 4 KB (including Apple Silicon’s 16 KB ke
 - `src/styles/home.css`: monochrome homepage layout and responsive styles.
 - `src/components/MacBook.astro`: vector MacBook illustration with the official A mark.
 - `src/pages/devices.astro`: standalone SoC and device-class feature support page.
-- `src/pages/download.astro`: redirect to the Omarchy Mac download section.
+- `src/pages/download.astro`: redirect to `/docs/download/`.
 - `src/layouts/Site.astro`: shared minimal header, metadata, and social links.
 - `src/components/DeviceFinder.astro`: device and SoC selection, feature pills, and report details.
 - `src/data/devices.json`: 59-device catalog, including A18 Pro and M1 through M6, merged with the supplied alternate website.
@@ -54,7 +54,7 @@ The dependency override for `postcss-selector-parser` selects its patched releas
 
 The device catalog and project policies carry over from the previous site. The catalog links to existing Linux hardware reports; being listed does not establish support. Linux uses the normal A mark; the Tux mark is not used.
 
-The hero Download button jumps to the Omarchy Mac section. Its Download button links to the Omarchy Mac repository. The former download page redirects to this section.
+The hero Download button jumps to the Omarchy Mac section. Its Download button links to the Omarchy Mac repository.
 
 Feature pills use Working, Partial, Untested, Not working, and Not recorded from the imported Linux support snapshot. Use Untested (`untested` in `support.json`) for hardware the kernel describes but that has not been run on that Mac. Where only older observations exist, they show Reported. The dated development reports from October 1, 2026 are retained separately and remain available in feature details. Update current states in `support.json` and add dated, model-specific evidence in `feature-reports.json`. Being in the catalog does not imply compatibility.
 
@@ -64,7 +64,7 @@ Legacy `/docs/devices/` and `/docs/installation/` URLs redirect to `/devices/` a
 
 ## Deployment
 
-The GitHub Pages workflow installs locked dependencies, checks the source, builds `dist/`, and deploys on pushes to `main` or a manual workflow run. Pushing `rework` does not deploy the site. Merging its pull request into `main` triggers deployment.
+The GitHub Pages workflow installs locked dependencies, checks the source, builds `dist/`, and deploys on pushes to `main` or a manual workflow run.
 
 The canonical URL and `public/CNAME` retain the existing `aurorasilicon.org` domain.
 
@@ -76,11 +76,11 @@ Shared typography uses the macOS system face on Macs and self-hosted Geist elsew
 
 The Omarchy desktop screenshot is the current official Vantablack theme preview, retrieved October 19, 2026 from `https://raw.githubusercontent.com/omacom/omarchy/quattro/themes/vantablack/preview.png`, resized to WebP for the site. Source: [Omarchy](https://github.com/omacom/omarchy), MIT license. It illustrates the Omarchy desktop, rather than a verified Aurora Mac build.
 
-The Neo release article and its media are held in a separate pull request. The blog infrastructure is ready for future posts. The homepage keeps a pure black or white base, with a faint monochrome dot pattern in the hero, restrained button elevation, and rounded screenshot corners with a slight shadow in light mode.
+The blog infrastructure is ready for future posts. The homepage keeps a pure black or white base, with a faint monochrome dot pattern in the hero, restrained button elevation, and rounded screenshot corners with a slight shadow in light mode.
 
 ## Alternate website import
 
-Reviewed both `aurora-site-source.zip` and `aurora-site-built.zip` from Downloads. Carried over the latest-device summary, Linux device catalog/status data, profile-specific feature grouping, feature icon concept, and attribution notices. The pure black/white theme, current layout, Linux-only scope, blog, policy text, and Omarchy screenshot remain in place. Source snapshot provenance is recorded in `support.json`; the supplied file did not provide test dates for the current status entries. Original bundles and extracted review copies are retained in Downloads and `.cache/alternate-site/`.
+Reviewed both `aurora-site-source.zip` and `aurora-site-built.zip` from Downloads. Carried over the latest-device summary, Linux device catalog/status data, profile-specific feature grouping, feature icon concept, and attribution notices. The pure black/white theme, current layout, Linux-only scope, blog, policy text, and Omarchy screenshot remain in place. Source snapshot provenance is recorded in `support.json`; the supplied file did not provide test dates for the current status entries.
 
 M1/M2 Thunderbolt/USB4, USB-C display output, VRR, Touch ID where fitted, and Secure Enclave statuses include the project owner’s confirmation. These corrections are recorded in `support.json`; other per-device states and earlier dated observations remain separate.
 
