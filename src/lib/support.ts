@@ -17,6 +17,11 @@ export const deviceClasses = ['MacBook Air', 'MacBook Neo', 'MacBook Pro', 'Mac 
 export function getDeviceClass(device: Device): string {
   return deviceClasses.find(name => device.model.startsWith(name)) ?? device.model;
 }
+export function featureLabel(device: Device, feature: string): string {
+  return feature === 'Variable refresh rate' && getDeviceClass(device) !== 'MacBook Pro'
+    ? 'Variable refresh rate on external displays'
+    : feature;
+}
 export const support = supportData as {
   profiles: { [profile: string]: FeatureGroup[] };
   results: { [device: string]: { [feature: string]: Record } };

@@ -1,7 +1,7 @@
 ---
 import devices from '../data/devices.json';
 import FeatureIcon from './FeatureIcon.astro';
-import { getGroups, getState, labels, support, deviceClasses, getDeviceClass, getSeries, installerLabel } from '../lib/support';
+import { getGroups, getState, labels, support, deviceClasses, getDeviceClass, getSeries, installerLabel, featureLabel } from '../lib/support';
 import DeviceIcon from './DeviceIcon.astro';
 const seriesList = getSeries(devices);
 const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMap(group => group.features)))];
@@ -31,13 +31,13 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
   <template data-feature-icons>{iconNames.map(name => <span data-icon-name={name}><FeatureIcon name={name} /></span>)}</template>
   <noscript>
     <style>.series-selection,.class-selection,.variant-picker{display:none}</style>
-    <div class="offline-devices"><p>Select a chip series, then a device.</p>{seriesList.map(series => <details><summary>{series}</summary>{deviceClasses.filter(name => devices.some(device => device.generation === series && getDeviceClass(device) === name)).map(name => <details><summary>{name}</summary>{devices.filter(device => device.generation === series && getDeviceClass(device) === name).map(device => <details><summary>{device.model} · {device.chip} · {device.device}{device.experimental ? ' · Experimental, untested' : ''} · {installerLabel(device)}</summary>{getGroups(device).map(group => <div><h3>{group.name}</h3><ul>{group.features.map(feature => <li>{feature}: {labels[getState(device.device, feature)]}{support.results[device.device]?.[feature]?.note ? ` · ${support.results[device.device][feature].note}` : ''}</li>)}</ul></div>)}<a href={device.discussion}>Hardware reports</a></details>)}</details>)}</details>)}</div>
+    <div class="offline-devices"><p>Select a chip series, then a device.</p>{seriesList.map(series => <details><summary>{series}</summary>{deviceClasses.filter(name => devices.some(device => device.generation === series && getDeviceClass(device) === name)).map(name => <details><summary>{name}</summary>{devices.filter(device => device.generation === series && getDeviceClass(device) === name).map(device => <details><summary>{device.model} · {device.chip} · {device.device}{device.experimental ? ' · Experimental, untested' : ''} · {installerLabel(device)}</summary>{getGroups(device).map(group => <div><h3>{group.name}</h3><ul>{group.features.map(feature => <li>{featureLabel(device, feature)}: {labels[getState(device.device, feature)]}{support.results[device.device]?.[feature]?.note ? ` · ${support.results[device.device][feature].note}` : ''}</li>)}</ul></div>)}<a href={device.discussion}>Hardware reports</a></details>)}</details>)}</details>)}</div>
   </noscript>
   <span class="sr-only" data-device-announcement role="status" aria-live="polite"></span>
 </section>
 <script>
   import devices from '../data/devices.json';
-  import { getGroups, getState, getSummary, getHistory, labels, support, getDeviceClass, getSeries, getChipTier, installerLabel } from '../lib/support';
+  import { getGroups, getState, getSummary, getHistory, labels, support, getDeviceClass, getSeries, getChipTier, installerLabel, featureLabel } from '../lib/support';
   import type { Device } from '../lib/support';
   const classButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-device-class]')];
   const variants = document.querySelector<HTMLElement>('[data-variants]')!;
@@ -155,7 +155,7 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
         button.setAttribute('aria-expanded', 'false'); button.setAttribute('aria-controls', 'feature-detail');
         const original = [...icons.querySelectorAll<HTMLElement>('[data-icon-name]')].find(icon => icon.dataset.iconName === feature);
         if (original?.firstElementChild) button.append(original.firstElementChild.cloneNode(true));
-        const label = document.createElement('span'); label.className = 'feature-name'; label.textContent = feature;
+        const label = document.createElement('span'); label.className = 'feature-name'; label.textContent = featureLabel(selected, feature);
         const stateLabel = document.createElement('span'); stateLabel.className = 'feature-state'; stateLabel.textContent = labels[state];
         const marker = document.createElement('span'); marker.className = `state-mark state-${state}`; marker.setAttribute('aria-hidden', 'true');
         button.append(label, marker, stateLabel); list.append(button);
@@ -189,7 +189,7 @@ const iconNames = [...new Set(devices.flatMap(device => getGroups(device).flatMa
     const feature = pill.dataset.feature!;
     pill.setAttribute('aria-expanded', 'true'); panel.hidden = false;
     const url = new URL(window.location.href); url.searchParams.set('feature', feature); history.replaceState(null, '', url);
-    document.querySelector<HTMLElement>('[data-feature-title]')!.textContent = feature;
+    document.querySelector<HTMLElement>('[data-feature-title]')!.textContent = featureLabel(selected, feature);
     const body = document.querySelector<HTMLElement>('[data-feature-body]')!; body.replaceChildren();
     const current = support.results[selected.device]?.[feature];
     const text = document.createElement('p');
