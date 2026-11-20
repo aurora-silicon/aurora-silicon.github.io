@@ -110,8 +110,10 @@ switch_packages() {
     rpm -q plymouth >/dev/null 2>&1 && extra=plymouth-theme-aurora
     # Asahi ran FEX in muvm, which brought the x86 root filesystem along.
     # Aurora's fex-emu, from the upgrade below, reads it on the host. Fedora's
-    # fex-emu already recommends it, so that upgrade won't add it.
-    rpm -q fex-emu >/dev/null 2>&1 && extra="$extra fex-emu-rootfs-fedora"
+    # fex-emu already recommends it, so that upgrade won't add it. Aurora's x86
+    # Mesa goes over that filesystem for x86 programs; it must be the same
+    # build as the Mesa installed here.
+    rpm -q fex-emu >/dev/null 2>&1 && extra="$extra fex-emu-rootfs-fedora mesa-aurora-fex-guest"
     # One transaction, so a failure leaves the system as it was. The vendor
     # switch is needed once: Asahi's protected metapackage blocks it otherwise.
     # shellcheck disable=SC2086
