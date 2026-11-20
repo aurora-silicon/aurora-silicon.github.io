@@ -56,7 +56,7 @@ pull request that has not merged.
 | --- | --- | --- | --- |
 | Boot, all CPU cores, cpufreq | Works | All cores up; performance cores at about 4.05 GHz | [linux#2562](https://github.com/aurora-silicon/linux/pull/2562) (merged) |
 | GNOME desktop and Firefox | Works | GNOME on Wayland, Firefox loads a page, 0 failed services in all 25 complete runs since 20 November | |
-| Internal display | Works, open PR | 2880x1800 at 60 Hz on the display driver, frame pacing 60.000 Hz, brightness 0 to 500 nits, survives suspend | [linux#2580](https://github.com/aurora-silicon/linux/pull/2580), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (open) |
+| Internal display | Works, open PR | 2880x1800 at 60 Hz on the display driver, frame pacing 60.000 Hz, brightness 0 to 500 nits, survives suspend | [linux#2580](https://github.com/aurora-silicon/linux/pull/2580) (draft), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (open) |
 | Wi-Fi | Works | 2.4 and 5 GHz; over ssh typically 260 to 275 Mbit/s up and 210 to 245 Mbit/s down (21 November runs) | |
 | Bluetooth | Works | Controller powered, scanning finds devices | |
 | Internal storage | Works | 1 GiB copy at 1200 to 1330 MB/s, cold read 2130 to 2700 MB/s (21 November runs) | |
@@ -70,7 +70,7 @@ pull request that has not merged.
 | Camera | Works, open PR | "FaceTime HD Camera" in PipeWire, 1920x1080 at 30 frames/s | [linux#2570](https://github.com/aurora-silicon/linux/pull/2570), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (open) |
 | Microphones | Works, open PR | Default PipeWire source in GNOME | [linux#2569](https://github.com/aurora-silicon/linux/pull/2569), [aura#377](https://github.com/aurora-silicon/aura/pull/377) (open) |
 | Light and lid sensors | Works, open PR | Ambient light and lid angle read | [aura#377](https://github.com/aurora-silicon/aura/pull/377) (open) |
-| Speakers | Not yet | Speaker sense now reads correctly. Quiet test playback under speakerguardd v2 protection works in the lab (no limiting needed, no amplifier faults); speakers stay locked in an install until v2 is qualified on this Mac | [linux#2589](https://github.com/aurora-silicon/linux/pull/2589) (merged), [speakerguardd#225](https://github.com/aurora-silicon/speakerguardd/pull/225) (merged), [speakerguardd#226](https://github.com/aurora-silicon/speakerguardd/pull/226) (open) |
+| Speakers | Not yet | Speaker sense now reads correctly. Quiet test playback under speakerguardd v2 protection works in the lab (no limiting needed, no amplifier faults); speakers stay locked in an install until v2 is qualified on this Mac | [linux#2589](https://github.com/aurora-silicon/linux/pull/2589) (merged), [speakerguardd#225](https://github.com/aurora-silicon/speakerguardd/pull/225) (merged), [speakerguardd#226](https://github.com/aurora-silicon/speakerguardd/pull/226) (merged) |
 | Headphone jack | Partial | Jack detected; playback not tested | |
 | Battery and charging | Works | Charge, health, cycles and charge limits | |
 | Thermals | Works | 10 minutes of full load on all cores without a fan, throttling as designed | |
