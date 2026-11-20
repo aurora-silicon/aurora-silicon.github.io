@@ -64,7 +64,7 @@ pull request that has not merged.
 | Trackpad | Partial | Driver ready, not yet tested by hand | [linux#2576](https://github.com/aurora-silicon/linux/pull/2576) (open) |
 | Keyboard backlight | Works | Brightness 0 to 255 | |
 | USB-C | Partial | Device (gadget) mode works at high speed; host mode with a real device not tested yet | [aura#399](https://github.com/aurora-silicon/aura/pull/399) (open) |
-| Hardware video decode | Works, open PR | H.264, HEVC, VP9 and AV1, bit-exact against software decode; 1080p at 366, 588, 429 and 380 frames/s | [linux#2586](https://github.com/aurora-silicon/linux/pull/2586), [avd-fw#8](https://github.com/aurora-silicon/avd-fw/pull/8) (open) |
+| Hardware video decode | Works, open PR | H.264, HEVC, VP9 and AV1, bit-exact against software decode; 1080p at 370, 625, 429 and 448 frames/s (median of about 25 runs on 21 November) | [linux#2586](https://github.com/aurora-silicon/linux/pull/2586), [avd-fw#8](https://github.com/aurora-silicon/avd-fw/pull/8) (open) |
 | JPEG encode | Works | 1080p at 612 frames/s, output identical to our reference | |
 | Hardware scaler | Works, open PR | NV12 and P010 to ARGB in BT.601, 709 and 2020 | [linux#2429](https://github.com/aurora-silicon/linux/pull/2429) (open) |
 | Camera | Works, open PR | "FaceTime HD Camera" in PipeWire, 1920x1080 at 30 frames/s | [linux#2570](https://github.com/aurora-silicon/linux/pull/2570), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (open) |
@@ -98,7 +98,7 @@ pull request that has not merged.
 | Keyboard backlight | Partial | Brightness control present (0 to 255); not checked by eye | |
 | USB-C | Works, open PR | Host mode (USB 2 hub, keyboard and mouse through a monitor's hub); device mode at 280 to 332 Mbit/s | [aura#399](https://github.com/aurora-silicon/aura/pull/399) (open) |
 | Thunderbolt / USB4 | Works | Host-to-host networking with an M4 Pro MacBook Pro at about 20 Gbit/s | |
-| Hardware video decode | Works, open PR | H.264, HEVC, VP9 and AV1, bit-exact; 1080p at 938, 1579, 882 and 811 frames/s | [linux#1487](https://github.com/aurora-silicon/linux/pull/1487), [linux#1488](https://github.com/aurora-silicon/linux/pull/1488) (merged), [linux#2555](https://github.com/aurora-silicon/linux/pull/2555) (open) |
+| Hardware video decode | Works, open PR | H.264, HEVC, VP9 and AV1, bit-exact; 1080p at 750, 1500, 545 and 789 frames/s (median of about 22 runs on 21 November) | [linux#1487](https://github.com/aurora-silicon/linux/pull/1487), [linux#1488](https://github.com/aurora-silicon/linux/pull/1488) (merged), [linux#2555](https://github.com/aurora-silicon/linux/pull/2555) (open) |
 | JPEG encode | Works | 1080p at 732 frames/s, output identical to our reference | |
 | Camera | Works | Front camera, 1080p at 30 frames/s, five frame sizes | [aura#309](https://github.com/aurora-silicon/aura/pull/309), [aura#397](https://github.com/aurora-silicon/aura/pull/397) (merged) |
 | Microphones | Partial | Three capture devices record | |
