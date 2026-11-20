@@ -4,6 +4,6 @@ export const socialLinks = [
   { label: 'X', detail: '@aurorasilicon', href: 'https://x.com/aurorasilicon' },
   { label: 'Discord', detail: 'Join the server', href: 'https://discord.gg/DXmsSSc5aY' },
 ];
-export const omarchyUrl = 'https://github.com/aurora-silicon/omarchy-mac';
+export const omarchyUrl = 'https://omarchy.org/#install';
 export const auroraInstallerUrl = 'https://github.com/aurora-silicon/aurora-installer';
 export const downloadsAvailable = false;
