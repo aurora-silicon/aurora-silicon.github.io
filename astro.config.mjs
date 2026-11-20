@@ -39,6 +39,10 @@ export default defineConfig({
           { label: 'Support records', slug: 'docs/hardware' },
         ] },
         { label: 'Linux', slug: 'docs/linux' },
+        { label: 'MacBook Air (M3, M4)', items: [
+          { label: 'What works', slug: 'docs/macbook-air' },
+          { label: 'Installing', slug: 'docs/macbook-air-install' },
+        ] },
         { label: 'Contribute', items: [
           { label: 'Getting involved', slug: 'docs/contributing' },
           { label: 'Policies & guidelines', slug: 'docs/policies' },
