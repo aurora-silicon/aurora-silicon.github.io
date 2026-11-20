@@ -873,8 +873,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "Speakers": {
         "state": "works",
@@ -943,8 +943,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "Speakers": {
         "state": "works",
@@ -1037,8 +1037,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "Speakers": {
         "state": "works",
@@ -1123,8 +1123,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "Speakers": {
         "state": "works",
@@ -1173,8 +1173,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "Speakers": {
         "state": "works",
@@ -1231,8 +1231,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "Speakers": {
         "state": "works",
@@ -1407,8 +1407,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "Video decoding": {
         "state": "works",
@@ -1521,8 +1521,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -1627,8 +1627,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -1702,7 +1702,7 @@
       },
       "Sleep / resume": {
         "state": "partial",
-        "note": "Touch ID lost after resume"
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20; Touch ID is lost after resume"
       },
       "GPU acceleration": {
         "state": "works",
@@ -1855,8 +1855,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -1977,8 +1977,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -2007,8 +2007,8 @@
         "note": ""
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": ""
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "ProMotion": {
         "state": "works",
@@ -2129,8 +2129,8 @@
         "note": ""
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": ""
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "Touch ID": {
         "state": "works",
@@ -2303,8 +2303,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -2409,8 +2409,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -2443,8 +2443,8 @@
         "note": "4K with audio"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": ""
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "ProMotion": {
         "state": "works",
@@ -2617,8 +2617,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -2719,8 +2719,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -2801,8 +2801,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -2883,8 +2883,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -2965,8 +2965,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -3047,8 +3047,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -3169,8 +3169,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -3291,8 +3291,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -3377,8 +3377,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -3463,8 +3463,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -3545,8 +3545,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -3627,8 +3627,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Sleep / resume": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
         "state": "works",
@@ -3809,8 +3809,8 @@
         "note": "microphone stream described; no hardware test recorded on this Mac"
       },
       "Sleep / resume": {
-        "state": "untested",
-        "note": "no hardware test recorded on this Mac"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "Speakers": {
         "state": "untested",
@@ -3863,8 +3863,8 @@
         "note": "described as on the J514c; no hardware test recorded on this Mac"
       },
       "Sleep / resume": {
-        "state": "untested",
-        "note": "no hardware test recorded on this Mac"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "Speakers": {
         "state": "untested",
@@ -3917,8 +3917,8 @@
         "note": "described as on the J516c; no hardware test recorded on this Mac"
       },
       "Sleep / resume": {
-        "state": "untested",
-        "note": "no hardware test recorded on this Mac"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "Speakers": {
         "state": "untested",
@@ -3963,8 +3963,8 @@
         "note": "microphones enabled in the device tree on 2026-11-07 (#1141); not yet tested on an M3 iMac"
       },
       "Sleep / resume": {
-        "state": "untested",
-        "note": "no hardware test recorded on this Mac"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "Speakers": {
         "state": "none",
@@ -4009,8 +4009,8 @@
         "note": "microphones enabled in the device tree on 2026-11-07 (#1141); not yet tested on an M3 iMac"
       },
       "Sleep / resume": {
-        "state": "untested",
-        "note": "no hardware test recorded on this Mac"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "Speakers": {
         "state": "none",
@@ -4043,8 +4043,8 @@
         "note": "jack codec and sound card described; no hardware test recorded on this Mac"
       },
       "Sleep / resume": {
-        "state": "untested",
-        "note": "no hardware test recorded on this Mac"
+        "state": "partial",
+        "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "Speaker": {
         "state": "untested",
@@ -5708,6 +5708,14 @@
       "scope": "M5 MacBook Air (j813 and j815)",
       "baseline": "M5 Pro MacBook Pro (j714s)",
       "note": "Match all shared laptop feature states to M5 Pro/Max support. Ray tracing and Thunderbolt / USB4 remain partial. Preserve Air-specific hardware details and installer test status; do not add Pro-only hardware."
+    },
+    {
+      "source": "Project owner clarification, 2026-11-20",
+      "scope": "All M1, M2 and M3 machines, including Pro, Max and Ultra variants",
+      "partial": [
+        "Sleep / resume"
+      ],
+      "note": "Full sleep / resume support has only been completed on M4 and later so far. Supersedes earlier working or untested sleep / resume ratings on M1/M2/M3. Preserve the J316s Touch ID limitation; other feature results and later-generation records are unchanged."
     }
   ]
 }
