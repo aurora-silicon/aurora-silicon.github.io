@@ -1,0 +1,26 @@
+name: macOS boot helpers
+on:
+  pull_request:
+    paths: ['public/grubcfg.sh', 'public/verbose.sh', 'scripts/test-boot-tools.py', '.github/workflows/boot-tools.yml']
+  push:
+    branches: [main]
+    paths: ['public/grubcfg.sh', 'public/verbose.sh', 'scripts/test-boot-tools.py', '.github/workflows/boot-tools.yml']
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - if: runner.os == 'macOS'
+        run: |
+          brew install e2fsprogs
+          echo "$(brew --prefix e2fsprogs)/sbin" >> "$GITHUB_PATH"
+      - run: sh -n public/grubcfg.sh && sh -n public/verbose.sh
+      - run: python3 scripts/test-boot-tools.py -v
