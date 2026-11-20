@@ -1,0 +1,19 @@
+name: Fedora Asahi upgrade script
+on:
+  pull_request:
+    paths: ['public/upgrade.sh', 'scripts/test-upgrade.py', '.github/workflows/upgrade.yml']
+  push:
+    branches: [main]
+    paths: ['public/upgrade.sh', 'scripts/test-upgrade.py', '.github/workflows/upgrade.yml']
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: sh -n public/upgrade.sh
+      - run: python3 scripts/test-upgrade.py -v
