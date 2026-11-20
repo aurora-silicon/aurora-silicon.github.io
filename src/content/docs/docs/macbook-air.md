@@ -41,7 +41,10 @@ when you install.
 
 Several of these results need pull requests that are still open. They work on our
 test kernels and will reach an installed system once those pull requests merge and
-ship in a release. The tables below say which.
+ship in a release. The tables below say which. On the M3 Air's current default boot
+(no open pull requests), the internal display driver, camera and light and lid
+sensors are not active yet; the desktop, Wi-Fi, storage and video decode work
+there.
 
 **Status key:** *Works* = proven on the Mac with the numbers shown. *Partial* = works
 with a stated limit. *Not yet* = does not work today. *Open PR* = the result needs a
@@ -52,11 +55,11 @@ pull request that has not merged.
 | Feature | Status | Result | Pull requests |
 | --- | --- | --- | --- |
 | Boot, all CPU cores, cpufreq | Works | All cores up; performance cores at about 4.05 GHz | [linux#2562](https://github.com/aurora-silicon/linux/pull/2562) (merged) |
-| GNOME desktop and Firefox | Works | GNOME on Wayland, Firefox loads a page, 0 failed services in 20 runs in a row | |
+| GNOME desktop and Firefox | Works | GNOME on Wayland, Firefox loads a page, 0 failed services in all 25 complete runs since 20 November | |
 | Internal display | Works, open PR | 2880x1800 at 60 Hz on the display driver, frame pacing 60.000 Hz, brightness 0 to 500 nits, survives suspend | [linux#2580](https://github.com/aurora-silicon/linux/pull/2580), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (open) |
-| Wi-Fi | Works | 2.4 and 5 GHz, about 267 Mbit/s up and 241 Mbit/s down over ssh | |
+| Wi-Fi | Works | 2.4 and 5 GHz; over ssh typically 260 to 275 Mbit/s up and 210 to 245 Mbit/s down (21 November runs) | |
 | Bluetooth | Works | Controller powered, scanning finds devices | |
-| Internal storage | Works | 1 GiB copy at 1330 MB/s, cold read 2560 MB/s | |
+| Internal storage | Works | 1 GiB copy at 1200 to 1330 MB/s, cold read 2130 to 2700 MB/s (21 November runs) | |
 | Keyboard | Works, open PR | Keys register in the desktop | [linux#2525](https://github.com/aurora-silicon/linux/pull/2525), [u-boot#67](https://github.com/aurora-silicon/u-boot/pull/67) (merged), [linux#2576](https://github.com/aurora-silicon/linux/pull/2576) (open) |
 | Trackpad | Partial | Driver ready, not yet tested by hand | [linux#2576](https://github.com/aurora-silicon/linux/pull/2576) (open) |
 | Keyboard backlight | Works | Brightness 0 to 255 | |
@@ -67,12 +70,12 @@ pull request that has not merged.
 | Camera | Works, open PR | "FaceTime HD Camera" in PipeWire, 1920x1080 at 30 frames/s | [linux#2570](https://github.com/aurora-silicon/linux/pull/2570), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (open) |
 | Microphones | Works, open PR | Default PipeWire source in GNOME | [linux#2569](https://github.com/aurora-silicon/linux/pull/2569), [aura#377](https://github.com/aurora-silicon/aura/pull/377) (open) |
 | Light and lid sensors | Works, open PR | Ambient light and lid angle read | [aura#377](https://github.com/aurora-silicon/aura/pull/377) (open) |
-| Speakers | Not yet | Speaker sense now reads correctly; speakers stay locked until speaker protection is qualified on this Mac | [linux#2589](https://github.com/aurora-silicon/linux/pull/2589) (merged) |
+| Speakers | Not yet | Speaker sense now reads correctly. Quiet test playback under speakerguardd v2 protection works in the lab (no limiting needed, no amplifier faults); speakers stay locked in an install until v2 is qualified on this Mac | [linux#2589](https://github.com/aurora-silicon/linux/pull/2589) (merged), [speakerguardd#225](https://github.com/aurora-silicon/speakerguardd/pull/225) (merged), [speakerguardd#226](https://github.com/aurora-silicon/speakerguardd/pull/226) (open) |
 | Headphone jack | Partial | Jack detected; playback not tested | |
 | Battery and charging | Works | Charge, health, cycles and charge limits | |
 | Thermals | Works | 10 minutes of full load on all cores without a fan, throttling as designed | |
 | Suspend to idle | Works | 13 of 13 wakes by timer, wake by Wi-Fi packet, suspend from the desktop | [linux#2562](https://github.com/aurora-silicon/linux/pull/2562), [linux#2581](https://github.com/aurora-silicon/linux/pull/2581) (merged) |
-| GPU | Not yet | The GPU driver does not support the 27.2 GPU firmware yet; the desktop renders in software | |
+| GPU | Not yet | The 27.2 GPU firmware now starts from Linux and runs to its start banner, then stops at the same point every time; the desktop renders in software | |
 | External display | Not yet | The external display processor starts, but no picture yet | [linux#2584](https://github.com/aurora-silicon/linux/pull/2584) (open) |
 | Thunderbolt / USB4 | Not yet | | |
 | Video encode | Not yet | | |
@@ -84,12 +87,12 @@ pull request that has not merged.
 | Feature | Status | Result | Pull requests |
 | --- | --- | --- | --- |
 | Boot, all CPU cores, cpufreq | Works | All 10 cores; 30 minutes of full load at 3.91 GHz (performance) and 2.79 GHz (efficiency) with no throttling | |
-| Warm reboots | Works | Storage comes back on warm reboots; a rare start failure now recovers by itself with one reboot | [aura#305](https://github.com/aurora-silicon/aura/pull/305) (merged), [aura#401](https://github.com/aurora-silicon/aura/pull/401) (open) |
-| GNOME desktop and Firefox | Works | GNOME on Wayland, Firefox loads a page, 0 failed services in 12 runs in a row | |
+| Warm reboots | Works | Storage comes back on warm reboots (5 of 5 on the newest boot chain); a rare start failure now recovers by itself with one reboot | [aura#305](https://github.com/aurora-silicon/aura/pull/305) (merged), [aura#401](https://github.com/aurora-silicon/aura/pull/401) (open) |
+| GNOME desktop and Firefox | Works | GNOME on Wayland, Firefox loads a page, 0 failed services in all 23 complete runs since 20 November | |
 | Internal display | Works, open PR | 2560x1600 at 60 Hz on the display driver, frame pacing 60.001 Hz, brightness 0 to 500 nits. Without the PR the desktop runs on a basic framebuffer | [linux#2590](https://github.com/aurora-silicon/linux/pull/2590) (open, on [linux#2541](https://github.com/aurora-silicon/linux/pull/2541)), [linux#2578](https://github.com/aurora-silicon/linux/pull/2578) (merged) |
-| Wi-Fi | Works | 5 GHz, about 268 Mbit/s up and 227 Mbit/s down over ssh | |
+| Wi-Fi | Works | 5 GHz; over ssh typically 245 to 275 Mbit/s up and 170 to 235 Mbit/s down (21 November runs) | |
 | Bluetooth | Works | Controller powered, scanning finds devices | |
-| Internal storage | Works | 1 GiB copy at 1067 MB/s, cold read 2090 MB/s | |
+| Internal storage | Works | 1 GiB copy at 1030 to 1080 MB/s, cold read 2090 to 2500 MB/s (21 November runs) | |
 | Keyboard | Works | Keys register in the desktop | |
 | Trackpad | Works | Touch, move and click register; two-finger scroll not tested yet | |
 | Keyboard backlight | Partial | Brightness control present (0 to 255); not checked by eye | |
@@ -100,7 +103,7 @@ pull request that has not merged.
 | Camera | Works | Front camera, 1080p at 30 frames/s, five frame sizes | [aura#309](https://github.com/aurora-silicon/aura/pull/309), [aura#397](https://github.com/aurora-silicon/aura/pull/397) (merged) |
 | Microphones | Partial | Three capture devices record | |
 | Sensors | Works | Ambient light, light temperature, lid angle, accelerometer, gyroscope, device motion | |
-| Speakers | Not yet | Speakers stay locked until speaker protection is installed and qualified on this Mac | |
+| Speakers | Not yet | Speakers stay at a safe locked level: the speakerguardd v2 upgrade check refuses to unlock them until every protection type this model needs is supported | [speakerguardd#225](https://github.com/aurora-silicon/speakerguardd/pull/225) (merged) |
 | Headphone jack | Partial | Jack detected; playback not tested on 27.2 | |
 | Battery and charging | Works | 7.5 W idle drain with the screen off (about 6.5 hours) | |
 | Thermals | Works | 30 minutes of full load without a fan, chip at 92 to 94 °C, no throttling | |
@@ -123,8 +126,8 @@ close them:
 2. **GPU.** Both Macs render the desktop in software on 27.2. Expect a slower desktop
    and no hardware OpenGL or Vulkan.
 3. **External displays.** No picture yet on either Mac.
-4. **Speakers.** Locked on both Macs until speaker protection is qualified for each
-   model. Headphones and microphones are unaffected.
+4. **Speakers.** Locked on both Macs until speaker protection (speakerguardd v2)
+   is qualified for each model. Headphones and microphones are unaffected.
 5. **Sleep on the M4 Air.** Not enabled yet. The M3 Air suspends to idle and wakes.
 6. **Video encode and the Neural Engine.** Not started on 27.2.
 
