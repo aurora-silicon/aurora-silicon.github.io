@@ -1,0 +1,16 @@
+name: PMP helper
+on:
+  pull_request:
+    paths: ['public/pmp.sh', '.github/workflows/pmp-sh.yml']
+  push:
+    branches: [main]
+    paths: ['public/pmp.sh', '.github/workflows/pmp-sh.yml']
+permissions:
+  contents: read
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: sh -n public/pmp.sh && bash -n public/pmp.sh
+      - run: shellcheck -s sh public/pmp.sh
