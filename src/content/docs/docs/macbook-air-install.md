@@ -10,8 +10,9 @@ Last updated 21 November 2026.
 :::caution[Not tested by the Aurora team yet]
 The Aurora installer lists both Macs, but nobody on the team has run a full install
 on either of them yet. The [device page](/devices/) shows this as *Installer
-untested*. Only install on a Mac whose data you have backed up, and read
-[Known problems](#known-problems) first.
+untested*. Installs with the installer's current firmware choice have not reached
+a working desktop on either Mac in our tests (see [Known problems](#known-problems)),
+so we do not recommend installing on these two Macs yet. If you do, back up first.
 :::
 
 ## Which firmware you get
@@ -25,9 +26,11 @@ firmware for the Mac's coprocessors. The installer picks its version per model:
 | 13-inch M4 Air (J713) | macOS 26.6.2 | macOS 27.2 |
 
 The results on the [MacBook Air page](/docs/macbook-air/) are for 27.2. The installer
-does not offer 27.2 for these Macs yet; it will once the drivers they need have
-merged and shipped in a release. Until then, the [device page](/devices/) is the
-better guide to what an installed system does.
+does not offer 27.2 for these Macs yet.
+[aurora-installer#177](https://github.com/aurora-silicon/aurora-installer/pull/177)
+(open) moves both Macs to the 27.2 stub; it still needs the drivers listed on the
+MacBook Air page to merge and ship in a release before an install matches our
+results. Until then, the [device page](/devices/) records the older setup.
 
 ## Before you start
 
@@ -73,12 +76,14 @@ are not changed by any of this.
 
 ## Known problems
 
-- **M3 Air (J615), screen goes blank after the boot splash.** Reported on earlier
-  installs on macOS 14.8 firmware. We have not reproduced it on 27.2, where the
-  desktop starts on the display driver. If it happens, hold the power button to shut
-  down and start macOS as above.
-- **M4 Air (J713), stops before Linux on some warm reboots.** The boot loader could
-  not always start the internal storage after a warm reboot and stopped before Linux.
+- **M3 Air (J615), screen goes blank after the boot splash.** Seen on installs on
+  the macOS 14.8 stub, which is what the installer uses today. It does not happen on
+  27.2, where the desktop starts on the display driver. If it happens, hold the
+  power button to shut down and start macOS as above.
+- **M4 Air (J713), stops in the boot loader before Linux.** Seen on an install on
+  the macOS 26.6.2 stub, which is what the installer uses today, and on some warm
+  reboots on 27.2. The boot loader could not always start the internal storage and
+  stopped before Linux.
   [aura#305](https://github.com/aurora-silicon/aura/pull/305) fixes this and has
   merged, but it is not in a tagged aura release yet. A rarer failure when the
   storage starts from power-off (about 1 start in 7 in our tests) is handled by
