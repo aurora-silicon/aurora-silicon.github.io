@@ -79,7 +79,7 @@ are not in a published package yet.
 | GPU | Not yet | The GPU firmware now starts from Linux, but the GPU does not run work on 27.2 yet; the desktop renders in software | |
 | External display | Not yet | The external display processor starts, but no picture yet | [linux#2584](https://github.com/aurora-silicon/linux/pull/2584) (open) |
 | Thunderbolt / USB4 | Not yet | The Thunderbolt controllers start on a test kernel; no link tested yet, because the only cable on hand is USB 2 | |
-| Video encode | Works, open PR | H.264 and HEVC hardware encode: 1080p at 124 to 155 frames/s and 4K at 39 to 41 frames/s, with picture quality matching the M4 Pro MacBook Pro within 0.03 dB | [linux#2644](https://github.com/aurora-silicon/linux/pull/2644), [aura#420](https://github.com/aurora-silicon/aura/pull/420) (open) |
+| Video encode | Works, open PR | H.264 and HEVC hardware encode: 1080p at 124 to 155 frames/s and 4K at 39 to 41 frames/s, with picture quality matching the M4 Pro MacBook Pro within 0.03 dB | [linux#2644](https://github.com/aurora-silicon/linux/pull/2644) (merged), [aura#420](https://github.com/aurora-silicon/aura/pull/420) (open) |
 | Neural Engine | Not yet | | |
 | Deep sleep | Not yet | | |
 
@@ -132,7 +132,7 @@ close them:
    is qualified for each model. Headphones and microphones are unaffected.
 5. **Sleep on the M4 Air.** Not enabled yet. The M3 Air suspends to idle and wakes.
 6. **Video encode and the Neural Engine.** Video encode works on the M3 Air with
-   [linux#2644](https://github.com/aurora-silicon/linux/pull/2644) and
+   [linux#2644](https://github.com/aurora-silicon/linux/pull/2644) (merged) and
    [aura#420](https://github.com/aurora-silicon/aura/pull/420) (open), and on the M4 Air
    with [linux#2668](https://github.com/aurora-silicon/linux/pull/2668) (open).
    The Neural Engine works on the M4 Air with
