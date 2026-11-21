@@ -34,8 +34,8 @@ when you install.
   The GPU, Thunderbolt, external displays and the Neural Engine do not work yet.
 - **13-inch M4 Air (J713):** desktop, browser, Wi-Fi, Bluetooth, storage,
   internal display with brightness, keyboard, trackpad, camera, microphones,
-  sensors, Thunderbolt networking, battery and hardware video decode all work,
-  and the Neural Engine runs on a test kernel. The GPU, sleep, external displays
+  sensors, Thunderbolt networking, battery, hardware video decode and the Neural
+  Engine all work. The GPU, sleep, external displays
   and video encode do not work yet.
 
 Several of these results need pull requests that are still open. They work on our
