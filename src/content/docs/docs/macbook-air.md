@@ -43,8 +43,8 @@ Several of these results need pull requests that are still open. They work on ou
 test kernels and will reach an installed system once those pull requests merge and
 ship in a release. The tables below say which. On the M3 Air's current default boot
 (the distribution's kernel), the internal display driver, camera and light and lid
-sensors are not active yet; the desktop, keyboard, trackpad, Wi-Fi, storage and
-video decode work there.
+sensors are not active yet; the desktop, keyboard, Wi-Fi, storage and video
+decode work there.
 
 **Status key:** *Works* = proven on the Mac with the numbers shown. *Partial* = works
 with a stated limit. *Not yet* = does not work today. *Open PR* = the result needs a
@@ -75,7 +75,7 @@ pull request that has not merged.
 | Battery and charging | Works | Charge, health, cycles and charge limits | |
 | Thermals | Works | 10 minutes of full load on all cores without a fan, throttling as designed | |
 | Suspend to idle | Works | 13 of 13 wakes by timer, wake by Wi-Fi packet, suspend from the desktop | [linux#2562](https://github.com/aurora-silicon/linux/pull/2562), [linux#2581](https://github.com/aurora-silicon/linux/pull/2581) (merged) |
-| GPU | Not yet | The 27.2 GPU firmware now starts from Linux and runs to its start banner, then stops at the same point every time; the desktop renders in software | |
+| GPU | Not yet | The GPU does not start on 27.2 yet; the desktop renders in software | |
 | External display | Not yet | The external display processor starts, but no picture yet | [linux#2584](https://github.com/aurora-silicon/linux/pull/2584) (open) |
 | Thunderbolt / USB4 | Not yet | The Thunderbolt controllers start on a test kernel; no link tested yet, because the only cable on hand is USB 2 | |
 | Video encode | Not yet | | |
@@ -87,9 +87,9 @@ pull request that has not merged.
 | Feature | Status | Result | Pull requests |
 | --- | --- | --- | --- |
 | Boot, all CPU cores, cpufreq | Works | All 10 cores; 30 minutes of full load at 3.91 GHz (performance) and 2.79 GHz (efficiency) with no throttling | |
-| Warm reboots | Works | Storage comes back on warm reboots (5 of 5 on the newest boot chain); a rare start failure now recovers by itself with one reboot | [aura#305](https://github.com/aurora-silicon/aura/pull/305) (merged), [aura#401](https://github.com/aurora-silicon/aura/pull/401) (open) |
+| Warm reboots | Works, open PR | Storage comes back on warm reboots (5 of 5 on the newest boot chain). About 1 start in 7 from power-off failed in earlier tests; with aura#401 the Mac recovers from that by itself with one reboot | [aura#305](https://github.com/aurora-silicon/aura/pull/305) (merged), [aura#401](https://github.com/aurora-silicon/aura/pull/401) (open) |
 | GNOME desktop and Firefox | Works | GNOME on Wayland, Firefox loads a page, 0 failed services in all 23 complete runs since 20 November | |
-| Internal display | Works, open PR | 2560x1600 at 60 Hz on the display driver, frame pacing 60.001 Hz, brightness 0 to 500 nits. Without the PR the desktop runs on a basic framebuffer | [linux#2590](https://github.com/aurora-silicon/linux/pull/2590) (open, on [linux#2541](https://github.com/aurora-silicon/linux/pull/2541)), [linux#2578](https://github.com/aurora-silicon/linux/pull/2578) (merged) |
+| Internal display | Works, open PR | 2560x1600 at 60 Hz on the display driver, frame pacing 60.001 Hz, brightness 0 to 500 nits. Without the PR the desktop runs on a basic framebuffer | [linux#2590](https://github.com/aurora-silicon/linux/pull/2590) (open, on [linux#2541](https://github.com/aurora-silicon/linux/pull/2541), draft), [linux#2578](https://github.com/aurora-silicon/linux/pull/2578) (merged) |
 | Wi-Fi | Works | 5 GHz; over ssh typically 245 to 275 Mbit/s up and 170 to 235 Mbit/s down (21 November runs) | |
 | Bluetooth | Works | Controller powered, scanning finds devices | |
 | Internal storage | Works | 1 GiB copy at 1030 to 1080 MB/s, cold read 2090 to 2500 MB/s (21 November runs) | |

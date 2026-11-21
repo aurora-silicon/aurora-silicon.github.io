@@ -105,7 +105,10 @@ contributor:
    never as the default. Leave the distribution's kernel in place as the fallback.
 2. **Boot the test kernel once.** Use `grub2-reboot` (Fedora) or `grub-reboot`
    (Arch Linux ARM) with the test entry, then reboot. The next reboot after that
-   returns to the default entry by itself.
+   returns to the default entry by itself. This needs `GRUB_DEFAULT=saved` in
+   `/etc/default/grub`, which Fedora sets by default. If your system has another
+   value, set it and regenerate the GRUB configuration first; otherwise the one-time
+   entry is ignored and the default kernel starts.
 3. **Make a hang end in a reboot.** Add `panic=10` to the test entry's command line
    so a panic reboots after 10 seconds. If the kernel hangs without panicking, hold
    the power button to shut down; the next start uses the default entry. Do not ship
