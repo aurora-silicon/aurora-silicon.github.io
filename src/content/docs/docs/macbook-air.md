@@ -35,8 +35,8 @@ when you install.
 - **13-inch M4 Air (J713):** desktop, browser, Wi-Fi, Bluetooth, storage,
   internal display with brightness, keyboard, trackpad, camera, microphones,
   sensors, Thunderbolt networking, battery and hardware video decode all work,
-  and the Neural Engine works with an open pull request. The GPU, sleep, external displays
-  and video encode do not work yet.
+  and the Neural Engine works with an open pull request. The GPU runs only on a
+  test kernel so far; sleep, external displays and video encode do not work yet.
 
 Several of these results need pull requests that are still open. They work on our
 test kernels and will reach an installed system once those pull requests merge and
@@ -107,7 +107,7 @@ are not in a published package yet.
 | Headphone jack | Partial | Jack detected; playback not tested on 27.2 | |
 | Battery and charging | Works | 7.5 W idle drain with the screen off (about 6.5 hours) | |
 | Thermals | Works | 30 minutes of full load without a fan, chip at 92 to 94 °C, no throttling | |
-| GPU | Not yet | The GPU firmware starts but the driver cannot bring it up on 27.2 yet; the desktop renders in software | |
+| GPU | Partial | First runs on a test kernel with driver changes still in progress (21 November): Vulkan reports an Apple M4 GPU, smoke and compute tests pass 9 of 9, and 10 of 10 idle-to-wake cycles run without a firmware fault. Not in a pull request yet; the desktop still renders in software | |
 | Sleep | Not yet | | |
 | External display | Not yet | DisplayPort alt mode is negotiated with a USB-C monitor, but the port's DisplayPort path is not switched on yet | |
 | Video encode | Not yet | | |
@@ -124,7 +124,8 @@ close them:
    (M3 Air) and [linux#2590](https://github.com/aurora-silicon/linux/pull/2590)
    (M4 Air). Until then the desktop runs on a basic framebuffer with fixed brightness.
 2. **GPU.** Both Macs render the desktop in software on 27.2. Expect a slower desktop
-   and no hardware OpenGL or Vulkan.
+   and no hardware OpenGL or Vulkan. On the M4 Air the GPU has started running work on
+   a test kernel; the M3 Air's GPU firmware starts but runs no work yet.
 3. **External displays.** No picture yet on either Mac.
 4. **Speakers.** Locked on both Macs until speaker protection (speakerguardd v2)
    is qualified for each model. Headphones and microphones are unaffected.
