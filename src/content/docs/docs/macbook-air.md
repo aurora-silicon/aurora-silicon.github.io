@@ -56,7 +56,7 @@ are not in a published package yet.
 | --- | --- | --- | --- |
 | Boot, all CPU cores, cpufreq | Works | All cores up; performance cores at about 4.05 GHz | [linux#2562](https://github.com/aurora-silicon/linux/pull/2562) (merged) |
 | GNOME desktop and Firefox | Works | GNOME on Wayland, Firefox loads a page, 0 failed services in all 25 complete runs since 20 November | |
-| Internal display | Works, open PR | 2880x1800 at 60 Hz on the display driver, frame pacing 60.000 Hz, brightness 0 to 500 nits, survives suspend | [linux#2580](https://github.com/aurora-silicon/linux/pull/2580) (draft), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (merged) |
+| Internal display | Works, open PR | 2880x1800 at 60 Hz on the display driver, frame pacing 60.000 Hz, brightness 0 to 500 nits, survives suspend | [linux#2688](https://github.com/aurora-silicon/linux/pull/2688), [linux#2526](https://github.com/aurora-silicon/linux/pull/2526) (open), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (merged) |
 | Wi-Fi | Works | 2.4 and 5 GHz; over ssh typically 260 to 275 Mbit/s up and 210 to 245 Mbit/s down (21 November runs). WPA3 (SAE) joins a WPA3-only test access point in about 4 s (3 of 3); roaming between 5 and 2.4 GHz when told to, 4 of 4; stays connected through suspend to idle, 3 of 3 (21 November) | |
 | Bluetooth | Works | Bluetooth LE keyboard (21 November): 2 of 2 runs paired in 5.9 to 6.8 s and delivered every key press, also under Wi-Fi load. A 15 s scan finds 28 LE and 11 classic devices | |
 | Internal storage | Works | 1 GiB copy at 1200 to 1330 MB/s, cold read 2130 to 2700 MB/s (21 November runs) | |
@@ -120,9 +120,9 @@ These are the main pieces still missing on 27.2, roughly in the order we expect 
 close them:
 
 1. **Display driver in the default install.** The internal display driver works on
-   both Macs but needs [linux#2580](https://github.com/aurora-silicon/linux/pull/2580)
-   (M3 Air) and [linux#2590](https://github.com/aurora-silicon/linux/pull/2590)
-   (M4 Air). Until then the desktop runs on a basic framebuffer with fixed brightness.
+   both Macs but needs [linux#2688](https://github.com/aurora-silicon/linux/pull/2688)
+   with [linux#2526](https://github.com/aurora-silicon/linux/pull/2526) (M3 Air) and
+   [linux#2590](https://github.com/aurora-silicon/linux/pull/2590) (M4 Air). Until then the desktop runs on a basic framebuffer with fixed brightness.
 2. **GPU.** Both Macs render the desktop in software on 27.2. Expect a slower desktop
    and no hardware OpenGL or Vulkan. On the M4 Air the GPU works on our test kernel
    with [linux#2676](https://github.com/aurora-silicon/linux/pull/2676) (draft) and
