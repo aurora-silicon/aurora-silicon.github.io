@@ -34,20 +34,21 @@ when you install.
   The GPU, Thunderbolt, external displays and the Neural Engine do not work yet.
 - **13-inch M4 Air (J713):** desktop, browser, Wi-Fi, Bluetooth, storage,
   internal display with brightness, keyboard, trackpad, camera, microphones,
-  sensors, Thunderbolt networking, battery, hardware video decode and the Neural
-  Engine all work. The GPU, sleep, external displays
+  sensors, Thunderbolt networking, battery and hardware video decode all work,
+  and the Neural Engine works with an open pull request. The GPU, sleep, external displays
   and video encode do not work yet.
 
 Several of these results need pull requests that are still open. They work on our
 test kernels and will reach an installed system once those pull requests merge and
 ship in a release. The tables below say which. On the M3 Air's current default boot
 (our shared fleet kernel, no extra options), the desktop, keyboard, Wi-Fi, storage,
-video decode and suspend to idle work; the internal display driver, camera and
+video decode and suspend to idle (3 of 3 timer wakes) work; the internal display driver, camera and
 light and lid sensors are not active there yet.
 
 **Status key:** *Works* = proven on the Mac with the numbers shown. *Partial* = works
 with a stated limit. *Not yet* = does not work today. *Open PR* = the result needs a
-pull request that has not merged.
+pull request that has not merged. *Next kernel release* = the pull requests have
+merged but are not in a published package yet.
 
 ## 15-inch M3 MacBook Air (J615)
 
@@ -63,7 +64,7 @@ pull request that has not merged.
 | Trackpad | Partial | Driver ready and reports the full trackpad (16 touches, pressure, haptic click); not yet tested by hand | [linux#2576](https://github.com/aurora-silicon/linux/pull/2576) (open) |
 | Keyboard backlight | Works | Brightness 0 to 255 | |
 | USB-C | Partial | Device (gadget) mode works at high speed; host mode with a real device not tested yet | [aura#399](https://github.com/aurora-silicon/aura/pull/399) (open) |
-| Hardware video decode | Works | H.264, HEVC, VP9 and AV1, bit-exact against software decode; 1080p at 370, 625, 429 and 448 frames/s (median of about 25 runs on 21 November) | [linux#2586](https://github.com/aurora-silicon/linux/pull/2586), [avd-fw#8](https://github.com/aurora-silicon/avd-fw/pull/8) (merged) |
+| Hardware video decode | Works (next kernel release) | H.264, HEVC, VP9 and AV1, bit-exact against software decode; 1080p at 370, 625, 429 and 448 frames/s (median of about 25 runs on 21 November) | [linux#2586](https://github.com/aurora-silicon/linux/pull/2586), [avd-fw#8](https://github.com/aurora-silicon/avd-fw/pull/8) (merged); reaches an install with the next kernel package and [fedora-aurora#467](https://github.com/aurora-silicon/fedora-aurora/pull/467) (open) |
 | JPEG encode | Works | 1080p at 612 frames/s, output identical to our reference | |
 | Hardware scaler | Works, open PR | NV12 and P010 to ARGB in BT.601, 709 and 2020 | [linux#2429](https://github.com/aurora-silicon/linux/pull/2429) (draft) |
 | Camera | Works, open PR | "FaceTime HD Camera" in PipeWire, 1920x1080 at 30 frames/s | [linux#2570](https://github.com/aurora-silicon/linux/pull/2570) (draft), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (open) |
