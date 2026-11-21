@@ -44,8 +44,8 @@ test kernels and will reach an installed system once those pull requests merge a
 ship in a release. The tables below say which. On the M3 Air's current default boot
 (our shared fleet kernel, no extra options), the desktop, keyboard, trackpad, Wi-Fi,
 storage, video decode, suspend to idle (6 of 6) and the internal display driver with
-brightness work; the light and lid sensors are not active there yet, and the camera
-has not been tested there.
+brightness and the camera work; the light and lid sensors are not active there
+yet.
 
 **Status key:** *Works* = proven on the Mac with the numbers shown. *Partial* = works
 with a stated limit. *Not yet* = does not work today. *Open PR* = the result needs a
@@ -69,7 +69,7 @@ are not in a published package yet.
 | Hardware video decode | Works (next release) | H.264, HEVC, VP9 and AV1, bit-exact against software decode; 1080p at 370, 625, 429 and 448 frames/s (median of about 25 runs on 21 November) | [linux#2586](https://github.com/aurora-silicon/linux/pull/2586), [avd-fw#8](https://github.com/aurora-silicon/avd-fw/pull/8) (merged); reaches an install with the next kernel package ([fedora-aurora#467](https://github.com/aurora-silicon/fedora-aurora/pull/467), merged) |
 | JPEG encode | Works | 1080p at 612 frames/s, output identical to our reference | |
 | Hardware scaler | Works, open PR | NV12 and P010 to ARGB in BT.601, 709 and 2020 | [linux#2429](https://github.com/aurora-silicon/linux/pull/2429) (draft) |
-| Camera | Works, open PR | "FaceTime HD Camera" in PipeWire, 1920x1080 at 30 frames/s | [linux#2670](https://github.com/aurora-silicon/linux/pull/2670) (open), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (merged, next aura release) |
+| Camera | Works, open PR | "FaceTime HD Camera" in PipeWire, 1920x1080 at 30 frames/s. On the default boot (21 November): all 26 camera modes at their exact frame rate, 10 of 10 restarts, works in GStreamer, PipeWire and Firefox, and keeps streaming through suspend to idle (900 of 900 frames) | [linux#2670](https://github.com/aurora-silicon/linux/pull/2670) (open), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (merged, next aura release) |
 | Microphones | Works, open PR | Default PipeWire source in GNOME | [linux#2569](https://github.com/aurora-silicon/linux/pull/2569), [aura#377](https://github.com/aurora-silicon/aura/pull/377) (open) |
 | Light and lid sensors | Works, open PR | Ambient light and lid angle read | [aura#377](https://github.com/aurora-silicon/aura/pull/377) (open) |
 | Speakers | Not yet | Speaker sense now reads correctly. Quiet test playback under speakerguardd v2 protection works in the lab (no limiting needed, no amplifier faults); speakers stay locked in an install until v2 is qualified on this Mac | [linux#2589](https://github.com/aurora-silicon/linux/pull/2589) (merged), [speakerguardd#225](https://github.com/aurora-silicon/speakerguardd/pull/225) (merged), [speakerguardd#226](https://github.com/aurora-silicon/speakerguardd/pull/226) (merged) |
