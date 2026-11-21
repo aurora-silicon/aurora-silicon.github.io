@@ -36,7 +36,8 @@ when you install.
   internal display with brightness, keyboard, trackpad, camera, microphones,
   sensors, Thunderbolt networking, battery and hardware video decode all work,
   and the Neural Engine works with an open pull request. The GPU runs only on a
-  test kernel so far; sleep, external displays and video encode do not work yet.
+  test kernel so far; sleep and external displays do not work yet, and video
+  encode works with an open pull request.
 
 Several of these results need pull requests that are still open. They work on our
 test kernels and will reach an installed system once those pull requests merge and
@@ -110,7 +111,7 @@ are not in a published package yet.
 | GPU | Partial | First runs on a test kernel with driver changes still in progress (21 November): Vulkan reports an Apple M4 GPU, smoke and compute tests pass 9 of 9, and 10 of 10 idle-to-wake cycles run without a firmware fault. Not in a pull request yet; the desktop still renders in software | |
 | Sleep | Not yet | | |
 | External display | Not yet | DisplayPort alt mode is negotiated with a USB-C monitor, but the port's DisplayPort path is not switched on yet | |
-| Video encode | Not yet | | |
+| Video encode | Works, open PR | H.264 and HEVC hardware encode (21 November): 1080p at 242 (H.264) and 217 (HEVC) frames/s, equal to or faster than the M4 Pro MacBook Pro; 8 of 8 test streams encode, 6 of them byte-identical to the M4 Pro's output and the rest the same quality. 4K H.264 and some B-frame cases are slower | [linux#2668](https://github.com/aurora-silicon/linux/pull/2668) (open) |
 | Neural Engine | Works, open PR | The Neural Engine firmware starts and `/dev/accel/accel0` appears. A test program gives bit-exact results over 1000 runs, and an image classification network gives the expected top result 16 of 16 times at about 0.9 ms per run | [linux#2630](https://github.com/aurora-silicon/linux/pull/2630) (open) |
 | Touch ID | Partial | Secure Enclave up; no fingerprint test on 27.2 yet | |
 
@@ -132,8 +133,8 @@ close them:
 5. **Sleep on the M4 Air.** Not enabled yet. The M3 Air suspends to idle and wakes.
 6. **Video encode and the Neural Engine.** Video encode works on the M3 Air with
    [linux#2644](https://github.com/aurora-silicon/linux/pull/2644) and
-   [aura#420](https://github.com/aurora-silicon/aura/pull/420) (open) and does not work
-   on the M4 Air yet.
+   [aura#420](https://github.com/aurora-silicon/aura/pull/420) (open), and on the M4 Air
+   with [linux#2668](https://github.com/aurora-silicon/linux/pull/2668) (open).
    The Neural Engine works on the M4 Air with
    [linux#2630](https://github.com/aurora-silicon/linux/pull/2630) (open); the M3 Air
    is not done yet.
