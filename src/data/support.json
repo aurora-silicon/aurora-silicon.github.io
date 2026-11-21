@@ -552,7 +552,7 @@
       },
       "Vulkan": {
         "state": "works",
-        "note": "Vulkan 1.4 on Honeykrisp (#1012, mesa-aurora#32)"
+        "note": "Vulkan 1.4 on Borealis (#1012, mesa-aurora#32)"
       },
       "Ray tracing": {
         "state": "partial",
@@ -1306,7 +1306,7 @@
       },
       "Vulkan": {
         "state": "untested",
-        "note": "Honeykrisp builds for G18G but has not run on an M6"
+        "note": "Borealis builds for G18G but has not run on an M6"
       }
     },
     "j413": {
@@ -5008,7 +5008,7 @@
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "desktop through Zink on Honeykrisp, admitted by default (mesa#205, #1276)"
+        "note": "desktop through Zink on Borealis, admitted by default (mesa#205, #1276)"
       },
       "Vulkan": {
         "state": "works",
