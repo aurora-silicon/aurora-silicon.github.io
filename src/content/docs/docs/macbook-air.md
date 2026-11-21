@@ -35,9 +35,9 @@ when you install.
 - **13-inch M4 Air (J713):** desktop, browser, Wi-Fi, Bluetooth, storage,
   internal display with brightness, keyboard, trackpad, camera, microphones,
   sensors, Thunderbolt networking, battery and hardware video decode all work,
-  and the Neural Engine works with an open pull request. The GPU runs only on a
-  test kernel so far; sleep and external displays do not work yet, and video
-  encode works with an open pull request.
+  and the Neural Engine and video encode work with open pull requests. The GPU
+  works on our test kernel, with driver changes not yet in a pull request. Sleep
+  and external displays do not work yet.
 
 Several of these results need pull requests that are still open. They work on our
 test kernels and will reach an installed system once those pull requests merge and
@@ -108,7 +108,7 @@ are not in a published package yet.
 | Headphone jack | Partial | Jack detected; playback not tested on 27.2 | |
 | Battery and charging | Works | 7.5 W idle drain with the screen off (about 6.5 hours) | |
 | Thermals | Works | 30 minutes of full load without a fan, chip at 92 to 94 °C, no throttling | |
-| GPU | Partial | First runs on a test kernel with driver changes still in progress (21 November): Vulkan reports an Apple M4 GPU, smoke and compute tests pass 9 of 9, and 10 of 10 idle-to-wake cycles run without a firmware fault. Not in a pull request yet; the desktop still renders in software | |
+| GPU | Partial | Works on our test kernel with driver changes still in progress (21 November): the Vulkan conformance smoke list passes 6125 tests with 0 failures and no firmware crashes, OpenGL and Vulkan benchmarks ran on the desktop for 21 minutes without a stall, and 3 of 3 reboots come up with the GPU ready. The changes are not in a pull request yet, so an installed system still renders in software | |
 | Sleep | Not yet | | |
 | External display | Not yet | DisplayPort alt mode is negotiated with a USB-C monitor. On a test kernel both external display processors start and a port is routed to the monitor, but the connection is not reported yet, so there is no picture | |
 | Video encode | Works, open PR | H.264 and HEVC hardware encode (21 November): 1080p at 242 (H.264) and 217 (HEVC) frames/s, equal to or faster than the M4 Pro MacBook Pro; 8 of 8 test streams encode, 6 of them byte-identical to the M4 Pro's output and the rest the same quality. 4K and short streams (B-frames, odd sizes) run at about half to nine-tenths of the M4 Pro's speed | [linux#2675](https://github.com/aurora-silicon/linux/pull/2675) (open) |
@@ -125,8 +125,9 @@ close them:
    (M3 Air) and [linux#2590](https://github.com/aurora-silicon/linux/pull/2590)
    (M4 Air). Until then the desktop runs on a basic framebuffer with fixed brightness.
 2. **GPU.** Both Macs render the desktop in software on 27.2. Expect a slower desktop
-   and no hardware OpenGL or Vulkan. On the M4 Air the GPU has started running work on
-   a test kernel; the M3 Air's GPU firmware starts but runs no work yet.
+   and no hardware OpenGL or Vulkan. On the M4 Air the GPU works on our test kernel
+   (driver changes not in a pull request yet); the M3 Air's GPU firmware starts but
+   runs no work yet.
 3. **External displays.** No picture yet on either Mac.
 4. **Speakers.** Locked on both Macs until speaker protection (speakerguardd v2)
    is qualified for each model. Headphones and microphones are unaffected.
