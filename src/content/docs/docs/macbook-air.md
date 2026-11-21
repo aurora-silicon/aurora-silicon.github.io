@@ -59,8 +59,8 @@ pull request that has not merged.
 | Wi-Fi | Works | 2.4 and 5 GHz; over ssh typically 260 to 275 Mbit/s up and 210 to 245 Mbit/s down (21 November runs) | |
 | Bluetooth | Works | Controller powered, scanning finds devices | |
 | Internal storage | Works | 1 GiB copy at 1200 to 1330 MB/s, cold read 2130 to 2700 MB/s (21 November runs) | |
-| Keyboard | Works, open PR | Keys register in the desktop | [linux#2525](https://github.com/aurora-silicon/linux/pull/2525), [u-boot#67](https://github.com/aurora-silicon/u-boot/pull/67) (merged), [linux#2576](https://github.com/aurora-silicon/linux/pull/2576) (open) |
-| Trackpad | Partial | Driver ready, not yet tested by hand | [linux#2576](https://github.com/aurora-silicon/linux/pull/2576) (open) |
+| Keyboard | Works, open PR | Keys register in the desktop. On the current distribution kernel the keyboard appears about 20 seconds after boot (fixed by linux#2525). Fixes are open for the Do Not Disturb key, which suspended the Mac, and for Mission Control in GNOME ([linux#2624](https://github.com/aurora-silicon/linux/pull/2624), [fedora-aurora#465](https://github.com/aurora-silicon/fedora-aurora/pull/465)) | [linux#2525](https://github.com/aurora-silicon/linux/pull/2525), [u-boot#67](https://github.com/aurora-silicon/u-boot/pull/67) (merged), [linux#2576](https://github.com/aurora-silicon/linux/pull/2576) (open) |
+| Trackpad | Partial | Driver ready and reports the full trackpad (16 touches, pressure, haptic click); not yet tested by hand | [linux#2576](https://github.com/aurora-silicon/linux/pull/2576) (open) |
 | Keyboard backlight | Works | Brightness 0 to 255 | |
 | USB-C | Partial | Device (gadget) mode works at high speed; host mode with a real device not tested yet | [aura#399](https://github.com/aurora-silicon/aura/pull/399) (open) |
 | Hardware video decode | Works, open PR | H.264, HEVC, VP9 and AV1, bit-exact against software decode; 1080p at 370, 625, 429 and 448 frames/s (median of about 25 runs on 21 November) | [linux#2586](https://github.com/aurora-silicon/linux/pull/2586) (open), [avd-fw#8](https://github.com/aurora-silicon/avd-fw/pull/8) (merged) |
@@ -74,7 +74,7 @@ pull request that has not merged.
 | Battery and charging | Works | Charge, health, cycles and charge limits | |
 | Thermals | Works | 10 minutes of full load on all cores without a fan, throttling as designed | |
 | Suspend to idle | Works | 13 of 13 wakes by timer, wake by Wi-Fi packet, suspend from the desktop | [linux#2562](https://github.com/aurora-silicon/linux/pull/2562), [linux#2581](https://github.com/aurora-silicon/linux/pull/2581) (merged) |
-| GPU | Not yet | The GPU does not start on 27.2 yet; the desktop renders in software | |
+| GPU | Not yet | The GPU firmware now starts from Linux, but the GPU does not run work on 27.2 yet; the desktop renders in software | |
 | External display | Not yet | The external display processor starts, but no picture yet | [linux#2584](https://github.com/aurora-silicon/linux/pull/2584) (open) |
 | Thunderbolt / USB4 | Not yet | The Thunderbolt controllers start on a test kernel; no link tested yet, because the only cable on hand is USB 2 | |
 | Video encode | Works, open PR | H.264 and HEVC hardware encode: 1080p at about 140 frames/s and 4K at about 37 frames/s, with picture quality matching the M4 Pro MacBook Pro within 0.03 dB | [linux#2644](https://github.com/aurora-silicon/linux/pull/2644), [aura#420](https://github.com/aurora-silicon/aura/pull/420) (open) |
