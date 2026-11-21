@@ -35,9 +35,8 @@ when you install.
 - **13-inch M4 Air (J713):** desktop, browser, Wi-Fi, Bluetooth, storage,
   internal display with brightness, keyboard, trackpad, camera, microphones,
   sensors, Thunderbolt networking, battery and hardware video decode all work,
-  and the Neural Engine and video encode work with open pull requests. The GPU
-  works on our test kernel, with driver changes not yet in a pull request. Sleep
-  and external displays do not work yet.
+  and the GPU, the Neural Engine and video encode work with open pull requests.
+  Sleep and external displays do not work yet.
 
 Several of these results need pull requests that are still open. They work on our
 test kernels and will reach an installed system once those pull requests merge and
@@ -108,7 +107,7 @@ are not in a published package yet.
 | Headphone jack | Partial | Jack detected; playback not tested on 27.2 | |
 | Battery and charging | Works | 7.5 W idle drain with the screen off (about 6.5 hours) | |
 | Thermals | Works | 30 minutes of full load without a fan, chip at 92 to 94 °C, no throttling | |
-| GPU | Partial | Works on our test kernel with driver changes still in progress (21 November): the Vulkan conformance smoke list passes 6125 tests with 0 failures and no firmware crashes, OpenGL and Vulkan benchmarks ran on the desktop for 21 minutes without a stall, and 3 of 3 reboots come up with the GPU ready. The changes are not in a pull request yet, so an installed system still renders in software | |
+| GPU | Works, open PR | Works on our test kernel (21 November): the Vulkan conformance smoke list passes 6125 tests with 0 failures and no firmware crashes, OpenGL and Vulkan benchmarks ran on the desktop for 21 minutes without a stall, and 3 of 3 reboots come up with the GPU ready. Until the pull requests merge and ship, an installed system renders in software | [linux#2676](https://github.com/aurora-silicon/linux/pull/2676) (draft), [aura#379](https://github.com/aurora-silicon/aura/pull/379) (open) |
 | Sleep | Not yet | | |
 | External display | Not yet | DisplayPort alt mode is negotiated with a USB-C monitor. On a test kernel both external display processors start and, after the port is reset by hand, detect the monitor and read its capabilities, but the DisplayPort link does not train yet, so there is no picture | |
 | Video encode | Works, open PR | H.264 and HEVC hardware encode (21 November): 1080p at 242 (H.264) and 217 (HEVC) frames/s, equal to or faster than the M4 Pro MacBook Pro; 8 of 8 test streams encode, 6 of them byte-identical to the M4 Pro's output and the rest the same quality. 4K and short streams (B-frames, odd sizes) run at about half to nine-tenths of the M4 Pro's speed | [linux#2675](https://github.com/aurora-silicon/linux/pull/2675) (open) |
@@ -126,8 +125,9 @@ close them:
    (M4 Air). Until then the desktop runs on a basic framebuffer with fixed brightness.
 2. **GPU.** Both Macs render the desktop in software on 27.2. Expect a slower desktop
    and no hardware OpenGL or Vulkan. On the M4 Air the GPU works on our test kernel
-   (driver changes not in a pull request yet); the M3 Air's GPU firmware starts but
-   runs no work yet.
+   with [linux#2676](https://github.com/aurora-silicon/linux/pull/2676) (draft) and
+   [aura#379](https://github.com/aurora-silicon/aura/pull/379) (open); the M3 Air's GPU
+   firmware starts but runs no work yet.
 3. **External displays.** No picture yet on either Mac.
 4. **Speakers.** Locked on both Macs until speaker protection (speakerguardd v2)
    is qualified for each model. Headphones and microphones are unaffected.
