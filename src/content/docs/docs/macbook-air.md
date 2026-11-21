@@ -63,7 +63,7 @@ pull request that has not merged.
 | Trackpad | Partial | Driver ready and reports the full trackpad (16 touches, pressure, haptic click); not yet tested by hand | [linux#2576](https://github.com/aurora-silicon/linux/pull/2576) (open) |
 | Keyboard backlight | Works | Brightness 0 to 255 | |
 | USB-C | Partial | Device (gadget) mode works at high speed; host mode with a real device not tested yet | [aura#399](https://github.com/aurora-silicon/aura/pull/399) (open) |
-| Hardware video decode | Works, open PR | H.264, HEVC, VP9 and AV1, bit-exact against software decode; 1080p at 370, 625, 429 and 448 frames/s (median of about 25 runs on 21 November) | [linux#2586](https://github.com/aurora-silicon/linux/pull/2586) (open), [avd-fw#8](https://github.com/aurora-silicon/avd-fw/pull/8) (merged) |
+| Hardware video decode | Works | H.264, HEVC, VP9 and AV1, bit-exact against software decode; 1080p at 370, 625, 429 and 448 frames/s (median of about 25 runs on 21 November) | [linux#2586](https://github.com/aurora-silicon/linux/pull/2586), [avd-fw#8](https://github.com/aurora-silicon/avd-fw/pull/8) (merged) |
 | JPEG encode | Works | 1080p at 612 frames/s, output identical to our reference | |
 | Hardware scaler | Works, open PR | NV12 and P010 to ARGB in BT.601, 709 and 2020 | [linux#2429](https://github.com/aurora-silicon/linux/pull/2429) (draft) |
 | Camera | Works, open PR | "FaceTime HD Camera" in PipeWire, 1920x1080 at 30 frames/s | [linux#2570](https://github.com/aurora-silicon/linux/pull/2570) (draft), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (open) |
