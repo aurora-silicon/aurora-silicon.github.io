@@ -28,14 +28,20 @@ installer, speakerguardd and the distributions.
   the pull request.
 - **It selects by hardware, not by model.** Choose behaviour from what the device
   tree and the firmware describe: a property, the block's `compatible` string, a
-  capability bit, or a register you probe. Do not add checks on the chip, board,
-  Mac model or firmware version. If one is truly unavoidable, explain why in the
-  commit message and key it on the narrowest property you can.
+  capability bit, or a register you probe. Do not add checks on the chip, board or
+  Mac model. Firmware interface differences are chosen from the firmware version the
+  device tree reports, in the driver's one version table, never as scattered checks.
+  If any other check is truly unavoidable, explain why in the commit message and key
+  it on the narrowest property you can.
 - **It is tested on every Mac with that hardware.** A change to a block shared by
   several Macs needs results from each of them, or a clear list of the ones you could
   not test.
-- **No delays or magic numbers as fixes.** A sleep, retry count or queue depth that
-  the hardware does not describe is not a fix; find the cause.
+- **No delays or magic numbers as fixes.** Timeouts and retries that a protocol or
+  the hardware defines are fine. A sleep, retry count or queue depth chosen only
+  because the failure stopped is not a fix; find the cause.
+- **Commits carry your identity only.** If an LLM helped, end the pull request
+  description with `Assisted-by: LLM (<Vendor>:<Model>)`; do not add AI trailers
+  to commits.
 - **Speakers stay protected.** Speaker work goes through
   [speakerguardd](https://github.com/aurora-silicon/speakerguardd). Never disable
   speaker protection or raise its limits, and do not test speakers without it.
@@ -46,6 +52,6 @@ A pull request that does not meet these yet can stay open as a draft.
 
 Explain the problem, the change or observation, and how you verified it. Make limitations explicit. Follow the repository’s issue or pull request template where one exists.
 
-If generative AI contributed to a submission, disclose that involvement clearly in the associated commit, as required by the project policies. You remain responsible for the submitted content.
+If generative AI contributed to a submission, disclose that involvement in the pull request, as required by the project policies: end its description with `Assisted-by: LLM (<Vendor>:<Model>)`. Commits carry your identity only, with no AI co-author or similar trailers. You remain responsible for the submitted content.
 
 Keep project-derived findings, patches, and related technical discussion within Aurora-controlled spaces. Do not send them to upstream projects.
