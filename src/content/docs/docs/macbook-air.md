@@ -43,9 +43,8 @@ Several of these results need pull requests that are still open. They work on ou
 test kernels and will reach an installed system once those pull requests merge and
 ship in a release. The tables below say which. On the M3 Air's current default boot
 (our shared fleet kernel, no extra options), the desktop, keyboard, trackpad, Wi-Fi,
-storage, video decode, suspend to idle (6 of 6) and the internal display driver with
-brightness and the camera work; the light and lid sensors are not active there
-yet.
+storage, video decode and encode, suspend to idle (6 of 6), the internal display
+driver with brightness, the camera and the light and lid sensors all work.
 
 **Status key:** *Works* = proven on the Mac with the numbers shown. *Partial* = works
 with a stated limit. *Not yet* = does not work today. *Open PR* = the result needs a
