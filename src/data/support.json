@@ -4448,7 +4448,7 @@
       },
       "Touch ID": {
         "state": "none",
-        "note": "the Secure Enclave driver still has no J604 profile; enrolment and match reported on a contributor kernel with the sensor in SPI mode 1 (#1496, open)"
+        "note": "the Secure Enclave driver still has no J604 profile; enrolment and match reported on a contributor kernel with the sensor in SPI mode 1 (#1496)"
       },
       "Speakers": {
         "state": "none",
@@ -4525,8 +4525,8 @@
         "note": "3024x1890 at 120 Hz through the display coprocessor (aura#44); clamshell mode turns the panel off cleanly (ferass04)"
       },
       "HDMI": {
-        "state": "partial",
-        "note": "through the J614s's own external display processor (#1585, #1551); also needs the boot loader change in open aura#166"
+        "state": "works",
+        "note": "through the J614s's own external display processor (#1585, #1551) and the boot loader's handoff of its firmware memory (aura#166): 2560x1440 at 75 Hz, with USB-C display still working"
       },
       "Keyboard": {
         "state": "works",
@@ -5438,7 +5438,7 @@
       },
       "Boot": {
         "state": "works",
-        "note": "boots its SSD install to Plasma through aura (#1413); its device tree is open #1532; reported by m0d16l14n1, 2026-11-11"
+        "note": "boots its SSD install to Plasma through aura (#1413); with its device tree (#1532); reported by m0d16l14n1, 2026-11-11"
       },
       "Internal display": {
         "state": "works",
@@ -5458,7 +5458,7 @@
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "WPA2 on 5 GHz, back after rfkill and s2idle; needs open #1530 and #1532"
+        "note": "WPA2 on 5 GHz, back after rfkill and s2idle (#1530, #1532)"
       },
       "GPU acceleration": {
         "state": "works",
