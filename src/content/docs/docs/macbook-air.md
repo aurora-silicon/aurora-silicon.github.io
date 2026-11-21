@@ -35,15 +35,15 @@ when you install.
 - **13-inch M4 Air (J713):** desktop, browser, Wi-Fi, Bluetooth, storage,
   internal display with brightness, keyboard, trackpad, camera, microphones,
   sensors, Thunderbolt networking, battery and hardware video decode all work,
-  and the GPU, the Neural Engine and video encode work with open pull requests.
-  Sleep and external displays do not work yet.
+  and the GPU, the Neural Engine, video encode and an external monitor over USB-C
+  work with open pull requests. Sleep does not work yet.
 
 Several of these results need pull requests that are still open. They work on our
 test kernels and will reach an installed system once those pull requests merge and
 ship in a release. The tables below say which. On the M3 Air's current default boot
 (our shared fleet kernel, no extra options), the desktop, keyboard, trackpad, Wi-Fi,
-storage, video decode and suspend to idle (3 of 3 timer wakes) work; the internal
-display driver, camera and light and lid sensors are not active there yet.
+storage, video decode, suspend to idle (6 of 6) and the internal display driver with
+brightness work; the camera and light and lid sensors are not active there yet.
 
 **Status key:** *Works* = proven on the Mac with the numbers shown. *Partial* = works
 with a stated limit. *Not yet* = does not work today. *Open PR* = the result needs a
@@ -56,7 +56,7 @@ are not in a published package yet.
 | --- | --- | --- | --- |
 | Boot, all CPU cores, cpufreq | Works | All cores up; performance cores at about 4.05 GHz | [linux#2562](https://github.com/aurora-silicon/linux/pull/2562) (merged) |
 | GNOME desktop and Firefox | Works | GNOME on Wayland, Firefox loads a page, 0 failed services in all 25 complete runs since 20 November | |
-| Internal display | Works, open PR | 2880x1800 at 60 Hz on the display driver, frame pacing 60.000 Hz, brightness 0 to 500 nits, survives suspend | [linux#2688](https://github.com/aurora-silicon/linux/pull/2688), [linux#2526](https://github.com/aurora-silicon/linux/pull/2526) (open), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (merged, next aura release) |
+| Internal display | Works, open PR | 2880x1800 at 60 Hz on the display driver, frame pacing 60.000 Hz, brightness 0 to 500 nits, survives suspend. Idle power drops from 9.5 W on a basic framebuffer to 2.8 W with the driver | [linux#2688](https://github.com/aurora-silicon/linux/pull/2688), [linux#2526](https://github.com/aurora-silicon/linux/pull/2526) (open), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (merged, next aura release) |
 | Wi-Fi | Works | 2.4 and 5 GHz; over ssh typically 260 to 275 Mbit/s up and 210 to 245 Mbit/s down (21 November runs). WPA3 (SAE) joins a WPA3-only test access point in about 4 s (3 of 3); roaming between 5 and 2.4 GHz when told to, 4 of 4; stays connected through suspend to idle, 3 of 3 (21 November) | |
 | Bluetooth | Works | Bluetooth LE keyboard (21 November): 2 of 2 runs paired in 5.9 to 6.8 s and delivered every key press, also under Wi-Fi load. A 15 s scan finds 28 LE and 11 classic devices | |
 | Internal storage | Works | 1 GiB copy at 1200 to 1330 MB/s, cold read 2130 to 2700 MB/s (21 November runs) | |
@@ -109,7 +109,7 @@ are not in a published package yet.
 | Thermals | Works | 30 minutes of full load without a fan, chip at 92 to 94 °C, no throttling | |
 | GPU | Works, open PR | Works on our test kernel (21 November): the Vulkan conformance smoke list passes 6125 tests with 0 failures and no firmware crashes, OpenGL and Vulkan benchmarks ran on the desktop for 21 minutes without a stall, and 3 of 3 reboots come up with the GPU ready. Until the pull requests merge and ship, an installed system renders in software | [linux#2676](https://github.com/aurora-silicon/linux/pull/2676) (draft), [aura#379](https://github.com/aurora-silicon/aura/pull/379) (open) |
 | Sleep | Not yet | | |
-| External display | Not yet | DisplayPort alt mode is negotiated with a USB-C monitor. On a test kernel both external display processors start and, after the port is reset by hand, detect the monitor and read its capabilities, but the DisplayPort link does not train yet, so there is no picture | |
+| External display | Works, open PR | On a test kernel (21 November) a 2560x1440 USB-C monitor connects at boot with no replugging, its EDID is read and GNOME extends the desktop onto it at 2560x1440; the internal display is unaffected. Measured from the system, not yet checked by eye | [linux#2673](https://github.com/aurora-silicon/linux/pull/2673), [linux#2596](https://github.com/aurora-silicon/linux/pull/2596), [linux#2526](https://github.com/aurora-silicon/linux/pull/2526) (open) |
 | Video encode | Works, open PR | H.264 and HEVC hardware encode (21 November): 1080p at 242 (H.264) and 217 (HEVC) frames/s, equal to or faster than the M4 Pro MacBook Pro; 8 of 8 test streams encode, 6 of them byte-identical to the M4 Pro's output and the rest the same quality. 4K and short streams (B-frames, odd sizes) run at about half to nine-tenths of the M4 Pro's speed | [linux#2675](https://github.com/aurora-silicon/linux/pull/2675) (open) |
 | Neural Engine | Works, open PR | The Neural Engine firmware starts and `/dev/accel/accel0` appears. A test program gives bit-exact results over 1000 runs, and an image classification network gives the expected top result 16 of 16 times at about 0.9 ms per run | [linux#2630](https://github.com/aurora-silicon/linux/pull/2630) (open) |
 | Touch ID | Partial | Secure Enclave up; no fingerprint test on 27.2 yet | |
@@ -128,7 +128,9 @@ close them:
    with [linux#2676](https://github.com/aurora-silicon/linux/pull/2676) (draft) and
    [aura#379](https://github.com/aurora-silicon/aura/pull/379) (open); the M3 Air's GPU
    firmware starts but runs no work yet.
-3. **External displays.** No picture yet on either Mac.
+3. **External displays.** The M4 Air drives a USB-C monitor on a test kernel
+   ([linux#2673](https://github.com/aurora-silicon/linux/pull/2673), open); no picture
+   yet on the M3 Air.
 4. **Speakers.** Locked on both Macs until speaker protection (speakerguardd v2)
    is qualified for each model. Headphones and microphones are unaffected.
 5. **Sleep on the M4 Air.** Not enabled yet. The M3 Air suspends to idle and wakes.
