@@ -37,8 +37,8 @@ when you install.
   internal display with brightness, keyboard, trackpad, camera, microphones,
   sensors, Thunderbolt networking, battery and hardware video decode all work,
   and the GPU, the Neural Engine, video encode and an external monitor over USB-C
-  work with open pull requests. Suspend to idle works, and deep sleep works on a
-  test kernel.
+  work with open pull requests. Suspend to idle and deep sleep work on a test
+  kernel.
 
 Several of these results need pull requests that are still open. They work on our
 test kernels and will reach an installed system once those pull requests merge and
@@ -71,7 +71,7 @@ are not in a published package yet.
 | Hardware scaler | Works, open PR | NV12 and P010 to ARGB in BT.601, 709 and 2020 | [linux#2429](https://github.com/aurora-silicon/linux/pull/2429) (draft) |
 | Camera | Works, open PR | "FaceTime HD Camera" in PipeWire, 1920x1080 at 30 frames/s. On the default boot (21 November): all 26 camera modes at their exact frame rate, 10 of 10 restarts, works in GStreamer, PipeWire and Firefox, and keeps streaming through suspend to idle (900 of 900 frames) | [linux#2670](https://github.com/aurora-silicon/linux/pull/2670) (open), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (merged, next aura release) |
 | Microphones | Works, open PR | Default PipeWire source in GNOME | [linux#2569](https://github.com/aurora-silicon/linux/pull/2569) (open), [aura#377](https://github.com/aurora-silicon/aura/pull/377) (merged, next aura release) |
-| Light and lid sensors | Works (next release) | Ambient light and lid angle read | [aura#377](https://github.com/aurora-silicon/aura/pull/377) (merged, next aura release) |
+| Light and lid sensors | Works, open PR | Ambient light and lid angle read | [linux#2569](https://github.com/aurora-silicon/linux/pull/2569) (open), [aura#377](https://github.com/aurora-silicon/aura/pull/377) (merged, next aura release) |
 | Speakers | Not yet | Speaker sense now reads correctly. Quiet test playback under speakerguardd v2 protection works in the lab (no limiting needed, no amplifier faults); speakers stay locked in an install until v2 is qualified on this Mac | [linux#2589](https://github.com/aurora-silicon/linux/pull/2589) (merged), [speakerguardd#225](https://github.com/aurora-silicon/speakerguardd/pull/225) (merged), [speakerguardd#226](https://github.com/aurora-silicon/speakerguardd/pull/226) (merged) |
 | Headphone jack | Partial | Jack detected; playback not tested | |
 | Battery and charging | Works | Charge, health, cycles and charge limits | |
@@ -103,14 +103,14 @@ are not in a published package yet.
 | Hardware video decode | Works (next release) | H.264, HEVC, VP9 and AV1, bit-exact; 1080p at 750, 1500, 545 and 789 frames/s (median of about 22 runs on 21 November) | [linux#1487](https://github.com/aurora-silicon/linux/pull/1487), [linux#1488](https://github.com/aurora-silicon/linux/pull/1488), [linux#2555](https://github.com/aurora-silicon/linux/pull/2555) (merged) |
 | JPEG encode | Works | 1080p at 732 frames/s, output identical to our reference | |
 | Camera | Works | Front camera, 1080p at 30 frames/s, five frame sizes | [aura#309](https://github.com/aurora-silicon/aura/pull/309), [aura#397](https://github.com/aurora-silicon/aura/pull/397) (merged) |
-| Microphones | Partial | Three capture devices record | |
+| Microphones | Works | On our test kernel (22 November), all three microphones record (silent room: noise floor about -69 dBFS on each) | |
 | Sensors | Works | Ambient light, light temperature, lid angle, accelerometer, gyroscope, device motion | |
 | Speakers | Not yet | Speakers stay at a safe locked level: the speakerguardd v2 upgrade check refuses to unlock them until every protection type this model needs is supported | [speakerguardd#225](https://github.com/aurora-silicon/speakerguardd/pull/225) (merged) |
 | Headphone jack | Partial | Jack detected; playback not tested on 27.2 | |
 | Battery and charging | Works | 7.5 W idle drain with the screen off (about 6.5 hours) | |
 | Thermals | Works | 30 minutes of full load without a fan, chip at 92 to 94 °C, no throttling | |
 | GPU | Works, open PR | Works on our test kernel (21 November): the Vulkan conformance smoke list passes 6125 tests with 0 failures and no firmware crashes, OpenGL and Vulkan benchmarks ran on the desktop for 21 minutes without a stall, and 3 of 3 reboots come up with the GPU ready. Until the pull requests merge and ship, an installed system renders in software | [linux#2676](https://github.com/aurora-silicon/linux/pull/2676) (draft), [aura#379](https://github.com/aurora-silicon/aura/pull/379) (merged, next aura release) |
-| Sleep | Partial | Suspend to idle works on our current kernel (22 November): 3 of 3 timer wakes with the external monitor and Wi-Fi back, and a camera stream kept running across it. Deep sleep works on a test kernel (21 November): 10 of 10 sleep and wake cycles by timer, with Wi-Fi, storage, USB and the display back after each wake (Wi-Fi in about 4 s). Not combined with the external display support yet: with both, the first deep sleep hung, so the external display processors still need to be stopped for sleep | [linux#2660](https://github.com/aurora-silicon/linux/pull/2660), [linux#2691](https://github.com/aurora-silicon/linux/pull/2691), [linux#2662](https://github.com/aurora-silicon/linux/pull/2662), [linux#2692](https://github.com/aurora-silicon/linux/pull/2692) (open) |
+| Sleep | Partial | On our test kernel (22 November): suspend to idle wakes 3 of 3 by timer with the external monitor and Wi-Fi back, and keeps a camera stream running across it. Deep sleep wakes 10 of 10 by timer with Wi-Fi, storage, USB and the display back (Wi-Fi in about 4 s); with the external monitor attached it wakes 3 of 3, but the GPU does not come back after a deep wake yet | [linux#2700](https://github.com/aurora-silicon/linux/pull/2700), [linux#2660](https://github.com/aurora-silicon/linux/pull/2660), [linux#2691](https://github.com/aurora-silicon/linux/pull/2691), [linux#2662](https://github.com/aurora-silicon/linux/pull/2662), [linux#2692](https://github.com/aurora-silicon/linux/pull/2692), [linux#2721](https://github.com/aurora-silicon/linux/pull/2721) (open), [linux#2673](https://github.com/aurora-silicon/linux/pull/2673) (draft) |
 | External display | Works, open PR | On a test kernel (21 November) a 2560x1440 USB-C monitor connects at boot with no replugging, its EDID is read and GNOME extends the desktop onto it at 2560x1440 at 280 Hz, and replugging works; the internal display is unaffected, and the picture on the monitor was confirmed by eye | [linux#2673](https://github.com/aurora-silicon/linux/pull/2673) (draft), [linux#2596](https://github.com/aurora-silicon/linux/pull/2596), [linux#2526](https://github.com/aurora-silicon/linux/pull/2526) (open) |
 | Video encode | Works, open PR | H.264 and HEVC hardware encode (21 November): 1080p at 242 (H.264) and 217 (HEVC) frames/s, equal to or faster than the M4 Pro MacBook Pro; 8 of 8 test streams encode, 6 of them byte-identical to the M4 Pro's output and the rest the same quality. 4K and short streams (B-frames, odd sizes) run at about half to nine-tenths of the M4 Pro's speed | [linux#2675](https://github.com/aurora-silicon/linux/pull/2675) (open) |
 | Neural Engine | Works, open PR | The Neural Engine firmware starts and `/dev/accel/accel0` appears. A test program gives bit-exact results over 1000 runs, and an image classification network gives the expected top result 16 of 16 times at about 0.9 ms per run | [linux#2630](https://github.com/aurora-silicon/linux/pull/2630) (open) |
@@ -135,9 +135,9 @@ close them:
    yet on the M3 Air.
 4. **Speakers.** Locked on both Macs until speaker protection (speakerguardd v2)
    is qualified for each model. Headphones and microphones are unaffected.
-5. **Sleep on the M4 Air.** Suspend to idle works (3 of 3); deep sleep works on a
-   test kernel (10 of 10), and its fixes are still in review. The M3 Air suspends
-   to idle and wakes.
+5. **Sleep on the M4 Air.** Suspend to idle (3 of 3) and deep sleep (10 of 10) work
+   on a test kernel; the fixes are still in review, and the GPU does not come back
+   after a deep wake yet. The M3 Air suspends to idle and wakes.
 6. **Video encode and the Neural Engine.** Video encode works on the M3 Air with
    [linux#2644](https://github.com/aurora-silicon/linux/pull/2644) and
    [aura#420](https://github.com/aurora-silicon/aura/pull/420) (both merged, next
