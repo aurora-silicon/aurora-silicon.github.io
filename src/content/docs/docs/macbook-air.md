@@ -41,9 +41,9 @@ when you install.
 Several of these results need pull requests that are still open. They work on our
 test kernels and will reach an installed system once those pull requests merge and
 ship in a release. The tables below say which. On the M3 Air's current default boot
-(the distribution's kernel), the internal display driver, camera and light and lid
-sensors are not active yet; the desktop, keyboard, Wi-Fi, storage and video
-decode work there.
+(our shared fleet kernel, no extra options), the desktop, keyboard, Wi-Fi, storage,
+video decode and suspend to idle work; the internal display driver, camera and
+light and lid sensors are not active there yet.
 
 **Status key:** *Works* = proven on the Mac with the numbers shown. *Partial* = works
 with a stated limit. *Not yet* = does not work today. *Open PR* = the result needs a
