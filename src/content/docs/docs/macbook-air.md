@@ -95,7 +95,7 @@ are not in a published package yet.
 | Bluetooth | Partial | Bluetooth LE keyboard (21 November): 3 of 5 runs paired in 6.5 to 7.4 s and delivered every key press, also under Wi-Fi load; one pairing failed authentication and one paired but no keyboard device appeared. A 15 s scan finds 31 devices | |
 | Internal storage | Works | 1 GiB copy at 1030 to 1080 MB/s, cold read 2090 to 2500 MB/s (21 November runs) | |
 | Keyboard | Works | Keys register in the desktop | |
-| Trackpad | Works | Touch, move and click register; two-finger scroll not tested yet | |
+| Trackpad | Works | Tested by hand (21 November): touch, move, click and two-finger contact register across the whole surface. Gestures such as two-finger scrolling were not checked one by one | |
 | Keyboard backlight | Partial | Brightness control present (0 to 255); not checked by eye | |
 | USB-C | Works (next release) | Host mode (USB 2 hub, keyboard and mouse through a monitor's hub); device mode at 280 to 332 Mbit/s | [aura#399](https://github.com/aurora-silicon/aura/pull/399) (merged) |
 | Thunderbolt / USB4 | Works | Host-to-host networking with an M4 Pro MacBook Pro at about 20 Gbit/s | |
@@ -110,7 +110,7 @@ are not in a published package yet.
 | Thermals | Works | 30 minutes of full load without a fan, chip at 92 to 94 °C, no throttling | |
 | GPU | Partial | First runs on a test kernel with driver changes still in progress (21 November): Vulkan reports an Apple M4 GPU, smoke and compute tests pass 9 of 9, and 10 of 10 idle-to-wake cycles run without a firmware fault. Not in a pull request yet; the desktop still renders in software | |
 | Sleep | Not yet | | |
-| External display | Not yet | DisplayPort alt mode is negotiated with a USB-C monitor, but the port's DisplayPort path is not switched on yet | |
+| External display | Not yet | DisplayPort alt mode is negotiated with a USB-C monitor. On a test kernel both external display processors start and a port is routed to the monitor, but the connection is not reported yet, so there is no picture | |
 | Video encode | Works, open PR | H.264 and HEVC hardware encode (21 November): 1080p at 242 (H.264) and 217 (HEVC) frames/s, equal to or faster than the M4 Pro MacBook Pro; 8 of 8 test streams encode, 6 of them byte-identical to the M4 Pro's output and the rest the same quality. 4K and short streams (B-frames, odd sizes) run at about half to nine-tenths of the M4 Pro's speed | [linux#2668](https://github.com/aurora-silicon/linux/pull/2668) (open) |
 | Neural Engine | Works, open PR | The Neural Engine firmware starts and `/dev/accel/accel0` appears. A test program gives bit-exact results over 1000 runs, and an image classification network gives the expected top result 16 of 16 times at about 0.9 ms per run | [linux#2630](https://github.com/aurora-silicon/linux/pull/2630) (open) |
 | Touch ID | Partial | Secure Enclave up; no fingerprint test on 27.2 yet | |
