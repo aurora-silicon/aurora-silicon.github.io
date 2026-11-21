@@ -65,8 +65,8 @@ pull request that has not merged.
 | USB-C | Partial | Device (gadget) mode works at high speed; host mode with a real device not tested yet | [aura#399](https://github.com/aurora-silicon/aura/pull/399) (open) |
 | Hardware video decode | Works, open PR | H.264, HEVC, VP9 and AV1, bit-exact against software decode; 1080p at 370, 625, 429 and 448 frames/s (median of about 25 runs on 21 November) | [linux#2586](https://github.com/aurora-silicon/linux/pull/2586) (open), [avd-fw#8](https://github.com/aurora-silicon/avd-fw/pull/8) (merged) |
 | JPEG encode | Works | 1080p at 612 frames/s, output identical to our reference | |
-| Hardware scaler | Works, open PR | NV12 and P010 to ARGB in BT.601, 709 and 2020 | [linux#2429](https://github.com/aurora-silicon/linux/pull/2429) (open) |
-| Camera | Works, open PR | "FaceTime HD Camera" in PipeWire, 1920x1080 at 30 frames/s | [linux#2570](https://github.com/aurora-silicon/linux/pull/2570), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (open) |
+| Hardware scaler | Works, open PR | NV12 and P010 to ARGB in BT.601, 709 and 2020 | [linux#2429](https://github.com/aurora-silicon/linux/pull/2429) (draft) |
+| Camera | Works, open PR | "FaceTime HD Camera" in PipeWire, 1920x1080 at 30 frames/s | [linux#2570](https://github.com/aurora-silicon/linux/pull/2570) (draft), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (open) |
 | Microphones | Works, open PR | Default PipeWire source in GNOME | [linux#2569](https://github.com/aurora-silicon/linux/pull/2569), [aura#377](https://github.com/aurora-silicon/aura/pull/377) (open) |
 | Light and lid sensors | Works, open PR | Ambient light and lid angle read | [aura#377](https://github.com/aurora-silicon/aura/pull/377) (open) |
 | Speakers | Not yet | Speaker sense now reads correctly. Quiet test playback under speakerguardd v2 protection works in the lab (no limiting needed, no amplifier faults); speakers stay locked in an install until v2 is qualified on this Mac | [linux#2589](https://github.com/aurora-silicon/linux/pull/2589) (merged), [speakerguardd#225](https://github.com/aurora-silicon/speakerguardd/pull/225) (merged), [speakerguardd#226](https://github.com/aurora-silicon/speakerguardd/pull/226) (merged) |
@@ -86,7 +86,7 @@ pull request that has not merged.
 | Feature | Status | Result | Pull requests |
 | --- | --- | --- | --- |
 | Boot, all CPU cores, cpufreq | Works | All 10 cores; 30 minutes of full load at 3.91 GHz (performance) and 2.79 GHz (efficiency) with no throttling | |
-| Warm reboots | Works, open PR | Storage comes back on warm reboots (5 of 5 on the newest boot chain). About 1 start in 7 from power-off failed in earlier tests; with aura#401 the Mac recovers from that by itself with one reboot | [aura#305](https://github.com/aurora-silicon/aura/pull/305) (merged), [aura#401](https://github.com/aurora-silicon/aura/pull/401) (open) |
+| Warm reboots | Works, open PR | Storage comes back on warm reboots (5 of 5 on the newest boot chain). About 1 start in 7 from power-off failed in earlier tests; aura#401 (open) adds a bounded self-reboot for a one-off failure | [aura#305](https://github.com/aurora-silicon/aura/pull/305) (merged), [aura#401](https://github.com/aurora-silicon/aura/pull/401) (open) |
 | GNOME desktop and Firefox | Works | GNOME on Wayland, Firefox loads a page, 0 failed services in all 23 complete runs since 20 November | |
 | Internal display | Works, open PR | 2560x1600 at 60 Hz on the display driver, frame pacing 60.001 Hz, brightness 0 to 500 nits. Without the PR the desktop runs on a basic framebuffer | [linux#2590](https://github.com/aurora-silicon/linux/pull/2590) (open, on [linux#2541](https://github.com/aurora-silicon/linux/pull/2541), draft), [linux#2578](https://github.com/aurora-silicon/linux/pull/2578) (merged) |
 | Wi-Fi | Works | 5 GHz; over ssh typically 245 to 275 Mbit/s up and 170 to 235 Mbit/s down (21 November runs) | |

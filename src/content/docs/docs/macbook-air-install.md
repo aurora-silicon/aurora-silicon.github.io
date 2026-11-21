@@ -86,8 +86,9 @@ are not changed by any of this.
   stopped before Linux.
   [aura#305](https://github.com/aurora-silicon/aura/pull/305) fixes this and has
   merged, but it is not in a tagged aura release yet. A rarer failure when the
-  storage starts from power-off (about 1 start in 7 in our tests) is handled by
-  [aura#401](https://github.com/aurora-silicon/aura/pull/401), still open. If the Mac
+  storage starts from power-off (about 1 start in 7 in our tests) is not handled
+  yet; [aura#401](https://github.com/aurora-silicon/aura/pull/401) (open) adds a
+  bounded self-reboot for a one-off failure. If the Mac
   stops before Linux, hold the power button to shut down and start it again.
 - **No GPU acceleration on 27.2.** On 27.2 both Macs render the desktop in software.
   See [Known gaps](/docs/macbook-air/#known-gaps).
