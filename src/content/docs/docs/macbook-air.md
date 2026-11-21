@@ -35,9 +35,9 @@ when you install.
   yet.
 - **13-inch M4 Air (J713):** desktop, browser, Wi-Fi, Bluetooth, storage,
   internal display with brightness, keyboard, trackpad, camera, microphones,
-  sensors, Thunderbolt networking, battery and hardware video decode all work.
-  The GPU, sleep, external displays, video encode and the Neural Engine do not
-  work yet.
+  sensors, Thunderbolt networking, battery and hardware video decode all work,
+  and the Neural Engine runs on a test kernel. The GPU, sleep, external displays
+  and video encode do not work yet.
 
 Several of these results need pull requests that are still open. They work on our
 test kernels and will reach an installed system once those pull requests merge and
@@ -111,7 +111,7 @@ pull request that has not merged.
 | Sleep | Not yet | | |
 | External display | Not yet | DisplayPort alt mode is negotiated with a USB-C monitor, but the port's DisplayPort path is not switched on yet | |
 | Video encode | Not yet | | |
-| Neural Engine | Not yet | | |
+| Neural Engine | Works, open PR | The Neural Engine firmware starts and `/dev/accel/accel0` appears. A test program gives bit-exact results over 1000 runs, and an image classification network gives the expected top result 16 of 16 times at about 0.9 ms per run | [linux#2630](https://github.com/aurora-silicon/linux/pull/2630) (open) |
 | Touch ID | Partial | Secure Enclave up; no fingerprint test on 27.2 yet | |
 
 ## Known gaps
@@ -129,7 +129,10 @@ close them:
 4. **Speakers.** Locked on both Macs until speaker protection (speakerguardd v2)
    is qualified for each model. Headphones and microphones are unaffected.
 5. **Sleep on the M4 Air.** Not enabled yet. The M3 Air suspends to idle and wakes.
-6. **Video encode and the Neural Engine.** Not started on 27.2.
+6. **Video encode and the Neural Engine.** Video encode does not work on 27.2 yet.
+   The Neural Engine works on the M4 Air with
+   [linux#2630](https://github.com/aurora-silicon/linux/pull/2630) (open); the M3 Air
+   is not done yet.
 
 ## Reporting results
 
