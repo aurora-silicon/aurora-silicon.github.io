@@ -47,8 +47,8 @@ light and lid sensors are not active there yet.
 
 **Status key:** *Works* = proven on the Mac with the numbers shown. *Partial* = works
 with a stated limit. *Not yet* = does not work today. *Open PR* = the result needs a
-pull request that has not merged. *Next kernel release* = the pull requests have
-merged but are not in a published package yet.
+pull request that has not merged. *Next release* = the pull requests have merged but
+are not in a published package yet.
 
 ## 15-inch M3 MacBook Air (J615)
 
@@ -63,8 +63,8 @@ merged but are not in a published package yet.
 | Keyboard | Works, open PR | Keys register in the desktop. On the current distribution kernel the keyboard appears about 20 seconds after boot (fixed by linux#2525). The Do Not Disturb key no longer suspends the Mac and the Mission Control key opens the GNOME overview ([linux#2624](https://github.com/aurora-silicon/linux/pull/2624), [fedora-aurora#465](https://github.com/aurora-silicon/fedora-aurora/pull/465), merged) | [linux#2525](https://github.com/aurora-silicon/linux/pull/2525), [u-boot#67](https://github.com/aurora-silicon/u-boot/pull/67) (merged), [linux#2576](https://github.com/aurora-silicon/linux/pull/2576) (open) |
 | Trackpad | Partial | Driver ready and reports the full trackpad (16 touches, pressure, haptic click); not yet tested by hand | [linux#2576](https://github.com/aurora-silicon/linux/pull/2576) (open) |
 | Keyboard backlight | Works | Brightness 0 to 255 | |
-| USB-C | Partial | Device (gadget) mode works at high speed; host mode with a real device not tested yet | [aura#399](https://github.com/aurora-silicon/aura/pull/399) (open) |
-| Hardware video decode | Works (next kernel release) | H.264, HEVC, VP9 and AV1, bit-exact against software decode; 1080p at 370, 625, 429 and 448 frames/s (median of about 25 runs on 21 November) | [linux#2586](https://github.com/aurora-silicon/linux/pull/2586), [avd-fw#8](https://github.com/aurora-silicon/avd-fw/pull/8) (merged); reaches an install with the next kernel package and [fedora-aurora#467](https://github.com/aurora-silicon/fedora-aurora/pull/467) (open) |
+| USB-C | Partial | Device (gadget) mode works at high speed; host mode with a real device not tested yet | [aura#399](https://github.com/aurora-silicon/aura/pull/399) (merged) |
+| Hardware video decode | Works (next release) | H.264, HEVC, VP9 and AV1, bit-exact against software decode; 1080p at 370, 625, 429 and 448 frames/s (median of about 25 runs on 21 November) | [linux#2586](https://github.com/aurora-silicon/linux/pull/2586), [avd-fw#8](https://github.com/aurora-silicon/avd-fw/pull/8) (merged); reaches an install with the next kernel package and [fedora-aurora#467](https://github.com/aurora-silicon/fedora-aurora/pull/467) (open) |
 | JPEG encode | Works | 1080p at 612 frames/s, output identical to our reference | |
 | Hardware scaler | Works, open PR | NV12 and P010 to ARGB in BT.601, 709 and 2020 | [linux#2429](https://github.com/aurora-silicon/linux/pull/2429) (draft) |
 | Camera | Works, open PR | "FaceTime HD Camera" in PipeWire, 1920x1080 at 30 frames/s | [linux#2570](https://github.com/aurora-silicon/linux/pull/2570) (draft), [aura#227](https://github.com/aurora-silicon/aura/pull/227) (open) |
@@ -96,7 +96,7 @@ merged but are not in a published package yet.
 | Keyboard | Works | Keys register in the desktop | |
 | Trackpad | Works | Touch, move and click register; two-finger scroll not tested yet | |
 | Keyboard backlight | Partial | Brightness control present (0 to 255); not checked by eye | |
-| USB-C | Works, open PR | Host mode (USB 2 hub, keyboard and mouse through a monitor's hub); device mode at 280 to 332 Mbit/s | [aura#399](https://github.com/aurora-silicon/aura/pull/399) (open) |
+| USB-C | Works (next release) | Host mode (USB 2 hub, keyboard and mouse through a monitor's hub); device mode at 280 to 332 Mbit/s | [aura#399](https://github.com/aurora-silicon/aura/pull/399) (merged) |
 | Thunderbolt / USB4 | Works | Host-to-host networking with an M4 Pro MacBook Pro at about 20 Gbit/s | |
 | Hardware video decode | Works, open PR | H.264, HEVC, VP9 and AV1, bit-exact; 1080p at 750, 1500, 545 and 789 frames/s (median of about 22 runs on 21 November) | [linux#1487](https://github.com/aurora-silicon/linux/pull/1487), [linux#1488](https://github.com/aurora-silicon/linux/pull/1488) (merged), [linux#2555](https://github.com/aurora-silicon/linux/pull/2555) (open) |
 | JPEG encode | Works | 1080p at 732 frames/s, output identical to our reference | |
