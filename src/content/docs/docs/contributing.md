@@ -39,9 +39,6 @@ installer, speakerguardd and the distributions.
 - **No delays or magic numbers as fixes.** Timeouts and retries that a protocol or
   the hardware defines are fine. A sleep, retry count or queue depth chosen only
   because the failure stopped is not a fix; find the cause.
-- **Commits carry your identity only.** If an LLM helped, end the pull request
-  description with `Assisted-by: LLM (<Vendor>:<Model>)`; do not add AI trailers
-  to commits.
 - **Speakers stay protected.** Speaker work goes through
   [speakerguardd](https://github.com/aurora-silicon/speakerguardd). Never disable
   speaker protection or raise its limits, and do not test speakers without it.
@@ -52,6 +49,6 @@ A pull request that does not meet these yet can stay open as a draft.
 
 Explain the problem, the change or observation, and how you verified it. Make limitations explicit. Follow the repository’s issue or pull request template where one exists.
 
-If generative AI contributed to a submission, disclose that involvement in the pull request, as required by the project policies: end its description with `Assisted-by: LLM (<Vendor>:<Model>)`. Commits carry your identity only, with no AI co-author or similar trailers. You remain responsible for the submitted content.
+If generative AI contributed to a submission, disclose that involvement clearly in the associated commit, as required by the project policies. You remain responsible for the submitted content.
 
 Keep project-derived findings, patches, and related technical discussion within Aurora-controlled spaces. Do not send them to upstream projects.
