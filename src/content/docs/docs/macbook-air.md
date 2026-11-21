@@ -30,8 +30,9 @@ when you install.
 
 - **15-inch M3 Air (J615):** desktop, browser, Wi-Fi, Bluetooth, storage,
   internal display with brightness, keyboard, trackpad, camera, microphones, sensors,
-  battery, hardware video decode, video encode and suspend to idle all work.
-  The GPU, Thunderbolt, external displays and the Neural Engine do not work yet.
+  battery, hardware video decode, video encode and suspend to idle all work, and a
+  Thunderbolt link comes up. The GPU, external displays and the Neural Engine do
+  not work yet.
 - **13-inch M4 Air (J713):** desktop, browser, Wi-Fi, Bluetooth, storage,
   internal display with brightness, keyboard, trackpad, camera, microphones,
   sensors, Thunderbolt networking, battery and hardware video decode all work,
@@ -78,7 +79,7 @@ are not in a published package yet.
 | Suspend to idle | Works | 13 of 13 wakes by timer, wake by Wi-Fi packet, suspend from the desktop | [linux#2562](https://github.com/aurora-silicon/linux/pull/2562), [linux#2581](https://github.com/aurora-silicon/linux/pull/2581) (merged) |
 | GPU | Not yet | The GPU firmware now starts from Linux, but the GPU does not run work on 27.2 yet; the desktop renders in software | |
 | External display | Not yet | The external display processor starts, but no picture yet | [linux#2584](https://github.com/aurora-silicon/linux/pull/2584) (open) |
-| Thunderbolt / USB4 | Not yet | The Thunderbolt controllers start on a test kernel; no link tested yet, because the only cable on hand is USB 2 | |
+| Thunderbolt / USB4 | Partial | On the default boot (21 November), a USB4 link to an M1 Pro MacBook Pro comes up at 20 Gbit/s (two 10 Gbit/s lanes) with Thunderbolt networking, and survives suspend to idle and reboots. Throughput not measured yet | |
 | Video encode | Works, open PR | H.264 and HEVC hardware encode: 1080p at 124 to 155 frames/s and 4K at 39 to 41 frames/s, with picture quality matching the M4 Pro MacBook Pro within 0.03 dB | [linux#2644](https://github.com/aurora-silicon/linux/pull/2644) (merged), [aura#420](https://github.com/aurora-silicon/aura/pull/420) (open) |
 | Neural Engine | Not yet | | |
 | Deep sleep | Not yet | | |
