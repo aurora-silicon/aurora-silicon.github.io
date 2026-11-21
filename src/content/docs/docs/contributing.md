@@ -20,6 +20,6 @@ Read the [policies and guidelines](/docs/policies/) first, then the README, cont
 
 Explain the problem, the change or observation, and how you verified it. Make limitations explicit. Follow the repository’s issue or pull request template where one exists.
 
-If generative AI contributed to a submission, disclose that involvement clearly in the associated commit, as required by the project policies. You remain responsible for the submitted content.
+If generative AI contributed to a submission, disclose that involvement in the pull request, as required by the project policies: end its description with `Assisted-by: LLM (<Vendor>:<Model>)`. Commits carry your identity only, with no AI co-author or similar trailers. You remain responsible for the submitted content.
 
 Keep project-derived findings, patches, and related technical discussion within Aurora-controlled spaces. Do not send them to upstream projects.
