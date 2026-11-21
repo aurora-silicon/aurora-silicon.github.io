@@ -30,9 +30,9 @@ when you install.
 
 - **15-inch M3 Air (J615):** desktop, browser, Wi-Fi, Bluetooth, storage,
   internal display with brightness, keyboard, camera, microphones, sensors,
-  battery, hardware video decode and suspend to idle all work. The GPU,
-  Thunderbolt, external displays, video encode and the Neural Engine do not work
-  yet.
+  battery, hardware video decode and suspend to idle all work, and video encode
+  runs on a test kernel. The GPU, Thunderbolt, external displays and the Neural
+  Engine do not work yet.
 - **13-inch M4 Air (J713):** desktop, browser, Wi-Fi, Bluetooth, storage,
   internal display with brightness, keyboard, trackpad, camera, microphones,
   sensors, Thunderbolt networking, battery and hardware video decode all work,
@@ -78,7 +78,7 @@ pull request that has not merged.
 | GPU | Not yet | The GPU does not start on 27.2 yet; the desktop renders in software | |
 | External display | Not yet | The external display processor starts, but no picture yet | [linux#2584](https://github.com/aurora-silicon/linux/pull/2584) (open) |
 | Thunderbolt / USB4 | Not yet | The Thunderbolt controllers start on a test kernel; no link tested yet, because the only cable on hand is USB 2 | |
-| Video encode | Not yet | | |
+| Video encode | Partial | H.264 and HEVC hardware encode work on a test kernel: 1080p at about 140 frames/s and 4K at about 37 frames/s, with picture quality matching the M4 Pro MacBook Pro within 0.03 dB. The code for this Mac is not in a pull request yet | [linux#2362](https://github.com/aurora-silicon/linux/pull/2362), [aura#334](https://github.com/aurora-silicon/aura/pull/334), [aura#354](https://github.com/aurora-silicon/aura/pull/354) (drafts) |
 | Neural Engine | Not yet | | |
 | Deep sleep | Not yet | | |
 
@@ -129,7 +129,8 @@ close them:
 4. **Speakers.** Locked on both Macs until speaker protection (speakerguardd v2)
    is qualified for each model. Headphones and microphones are unaffected.
 5. **Sleep on the M4 Air.** Not enabled yet. The M3 Air suspends to idle and wakes.
-6. **Video encode and the Neural Engine.** Video encode does not work on 27.2 yet.
+6. **Video encode and the Neural Engine.** Video encode runs on a test kernel on the
+   M3 Air and does not work on the M4 Air yet.
    The Neural Engine works on the M4 Air with
    [linux#2630](https://github.com/aurora-silicon/linux/pull/2630) (open); the M3 Air
    is not done yet.
