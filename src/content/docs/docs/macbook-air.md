@@ -79,7 +79,7 @@ are not in a published package yet.
 | GPU | Not yet | The GPU firmware now starts from Linux, but the GPU does not run work on 27.2 yet; the desktop renders in software | |
 | External display | Not yet | The external display processor starts, but no picture yet | [linux#2704](https://github.com/aurora-silicon/linux/pull/2704) (open) |
 | Thunderbolt / USB4 | Partial | On the default boot (21 November), a USB4 link to an M1 Pro MacBook Pro comes up at 20 Gbit/s (two 10 Gbit/s lanes) with Thunderbolt networking, and survives suspend to idle and reboots. Throughput not measured yet | |
-| Video encode | Works, open PR | H.264 and HEVC hardware encode: 1080p at 124 to 155 frames/s and 4K at 39 to 41 frames/s, with picture quality matching the M4 Pro MacBook Pro within 0.03 dB | [linux#2644](https://github.com/aurora-silicon/linux/pull/2644) (merged), [aura#420](https://github.com/aurora-silicon/aura/pull/420) (open) |
+| Video encode | Works (next release) | H.264 and HEVC hardware encode: 1080p at 124 to 155 frames/s and 4K at 39 to 41 frames/s, with picture quality matching the M4 Pro MacBook Pro within 0.03 dB | [linux#2644](https://github.com/aurora-silicon/linux/pull/2644), [aura#420](https://github.com/aurora-silicon/aura/pull/420) (merged, next aura release) |
 | Neural Engine | Not yet | | |
 | Deep sleep | Not yet | | |
 
@@ -137,8 +137,9 @@ close them:
 5. **Sleep on the M4 Air.** Deep sleep works on a test kernel (10 of 10); the fixes
    are still in review. The M3 Air suspends to idle and wakes.
 6. **Video encode and the Neural Engine.** Video encode works on the M3 Air with
-   [linux#2644](https://github.com/aurora-silicon/linux/pull/2644) (merged) and
-   [aura#420](https://github.com/aurora-silicon/aura/pull/420) (open), and on the M4 Air
+   [linux#2644](https://github.com/aurora-silicon/linux/pull/2644) and
+   [aura#420](https://github.com/aurora-silicon/aura/pull/420) (both merged, next
+   release), and on the M4 Air
    with [linux#2675](https://github.com/aurora-silicon/linux/pull/2675) (open).
    The Neural Engine works on the M4 Air with
    [linux#2630](https://github.com/aurora-silicon/linux/pull/2630) (open); the M3 Air
