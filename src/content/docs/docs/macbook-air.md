@@ -77,7 +77,7 @@ pull request that has not merged.
 | Suspend to idle | Works | 13 of 13 wakes by timer, wake by Wi-Fi packet, suspend from the desktop | [linux#2562](https://github.com/aurora-silicon/linux/pull/2562), [linux#2581](https://github.com/aurora-silicon/linux/pull/2581) (merged) |
 | GPU | Not yet | The 27.2 GPU firmware now starts from Linux and runs to its start banner, then stops at the same point every time; the desktop renders in software | |
 | External display | Not yet | The external display processor starts, but no picture yet | [linux#2584](https://github.com/aurora-silicon/linux/pull/2584) (open) |
-| Thunderbolt / USB4 | Not yet | | |
+| Thunderbolt / USB4 | Not yet | The Thunderbolt controllers start on a test kernel; no link tested yet, because the only cable on hand is USB 2 | |
 | Video encode | Not yet | | |
 | Neural Engine | Not yet | | |
 | Deep sleep | Not yet | | |
