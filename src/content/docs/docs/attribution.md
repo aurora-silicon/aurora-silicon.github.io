@@ -24,7 +24,7 @@ Aurora’s graphics drivers build on [Mesa](https://mesa3d.org), the open source
 [Omarchy](https://omarchy.org) is Aurora’s flagship distribution for Apple Silicon. The Omarchy and Aurora teams worked together on the Mac experience.
 
 - [Omacom](https://github.com/omacom)
-- [Omarchy Mac](https://github.com/aurora-silicon/omarchy-mac)
+- [Omarchy Mac installer](https://github.com/omacom/omarchy-mac-installer)
 
 ## MacBook Neo foundations
 
