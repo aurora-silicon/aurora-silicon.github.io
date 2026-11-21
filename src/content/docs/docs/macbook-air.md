@@ -29,7 +29,7 @@ when you install.
 ## Summary
 
 - **15-inch M3 Air (J615):** desktop, browser, Wi-Fi, Bluetooth, storage,
-  internal display with brightness, keyboard, camera, microphones, sensors,
+  internal display with brightness, keyboard, trackpad, camera, microphones, sensors,
   battery, hardware video decode, video encode and suspend to idle all work.
   The GPU, Thunderbolt, external displays and the Neural Engine do not work yet.
 - **13-inch M4 Air (J713):** desktop, browser, Wi-Fi, Bluetooth, storage,
@@ -42,9 +42,9 @@ when you install.
 Several of these results need pull requests that are still open. They work on our
 test kernels and will reach an installed system once those pull requests merge and
 ship in a release. The tables below say which. On the M3 Air's current default boot
-(our shared fleet kernel, no extra options), the desktop, keyboard, Wi-Fi, storage,
-video decode and suspend to idle (3 of 3 timer wakes) work; the internal display driver, camera and
-light and lid sensors are not active there yet.
+(our shared fleet kernel, no extra options), the desktop, keyboard, trackpad, Wi-Fi,
+storage, video decode and suspend to idle (3 of 3 timer wakes) work; the internal
+display driver, camera and light and lid sensors are not active there yet.
 
 **Status key:** *Works* = proven on the Mac with the numbers shown. *Partial* = works
 with a stated limit. *Not yet* = does not work today. *Open PR* = the result needs a
