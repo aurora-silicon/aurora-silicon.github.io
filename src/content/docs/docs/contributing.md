@@ -49,6 +49,6 @@ A pull request that does not meet these yet can stay open as a draft.
 
 Explain the problem, the change or observation, and how you verified it. Make limitations explicit. Follow the repository’s issue or pull request template where one exists.
 
-If generative AI contributed to a submission, disclose that involvement clearly in the associated commit, as required by the project policies. You remain responsible for the submitted content.
+If generative AI contributed to a submission, disclose that involvement in the pull request, as required by the project policies: end its description with a plain `Assisted-by:` line naming the model or tool, for example `Assisted-by: LLM (Claude:Opus 5.5)`. Commits carry your identity only, with no AI co-author or similar trailers. You remain responsible for the submitted content.
 
 Keep project-derived findings, patches, and related technical discussion within Aurora-controlled spaces. Do not send them to upstream projects.
