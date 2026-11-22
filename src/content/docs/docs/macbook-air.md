@@ -11,7 +11,7 @@ This page covers two Macs that the Aurora team has been bringing up in its lab s
 | MacBook Air 15-inch, M3, 2024 | J615 | M3 (T8122) |
 | MacBook Air 13-inch, M4, 2025 | J713 | M4 (T8132) |
 
-Last updated 21 November 2026. The results come from our own runs on these two
+Last updated 22 November 2026. The results come from our own runs on these two
 Macs. The same Linux user-path check (desktop, browser, Wi-Fi, file copy, video
 decode, JPEG encode, sound cards, sensors, battery, failed services) runs on them
 every two hours and on our other test Macs for comparison.
@@ -33,17 +33,18 @@ when you install.
   battery, hardware video decode, video encode and suspend to idle all work, and a
   Thunderbolt link comes up. The GPU, external displays and the Neural Engine do
   not work yet.
-- **13-inch M4 Air (J713):** desktop, browser, Wi-Fi, Bluetooth, storage,
+- **13-inch M4 Air (J713):** desktop, browser, Wi-Fi, storage,
   internal display with brightness, keyboard, trackpad, camera, microphones,
   sensors, Thunderbolt networking, battery and hardware video decode all work,
-  and the GPU, the Neural Engine, video encode and an external monitor over USB-C
+  Bluetooth works in part (a keyboard paired in 3 of 5 runs), and the GPU, the Neural Engine, video encode and an external monitor over USB-C
   work with open pull requests. Suspend to idle and deep sleep work on a test
   kernel.
 
 Several of these results need pull requests that are still open. They work on our
 test kernels and will reach an installed system once those pull requests merge and
 ship in a release. The tables below say which. On the M3 Air's current default boot
-(our shared fleet kernel, no extra options), the desktop, keyboard, trackpad, Wi-Fi,
+(our shared fleet kernel, which carries some of those open pull requests, and
+no extra options), the desktop, keyboard, trackpad, Wi-Fi,
 storage, video decode and encode, suspend to idle (6 of 6), the internal display
 driver with brightness, the camera and the light and lid sensors all work.
 
