@@ -1600,7 +1600,7 @@
       },
       "Video encoding": {
         "state": "works",
-        "note": "Hardware H.264 and HEVC encoding tested on the 13.5 firmware stub (Linux #2904)."
+        "note": "Hardware H.264 and HEVC encoding tested on the 13.5 firmware stub (Linux #2938)."
       },
       "Wake-on-WLAN": {
         "state": "works",
@@ -2523,8 +2523,8 @@
         "note": "Boot framebuffer only on the tested 27.2 default. Native HDMI modesetting is in testing (Linux #2853)."
       },
       "Speaker": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "On the 27.2 firmware stub, speakerguardd v2 keeps the speaker muted when its voicing check fails (speakerguardd#138)."
       },
       "Headset jack": {
         "state": "works",

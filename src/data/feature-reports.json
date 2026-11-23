@@ -485,6 +485,16 @@
       }
     ]
   },
+  "j473": {
+    "audio": [
+      {
+        "date": "2026-11-23",
+        "title": "The internal speaker stays muted on the tested 27.2 setup",
+        "detail": "The mono amplifier sense-switch check passed. speakerguardd v2 then refused the playback grant because the voicing check failed, so the internal speaker stayed muted.",
+        "url": "https://github.com/aurora-silicon/speakerguardd/pull/138#issuecomment-7101371282"
+      }
+    ]
+  },
   "j704": {
     "boot": [
       {
