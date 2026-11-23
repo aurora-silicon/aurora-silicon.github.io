@@ -1599,8 +1599,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "Video encoding": {
-        "state": "partial",
-        "note": "H.264 (#1440, #1550, aura#161); HEVC not yet"
+        "state": "works",
+        "note": "Hardware H.264 and HEVC encoding tested on the 13.5 firmware stub (Linux #2904)."
       },
       "Wake-on-WLAN": {
         "state": "works",
@@ -2487,24 +2487,24 @@
     },
     "j473": {
       "Display output": {
-        "state": "works",
-        "note": "8 of 8 cold boots"
+        "state": "partial",
+        "note": "Boot framebuffer works on the 27.2 firmware stub. Native display support for that stub is still in testing."
       },
       "Thunderbolt / USB4": {
-        "state": "works",
-        "note": ""
+        "state": "partial",
+        "note": "A 27.2 test build negotiated a 20 Gb/s two-lane link. USB4 is unavailable on the tested 27.2 default."
       },
       "Secure Enclave": {
         "state": "works",
         "note": ""
       },
       "USB-C display": {
-        "state": "works",
-        "note": ""
+        "state": "partial",
+        "note": "The 27.2 default does not light an external display over USB-C. The candidate reached 2560 × 1440 at 144 Hz (Linux #2868)."
       },
       "Variable refresh rate": {
-        "state": "works",
-        "note": "On compatible displays."
+        "state": "partial",
+        "note": "Requires a compatible display and native display support. VRR is unverified on the 27.2 firmware stub."
       },
       "Boot": {
         "state": "works",
@@ -2519,8 +2519,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "HDMI": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Boot framebuffer only on the tested 27.2 default. Native HDMI modesetting is in testing (Linux #2853)."
       },
       "Speaker": {
         "state": "works",
@@ -2535,8 +2535,8 @@
         "note": "Confirmed by Aurora, 2026-10-21"
       },
       "USB-C": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "USB-C port registration is blocked on the tested 27.2 default. The 27.2 display candidate restores port registration."
       },
       "Ethernet": {
         "state": "works",
@@ -2555,12 +2555,12 @@
         "note": "Full sleep / resume support has only been completed on M4 and later so far, per Aurora, 2026-11-20"
       },
       "GPU acceleration": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "Hardware rendering is unavailable on the tested 27.2 default. GPU support depends on the firmware stub."
       },
       "Vulkan": {
-        "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "state": "partial",
+        "note": "The tested 27.2 default does not expose a GPU render node. Vulkan support depends on the firmware stub."
       },
       "Video decoding": {
         "state": "works",
