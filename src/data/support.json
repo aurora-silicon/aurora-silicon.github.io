@@ -4708,6 +4708,14 @@
         "state": "works",
         "note": "Basic boot; broader hardware support pending"
       },
+      "All CPU cores": {
+        "state": "works",
+        "note": "14 cores with cpufreq and cpuidle (https://github.com/aurora-silicon/aurora-silicon.github.io/pull/56#issuecomment-7093315623)"
+      },
+      "Internal storage": {
+        "state": "works",
+        "note": "NVMe (https://github.com/aurora-silicon/aurora-silicon.github.io/pull/56#issuecomment-7093315623)"
+      },
       "Internal display": {
         "state": "works",
         "note": "3456x2234 at 120 Hz through the display coprocessor (#525) with the aura handoff (aura#67)"
@@ -4715,6 +4723,10 @@
       "Keyboard": {
         "state": "works",
         "note": "#525"
+      },
+      "Keyboard backlight": {
+        "state": "works",
+        "note": "PWM backlight (https://github.com/aurora-silicon/aurora-silicon.github.io/pull/56#issuecomment-7093315623)"
       },
       "Trackpad": {
         "state": "works",
@@ -4748,13 +4760,17 @@
         "state": "works",
         "note": "front camera at 1920x1080 with the ISP handoff (aura#71, #1368)"
       },
+      "Fan control": {
+        "state": "works",
+        "note": "SMC automatic; both fans readable, manual targets through hwmon (https://github.com/aurora-silicon/aurora-silicon.github.io/pull/56#issuecomment-7093315623)"
+      },
       "Sleep / resume": {
         "state": "partial",
         "note": "suspend to idle overnight at 1.83 W, wake by lid and PMU RTC (#930, #994); suspend to RAM does not work (#791)"
       },
       "Wi-Fi": {
-        "state": "untested",
-        "note": "joins at 5 GHz on a private 7.3 tree (AxxzyWasTaken); not tested as merged"
+        "state": "works",
+        "note": "BCM4388; joins at 5 GHz with an 80 MHz channel (https://github.com/aurora-silicon/aurora-silicon.github.io/pull/56#issuecomment-7093315623)"
       },
       "Bluetooth": {
         "state": "untested",
