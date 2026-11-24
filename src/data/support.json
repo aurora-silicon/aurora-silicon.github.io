@@ -4773,8 +4773,40 @@
         "note": "BCM4388; joins at 5 GHz with an 80 MHz channel (https://github.com/aurora-silicon/aurora-silicon.github.io/pull/56#issuecomment-7093315623)"
       },
       "Bluetooth": {
-        "state": "untested",
-        "note": "plays audio on a private 7.3 tree (AxxzyWasTaken); not tested as merged"
+        "state": "partial",
+        "note": "BCM4388 controller powered on in bluetoothctl on merged main; audio pairing not re-tested on merged tip (https://github.com/aurora-silicon/aurora-silicon.github.io/pull/60#issuecomment-7140354768)"
+      },
+      "Brightness control": {
+        "state": "works",
+        "note": "backlight through the display coprocessor (apple-panel-bl; https://github.com/aurora-silicon/aurora-silicon.github.io/pull/60#issuecomment-7140354768)"
+      },
+      "Battery / charging": {
+        "state": "works",
+        "note": "battery level, MagSafe AC, and USB-C PD reporting via macsmc and tps6598x (https://github.com/aurora-silicon/aurora-silicon.github.io/pull/60#issuecomment-7140354768)"
+      },
+      "SDXC card slot": {
+        "state": "partial",
+        "note": "GL9755 reader detected (02:00.0); no card tested in the slot yet (https://github.com/aurora-silicon/aurora-silicon.github.io/pull/60#issuecomment-7140354768)"
+      },
+      "Speakers": {
+        "state": "partial",
+        "note": "AppleJ616 speakers and sense enumerated with speakerguardd-v2 active (https://github.com/aurora-silicon/aurora-silicon.github.io/pull/60#issuecomment-7140354768)"
+      },
+      "Video encoding": {
+        "state": "works",
+        "note": "H.264 and HEVC on AVE0 (1080p verified on J616C; https://github.com/aurora-silicon/aurora-silicon.github.io/pull/60#issuecomment-7140354768)"
+      },
+      "JPEG encoding": {
+        "state": "works",
+        "note": "both engines (jpeg0 and jpeg1, HWREV 0x100008, live encode/decode verified; https://github.com/aurora-silicon/aurora-silicon.github.io/pull/60#issuecomment-7140354768)"
+      },
+      "Neural Engine": {
+        "state": "partial",
+        "note": "H16 accel probes and exposes /dev/accel/accel0 on merged main (25G83); end-to-end model execution not yet re-tested on merged tip (https://github.com/aurora-silicon/aurora-silicon.github.io/pull/60#issuecomment-7140354768)"
+      },
+      "ProRes encoding": {
+        "state": "partial",
+        "note": "apr0 enabled in merged linux#3027 (301000000.video-codec, id 0x40008); 6 profiles 1080p and 4K verified; apr1 pending (https://github.com/aurora-silicon/aurora-silicon.github.io/pull/60#issuecomment-7140354768)"
       }
     },
     "j773g": {
