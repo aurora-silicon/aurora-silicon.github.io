@@ -4753,8 +4753,8 @@
         "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07); the 32-core GPU on 25G83 firmware needs #1373, merged 2026-11-10"
       },
       "Video decoding": {
-        "state": "partial",
-        "note": "HEVC output matches software decoding (#958); other codecs not tested on this Mac"
+        "state": "works",
+        "note": "H.264, HEVC, VP9 (1080p), and AV1 (1080p and 4K) match software decoding via v4l2_request VA-API"
       },
       "Camera": {
         "state": "works",
@@ -4765,8 +4765,8 @@
         "note": "SMC automatic; both fans readable, manual targets through hwmon (https://github.com/aurora-silicon/aurora-silicon.github.io/pull/56#issuecomment-7093315623)"
       },
       "Sleep / resume": {
-        "state": "partial",
-        "note": "suspend to idle overnight at 1.83 W, wake by lid and PMU RTC (#930, #994); suspend to RAM does not work (#791)"
+        "state": "works",
+        "note": "suspend to idle overnight at 1.83 W, wake by lid and PMU RTC (#930, #994); suspend to RAM (#1664), 7/7 deep cycles verified"
       },
       "Wi-Fi": {
         "state": "works",
@@ -4801,8 +4801,8 @@
         "note": "both engines (jpeg0 and jpeg1, HWREV 0x100008, live encode/decode verified; https://github.com/aurora-silicon/aurora-silicon.github.io/pull/60#issuecomment-7140354768)"
       },
       "Neural Engine": {
-        "state": "partial",
-        "note": "H16 accel probes and exposes /dev/accel/accel0 on merged main (25G83); end-to-end model execution not yet re-tested on merged tip (https://github.com/aurora-silicon/aurora-silicon.github.io/pull/60#issuecomment-7140354768)"
+        "state": "works",
+        "note": "H16 accel probes /dev/accel/accel0 and runs programs with exact output (#1595)"
       },
       "ProRes encoding": {
         "state": "partial",
