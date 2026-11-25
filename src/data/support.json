@@ -4753,8 +4753,8 @@
         "note": "M3/M4 GPU support, confirmed by the Aurora team (2026-11-07); the 32-core GPU on 25G83 firmware needs #1373, merged 2026-11-10"
       },
       "Video decoding": {
-        "state": "works",
-        "note": "H.264, HEVC, VP9 (1080p), and AV1 (1080p and 4K) match software decoding via v4l2_request VA-API"
+        "state": "partial",
+        "note": "8-bit H.264, HEVC and VP9 at 1080p and AV1 at 1080p and 4K matched software through VA-API. AV1 film grain fails and HEVC 10-bit is untested (linux#958, https://github.com/aurora-silicon/aurora-silicon.github.io/pull/63)"
       },
       "Camera": {
         "state": "works",
@@ -4766,7 +4766,7 @@
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "suspend to idle overnight at 1.83 W, wake by lid and PMU RTC (#930, #994); suspend to RAM (#1664), 7/7 deep cycles verified"
+        "note": "suspend to idle overnight at 1.83 W, wake by lid and PMU RTC (#930, #994). Suspend to RAM (linux#1664) passed five cycles on the merged change and two on a later main build"
       },
       "Wi-Fi": {
         "state": "works",
@@ -4802,7 +4802,7 @@
       },
       "Neural Engine": {
         "state": "works",
-        "note": "H16 accel probes /dev/accel/accel0 and runs programs with exact output (#1595)"
+        "note": "H16 accel with the ANE firmware handoff (linux#920, linux#1467). Both program runs matched all 16,384 fp16 output values"
       },
       "ProRes encoding": {
         "state": "partial",

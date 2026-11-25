@@ -392,6 +392,12 @@
     ],
     "neural-engine": [
       {
+        "date": "2026-11-25",
+        "title": "H16 program execution on the M4 Max",
+        "detail": "On J616c with firmware 25G83 and merged Linux 11e708c6c6b8, /dev/accel/accel0 ran the test twice. Both runs matched all 16,384 fp16 output values, with no ANE or DART faults. linux#920 adds the board handoff reservations and linux#1467 enables the node.",
+        "url": "https://github.com/aurora-silicon/aurora-silicon.github.io/pull/63"
+      },
+      {
         "date": "2026-11-07",
         "title": "Neural Engine startup on a 32-core M4 Max",
         "detail": "On AxxzyWasTaken's J616C (14-core CPU, 32-core GPU, 25G83 firmware), startup completed on 40 of 44 boots. The 4 failures match the H16 stall that #1066 restarts; two of them fell in boots with other faults, and the restart path has not run here yet. This part's preload is not admitted upstream yet. No inference job was run.",
@@ -413,6 +419,12 @@
       }
     ],
     "suspend": [
+      {
+        "date": "2026-11-25",
+        "title": "Suspend to RAM on the M4 Max",
+        "detail": "J616c passed five consecutive deep suspend cycles on the merged linux#1664 change, then two on merged Linux 11e708c6c6b8. The five-cycle run used the default command line and reported no GPU faults or failed units.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1664#issuecomment-7152639027"
+      },
       {
         "date": "2026-11-05",
         "title": "s2idle overnight on the M4 Max",
