@@ -530,7 +530,7 @@
       },
       "All CPU cores": {
         "state": "works",
-        "note": "10 cores"
+        "note": "10 cores with full cpufreq (P 0.30-4.46 GHz, E 0.30-2.96 GHz), SMC die thermal zones and M4+ WFI/WFIT support (linux#2747, linux#2788, linux#2796, linux#2840)"
       },
       "Internal storage": {
         "state": "works",
@@ -538,7 +538,7 @@
       },
       "Internal display": {
         "state": "works",
-        "note": "2560x1600 panel (#166, #1002), also on the macOS 27.0 firmware (#1413)"
+        "note": "2560x1600 panel with notch detection on macOS 27.2 firmware (#166, #1002, #1413)"
       },
       "Keyboard": {
         "state": "works",
@@ -554,11 +554,11 @@
       },
       "USB-C": {
         "state": "works",
-        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
+        "note": "dual-role USB-C with USB 3 (10 Gb/s) through deep sleep and replug (linux#1799, linux#2511)"
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "N1 (#998, aura#79); AP switching tested"
+        "note": "N1 (#998, aura#79); 5 GHz WPA2 and AP switching tested"
       },
       "Bluetooth": {
         "state": "works",
@@ -566,19 +566,19 @@
       },
       "Sleep / resume": {
         "state": "works",
-        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
+        "note": "s2idle and suspend-to-RAM (deep sleep) with internal panel, USB-C display, USB4 and radio recovery (linux#1527, linux#2135, linux#2142)"
       },
       "GPU acceleration": {
         "state": "works",
-        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
+        "note": "OpenGL and OpenGL ES on Apple M5 (G17G C0) with Mesa aurora-wip"
       },
       "Battery / charging": {
         "state": "works",
-        "note": "Confirmed by Aurora, 2026-10-21"
+        "note": "macsmc battery/AC and USB-C PD reporting via tps6598x"
       },
       "Vulkan": {
         "state": "works",
-        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
+        "note": "Borealis Vulkan 1.4.363 on Apple M5 (G17G C0) with Mesa aurora-wip (876b22c82bd)"
       },
       "Ray tracing": {
         "state": "partial",
@@ -586,39 +586,47 @@
       },
       "Brightness control": {
         "state": "works",
-        "note": "0-500 nits (#1002)"
+        "note": "0-500 nits via apple-panel-bl (#1002)"
       },
       "Speakers": {
         "state": "works",
-        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
+        "note": "AppleJ813 AOP audio with 4 SN012776 amps (linux#1000, linux#1423)"
       },
       "Microphone": {
         "state": "works",
-        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
+        "note": "built-in microphone array via AOP (linux#1000, linux#1423)"
       },
       "Headset jack": {
         "state": "works",
-        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
+        "note": "CS42L84 headset jack via AOP (linux#1000, linux#1423)"
       },
       "Camera": {
         "state": "works",
-        "note": "NV12 up to 1920x1080 (#999, #1026)"
+        "note": "NV12 up to 1920x1080 with binned config presets and idle ISP power-down (#999, #1026, linux#1874, linux#2237)"
       },
       "Video decoding": {
         "state": "works",
-        "note": "H.264, HEVC and VP9 match software decoding (#1026)"
+        "note": "H.264, HEVC and VP9 on AVD (/dev/video11, hw version 40020) match software decoding (#1026)"
+      },
+      "Video encoding": {
+        "state": "partial",
+        "note": "Apple AVE encoder enabled in linux#1923 and linux#2325; probes and exposes /dev/video10 (firmware 26B123) on merged main (065904c137fa); live encode not yet re-tested on merged tip"
+      },
+      "Neural Engine": {
+        "state": "partial",
+        "note": "T8142 ANE enabled in linux#2325 with CLPC floor and engine bridge setup (linux#2865, linux#3008, linux#3009); 6 models bit-exact on J813 before merge in linux#3008, not yet re-run on merged main"
       },
       "External display": {
         "state": "works",
-        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
+        "note": "USB-C DisplayPort output with deep sleep recovery (linux#2135)"
       },
       "Touch ID": {
         "state": "works",
-        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
+        "note": "Secure Enclave SPI2 fingerprint sensor (linux#1732); enrollment and matching survive reboots and deep sleep"
       },
       "Thunderbolt / USB4": {
         "state": "partial",
-        "note": "M5 Air support matches M5 Pro/Max, per Aurora, 2026-11-16"
+        "note": "native USB4 / PCIe tunneling (20 Gb/s x2, 3.0-3.3 GB/s NVMe) on the rear USB-C port across hotplug and deep sleep (linux#2142, aura#302, aura#435); front port pending"
       }
     },
     "j714s": {
@@ -1437,24 +1445,24 @@
     },
     "j873g": {
       "Boot": {
-        "state": "partial",
-        "note": "RAM boot through aura on the public stack (aura#85, aura#87), with restart through the SMC (linux#1197); SSD support is in aurora-wip, but booting an installed system has not been tested"
+        "state": "works",
+        "note": "boots installed NVMe rootfs through enrolled aura Stage 1 and Stage 2 (aura#16, aura#85, aura#498, linux#1797); reboot and poweroff via SMC"
       },
       "All CPU cores": {
         "state": "works",
-        "note": "12 cores (linux#161); two performance states per cluster until a thermal policy exists"
+        "note": "12 cores with full cpufreq (P/M 1.44-4.79 GHz, E 0.97-2.94 GHz) under 30 SMC CPU die thermal zones (linux#1798)"
       },
       "Internal storage": {
-        "state": "partial",
-        "note": "in aurora-wip (linux#1197); read-only probe and clean shutdown tested on 2026-11-08; reads and writes tested by Thomas Glanzmann on his original series"
+        "state": "works",
+        "note": "NVMe rootfs with read/write and clean shutdown (linux#1797)"
       },
       "Display output": {
-        "state": "partial",
-        "note": "boot framebuffer on the back-right USB-C port through aura (aura#16); the Linux display driver is still a draft (linux#1019)"
+        "state": "works",
+        "note": "native drm/apple (apple-dcpib) USB-C DisplayPort alt mode on rear ports via tipd with mode setting, hotplug and flipped replug up to 2560x1440@60 (linux#1800, linux#2486, linux#2873, aura#498)"
       },
       "HDMI": {
-        "state": "partial",
-        "note": "second framebuffer through aura (aura#16), reported by Thomas Glanzmann; no mode changes or hotplug"
+        "state": "works",
+        "note": "native drm/apple (apple-dcpib) HDMI output alongside rear USB-C displays (linux#1800, linux#2486, linux#2873)"
       },
       "Speaker": {
         "state": "none",
@@ -1462,35 +1470,43 @@
       },
       "Headset jack": {
         "state": "partial",
-        "note": "in aurora-wip (linux#1197); headphone playback tested by Thomas Glanzmann, silent playback and capture retested 2026-11-08; headset microphone not tested"
+        "note": "merged in linux#1797 (AppleJ873 sound card); headphone playback and silent capture tested, headset microphone not tested"
       },
       "USB-C": {
-        "state": "partial",
-        "note": "USB 2 on the back-left and front ports in aurora-wip (linux#1205); a USB device enumerates behind the front-port hub, but one plugged in while the hub is runtime-suspended is not seen until it resumes; no USB 3, and the back-middle and back-right ports are not host ports yet"
+        "state": "works",
+        "note": "USB 2 and USB 3.1 (10 Gb/s) on the front ports via ATC2 PHY (linux#1205, linux#1799, aura#498), and rear USB-C PD controllers with DisplayPort alt mode via tipd (linux#2486)"
       },
       "Thunderbolt / USB4": {
-        "state": "none",
-        "note": "not described yet"
+        "state": "works",
+        "note": "USB4 / PCIe tunneling (20 Gb/s x2, 3.3 GB/s NVMe) on the rear ports across hotplug, flipped replug and port swaps with DP monitors (linux#2178, aura#498)"
       },
       "Ethernet": {
         "state": "partial",
-        "note": "on-board 10GbE in aurora-wip (linux#1197); the driver binds, and Thomas Glanzmann measured 9.4 Gbit/s TCP on his series; transmit changes in linux#1198 (draft)"
+        "note": "on-board Realtek RTL8127A 10GbE merged in linux#1797 (link and traffic work on merged main); transmit changes remain in open linux#1198"
       },
       "Wi-Fi": {
         "state": "works",
-        "note": "scan, WPA2 join and 10 minutes of capped two-way TCP (linux#1013)"
+        "note": "native N1 Wi-Fi (apple_centauri) joins 5 GHz WPA2 networks on merged main (linux#1013)"
       },
       "Bluetooth": {
         "state": "partial",
-        "note": "LE discovery only (linux#1013); pairing and audio not tested"
+        "note": "N1 Bluetooth (btcentauri, hci0 UP RUNNING) with LE discovery (linux#1013, linux#2330); pairing and audio not tested"
+      },
+      "Sleep / resume": {
+        "state": "none",
+        "note": "system suspend is not supported yet on T8152 (linux#2385)"
       },
       "GPU acceleration": {
         "state": "partial",
-        "note": "OpenGL and OpenGL ES on Mesa aurora-wip (mesa#164, mesa#175) with linux#984; smoke and texture tests retested 2026-11-08; no full conformance run on this stack"
+        "note": "OpenGL 4.6 Core and OpenGL ES 3.2 on Apple M6 (G18G B1) with Mesa aurora-wip (876b22c82bd) and linux main (linux#1652, linux#2850, linux#1851); 75 s GLES 3.1 render+compute smoke passed (427/427 readback checks, 0 GPU faults), full CTS not yet run"
       },
       "Vulkan": {
-        "state": "untested",
-        "note": "Borealis builds for G18G but has not run on an M6"
+        "state": "partial",
+        "note": "Borealis Vulkan 1.4.363 enumerates Apple M6 (G18G B1) with ray-tracing extensions advertised on merged main (065904c137fa) + Mesa aurora-wip (876b22c82bd); Vulkan CTS not yet run on M6"
+      },
+      "Video decoding": {
+        "state": "partial",
+        "note": "Kopsia V4L2 Request decoder 0x40030 merged in linux#2139 (/dev/video10, polled completion); H.264, HEVC/Main10, VP9 and AV1 verified in #2139, suspend and fault recovery not qualified"
       }
     },
     "j413": {
