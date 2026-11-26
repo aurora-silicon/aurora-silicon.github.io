@@ -141,6 +141,54 @@ startup volume, or require disabling SIP. See the
 [Asahi boot-process guide](https://asahilinux.org/docs/alt/boot-process-guide/)
 for the distinction between firmware verbosity and later boot stages.
 
+## PMP on M1 Max (experimental)
+
+The PMP is the SoC's Power Management Processor. Aurora's kernel already turns
+it on for M1 Pro MacBook Pros. [pmp.sh](/pmp.sh) turns it on or off on an M1 Max
+MacBook Pro (J314c, J316c) or Mac Studio (J375c) running Aurora Fedora or Aurora
+Arch Linux ARM. Nobody has started an M1 Max with the PMP on yet.
+
+```sh
+curl -fLO https://aurorasilicon.org/pmp.sh
+sh pmp.sh status
+sudo sh pmp.sh --dry-run on
+sudo sh pmp.sh on
+sudo sh pmp.sh off
+```
+
+`on` makes the kernel's `APPLE_USE_PMP` device tree changes to this Mac's
+installed device tree with `fdtput`:
+
+- It adds the `pmp` alias, which makes aura enable the PMP at boot.
+- It powers DCP, DCPEXT0/1, ISP and AVD through their PMP report entries.
+- It enables the JPEG report entry.
+
+It saves the original, then rebuilds Stage 2 with `update-m1n1`. If the tree
+isn't exactly as expected, it stops without changing anything. It needs the
+`dtc` package and aura 1.0.0b12 or newer. `off` puts the original back byte for
+byte. Neither command reboots the Mac.
+
+A kernel update installs unchanged device trees and turns the PMP off again;
+run `sudo sh pmp.sh on` after each one. While it is on, package checks
+(`rpm -V`, `pacman -Qkk`) list the changed `.dtb`.
+
+If Linux doesn't start afterwards:
+
+- **Trial.** With a recent aura Stage 1, `update-m1n1` installs the new Stage 2
+  as a one-time trial, and a trial that doesn't come up falls back by itself.
+  Holding the power button until the Mac turns off and starting it again also
+  falls back.
+- **No trial.** Start macOS or recoveryOS. Mount the Aurora EFI partition with
+  `diskutil`, then copy `m1n1/boot.bin.pre-pmp` over `m1n1/boot.bin`.
+
+Either way, run `sudo sh pmp.sh off` once Linux is back. Choosing an older
+kernel in GRUB doesn't help, because every entry boots the single device tree
+inside Stage 2.
+
+NixOS builds Stage 2 from read-only kernel device trees, so pmp.sh doesn't
+support it. The M1 Ultra (J375d) device tree doesn't build with `APPLE_USE_PMP`
+yet.
+
 ## Source code
 
 The [Aurora repositories](https://github.com/aurora-silicon) contain the code and build instructions. The [Linux repository](https://github.com/aurora-silicon/linux) tracks kernel work and hardware discussions.
