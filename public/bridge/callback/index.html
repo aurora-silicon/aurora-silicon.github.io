@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'sha256-jYE/kbpvb2sKeH/OQkfLm+EsoZqEw5tPcoMC3D9+3Ds='; base-uri 'none'; form-action 'none'">
+<meta name="robots" content="noindex">
+<title>Basecamp link code</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:36em;margin:4em auto;padding:0 1em;line-height:1.5}
+code{display:block;font-size:1.1em;padding:.8em;background:#f2f2f2;border-radius:6px;word-break:break-all;user-select:all}
+button{margin-top:.8em;padding:.5em 1em;font-size:1em}
+</style></head>
+<body>
+<h1 id="h">Basecamp link code</h1>
+<div id="ok" hidden>
+  <p>Copy this one-time code, then in Discord run <b>/link code:</b> and paste it. It works once, for a few minutes, and only for you.</p>
+  <code id="c"></code>
+  <button id="b" type="button">Copy</button>
+</div>
+<p id="err" hidden></p>
+<script>
+// Static page for the bridge's [linking] mode = "paste". It sends nothing anywhere: it only
+// shows the code from this page's own address so you can paste it into Discord.
+(function () {
+  var q = new URLSearchParams(location.search);
+  var code = q.get("code"), state = q.get("state"), e = q.get("error");
+  if (code && state && /^\S+$/.test(code) && /^[\w-]+$/.test(state)) {
+    document.getElementById("c").textContent = code + "." + state;
+    document.getElementById("ok").hidden = false;
+    document.getElementById("b").onclick = function () {
+      navigator.clipboard.writeText(code + "." + state).then(function () {
+        document.getElementById("b").textContent = "Copied";
+      });
+    };
+    history.replaceState(null, "", location.pathname);  // keep the code out of history/bookmarks
+  } else {
+    document.getElementById("h").textContent = "Not linked";
+    var el = document.getElementById("err");
+    el.textContent = e ? "Basecamp access was not granted. Nothing was linked." :
+      "No code on this page. Run /link in Discord again.";
+    el.hidden = false;
+  }
+})();
+</script>
+</body></html>
