@@ -817,8 +817,8 @@
         "note": "suspend to idle by lid and menu (#830, #831), wake by USB on both ports (#832)"
       },
       "Touch ID": {
-        "state": "partial",
-        "note": "Secure Enclave and fprintd (#457); the installer does not collect the J713 sensor files yet"
+        "state": "works",
+        "note": "Secure Enclave and fprintd (#457, #1036); first-boot aurora-touchid-setup extracts the J713 calibration and root key on Linux, and enrolment and matching survive deep sleep and reboots"
       },
       "Speakers": {
         "state": "partial",
