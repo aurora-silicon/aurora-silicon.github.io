@@ -354,6 +354,12 @@
     ],
     "audio": [
       {
+        "date": "2026-11-26",
+        "title": "Four-speaker playback under speakerguardd v2 on two J713 units",
+        "detail": "Verified on two J713 (Mac16,12) units with AID37 playback_rows (speakerguardd#266) and the static four-lane LSID release (speakerguardd#228): one on macOS 27.2.1 (26B131) system firmware with linux-aurora 7.3.0.aurora1-41 and speakerguardd-v2 1.0.0alpha.2-9, and a second lab unit on 27.2 (26B123). Both passed speakerguardd-selfcheck verify 4/4 (derived wiring 291295bd06c656d0, voicing within +0.026 / -0.068 dB of macOS 26.6.2) and completed 420 s 0.3/0.6/1.0 pink-noise ladders with 0 lost telemetry records, health_or=0x0 and 0 amp faults across all four SN012776 amplifiers. At -8 dBFS the LSM2 tweeter limiter held -1.09 dB equilibrium at ~132.5 C (woofer max 102.2 / 100.5 C, tweeter max 133.3 / 133.4 C), and a mid-hold SIGKILL immediately withdrew protection and re-granted in 1.415 s. Automatic 26B131 tuning extraction without --ipsw merged in aurora-installer#250 and speakerguardd#267.",
+        "url": "https://github.com/aurora-silicon/speakerguardd/pull/266"
+      },
+      {
         "date": "2026-11-04",
         "title": "Microphones, headphone jack and speakers in the kernel",
         "detail": "On a J713 test kernel, all three sound cards registered. The microphones recorded, the jack played left and right correctly with plug detection, and the speakers played with speaker protection running. The J713 speaker protection profile, UCM and DSP graph are still open, so a stock install keeps the speakers locked.",
