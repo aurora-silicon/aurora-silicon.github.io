@@ -338,6 +338,12 @@
     ],
     "touch-id": [
       {
+        "date": "2026-11-26",
+        "title": "Touch ID across deep sleep and reboots on stock ALARM",
+        "detail": "On a J713 (Mac16,12) running shipped linux-aurora 7.3.0.aurora1-41, aurora-sep 1-29 and fprintd-aurora 1.94.5-5 (26.6.2 OS stub, 27.2.1 system firmware), aurora-touchid-setup.service automatically resealed apple/mesacal-j713.bin and apple/msrk-j713.bin from the local iBoot System Container at first boot. Enrolment, post-boot password arming, lock-screen unlock, deep sleep resume and reboot restore all passed with xart_guard=1, 0 refusals and aurora-sep status 23/23 PASS (0 warnings, 0 errors). Installer-side Stage 1 collection (aurora-installer#183) and in-kernel NVMe fallback (linux#2706) remain open.",
+        "url": "https://github.com/aurora-silicon/linux/pull/1036"
+      },
+      {
         "date": "2026-11-05",
         "title": "Touch ID enrolment and match",
         "detail": "On a J713 on 26.6.2 firmware, the Secure Enclave attached, fprintd enrolled a finger in 10 stages and matched it, and the enrolment came back and matched after a reboot. The lock screen unlocked through pam_fprintd. The installer does not collect the J713 sensor root key and calibration yet.",
