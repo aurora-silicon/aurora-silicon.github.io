@@ -821,8 +821,8 @@
         "note": "Secure Enclave and fprintd (#457); the installer does not collect the J713 sensor files yet"
       },
       "Speakers": {
-        "state": "partial",
-        "note": "kernel, UCM and DSP graph merged (#820, alsa-ucm-conf-asahi#6, asahi-audio#10); the speakers stay locked until a J713 speaker protection profile ships (speakerguardd#10 closed unmerged)"
+        "state": "works",
+        "note": "four speakers under speakerguardd v2 (#820, alsa-ucm-conf-asahi#6, asahi-audio#10, speakerguardd#228, speakerguardd#266, speakerguardd#267, aurora-installer#250); 420 s thermal ladders and kill-withdrawal verified on two J713 units"
       },
       "Microphone": {
         "state": "works",
